@@ -817,7 +817,7 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         [Paragraph("<b>Production Web URL</b>", table_cell), Paragraph("<code>https://apps-nu-henna.vercel.app</code>", code_style)],
         [Paragraph("<b>Hosting Platform</b>", table_cell), Paragraph("Vercel Serverless Platform (Node.js/Python WSGI Bridge)", table_cell)],
         [Paragraph("<b>Object Storage Store</b>", table_cell), Paragraph("Vercel Blob Storage &bull; Store: <code>apps-data</code> (ID: <code>store_eS9r7map43Dx32yX</code>)", table_cell)],
-        [Paragraph("<b>Source Control</b>", table_cell), Paragraph("Git (Dual-tracked: <code>origin/main</code> and <code>origin/master</code>)", table_cell)],
+        [Paragraph("<b>Source Control Repository</b>", table_cell), Paragraph("GitHub: <code>https://github.com/dharuntech275/APPS-</code> (Dual-tracked: <code>main</code> &amp; <code>master</code>)", table_cell)],
         [Paragraph("<b>Credential Recovery</b>", table_cell), Paragraph("Unit-verified self-service recovery (<code>/forgot_password</code>) active in production", table_cell)],
         [Paragraph("<b>Timezone Standard</b>", table_cell), Paragraph("Indian Standard Time (IST - <code>UTC+05:30</code>) with dynamic client clock sync", table_cell)],
         [Paragraph("<b>Secret Key Management</b>", table_cell), Paragraph("Environment-backed session secret key with stable production fallback", table_cell)],
