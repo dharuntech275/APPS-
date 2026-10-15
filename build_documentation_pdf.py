@@ -712,7 +712,7 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         [
             Paragraph("<b>Clinical Care</b>", table_cell),
             Paragraph("<b>Clinical Counseling Notes & Streamlined UI:</b><br/>"
-                      "Maintained the dedicated <b>Add Counseling Note</b> card with notes textarea, action taken, and follow-up scheduling. "
+                      "Maintained the dedicated <b>Add Counseling Note</b> card with focused clinical notes textarea and action taken fields, removing unnecessary date picker inputs for a frictionless note-taking workflow. "
                       "Removed intrusive floating sticky button overlay in favor of a clean, unobstructed dossier layout with high-risk triage shortcuts. "
                       "Permanently decommissioned subjective tags across soldier dossiers and rosters to focus personnel records purely on objective physiological telemetry and clinical observations.", table_cell),
             Paragraph("Empowers officers to record structured clinical interventions while providing an unobstructed, clean interface.", table_cell)
