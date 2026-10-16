@@ -27,12 +27,6 @@
 
 <div class="auth-shell">
 
-  <div class="auth-brand-panel">
-    <div class="brand-mark">APPS</div>
-    <h1 id="brandTitle">Join the Welfare Monitoring Network</h1>
-    <p id="brandSub">Register once to start your daily check-ins, and let the system watch out for you before strain becomes a bigger problem.</p>
-  </div>
-
   <div class="auth-form-panel">
     <div class="auth-card">
       <div class="brand" id="brandPill">APPS <span>•</span> PERSONNEL</div>
@@ -138,8 +132,8 @@
     // Update UI text and placeholders
     document.getElementById('brandPill').innerHTML = d.pill.replace('•', '<span>•</span>');
     document.getElementById('formTitle').textContent = d.title;
-    document.getElementById('brandTitle').textContent = d.brandTitle;
-    document.getElementById('brandSub').textContent = d.brandSub;
+    var bt = document.getElementById('brandTitle'); if (bt) bt.textContent = d.brandTitle;
+    var bs = document.getElementById('brandSub'); if (bs) bs.textContent = d.brandSub;
     document.getElementById('unitLabel').textContent = d.unitLabel;
     document.getElementById('unitInput').placeholder = d.unitPlaceholder;
     document.getElementById('submitBtn').textContent = d.btnText;

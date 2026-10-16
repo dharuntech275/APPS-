@@ -769,10 +769,10 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         ],
         [
             Paragraph("<b>Responsive &amp; UI</b>", table_cell),
-            Paragraph("<b>Responsive Layout &amp; Ergonomic Spacing Audit:</b><br/>"
-                      "Engineered adaptive breakpoints (<code>860px</code>, <code>720px</code>, <code>480px</code>) with mobile drawer navigation. "
-                      "Audited and enhanced vertical rhythm, card margins, input padding, and unit grid distributions across all templates.", table_cell),
-            Paragraph("Delivers clean ergonomic readability and optimal touch targets across mobile, tablet, and desktop displays.", table_cell)
+            Paragraph("<b>Ergonomic Spacing &amp; Centered Auth Overhaul:</b><br/>"
+                      "Eliminated redundant side branding panels across auth views for focused, centered login/signup cards. "
+                      "Relocated 'Forgot Password' directly below credentials. Bounded snapshot statistics into a cohesive centered card.", table_cell),
+            Paragraph("Delivers clean ergonomic focus, eliminates layout stretching, and optimizes touch targets across all displays.", table_cell)
         ],
         [
             Paragraph("<b>System Brand</b>", table_cell),

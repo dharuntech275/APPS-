@@ -274,59 +274,24 @@ header.top .logout-link:hover {
 .auth-shell {
   min-height: 100vh;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: radial-gradient(circle at 50% 15%, rgba(59, 130, 246, 0.08) 0, transparent 65%), #f8fafc;
+  box-sizing: border-box;
 }
 
 .auth-brand-panel {
-  flex: 1;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.2) 0, transparent 50%),
-    linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 64px;
-  color: #f8fafc;
-}
-
-.auth-brand-panel .brand-mark {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 800;
-  font-size: 24px;
-  letter-spacing: 0.08em;
-  margin-bottom: 20px;
-  color: #ffffff;
-}
-
-.auth-brand-panel h1 {
-  font-size: 36px;
-  font-weight: 700;
-  line-height: 1.25;
-  margin: 0 0 16px;
-  letter-spacing: -0.02em;
-  color: #ffffff;
-}
-
-.auth-brand-panel p {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 14.5px;
-  line-height: 1.65;
-  color: rgba(248, 250, 252, 0.75);
-  max-width: 380px;
+  display: none !important;
 }
 
 .auth-form-panel {
-  flex: 1;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 32px 24px;
-  background: #f8fafc;
-}
-
-@media (max-width: 800px) {
-  .auth-shell { flex-direction: column; }
-  .auth-brand-panel { padding: 40px 24px; min-height: 180px; }
-  .auth-brand-panel h1 { font-size: 26px; }
+  background: transparent;
+  padding: 0;
 }
 
 .auth-card {
@@ -1305,15 +1270,26 @@ body.personnel-page {
 
 .mini-stats {
   display: flex;
-  gap: 16px;
-  margin: auto 0 20px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line);
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  max-width: 360px;
+  margin: 22px auto 26px;
+  padding: 16px 24px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-sizing: border-box;
 }
 
 .mini-stat {
   flex: 1;
   text-align: center;
+}
+
+.mini-stat:first-child {
+  border-right: 1px solid var(--line);
+  padding-right: 16px;
 }
 
 .mini-num {
@@ -1328,8 +1304,10 @@ body.personnel-page {
   font-size: 11px;
   color: var(--steel);
   text-transform: uppercase;
-  letter-spacing: 0.03em;
-  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+  margin-top: 4px;
+  display: block;
 }
 
 .view-results-link {
@@ -2187,8 +2165,11 @@ html.dark .portal-icon {
 }
 
 /* ---------- Auth / Login Screens ---------- */
+html.dark .auth-shell {
+  background: radial-gradient(circle at 50% 15%, rgba(37, 99, 235, 0.12) 0, transparent 65%), #0b1120;
+}
 html.dark .auth-form-panel {
-  background: #0b1325;
+  background: transparent;
 }
 html.dark .auth-card {
   background: #131d31;
@@ -2248,7 +2229,10 @@ html.dark .snapshot-date { color: #94a3b8 !important; }
 
 html.dark .mini-stats {
   border-color: rgba(255, 255, 255, 0.1);
-  background: #0c1527;
+  background: rgba(255, 255, 255, 0.03);
+}
+html.dark .mini-stat:first-child {
+  border-right-color: rgba(255, 255, 255, 0.1);
 }
 html.dark .mini-num { color: #f8fafc; }
 html.dark .mini-lbl { color: #94a3b8; }
