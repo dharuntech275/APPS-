@@ -769,9 +769,9 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         ],
         [
             Paragraph("<b>UI / UX Design</b>", table_cell),
-            Paragraph("<b>Full-Site Visual &amp; Aesthetic Design Overhaul:</b><br/>"
+            Paragraph("<b>Full-Site Visual Overhaul &amp; Theme Harmonization:</b><br/>"
                       "Engineered ambient radial mesh lighting, glassmorphic card elevation, frosted glass streak chips, dual-gradient action buttons, "
-                      "and glowing portal gateway badges across all portals, views, and light/dark themes.", table_cell),
+                      "harmonized light/dark palettes across admin unit breakdown views, and glowing portal gateway badges.", table_cell),
             Paragraph("Transforms the platform into a visually captivating, defense-grade executive interface with seamless responsiveness.", table_cell)
         ],
         [

@@ -969,14 +969,15 @@ canvas {
   line-height: 1.6;
 }
 
-/* ---------- Admin Dashboard Theme ---------- */
+/* ---------- Admin Dashboard Theme (Light Mode) ---------- */
 body.admin-page {
   background:
-    radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.12) 0, transparent 60%),
-    radial-gradient(circle at 90% 40%, rgba(99, 102, 241, 0.08) 0, transparent 45%),
-    linear-gradient(180deg, #0b1329 0%, #0f172a 100%);
+    radial-gradient(circle at 10% 8%, rgba(124, 58, 237, 0.06) 0, transparent 40%),
+    radial-gradient(circle at 90% 12%, rgba(37, 99, 235, 0.06) 0, transparent 40%),
+    radial-gradient(circle at 50% 90%, rgba(16, 185, 129, 0.05) 0, transparent 45%),
+    #f8fafc;
   background-attachment: fixed;
-  color: #f8fafc;
+  color: var(--ink);
   min-height: 100vh;
 }
 
@@ -985,30 +986,34 @@ body.admin-page .wrap {
 }
 
 body.admin-page header.top {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid var(--line);
 }
 
 body.admin-page .mark {
-  color: #ffffff;
+  background: linear-gradient(135deg, #0f172a 0%, #2563eb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 body.admin-page header.top .role-pill {
-  color: #f8fafc;
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--steel-deep);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  border-color: var(--line);
 }
 
 body.admin-page header.top .logout-link {
-  color: #f8fafc;
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.18);
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.22);
 }
 body.admin-page header.top .logout-link:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: #ef4444;
+  color: #ffffff;
 }
 
 body.admin-page h2.page-title {
-  color: #ffffff;
+  color: var(--ink);
 }
 
 .stats-grid {
@@ -1098,11 +1103,7 @@ body.admin-page h2.page-title {
 .stat-card.medium .stat-icon { color: var(--signal-med); background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.25); }
 .stat-card.low .stat-icon { color: var(--signal-low); background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.25); }
 
-body.admin-page .card {
-  background: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-}
+
 
 /* ---------- Unit Cards ---------- */
 .unit-cards-grid {
@@ -1780,14 +1781,14 @@ body.personnel-page {
   border-color: #cbd5e1;
 }
 
-body.admin-page .nav-toggle {
+html.dark body.admin-page .nav-toggle {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.2);
 }
-body.admin-page .nav-toggle span {
+html.dark body.admin-page .nav-toggle span {
   background: #f8fafc;
 }
-body.admin-page .nav-toggle:hover {
+html.dark body.admin-page .nav-toggle:hover {
   background: rgba(255, 255, 255, 0.16);
 }
 
@@ -2180,7 +2181,7 @@ html.dark .desktop-logout:hover {
   background: #ef4444;
   color: #ffffff;
 }
-body.admin-page .desk-nav-item.active {
+html.dark body.admin-page .desk-nav-item.active {
   background: rgba(255, 255, 255, 0.15);
   color: #ffffff;
   border-color: rgba(255, 255, 255, 0.25);
@@ -2616,22 +2617,61 @@ html.dark .badge-stage {
 .unit-summary-tile {
   cursor: pointer;
   background: #ffffff;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 18px 20px;
-  transition: box-shadow 0.15s ease, transform 0.15s ease, background 0.15s ease;
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  padding: 20px 22px;
+  color: var(--ink);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .unit-summary-tile:hover {
-  box-shadow: 0 4px 12px rgba(16, 27, 38, 0.1);
-  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.1);
+  transform: translateY(-3px);
+  border-color: rgba(37, 99, 235, 0.35);
 }
+
+.unit-summary-tile strong,
+.unit-summary-tile .unit-title {
+  color: var(--steel-deep) !important;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.unit-summary-tile .unit-count-pill {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  background: #f1f5f9;
+  padding: 4px 10px;
+  border-radius: 12px;
+  color: var(--steel);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
 html.dark .unit-summary-tile {
   background: #0c1527 !important;
   border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #f8fafc !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3) !important;
 }
+
 html.dark .unit-summary-tile:hover {
   background: #111e38 !important;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+  border-color: rgba(59, 130, 246, 0.4) !important;
+}
+
+html.dark .unit-summary-tile strong,
+html.dark .unit-summary-tile .unit-title {
+  color: #f8fafc !important;
+}
+
+html.dark .unit-summary-tile .unit-count-pill {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #94a3b8 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 /* ---------- Officer Response Box ---------- */
