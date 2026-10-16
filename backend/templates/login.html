@@ -68,12 +68,12 @@
         <label>Name</label>
         <input type="text" name="name" value="{{ entered_name or request.args.get('name', '') }}" placeholder="Enter your registered name" required autofocus>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
           <label style="margin-bottom:0;">Password</label>
           <a href="/forgot_password" style="font-size:12px; color:var(--moss); font-weight:600; text-decoration:none;">Forgot Password?</a>
         </div>
-        <div style="position:relative;">
-          <input type="password" name="password" id="loginPassword" placeholder="Enter your password" required style="padding-right:42px;">
+        <div style="position:relative; margin-bottom:20px;">
+          <input type="password" name="password" id="loginPassword" placeholder="Enter your password" required style="padding-right:42px; margin-bottom:0;">
           <button type="button" class="pwd-toggle-btn" onclick="togglePasswordVisibility('loginPassword', this)" aria-label="Toggle password visibility" title="Show / Hide Password" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; font-size:16px; padding:4px; color:var(--steel); line-height:1;">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
           </button>
@@ -84,9 +84,9 @@
 
       <p class="foot-link">Don't have an account? <a href="/signup">Create an Account</a></p>
 
-      <div style="margin-top:16px; padding-top:14px; border-top:1px solid var(--line); text-align:center;">
-        <p style="font-size:11px; color:var(--steel); margin:0 0 10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em;">New Registration by Role</p>
-        <div style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap;">
+      <div style="margin-top:24px; padding-top:18px; border-top:1px solid var(--line); text-align:center;">
+        <p style="font-size:11px; color:var(--steel); margin:0 0 12px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em;">New Registration by Role</p>
+        <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
           <a href="/signup?role=personnel" class="role-chip-link"><svg class="role-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Personnel</a>
           <a href="/signup?role=officer" class="role-chip-link"><svg class="role-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Officer</a>
           <a href="/signup?role=admin" class="role-chip-link"><svg class="role-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Admin</a>

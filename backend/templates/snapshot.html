@@ -24,7 +24,7 @@
     {% endif %}
   </div>
 
-  <div style="margin-bottom:20px;">
+  <div style="margin-bottom:24px;">
     <a href="/dashboard" style="display:inline-flex; align-items:center; gap:6px; padding:10px 18px; background:transparent; color:var(--steel-deep); border:1.5px solid var(--line); border-radius:7px; font-family:'Helvetica Neue', Arial, sans-serif; font-weight:600; font-size:12.5px; letter-spacing:0.02em; text-decoration:none; transition: background 0.2s ease, border-color 0.2s ease;" onmouseover="this.style.background='var(--card)'; this.style.borderColor='var(--steel-deep)';" onmouseout="this.style.background='transparent'; this.style.borderColor='var(--line)';">&larr; Back to Check-in</a>
   </div>
 
@@ -32,24 +32,24 @@
     <h3>Your Latest Snapshot</h3>
 
     {% if trend_labels and trend_labels|length > 1 %}
-    <div style="margin-bottom:20px;">
-      <h4 style="font-family:'Helvetica Neue', Arial, sans-serif; font-size:12px; color:var(--steel); margin:0 0 10px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em;">7-Day Sleep &amp; Duty Trend</h4>
+    <div style="margin-bottom:24px;">
+      <h4 style="font-family:'Helvetica Neue', Arial, sans-serif; font-size:12px; color:var(--steel); margin:0 0 12px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em;">7-Day Sleep &amp; Duty Trend</h4>
       <canvas id="personalTrendChart" style="max-height:180px;"></canvas>
     </div>
     {% endif %}
 
     {% if latest %}
-      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+      <div style="display:flex; align-items:center; gap:14px; margin-bottom:16px;">
         <span class="result-badge badge-{{ latest.stress_level|lower }}">{{ latest.stress_level }}</span>
-        <span class="snapshot-date" style="margin:0; font-family:'Helvetica Neue', Arial, sans-serif; font-size:13px; color:var(--steel);">Logged on: <strong>{{ latest.date }}</strong></span>
+        <span class="snapshot-date" style="margin:0; font-family:'Helvetica Neue', Arial, sans-serif; font-size:13.5px; color:var(--steel);">Logged on: <strong>{{ latest.date }}</strong></span>
       </div>
-      <p class="snapshot-reco" style="font-size:14px; line-height:1.5; color:var(--ink); margin-bottom:18px;">{{ latest.recommendation }}</p>
+      <p class="snapshot-reco" style="font-size:14.5px; line-height:1.65; color:var(--ink); margin-bottom:24px;">{{ latest.recommendation }}</p>
     {% else %}
-      <div class="empty-note" style="padding:16px 0;">No check-ins recorded yet. Submit today's check-in to generate your snapshot!</div>
+      <div class="empty-note" style="padding:20px 0; margin-bottom:16px;">No check-ins recorded yet. Submit today's check-in to generate your snapshot!</div>
     {% endif %}
 
     {% if tips %}
-    <div class="tips-box" style="margin-bottom:20px;">
+    <div class="tips-box" style="margin-bottom:24px;">
       <p class="tips-title">Quick tips for today</p>
       <ul class="tips-list">
         {% for tip in tips %}
@@ -59,7 +59,7 @@
     </div>
     {% endif %}
 
-    <div class="mini-stats" style="margin-bottom:20px;">
+    <div class="mini-stats" style="margin-bottom:24px;">
       <div class="mini-stat">
         <span class="mini-num">{{ history|length }}</span>
         <span class="mini-lbl">Total check-ins</span>
@@ -70,7 +70,7 @@
       </div>
     </div>
 
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; border-top:1px solid var(--line); padding-top:14px; margin-top:8px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; border-top:1px solid var(--line); padding-top:18px; margin-top:12px;">
       <a href="/results" class="view-results-link">View Full Check-in History &rarr;</a>
       <a href="/dashboard" class="view-results-link">Submit Today's Check-in &rarr;</a>
     </div>

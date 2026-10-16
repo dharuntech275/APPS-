@@ -768,11 +768,11 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
             Paragraph("Eliminates UTC time-drift errors on check-ins and aligns dashboard greetings with the soldier's actual physical hour of day.", table_cell)
         ],
         [
-            Paragraph("<b>Responsive Design</b>", table_cell),
-            Paragraph("<b>Full Mobile & Laptop Responsive Layout:</b><br/>"
-                      "Engineered adaptive breakpoints (<code>860px</code>, <code>720px</code>, <code>480px</code>). Added mobile slide drawer navigation, stacked stat cards, "
-                      "responsive tables with horizontal scrolling, and touch-friendly 48px buttons.", table_cell),
-            Paragraph("Seamless user experience across smartphones, iPads/tablets, and high-resolution laptop monitors.", table_cell)
+            Paragraph("<b>Responsive &amp; UI</b>", table_cell),
+            Paragraph("<b>Responsive Layout &amp; Ergonomic Spacing Audit:</b><br/>"
+                      "Engineered adaptive breakpoints (<code>860px</code>, <code>720px</code>, <code>480px</code>) with mobile drawer navigation. "
+                      "Audited and enhanced vertical rhythm, card margins, input padding, and unit grid distributions across all templates.", table_cell),
+            Paragraph("Delivers clean ergonomic readability and optimal touch targets across mobile, tablet, and desktop displays.", table_cell)
         ],
         [
             Paragraph("<b>System Brand</b>", table_cell),

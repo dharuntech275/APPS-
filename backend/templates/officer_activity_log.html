@@ -19,28 +19,28 @@
 
   {% include "_header.html" %}
 
-  <a href="/officer_dashboard" style="display:inline-flex; align-items:center; gap:6px; font-family:'Helvetica Neue', Arial, sans-serif; font-size:12.5px; font-weight:600; color:var(--steel-deep); text-decoration:none; padding:7px 14px; border:1px solid var(--line); border-radius:20px; margin-bottom:16px;">
+  <a href="/officer_dashboard" style="display:inline-flex; align-items:center; gap:8px; font-family:'Helvetica Neue', Arial, sans-serif; font-size:12.5px; font-weight:600; color:var(--steel-deep); text-decoration:none; padding:8px 16px; border:1px solid var(--line); border-radius:20px; margin-bottom:22px;">
     <span style="font-size:14px;">&larr;</span> Back to Dashboard
   </a>
 
-  <h2 class="page-title" style="margin-bottom:6px;">Your Activity Log</h2>
-  <p style="font-family:'Helvetica Neue', Arial, sans-serif; font-size:12px; color:var(--steel); margin:0 0 18px;">
+  <h2 class="page-title" style="margin-bottom:8px;">Your Activity Log</h2>
+  <p style="font-family:'Helvetica Neue', Arial, sans-serif; font-size:13px; color:var(--steel); margin:0 0 24px;">
     Last 100 actions you've taken - counseling notes, case reviews, and request stages.
   </p>
 
   {% if entries %}
   <div class="card">
     {% for e in entries %}
-    <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; padding:10px 0; {% if not loop.last %}border-bottom:1px solid var(--line);{% endif %}">
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:15px 0; {% if not loop.last %}border-bottom:1px solid var(--line);{% endif %}">
       <div>
-        <p style="margin:0; font-family:'Helvetica Neue', Arial, sans-serif; font-size:13.5px; color:var(--ink);">
+        <p style="margin:0; font-family:'Helvetica Neue', Arial, sans-serif; font-size:14px; color:var(--ink);">
           <strong>{{ e.action }}</strong>{% if e.target_name %} &middot; {{ e.target_name }}{% endif %}
         </p>
         {% if e.details %}
-        <p style="margin:2px 0 0; font-family:'Helvetica Neue', Arial, sans-serif; font-size:12px; color:var(--steel);">{{ e.details }}</p>
+        <p style="margin:5px 0 0; font-family:'Helvetica Neue', Arial, sans-serif; font-size:12.5px; color:var(--steel); line-height:1.5;">{{ e.details }}</p>
         {% endif %}
       </div>
-      <span style="font-family:'Helvetica Neue', Arial, sans-serif; font-size:11px; color:var(--steel); white-space:nowrap;">{{ e.created_at }}</span>
+      <span style="font-family:'Helvetica Neue', Arial, sans-serif; font-size:11.5px; color:var(--steel); white-space:nowrap; padding-top:2px;">{{ e.created_at }}</span>
     </div>
     {% endfor %}
   </div>

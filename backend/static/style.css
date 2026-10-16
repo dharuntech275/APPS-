@@ -66,7 +66,7 @@ body.officer-page {
   width: 100%;
   max-width: 1240px;
   margin: 0 auto;
-  padding: 28px 24px 80px;
+  padding: 32px 28px 90px;
   box-sizing: border-box;
 }
 
@@ -75,9 +75,9 @@ header.top {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--line);
-  padding-bottom: 16px;
-  margin-bottom: 26px;
-  gap: 16px;
+  padding-bottom: 18px;
+  margin-bottom: 30px;
+  gap: 18px;
 }
 
 .header-left {
@@ -333,7 +333,7 @@ header.top .logout-link:hover {
   background: #ffffff;
   border: 1px solid var(--line);
   border-radius: 18px;
-  padding: 38px 30px;
+  padding: 42px 34px;
   width: 100%;
   max-width: 440px;
   box-shadow: var(--shadow-lg);
@@ -346,7 +346,7 @@ header.top .logout-link:hover {
   font-size: 13px;
   letter-spacing: 0.08em;
   color: var(--primary);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   text-align: center;
   text-transform: uppercase;
 }
@@ -354,7 +354,7 @@ header.top .logout-link:hover {
 .auth-card h1 {
   font-size: 24px;
   font-weight: 700;
-  margin: 4px 0 24px;
+  margin: 6px 0 24px;
   letter-spacing: -0.015em;
   text-align: center;
   color: var(--ink);
@@ -364,8 +364,8 @@ header.top .logout-link:hover {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 13px;
   color: var(--steel);
-  margin: 0 0 22px;
-  line-height: 1.5;
+  margin: 0 0 24px;
+  line-height: 1.55;
   text-align: center;
 }
 
@@ -377,19 +377,19 @@ header.top .logout-link:hover {
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--steel-deep);
-  margin-bottom: 7px;
+  margin-bottom: 8px;
 }
 
 .auth-card input {
   width: 100%;
-  padding: 12px 14px;
+  padding: 13px 15px;
   border: 1.5px solid #e2e8f0;
   border-radius: var(--radius-sm);
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 14px;
   background: #f8fafc;
   color: var(--ink);
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   transition: all 0.2s ease;
 }
 
@@ -435,7 +435,7 @@ header.top .logout-link:hover {
   font-size: 13px;
   color: var(--steel);
   text-align: center;
-  margin-top: 20px;
+  margin-top: 24px;
   margin-bottom: 0;
 }
 
@@ -456,10 +456,10 @@ header.top .logout-link:hover {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   background: #f1f5f9;
-  border-radius: 10px;
-  padding: 4px;
-  margin-bottom: 22px;
-  gap: 4px;
+  border-radius: 12px;
+  padding: 5px;
+  margin-bottom: 24px;
+  gap: 6px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -469,9 +469,9 @@ header.top .logout-link:hover {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 9px 4px;
+  padding: 10px 8px;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 600;
   text-decoration: none;
   color: var(--steel);
@@ -545,7 +545,7 @@ header.top .logout-link:hover {
 .portal-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 26px;
+  gap: 30px;
   max-width: 1080px;
   width: 100%;
 }
@@ -560,8 +560,8 @@ header.top .logout-link:hover {
 .portal-card {
   background: #ffffff;
   border: 1px solid rgba(226, 232, 240, 0.9);
-  border-radius: 18px;
-  padding: 34px 28px;
+  border-radius: 20px;
+  padding: 38px 30px;
   display: flex;
   flex-direction: column;
   box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.07), 0 4px 6px -2px rgba(15, 23, 42, 0.03);
@@ -593,13 +593,13 @@ header.top .logout-link:hover {
 
 .portal-icon {
   font-size: 34px;
-  margin-bottom: 14px;
+  margin-bottom: 18px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 58px;
-  height: 58px;
-  border-radius: 14px;
+  width: 62px;
+  height: 62px;
+  border-radius: 16px;
   background: #f8fafc;
   border: 1px solid var(--line);
 }
@@ -607,7 +607,7 @@ header.top .logout-link:hover {
 .portal-card h2 {
   font-size: 22px;
   font-weight: 700;
-  margin: 0 0 10px;
+  margin: 0 0 12px;
   color: var(--ink);
   letter-spacing: -0.015em;
 }
@@ -616,15 +616,15 @@ header.top .logout-link:hover {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 13.5px;
   color: var(--steel);
-  line-height: 1.6;
-  margin: 0 0 26px;
+  line-height: 1.65;
+  margin: 0 0 28px;
   flex: 1;
 }
 
 .portal-card .btn-group {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .btn-outline {
@@ -701,8 +701,8 @@ h2.page-title {
 .grid2 {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
-  gap: 24px;
-  margin-top: 24px;
+  gap: 28px;
+  margin-top: 28px;
   align-items: start;
 }
 
@@ -713,8 +713,8 @@ h2.page-title {
 .card {
   background: #ffffff;
   border: 1px solid rgba(226, 232, 240, 0.9);
-  border-radius: var(--radius);
-  padding: 26px;
+  border-radius: 16px;
+  padding: 30px 28px;
   box-shadow: var(--shadow-md);
   transition: box-shadow 0.2s ease;
 }
@@ -723,11 +723,11 @@ h2.page-title {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 14px;
   color: var(--steel-deep);
-  margin: 0 0 18px;
+  margin: 0 0 20px;
   font-weight: 700;
   letter-spacing: -0.01em;
   border-bottom: 1px solid var(--line);
-  padding-bottom: 12px;
+  padding-bottom: 14px;
 }
 
 .card label {
@@ -737,20 +737,20 @@ h2.page-title {
   font-weight: 600;
   letter-spacing: 0.01em;
   color: var(--steel-deep);
-  margin-bottom: 8px;
+  margin-bottom: 9px;
 }
 
 .card input[type=number],
 .card input[type=text] {
   width: 100%;
-  padding: 12px 14px;
+  padding: 13px 15px;
   border: 1.5px solid #e2e8f0;
   border-radius: var(--radius-sm);
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 14px;
   background: #f8fafc;
   color: var(--ink);
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   transition: all 0.2s ease;
 }
 
@@ -893,11 +893,11 @@ canvas {
 
 /* Result entries */
 .result-entry {
-  padding: 16px 0;
+  padding: 20px 0;
   margin-bottom: 0;
   border-bottom: 1px solid var(--line);
   display: flex;
-  gap: 16px;
+  gap: 18px;
   align-items: flex-start;
 }
 
@@ -916,8 +916,9 @@ canvas {
 }
 
 .result-entry .result-text p {
-  margin: 3px 0;
-  font-size: 13.5px;
+  margin: 5px 0;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 /* ---------- Admin Dashboard Theme ---------- */
@@ -1399,12 +1400,12 @@ body.personnel-page {
 .milestone-banner {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 18px;
   background: linear-gradient(135deg, #fef3c7 0%, #ecfdf5 100%);
   border: 1px solid #fde68a;
-  border-radius: 14px;
-  padding: 18px 22px;
-  margin-bottom: 24px;
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 28px;
 }
 
 .milestone-emoji {
@@ -1417,7 +1418,7 @@ body.personnel-page {
   font-weight: 700;
   font-size: 15px;
   color: #92400e;
-  margin: 0 0 2px;
+  margin: 0 0 3px;
 }
 
 .milestone-sub {
@@ -1431,13 +1432,13 @@ body.personnel-page {
 .reminder-banner {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   background: #fffbeb;
   border: 1px solid #fde68a;
   border-left: 4px solid var(--signal-med);
-  border-radius: 10px;
-  padding: 14px 20px;
-  margin-bottom: 24px;
+  border-radius: 12px;
+  padding: 16px 22px;
+  margin-bottom: 28px;
 }
 
 .reminder-icon {
@@ -1604,23 +1605,23 @@ body.personnel-page {
 }
 
 /* Timeline & tags */
-.tl-filters { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.tl-filters { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
 .tl-chip {
   background: #ffffff;
   border: 1.5px solid #cbd5e1;
   color: var(--steel-deep);
-  padding: 6px 14px;
+  padding: 7px 16px;
   border-radius: 20px;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 .tl-chip.active { background: var(--steel-deep); color: #ffffff; border-color: var(--steel-deep); }
 
-.tl-item { position: relative; display: flex; gap: 14px; padding: 0 0 18px 4px; }
-.tl-item::before { content: ""; position: absolute; left: 10px; top: 16px; bottom: 0; width: 2px; background: #e2e8f0; }
+.tl-item { position: relative; display: flex; gap: 16px; padding: 0 0 22px 6px; }
+.tl-item::before { content: ""; position: absolute; left: 12px; top: 16px; bottom: 0; width: 2px; background: #e2e8f0; }
 .tl-item:last-child::before { display: none; }
 .tl-dot { flex-shrink: 0; width: 14px; height: 14px; border-radius: 50%; margin-top: 4px; background: var(--steel); z-index: 1; }
 .tl-note .tl-dot { background: #3b82f6; }
@@ -1629,11 +1630,11 @@ body.personnel-page {
 .tl-checkin .tl-dot { background: #94a3b8; }
 
 .tl-body { flex: 1; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13.5px; }
-.tl-title { margin: 3px 0 2px; font-weight: 700; color: var(--ink); }
+.tl-title { margin: 0 0 6px; font-weight: 700; color: var(--ink); font-size: 14px; }
 .tl-by { font-weight: 400; color: var(--steel); font-size: 12px; margin-left: 4px; }
 .tl-stage { margin-left: 6px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; background: #f1f5f9; color: var(--steel-deep); }
-.tl-meta { margin: 0; color: var(--steel); font-size: 12px; }
-.tl-text { margin: 4px 0; white-space: pre-line; line-height: 1.5; }
+.tl-meta { margin: 4px 0 0; color: var(--steel); font-size: 12px; }
+.tl-text { margin: 6px 0; white-space: pre-line; line-height: 1.6; font-size: 13.5px; }
 
 .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
 .tag-chip {
@@ -2382,8 +2383,8 @@ html.dark .p-avatar {
 .personnel-list-item {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 14px 10px;
+  gap: 18px;
+  padding: 16px 14px;
   border-bottom: 1px solid var(--line);
   border-radius: 10px;
   transition: background 0.15s ease;
@@ -2474,8 +2475,8 @@ html.dark .badge-stage {
   cursor: pointer;
   background: #ffffff;
   border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 12px;
+  border-radius: 12px;
+  padding: 18px 20px;
   transition: box-shadow 0.15s ease, transform 0.15s ease, background 0.15s ease;
 }
 .unit-summary-tile:hover {
@@ -2495,9 +2496,9 @@ html.dark .unit-summary-tile:hover {
 .response-box {
   background: rgba(76, 122, 94, 0.1);
   border-left: 3px solid var(--signal-low);
-  padding: 10px 14px;
-  border-radius: 6px;
-  margin-top: 8px;
+  padding: 14px 18px;
+  border-radius: 8px;
+  margin-top: 10px;
 }
 html.dark .response-box {
   background: rgba(16, 185, 129, 0.12) !important;
