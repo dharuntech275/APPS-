@@ -18,7 +18,10 @@
 
 <div style="position:fixed; top:20px; right:24px; z-index:90;">
   <button type="button" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark/light mode">
-    <span class="theme-toggle-icon">🌙</span>
+    <span class="theme-toggle-icon">
+      <svg class="theme-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="theme-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </span>
   </button>
 </div>
 
@@ -39,7 +42,9 @@
     <!-- Card 1: Personnel -->
     <div class="portal-card">
       <div class="badge-role badge-personnel">Service Member</div>
-      <div class="portal-icon">🎖️</div>
+      <div class="portal-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+      </div>
       <h2>Personnel</h2>
       <p>Submit daily wellness check-ins, view stress trends, receive personalized insights, and request confidential officer counseling.</p>
       <div class="btn-group">
@@ -51,7 +56,9 @@
     <!-- Card 2: Welfare Officer -->
     <div class="portal-card">
       <div class="badge-role badge-officer">Welfare Staff</div>
-      <div class="portal-icon">🛡️</div>
+      <div class="portal-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+      </div>
       <h2>Welfare Officer</h2>
       <p>Monitor assigned troop readiness, track high-strain alerts, respond to personnel counseling requests, and maintain activity logs.</p>
       <div class="btn-group">
@@ -63,7 +70,9 @@
     <!-- Card 3: Senior Administrator -->
     <div class="portal-card">
       <div class="badge-role badge-admin">Command &amp; HQ</div>
-      <div class="portal-icon">⚙️</div>
+      <div class="portal-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </div>
       <h2>Senior Admin</h2>
       <p>Oversee aggregate organization readiness, analyze unit-by-unit statistics, and export executive reports.</p>
       <div class="btn-group">
@@ -78,15 +87,14 @@
 
 <script>
   (function(){
-    function updateIcons(dark) {
-      document.querySelectorAll('.theme-toggle-icon').forEach(function(i){ i.textContent = dark ? '☀️' : '🌙'; });
+    );
     }
-    updateIcons(document.documentElement.classList.contains('dark'));
+    );
     document.querySelectorAll('.theme-toggle').forEach(function(btn){
       btn.addEventListener('click', function(){
         var isDark = document.documentElement.classList.toggle('dark');
         localStorage.setItem('apps_theme', isDark ? 'dark' : 'light');
-        updateIcons(isDark);
+        
       });
     });
   })();

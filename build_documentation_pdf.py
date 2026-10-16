@@ -722,8 +722,15 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
             Paragraph("<b>Login Diagnostics & Whitespace Resilience:</b><br/>"
                       "Engineered intelligent authentication diagnostics distinguishing unregistered accounts from password mismatches. "
                       "Provides 1-click action buttons (<code>[Register Account]</code> or <code>[Reset Password]</code>). "
-                      "Added mobile trailing-space tolerance in password hashing and interactive visibility eye toggles (👁️) across all forms.", table_cell),
+                      "Added mobile trailing-space tolerance in password hashing and interactive visibility vector eye toggles across all forms.", table_cell),
             Paragraph("Completely prevents false 'Invalid credentials' rejections caused by mobile keyboard autofill or user uncertainty.", table_cell)
+        ],
+        [
+            Paragraph("<b>Design System</b>", table_cell),
+            Paragraph("<b>Unified Vector Icon System (Zero Emojis):</b><br/>"
+                      "Audited all views across the platform and replaced 65 legacy Unicode emoji glyphs with custom, scalable inline SVG vector icons. "
+                      "Standardized crisp icons for Theme Toggles (Sun/Moon), Role Selectors, Password Visibility Toggles, Risk Alerts, Milestones, and Portal Badges.", table_cell),
+            Paragraph("Eliminates cross-platform OS font rendering disparities (Windows/Mac/Android/iOS) and delivers a high-grade military aesthetic.", table_cell)
         ],
         [
             Paragraph("<b>Security & Auth</b>", table_cell),

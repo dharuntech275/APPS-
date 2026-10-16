@@ -26,14 +26,14 @@
 
   {% if not checked_in_today %}
   <div class="reminder-banner">
-    <span class="reminder-icon">⏰</span>
+    <span class="reminder-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ui-icon" style="color:var(--steel-deep);"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
     <p>You haven't checked in today yet — take a minute to log how you're doing.</p>
   </div>
   {% endif %}
 
   {% if milestone %}
   <div class="milestone-banner">
-    <span class="milestone-emoji">🎉</span>
+    <span class="milestone-emoji"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ui-icon"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></span>
     <div>
       <p class="milestone-title">{{ milestone }}-Day Streak!</p>
       <p class="milestone-sub">Consistent check-ins are helping you build a healthy habit. Keep it up!</p>

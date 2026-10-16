@@ -18,7 +18,10 @@
 
 <div style="position:fixed; top:20px; right:24px; z-index:90;">
   <button type="button" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
-    <span class="theme-toggle-icon">🌙</span>
+    <span class="theme-toggle-icon">
+      <svg class="theme-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="theme-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </span>
   </button>
 </div>
 
@@ -37,8 +40,9 @@
       <p class="sub">Enter your registered name and password to access your dashboard.</p>
 
       {% if request.args.get('reset') == 'success' %}
-        <div style="background:#f0fdf4; border:1px solid #bbf7d0; color:#15803d; font-size:13px; font-weight:600; padding:12px 14px; border-radius:var(--radius-sm); margin-bottom:18px; line-height:1.4;">
-          ✓ Password has been reset successfully! Please sign in with your new password.
+        <div style="background:#f0fdf4; border:1px solid #bbf7d0; color:#15803d; font-size:13px; font-weight:600; padding:12px 14px; border-radius:var(--radius-sm); margin-bottom:18px; line-height:1.4; display:flex; align-items:center; gap:8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span>Password has been reset successfully! Please sign in with your new password.</span>
         </div>
       {% endif %}
 
@@ -71,7 +75,7 @@
         <div style="position:relative;">
           <input type="password" name="password" id="loginPassword" placeholder="Enter your password" required style="padding-right:42px;">
           <button type="button" class="pwd-toggle-btn" onclick="togglePasswordVisibility('loginPassword', this)" aria-label="Toggle password visibility" title="Show / Hide Password" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; font-size:16px; padding:4px; color:var(--steel); line-height:1;">
-            👁️
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
           </button>
         </div>
 
@@ -83,9 +87,10 @@
       <div style="margin-top:16px; padding-top:14px; border-top:1px solid var(--line); text-align:center;">
         <p style="font-size:11px; color:var(--steel); margin:0 0 10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em;">New Registration by Role</p>
         <div style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap;">
-          <a href="/signup?role=personnel" class="role-chip-link">👤 Personnel</a>
-          <a href="/signup?role=officer" class="role-chip-link">🛡️ Officer</a>
-          <a href="/signup?role=admin" class="role-chip-link">⚡ Admin</a>
+          <a href="/signup?role=personnel" class="role-chip-link"><svg class="role-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Personnel</a>
+          <a href="/signup?role=officer" class="role-chip-link"><svg class="role-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Officer</a>
+          <a href="/signup?role=admin" class="role-chip-link"><svg class="role-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Admin</a>
+        </div>
       </div>
     </div>
   </div>
@@ -93,30 +98,28 @@
 </div>
 
 <script>
+  var EYE_SVG = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+  var EYE_OFF_SVG = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+
   function togglePasswordVisibility(id, btn) {
     var inp = document.getElementById(id);
     if (!inp) return;
     if (inp.type === 'password') {
       inp.type = 'text';
-      btn.textContent = '🙈';
+      btn.innerHTML = EYE_OFF_SVG;
       btn.title = 'Hide Password';
     } else {
       inp.type = 'password';
-      btn.textContent = '👁️';
+      btn.innerHTML = EYE_SVG;
       btn.title = 'Show Password';
     }
   }
 
   (function(){
-    function updateIcons(dark) {
-      document.querySelectorAll('.theme-toggle-icon').forEach(function(i){ i.textContent = dark ? '☀️' : '🌙'; });
-    }
-    updateIcons(document.documentElement.classList.contains('dark'));
     document.querySelectorAll('.theme-toggle').forEach(function(btn){
       btn.addEventListener('click', function(){
         var isDark = document.documentElement.classList.toggle('dark');
         localStorage.setItem('apps_theme', isDark ? 'dark' : 'light');
-        updateIcons(isDark);
       });
     });
   })();

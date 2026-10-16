@@ -1869,6 +1869,61 @@ body.admin-page .nav-toggle:hover {
   outline-offset: 2px;
 }
 
+.theme-toggle .theme-toggle-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.theme-toggle .theme-sun {
+  display: none;
+  color: #f59e0b;
+}
+
+.theme-toggle .theme-moon {
+  display: inline-block;
+  color: var(--steel-deep);
+}
+
+html.dark .theme-toggle .theme-sun {
+  display: inline-block;
+}
+
+html.dark .theme-toggle .theme-moon {
+  display: none;
+}
+
+/* UI Vector Icons System */
+.role-icon {
+  display: inline-block;
+  vertical-align: -2px;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+.pwd-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--steel);
+  transition: color 0.15s ease;
+}
+
+.pwd-toggle-btn:hover {
+  color: var(--ink);
+}
+
+.pwd-toggle-btn svg {
+  display: block;
+}
+
+.ui-icon {
+  display: inline-block;
+  vertical-align: -2px;
+  flex-shrink: 0;
+}
+
 /* ---------- Dark Mode Global Variables ---------- */
 html.dark {
   --ink: #f8fafc;
