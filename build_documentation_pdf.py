@@ -771,7 +771,7 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
             Paragraph("<b>Responsive &amp; UI</b>", table_cell),
             Paragraph("<b>Ergonomic Spacing &amp; Centered Auth Overhaul:</b><br/>"
                       "Eliminated redundant side branding panels across auth views for focused, centered login/signup cards. "
-                      "Relocated 'Forgot Password' directly below credentials. Bounded snapshot statistics into a cohesive centered card.", table_cell),
+                      "Centered password visibility eye toggles and streamlined registration credential fields.", table_cell),
             Paragraph("Delivers clean ergonomic focus, eliminates layout stretching, and optimizes touch targets across all displays.", table_cell)
         ],
         [

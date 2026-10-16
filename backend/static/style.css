@@ -1893,17 +1893,46 @@ input::-ms-clear {
   -webkit-appearance: none !important;
 }
 
+.pwd-input-wrap {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.pwd-input-wrap input {
+  width: 100%;
+  margin-bottom: 0 !important;
+  padding-right: 44px !important;
+}
+
 .pwd-toggle-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
   color: var(--steel);
+  line-height: 1;
   transition: color 0.15s ease, opacity 0.15s ease;
   z-index: 2;
 }
 
 .pwd-toggle-btn:hover {
   color: var(--ink);
+}
+
+html.dark .pwd-toggle-btn {
+  color: #94a3b8;
+}
+
+html.dark .pwd-toggle-btn:hover {
+  color: #f8fafc;
 }
 
 .pwd-toggle-btn svg {
