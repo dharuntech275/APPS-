@@ -628,6 +628,7 @@ def signup():
         name = request.form.get("name", "").strip()
         unit = request.form.get("unit", "").strip()
         password = request.form.get("password", "")
+        confirm_password = request.form.get("confirm_password")
         role = request.form.get("role", "personnel").lower()
         if role not in ("personnel", "officer", "admin"):
             role = "personnel"
@@ -636,6 +637,8 @@ def signup():
             error = "Please enter a name (up to 50 characters)."
         elif len(unit) > 50:
             error = "Unit/Department name is too long (max 50 characters)."
+        elif confirm_password is not None and password != confirm_password:
+            error = "Passwords do not match. Please re-enter your password accurately."
         else:
             is_strong, strength_err = validate_password_strength(password)
             if not is_strong:

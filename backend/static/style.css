@@ -1902,12 +1902,25 @@ html.dark .theme-toggle .theme-moon {
   flex-shrink: 0;
 }
 
+/* Hide browser native password reveal/clear icons (Edge, IE, Chrome) */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input::-ms-reveal,
+input::-ms-clear {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  pointer-events: none !important;
+  -webkit-appearance: none !important;
+}
+
 .pwd-toggle-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: var(--steel);
-  transition: color 0.15s ease;
+  transition: color 0.15s ease, opacity 0.15s ease;
+  z-index: 2;
 }
 
 .pwd-toggle-btn:hover {
