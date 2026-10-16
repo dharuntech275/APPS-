@@ -768,11 +768,11 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
             Paragraph("Eliminates UTC time-drift errors on check-ins and aligns dashboard greetings with the soldier's actual physical hour of day.", table_cell)
         ],
         [
-            Paragraph("<b>Responsive &amp; UI</b>", table_cell),
-            Paragraph("<b>Ergonomic Spacing &amp; Centered Auth Overhaul:</b><br/>"
-                      "Eliminated redundant side branding panels across auth views for focused, centered login/signup cards. "
-                      "Centered password visibility eye toggles and streamlined registration credential fields.", table_cell),
-            Paragraph("Delivers clean ergonomic focus, eliminates layout stretching, and optimizes touch targets across all displays.", table_cell)
+            Paragraph("<b>UI / UX Design</b>", table_cell),
+            Paragraph("<b>Full-Site Visual &amp; Aesthetic Design Overhaul:</b><br/>"
+                      "Engineered ambient radial mesh lighting, glassmorphic card elevation, frosted glass streak chips, dual-gradient action buttons, "
+                      "and glowing portal gateway badges across all portals, views, and light/dark themes.", table_cell),
+            Paragraph("Transforms the platform into a visually captivating, defense-grade executive interface with seamless responsiveness.", table_cell)
         ],
         [
             Paragraph("<b>System Brand</b>", table_cell),

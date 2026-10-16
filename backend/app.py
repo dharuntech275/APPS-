@@ -561,13 +561,18 @@ def calculate_stress(sleep_hours, duty_hours, heart_rate, mood_score):
 
 # ----------------------------------------------------------------------
 # Login / signup
-# ----------------------------------------------------------------------
 @app.route("/")
-@app.route("/portal")
 def home():
     if "user_id" in session:
         return redirect(home_for_role(session.get("role")))
     return redirect(url_for("login"))
+
+
+@app.route("/portal")
+def portal():
+    if "user_id" in session:
+        return redirect(home_for_role(session.get("role")))
+    return render_template("portal.html")
 
 
 WEAK_PASSWORDS = {
