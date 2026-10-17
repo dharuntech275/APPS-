@@ -80,7 +80,9 @@
 
   <div class="card" style="margin-bottom:28px;">
     <h3>Risk Distribution</h3>
-    <canvas id="riskChart" style="max-height:260px;"></canvas>
+    <div style="position:relative; height:240px; width:100%;">
+      <canvas id="riskChart"></canvas>
+    </div>
   </div>
 
   {% if high_count == 0 and total > 0 %}
@@ -106,23 +108,50 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 
 <script>
-  const ctx = document.getElementById('riskChart');
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Low', 'Medium', 'High'{% if pending_count and pending_count > 0 %}, 'Pending'{% endif %}],
-      datasets: [{
-        label: 'Number of Personnel',
-        data: [{{ low_count }}, {{ medium_count }}, {{ high_count }}{% if pending_count and pending_count > 0 %}, {{ pending_count }}{% endif %}],
-        backgroundColor: ['#4c7a5e', '#b8863c', '#9c3d3d'{% if pending_count and pending_count > 0 %}, '#64748b'{% endif %}]
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { display: false } },
-      scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
-    }
-  });
+  (function() {
+    var isDark = document.documentElement.classList.contains('dark');
+    var tickColor = isDark ? '#94a3b8' : '#64748b';
+    var gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)';
+    const ctx = document.getElementById('riskChart');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Low', 'Medium', 'High'{% if pending_count and pending_count > 0 %}, 'Pending'{% endif %}],
+        datasets: [{
+          label: 'Number of Personnel',
+          data: [{{ low_count }}, {{ medium_count }}, {{ high_count }}{% if pending_count and pending_count > 0 %}, {{ pending_count }}{% endif %}],
+          backgroundColor: ['#4c7a5e', '#b8863c', '#9c3d3d'{% if pending_count and pending_count > 0 %}, '#64748b'{% endif %}],
+          borderRadius: 6,
+          maxBarThickness: 54
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: tickColor,
+              font: { size: 12, weight: '600' }
+            },
+            grid: { display: false }
+          },
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1,
+              color: tickColor,
+              font: { size: 11 }
+            },
+            grid: { color: gridColor }
+          }
+        }
+      }
+    });
+  })();
 </script>
 </body>
 </html>

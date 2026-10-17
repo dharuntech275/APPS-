@@ -41,7 +41,7 @@
   </div>
   {% endif %}
 
-  <div style="max-width: 580px; margin: 24px auto 40px;">
+  <div class="personnel-dashboard-grid">
     <div class="card checkin-card fade-in" id="checkin">
       <h3>Today's Check-in</h3>
       <form method="POST" action="/submit_survey">
@@ -60,19 +60,22 @@
         <button type="submit" class="btn">Submit Check-in</button>
       </form>
     </div>
-  </div>
 
-  {% if trend_labels %}
-  <div style="max-width: 580px; margin: 0 auto 40px;">
-    <div class="card fade-in" style="padding: 22px 24px;">
+    {% if trend_labels %}
+    <div class="card fade-in" style="padding: 24px;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
-        <h4 style="font-family:'Helvetica Neue', Arial, sans-serif; font-size:12.5px; color:var(--steel-deep); margin:0; font-weight:700; text-transform:uppercase; letter-spacing:0.04em;">7-Day Sleep &amp; Duty Trend</h4>
+        <h4 style="font-family:'Plus Jakarta Sans', sans-serif; font-size:12.5px; color:var(--steel-deep); margin:0; font-weight:700; text-transform:uppercase; letter-spacing:0.04em;">7-Day Sleep &amp; Duty Trend</h4>
         <a href="/snapshot" class="view-results-link" style="font-size:12px;">Detailed Snapshot &rarr;</a>
       </div>
-      <canvas id="dashboardTrendChart" style="max-height:180px;"></canvas>
+      <canvas id="dashboardTrendChart" style="max-height:190px;"></canvas>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; padding-top:16px; border-top:1px solid var(--line); font-size:12.5px;">
+        <span style="color:var(--steel);">Need to talk confidentially?</span>
+        <a href="/talk_to_officer" class="view-results-link" style="font-size:12px;">Talk to Officer &rarr;</a>
+      </div>
     </div>
+    {% endif %}
   </div>
-  {% endif %}
 
 </div>
 
@@ -118,13 +121,15 @@
             label: 'Sleep Hrs',
             data: {{ trend_sleep|tojson }},
             backgroundColor: '#4c7a5e',
-            borderRadius: 4
+            borderRadius: 4,
+            maxBarThickness: 28
           },
           {
             label: 'Duty Hrs',
             data: {{ trend_duty|tojson }},
             backgroundColor: '#9c3d3d',
-            borderRadius: 4
+            borderRadius: 4,
+            maxBarThickness: 28
           }
         ]
       },

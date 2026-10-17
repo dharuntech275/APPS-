@@ -12,7 +12,7 @@
   .p-count{font-family:'Helvetica Neue',Arial,sans-serif; font-size:12px; color:var(--steel);}
   .p-count b{color:var(--ink);}
 
-  .p-toolbar{display:grid; grid-template-columns:repeat(4, 1fr) auto; gap:12px; margin-bottom:16px;}
+  .p-toolbar{display:grid; grid-template-columns:1fr 1.3fr auto; gap:12px; margin-bottom:16px;}
   .p-toolbar #searchBox{grid-column:1 / -1; width:100%; box-sizing:border-box;}
   .p-toolbar input, .p-toolbar select{
     font-family:'Helvetica Neue',Arial,sans-serif; font-size:13px; color:var(--ink);
@@ -70,9 +70,9 @@
   .p-eng.e-fading i{background:var(--signal-med);}
   .p-eng.e-quiet i{background:var(--signal-high);}
 
-  @media (min-width: 1024px) {
+  @media (min-width: 900px) {
     .p-toolbar {
-      grid-template-columns: 2.2fr 1.1fr 1.1fr 1.1fr 1.2fr auto !important;
+      grid-template-columns: minmax(220px, 2.5fr) 140px 190px auto !important;
       align-items: center !important;
     }
     .p-toolbar #searchBox {

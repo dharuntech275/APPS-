@@ -109,13 +109,15 @@
             label: 'Sleep Hrs',
             data: {{ trend_sleep|tojson }},
             backgroundColor: '#4c7a5e',
-            borderRadius: 4
+            borderRadius: 4,
+            maxBarThickness: 28
           },
           {
             label: 'Duty Hrs',
             data: {{ trend_duty|tojson }},
             backgroundColor: '#9c3d3d',
-            borderRadius: 4
+            borderRadius: 4,
+            maxBarThickness: 28
           }
         ]
       },

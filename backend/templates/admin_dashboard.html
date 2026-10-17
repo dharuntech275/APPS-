@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>APPS - Admin Dashboard</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script>
+  (function(){
+    var t = localStorage.getItem('apps_theme');
+    if (t === 'dark' || (!t && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+  })();
+</script>
 <style>
   .clickable-row { cursor: pointer; }
   .clickable-row:hover { background-color: rgba(0,0,0,0.04); }
@@ -80,6 +88,42 @@
     </div>
   </div>
 
+  <!-- Unit Summary Card -->
+  <div class="card" style="margin-top:28px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--line); padding-bottom:14px; margin-bottom:18px; flex-wrap:wrap; gap:10px;">
+      <h3 style="margin:0; border:none; padding:0;">Unit Overview</h3>
+      <a href="/admin/units" class="view-results-link" style="font-size:12.5px;">View Detailed Breakdown &rarr;</a>
+    </div>
+
+    {% if unit_summary %}
+    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap:18px;">
+      {% for unit, counts in unit_summary.items() %}
+      <div class="unit-summary-tile" onclick="window.location='{{ url_for('admin_unit_detail', unit_name=unit) }}'">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <strong class="unit-title">{{ unit }}</strong>
+          <span class="unit-count-pill">{{ counts.total }} personnel</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; text-align:center;">
+          <div>
+            <div style="color:var(--signal-high); font-weight:700; font-size:16px;">{{ counts.High }}</div>
+            <div style="font-size:10px; font-weight:700; letter-spacing:0.04em; color:var(--steel);">HIGH</div>
+          </div>
+          <div>
+            <div style="color:var(--signal-med); font-weight:700; font-size:16px;">{{ counts.Medium }}</div>
+            <div style="font-size:10px; font-weight:700; letter-spacing:0.04em; color:var(--steel);">MEDIUM</div>
+          </div>
+          <div>
+            <div style="color:var(--signal-low); font-weight:700; font-size:16px;">{{ counts.Low }}</div>
+            <div style="font-size:10px; font-weight:700; letter-spacing:0.04em; color:var(--steel);">LOW</div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+      <p class="empty-note">No unit data available yet.</p>
+    {% endif %}
+  </div>
 
 </div>
 </body>

@@ -31,7 +31,7 @@
   {% if entries %}
   <div class="card">
     {% for e in entries %}
-    <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:15px 0; {% if not loop.last %}border-bottom:1px solid var(--line);{% endif %}">
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:15px 0; {% if not loop.last %}border-bottom:1px solid var(--line);{% endif %} flex-wrap:wrap;">
       <div>
         <p style="margin:0; font-family:'Helvetica Neue', Arial, sans-serif; font-size:14px; color:var(--ink);">
           <strong>{{ e.action }}</strong>{% if e.target_name %} &middot; {{ e.target_name }}{% endif %}

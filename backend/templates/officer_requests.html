@@ -28,7 +28,7 @@
   {% if pending_requests %}
     {% for req in pending_requests %}
     <div class="card" style="margin-bottom:24px; padding:28px 26px;">
-      <div style="display:flex; align-items:center; gap:14px; margin-bottom:16px;">
+      <div style="display:flex; align-items:center; gap:14px; margin-bottom:16px; flex-wrap:wrap;">
         <div class="avatar-circle" style="width:42px; height:42px; font-size:16px;">
           {{ req.personnel_name[0]|upper }}
         </div>
