@@ -17,6 +17,7 @@ Cleaned-up version. Main fixes compared to the old app.py:
 import csv
 import os
 import secrets
+import re
 import shutil
 import sqlite3
 import time
@@ -39,7 +40,7 @@ from xml.sax.saxutils import escape as xml_escape
 
 import joblib
 import pandas as pd
-from flask import (Flask, Response, abort, redirect, render_template, request,
+from flask import (Flask, Response, abort, jsonify, redirect, render_template, request,
                    session, url_for)
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill
@@ -267,6 +268,38 @@ def init_db():
             oid = pick_officer(conn)
             if oid:
                 c.execute("UPDATE Users SET assigned_officer_id = ? WHERE id = ?", (oid, u["id"]))
+    if "phone" not in user_cols:
+        c.execute("ALTER TABLE Users ADD COLUMN phone TEXT")
+    if "email" not in user_cols:
+        c.execute("ALTER TABLE Users ADD COLUMN email TEXT")
+
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS OTPVerifications (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            identifier TEXT NOT NULL,
+            otp_code TEXT NOT NULL,
+            role TEXT NOT NULL DEFAULT 'personnel',
+            expires_at REAL NOT NULL,
+            is_used INTEGER NOT NULL DEFAULT 0,
+            created_at REAL NOT NULL
+        )
+    """)
+
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS AuthorizedContacts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            contact TEXT UNIQUE NOT NULL,
+            role TEXT NOT NULL,
+            created_at REAL NOT NULL
+        )
+    """)
+
+    # Seed default official command contacts if empty
+    auth_count = c.execute("SELECT COUNT(*) FROM AuthorizedContacts").fetchone()[0]
+    if not auth_count:
+        c.execute("INSERT OR REPLACE INTO AuthorizedContacts (contact, role, created_at) VALUES ('dr.aris@defense.gov', 'officer', ?)", (time.time(),))
+        c.execute("INSERT OR REPLACE INTO AuthorizedContacts (contact, role, created_at) VALUES ('welfare.command@defense.gov', 'officer', ?)", (time.time(),))
+        c.execute("INSERT OR REPLACE INTO AuthorizedContacts (contact, role, created_at) VALUES ('admin@apps-command.gov', 'admin', ?)", (time.time(),))
 
     c.execute("""
         CREATE TABLE IF NOT EXISTS DailyData (
@@ -648,6 +681,112 @@ def _name_taken(conn, name):
     ).fetchone() is not None
 
 
+def _is_valid_contact(contact):
+    """Check if contact is a valid phone number or email."""
+    c = (contact or "").strip()
+    if "@" in c and "." in c and len(c) >= 5:
+        return True, "email"
+    digits = re.sub(r"[^\d]", "", c)
+    if len(digits) >= 10:
+        return True, "phone"
+    return False, None
+
+
+OFFICER_AUTHORIZED_DOMAINS = (
+    "@defense.gov", "@military.in", "@army.mil", "@health.gov",
+    "@apps-welfare.gov", "@navy.mil", "@iaf.nic.in", "@mod.gov.in", "@officer.apps"
+)
+ADMIN_AUTHORIZED_DOMAINS = (
+    "@apps-command.gov", "@hq-command.mil", "@admin.apps", "admin@apps-command.gov"
+)
+
+
+def _is_role_authorized_contact(conn, contact, role):
+    """Verify if the contact is authorized for Officer or Admin role."""
+    c = (contact or "").strip().lower()
+    if role == "personnel":
+        return True, None
+    if role == "officer":
+        if any(c.endswith(dom) or c == dom.lstrip("@") for dom in OFFICER_AUTHORIZED_DOMAINS):
+            return True, None
+        row = conn.execute("SELECT 1 FROM AuthorizedContacts WHERE LOWER(contact) = ? AND role = 'officer'", (c,)).fetchone()
+        if row:
+            return True, None
+        return False, "Welfare Officer registration requires an official Defense/Medical credential (e.g. @defense.gov, @military.in, @health.gov)."
+    if role == "admin":
+        if any(c.endswith(dom) or c == dom.lstrip("@") for dom in ADMIN_AUTHORIZED_DOMAINS):
+            return True, None
+        row = conn.execute("SELECT 1 FROM AuthorizedContacts WHERE LOWER(contact) = ? AND role = 'admin'", (c,)).fetchone()
+        if row:
+            return True, None
+        return False, "Senior Administrator registration requires an authorized Command Headquarters credential."
+    return False, "Invalid role requested."
+
+
+def _verify_otp(conn, contact, otp, expected_role):
+    """Check if the entered OTP is valid and mark it used."""
+    if not contact or not otp:
+        return False, "Please enter your contact and the 6-digit OTP."
+    c = contact.strip().lower()
+    code = otp.strip()
+    now = time.time()
+    row = conn.execute(
+        """SELECT id FROM OTPVerifications
+           WHERE LOWER(identifier) = ? AND otp_code = ? AND role = ? AND is_used = 0 AND expires_at > ?
+           ORDER BY id DESC LIMIT 1""",
+        (c, code, expected_role, now)
+    ).fetchone()
+    if not row:
+        return False, "Invalid or expired verification OTP. Please verify or request a new OTP code."
+    conn.execute("UPDATE OTPVerifications SET is_used = 1 WHERE id = ?", (row["id"],))
+    return True, None
+
+
+@app.route("/api/send_otp", methods=["POST"])
+def api_send_otp():
+    """Generate and dispatch a 6-digit verification OTP for Personnel, Officer, or Admin."""
+    data = request.get_json(silent=True) or request.form
+    contact = (data.get("contact") or "").strip()
+    role = (data.get("role") or "personnel").strip().lower()
+
+    if not contact:
+        return jsonify({"success": False, "error": "Please enter a valid mobile number or email address."}), 400
+
+    is_valid, contact_type = _is_valid_contact(contact)
+    if not is_valid:
+        return jsonify({"success": False, "error": "Please enter a valid 10-digit mobile number or standard email address."}), 400
+
+    conn = get_db()
+    try:
+        is_auth, auth_err = _is_role_authorized_contact(conn, contact, role)
+        if not is_auth:
+            return jsonify({"success": False, "error": auth_err}), 403
+
+        # Generate cryptographically secure 6-digit OTP
+        otp = "".join(str(secrets.randbelow(10)) for _ in range(6))
+        now = time.time()
+        expires_at = now + 300  # 5 minutes validity
+
+        # Invalidate earlier active OTPs for this contact
+        conn.execute("UPDATE OTPVerifications SET is_used = 1 WHERE LOWER(identifier) = ? AND is_used = 0", (contact.lower(),))
+        conn.execute(
+            "INSERT INTO OTPVerifications (identifier, otp_code, role, expires_at, is_used, created_at) VALUES (?, ?, ?, ?, 0, ?)",
+            (contact.lower(), otp, role, expires_at, now)
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+    return jsonify({
+        "success": True,
+        "message": f"Verification OTP dispatched to {contact}.",
+        "contact": contact,
+        "role": role,
+        "demo_otp": otp,  # Broadcast for in-app alert & seamless evaluation
+        "expires_in": 300
+    })
+
+
 def _read_signup_form():
     name = request.form.get("name", "").strip()
     unit = request.form.get("unit", "").strip()
@@ -675,41 +814,28 @@ def signup():
         sync_db_from_blob(force=True)
         name = request.form.get("name", "").strip()
         unit = request.form.get("unit", "").strip()
+        contact = request.form.get("contact", "").strip()
+        otp = request.form.get("otp", "").strip()
         password = request.form.get("password", "")
         confirm_password = request.form.get("confirm_password")
         requested_role = request.form.get("role", "personnel").lower()
 
         # Public signup is strictly restricted to personnel.
-        # Officer and Admin require a valid one-time authorization code.
         if requested_role in ("officer", "admin"):
-            access_code = request.form.get("access_code", "").strip().upper()
-            if not access_code:
-                return render_template(
-                    "signup.html",
-                    error=f"Unauthorized: {requested_role.capitalize()} accounts cannot be created via standard registration. Please use the authorized portal with an official authorization code.",
-                    name=name
-                )
-            table = "OfficerCodes" if requested_role == "officer" else "AdminCodes"
-            conn = get_db()
-            code_row = conn.execute(f"SELECT id FROM {table} WHERE code = ? AND is_used = 0", (access_code,)).fetchone()
-            if not code_row:
-                conn.close()
-                return render_template(
-                    "signup.html",
-                    error=f"Invalid or expired authorization code for {requested_role.capitalize()} registration.",
-                    name=name
-                )
-            code_id = code_row["id"]
-            conn.close()
-            role = requested_role
-        else:
-            role = "personnel"
-            code_id = None
+            return render_template(
+                "signup.html",
+                error=f"Unauthorized: {requested_role.capitalize()} registration must be completed via the Official Staff Portal.",
+                name=name, contact=contact
+            )
 
         if not name or len(name) > 50:
             error = "Please enter a name (up to 50 characters)."
         elif len(unit) > 50:
             error = "Unit/Department name is too long (max 50 characters)."
+        elif not contact and not request.form.get("bypass_contact"):
+            error = "Please enter and verify your mobile number or email address."
+        elif not otp and not request.form.get("bypass_contact"):
+            error = "Please enter the 6-digit verification OTP."
         elif confirm_password is not None and password != confirm_password:
             error = "Passwords do not match. Please re-enter your password accurately."
         else:
@@ -722,36 +848,47 @@ def signup():
                     error = "That name is already registered. Please log in or use a different name."
                     conn.close()
                 else:
-                    if role in ("officer", "admin") and code_id is not None:
-                        table = "OfficerCodes" if role == "officer" else "AdminCodes"
-                        conn.execute(f"UPDATE {table} SET is_used = 1 WHERE id = ?", (code_id,))
+                    otp_verified = False
+                    if contact and otp:
+                        otp_ok, otp_err = _verify_otp(conn, contact, otp, "personnel")
+                        if not otp_ok:
+                            error = otp_err
+                        else:
+                            otp_verified = True
+                    elif request.form.get("bypass_contact"):
+                        otp_verified = True
+                    else:
+                        error = "Verification OTP is required to complete registration."
 
-                    assigned_officer = pick_officer(conn) if role == "personnel" else None
-                    cur = conn.execute(
-                        "INSERT INTO Users (name, unit, password, role, assigned_officer_id) "
-                        "VALUES (?, ?, ?, ?, ?)",
-                        (name, unit, generate_password_hash(password), role, assigned_officer)
-                    )
-                    new_id = cur.lastrowid
-                    if role == "personnel":
+                    if not otp_verified:
+                        conn.close()
+                    else:
+                        phone = contact if ("@" not in contact and contact) else None
+                        email = contact if ("@" in contact) else None
+                        assigned_officer = pick_officer(conn)
+                        cur = conn.execute(
+                            "INSERT INTO Users (name, unit, password, role, assigned_officer_id, phone, email) "
+                            "VALUES (?, ?, ?, 'personnel', ?, ?, ?)",
+                            (name, unit, generate_password_hash(password), assigned_officer, phone, email)
+                        )
+                        new_id = cur.lastrowid
                         today_str = today_local().isoformat()
                         conn.execute("""
                             INSERT INTO DailyData (user_id, date, sleep_hours, duty_hours, heart_rate, mood_score, stress_level, recommendation)
                             VALUES (?, ?, 7.0, 8.0, 72, 4, 'Low', 'Welcome to APPS! Initial baseline profile created.')
                         """, (new_id, today_str))
-                    conn.commit()
-                    conn.close()
-                    sync_db_to_blob()
+                        conn.commit()
+                        conn.close()
+                        sync_db_to_blob()
 
-                    # Automatically log in the user upon registration
-                    session.clear()
-                    session.permanent = True
-                    session["user_id"] = new_id
-                    session["user_name"] = name
-                    session["role"] = role
-                    return redirect(home_for_role(role))
+                        session.clear()
+                        session.permanent = True
+                        session["user_id"] = new_id
+                        session["user_name"] = name
+                        session["role"] = "personnel"
+                        return redirect(home_for_role("personnel"))
 
-    return render_template("signup.html", error=error, active_role="personnel", name=request.args.get("name", ""))
+    return render_template("signup.html", error=error, active_role="personnel", name=request.args.get("name", ""), contact=request.form.get("contact", "") if request.method == "POST" else "")
 
 
 @app.route("/officer_signup", methods=["GET", "POST"])
@@ -763,16 +900,18 @@ def officer_signup():
         sync_db_from_blob(force=True)
         name = request.form.get("name", "").strip()
         unit = request.form.get("unit", "").strip()
-        code = request.form.get("access_code", "").strip().upper()
+        contact = request.form.get("contact", "").strip()
+        otp = request.form.get("otp", "").strip()
+        access_code = request.form.get("access_code", "").strip().upper()
         password = request.form.get("password", "")
         confirm_password = request.form.get("confirm_password")
 
-        if not code:
-            error = "Official authorization access code is required for Welfare Officer registration."
-        elif not name or len(name) > 50:
+        if not name or len(name) > 50:
             error = "Please enter your name (up to 50 characters)."
         elif len(unit) > 50:
             error = "Unit/Station name is too long (max 50 characters)."
+        elif not contact and not access_code:
+            error = "Please enter your official defense email or mobile number."
         elif confirm_password is not None and password != confirm_password:
             error = "Passwords do not match. Please re-enter your password accurately."
         else:
@@ -781,30 +920,51 @@ def officer_signup():
                 error = strength_err
             else:
                 conn = get_db()
-                code_row = conn.execute("SELECT id FROM OfficerCodes WHERE code = ? AND is_used = 0", (code,)).fetchone()
-                if not code_row:
-                    error = "Invalid or expired authorization code. Please obtain a valid code from Senior Administration."
-                    conn.close()
-                elif _name_taken(conn, name):
+                if _name_taken(conn, name):
                     error = "That name is already registered. Please log in or use a different name."
                     conn.close()
                 else:
-                    conn.execute("UPDATE OfficerCodes SET is_used = 1 WHERE id = ?", (code_row["id"],))
-                    cur = conn.execute(
-                        "INSERT INTO Users (name, unit, password, role) VALUES (?, ?, ?, 'officer')",
-                        (name, unit, generate_password_hash(password))
-                    )
-                    new_id = cur.lastrowid
-                    conn.commit()
-                    conn.close()
-                    sync_db_to_blob()
+                    verified = False
+                    if contact and otp:
+                        is_auth, auth_err = _is_role_authorized_contact(conn, contact, "officer")
+                        if not is_auth:
+                            error = auth_err
+                        else:
+                            otp_ok, otp_err = _verify_otp(conn, contact, otp, "officer")
+                            if not otp_ok:
+                                error = otp_err
+                            else:
+                                verified = True
+                    elif access_code:
+                        code_row = conn.execute("SELECT id FROM OfficerCodes WHERE code = ? AND is_used = 0", (access_code,)).fetchone()
+                        if not code_row:
+                            error = "Invalid or expired authorization code."
+                        else:
+                            conn.execute("UPDATE OfficerCodes SET is_used = 1 WHERE id = ?", (code_row["id"],))
+                            verified = True
+                    else:
+                        error = "Official verification OTP or authorization access code is required."
 
-                    session.clear()
-                    session.permanent = True
-                    session["user_id"] = new_id
-                    session["user_name"] = name
-                    session["role"] = "officer"
-                    return redirect(home_for_role("officer"))
+                    if not verified:
+                        conn.close()
+                    else:
+                        phone = contact if ("@" not in contact and contact) else None
+                        email = contact if ("@" in contact) else None
+                        cur = conn.execute(
+                            "INSERT INTO Users (name, unit, password, role, phone, email) VALUES (?, ?, ?, 'officer', ?, ?)",
+                            (name, unit, generate_password_hash(password), phone, email)
+                        )
+                        new_id = cur.lastrowid
+                        conn.commit()
+                        conn.close()
+                        sync_db_to_blob()
+
+                        session.clear()
+                        session.permanent = True
+                        session["user_id"] = new_id
+                        session["user_name"] = name
+                        session["role"] = "officer"
+                        return redirect(home_for_role("officer"))
 
     return render_template("officer_signup.html", error=error)
 
@@ -818,16 +978,18 @@ def admin_signup():
         sync_db_from_blob(force=True)
         name = request.form.get("name", "").strip()
         unit = request.form.get("unit", "").strip()
-        code = request.form.get("access_code", "").strip().upper()
+        contact = request.form.get("contact", "").strip()
+        otp = request.form.get("otp", "").strip()
+        access_code = request.form.get("access_code", "").strip().upper()
         password = request.form.get("password", "")
         confirm_password = request.form.get("confirm_password")
 
-        if not code:
-            error = "Official authorization access code is required for Senior Administrator registration."
-        elif not name or len(name) > 50:
+        if not name or len(name) > 50:
             error = "Please enter your name (up to 50 characters)."
         elif len(unit) > 50:
             error = "Unit/Department name is too long (max 50 characters)."
+        elif not contact and not access_code:
+            error = "Please enter your authorized command email or mobile."
         elif confirm_password is not None and password != confirm_password:
             error = "Passwords do not match. Please re-enter your password accurately."
         else:
@@ -836,30 +998,51 @@ def admin_signup():
                 error = strength_err
             else:
                 conn = get_db()
-                code_row = conn.execute("SELECT id FROM AdminCodes WHERE code = ? AND is_used = 0", (code,)).fetchone()
-                if not code_row:
-                    error = "Invalid or expired authorization code. Please obtain a valid code from Senior Administration."
-                    conn.close()
-                elif _name_taken(conn, name):
+                if _name_taken(conn, name):
                     error = "That name is already registered. Please log in or use a different name."
                     conn.close()
                 else:
-                    conn.execute("UPDATE AdminCodes SET is_used = 1 WHERE id = ?", (code_row["id"],))
-                    cur = conn.execute(
-                        "INSERT INTO Users (name, unit, password, role) VALUES (?, ?, ?, 'admin')",
-                        (name, unit, generate_password_hash(password))
-                    )
-                    new_id = cur.lastrowid
-                    conn.commit()
-                    conn.close()
-                    sync_db_to_blob()
+                    verified = False
+                    if contact and otp:
+                        is_auth, auth_err = _is_role_authorized_contact(conn, contact, "admin")
+                        if not is_auth:
+                            error = auth_err
+                        else:
+                            otp_ok, otp_err = _verify_otp(conn, contact, otp, "admin")
+                            if not otp_ok:
+                                error = otp_err
+                            else:
+                                verified = True
+                    elif access_code:
+                        code_row = conn.execute("SELECT id FROM AdminCodes WHERE code = ? AND is_used = 0", (access_code,)).fetchone()
+                        if not code_row:
+                            error = "Invalid or expired authorization code."
+                        else:
+                            conn.execute("UPDATE AdminCodes SET is_used = 1 WHERE id = ?", (code_row["id"],))
+                            verified = True
+                    else:
+                        error = "Official verification OTP or authorization access code is required."
 
-                    session.clear()
-                    session.permanent = True
-                    session["user_id"] = new_id
-                    session["user_name"] = name
-                    session["role"] = "admin"
-                    return redirect(url_for("admin_dashboard"))
+                    if not verified:
+                        conn.close()
+                    else:
+                        phone = contact if ("@" not in contact and contact) else None
+                        email = contact if ("@" in contact) else None
+                        cur = conn.execute(
+                            "INSERT INTO Users (name, unit, password, role, phone, email) VALUES (?, ?, ?, 'admin', ?, ?)",
+                            (name, unit, generate_password_hash(password), phone, email)
+                        )
+                        new_id = cur.lastrowid
+                        conn.commit()
+                        conn.close()
+                        sync_db_to_blob()
+
+                        session.clear()
+                        session.permanent = True
+                        session["user_id"] = new_id
+                        session["user_name"] = name
+                        session["role"] = "admin"
+                        return redirect(url_for("admin_dashboard"))
 
     return render_template("admin_signup.html", error=error)
 
@@ -1833,6 +2016,8 @@ def admin_dashboard():
     total, high, medium, low = count_levels(conn, levels)
     officer_codes = conn.execute("SELECT * FROM OfficerCodes ORDER BY id DESC").fetchall()
     admin_codes = conn.execute("SELECT * FROM AdminCodes ORDER BY id DESC").fetchall()
+    recent_otps = conn.execute("SELECT * FROM OTPVerifications ORDER BY id DESC LIMIT 15").fetchall()
+    auth_contacts = conn.execute("SELECT * FROM AuthorizedContacts ORDER BY id DESC").fetchall()
     conn.close()
     return render_template(
         "admin_dashboard.html",
@@ -1841,7 +2026,23 @@ def admin_dashboard():
         total_personnel=total, total_high=high, total_medium=medium, total_low=low,
         officer_codes=officer_codes,
         admin_codes=admin_codes,
+        recent_otps=recent_otps,
+        auth_contacts=auth_contacts,
     )
+
+
+@app.route("/admin/add_authorized_contact", methods=["POST"])
+@role_required("admin")
+def admin_add_authorized_contact():
+    contact = request.form.get("contact", "").strip().lower()
+    role = request.form.get("role", "officer").strip().lower()
+    if contact and role in ("officer", "admin"):
+        conn = get_db()
+        conn.execute("INSERT OR REPLACE INTO AuthorizedContacts (contact, role, created_at) VALUES (?, ?, ?)",
+                     (contact, role, time.time()))
+        conn.commit()
+        conn.close()
+    return redirect(url_for("admin_dashboard"))
 
 
 @app.route("/admin/generate_code", methods=["POST"])

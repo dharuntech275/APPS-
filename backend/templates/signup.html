@@ -46,6 +46,28 @@
         <label id="unitLabel">Unit</label>
         <input type="text" name="unit" id="unitInput" placeholder="e.g. 1st Infantry / Alpha" required>
 
+        <label>Contact (Mobile Number or Email)</label>
+        <div style="display:flex; gap:8px; margin-bottom:14px;">
+          <input type="text" name="contact" id="contactInput" value="{{ contact or '' }}" placeholder="+91 98765 43210 or name@service.mil" required style="flex:1; margin-bottom:0;">
+          <button type="button" id="sendOtpBtn" class="btn" style="width:auto; padding:0 18px; font-size:12.5px; font-weight:700; white-space:nowrap; background:var(--steel-deep); color:#fff; border-radius:10px; cursor:pointer;" onclick="requestOtp('personnel')">Send OTP</button>
+        </div>
+
+        <div id="otpDispatchBanner" style="display:none; margin-bottom:14px; padding:12px 14px; background:rgba(37,99,235,0.08); border:1px solid rgba(37,99,235,0.25); border-radius:10px; font-size:12.5px; color:var(--ink);">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+            <span style="font-size:16px;">📨</span>
+            <strong style="color:var(--primary);">APPS Security OTP Dispatched</strong>
+          </div>
+          <p style="margin:0; color:var(--steel); font-size:12px;">Verification Code: <span id="demoOtpBadge" style="font-family:monospace; font-weight:700; font-size:15px; color:var(--primary); background:rgba(37,99,235,0.12); padding:2px 7px; border-radius:6px; letter-spacing:2px;"></span> (Valid 5 mins)</p>
+        </div>
+
+        <div id="otpInputSection" style="margin-bottom:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <label style="margin-bottom:0;">6-Digit Verification OTP</label>
+            <span id="resendTimer" style="font-size:11.5px; color:var(--steel);"></span>
+          </div>
+          <input type="text" name="otp" id="otpInput" maxlength="6" pattern="[0-9]{6}" placeholder="Enter 6-digit OTP" autocomplete="one-time-code" style="letter-spacing:4px; font-size:16px; font-weight:700; font-family:monospace; text-align:center;" required>
+        </div>
+
         <label>Password</label>
         <div class="pwd-input-wrap">
           <input type="password" name="password" id="signupPassword" minlength="8" placeholder="Minimum 8 characters (letters & numbers)" required>
@@ -63,7 +85,7 @@
         </div>
         <div id="pwMatchStatus" style="font-size:12px; margin-bottom:22px; min-height:16px;"></div>
 
-        <button type="submit" class="btn" id="submitBtn">Register as Personnel &rarr;</button>
+        <button type="submit" class="btn" id="submitBtn">Verify OTP & Register as Personnel &rarr;</button>
       </form>
 
       <p class="foot-link">Already have an account? <a href="/login">Sign In Here</a></p>
@@ -123,6 +145,68 @@
     }
   });
 
+  function requestOtp(role) {
+    var contactInp = document.getElementById('contactInput');
+    var btn = document.getElementById('sendOtpBtn');
+    var banner = document.getElementById('otpDispatchBanner');
+    var badge = document.getElementById('demoOtpBadge');
+    var timerSpan = document.getElementById('resendTimer');
+    var otpInp = document.getElementById('otpInput');
+
+    var contactVal = contactInp ? contactInp.value.trim() : '';
+    if (!contactVal) {
+      alert('Please enter your mobile number or email address first.');
+      if (contactInp) contactInp.focus();
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerText = 'Sending...';
+
+    fetch('/api/send_otp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contact: contactVal, role: role })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.success) {
+        if (banner) banner.style.display = 'block';
+        if (badge) badge.innerText = data.demo_otp || 'SENT';
+        if (otpInp) {
+          otpInp.value = data.demo_otp || '';
+          otpInp.focus();
+        }
+        startCountdown(btn, timerSpan, 45);
+      } else {
+        alert(data.error || 'Failed to dispatch OTP. Please check your contact and try again.');
+        btn.disabled = false;
+        btn.innerText = 'Send OTP';
+      }
+    })
+    .catch(function(err) {
+      alert('Network error while requesting OTP. Please try again.');
+      btn.disabled = false;
+      btn.innerText = 'Send OTP';
+    });
+  }
+
+  function startCountdown(btn, timerSpan, seconds) {
+    var remaining = seconds;
+    btn.disabled = true;
+    var interval = setInterval(function() {
+      remaining--;
+      if (remaining <= 0) {
+        clearInterval(interval);
+        btn.disabled = false;
+        btn.innerText = 'Resend OTP';
+        if (timerSpan) timerSpan.innerText = '';
+      } else {
+        btn.innerText = 'Wait (' + remaining + 's)';
+        if (timerSpan) timerSpan.innerText = 'Resend in ' + remaining + 's';
+      }
+    }, 1000);
+  }
 
   // Theme Toggle Handler
   (function(){

@@ -386,17 +386,17 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         [
             Paragraph("<code>signup.html</code>", code_style),
             Paragraph("<code>/signup</code>", code_style),
-            Paragraph("Personnel registration form. Unit selection, live password strength requirements meter, and officer auto-assignment notice.", table_cell)
+            Paragraph("Personnel registration form. Dynamic 6-digit OTP contact verification, unit selection, and live password strength requirements meter.", table_cell)
         ],
         [
             Paragraph("<code>officer_signup.html</code>", code_style),
             Paragraph("<code>/officer_signup</code>", code_style),
-            Paragraph("Officer registration. Requires cryptographically verified one-time officer access code (<code>OFC-XXXXXX</code>).", table_cell)
+            Paragraph("Officer registration. Requires authorized defense contact verification and dynamic 6-digit OTP confirmation (legacy code fallback supported).", table_cell)
         ],
         [
             Paragraph("<code>admin_signup.html</code>", code_style),
             Paragraph("<code>/admin_signup</code>", code_style),
-            Paragraph("Senior Administrator registration. Requires one-time administrator access code (<code>ADM-XXXXXX</code>).", table_cell)
+            Paragraph("Senior Administrator registration. Requires command contact verification and dynamic 6-digit OTP validation (legacy code fallback supported).", table_cell)
         ],
         [
             Paragraph("<code>upgrade_password.html</code>", code_style),
@@ -456,7 +456,7 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         [
             Paragraph("<code>admin_dashboard.html</code>", code_style),
             Paragraph("<code>/admin_dashboard</code>", code_style),
-            Paragraph("Senior Command Command Center. Unit stress distribution breakdown, high-risk flags, one-time code generator, batch export buttons.", table_cell)
+            Paragraph("Senior Command Center. Unit stress distribution, staff verification registry, OTP telemetry logs, and batch force exports.", table_cell)
         ],
         [
             Paragraph("<code>admin_units.html</code>", code_style),
@@ -514,9 +514,10 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         [Paragraph("<b>Route Path</b>", table_header), Paragraph("<b>HTTP</b>", table_header), Paragraph("<b>Role</b>", table_header), Paragraph("<b>Functionality & Behavior</b>", table_header)],
         [Paragraph("<code>/login</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Authenticates users, checks password strength; redirects to upgrade or dashboard.", table_cell)],
         [Paragraph("<code>/forgot_password</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Identity recovery via Name + Unit + Role match; sets strong password & syncs to cloud.", table_cell)],
-        [Paragraph("<code>/signup</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Creates soldier account; enforces strong password; calls pick_officer().", table_cell)],
-        [Paragraph("<code>/officer_signup</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Validates and consumes single-use OFC-* code; creates officer account.", table_cell)],
-        [Paragraph("<code>/admin_signup</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Validates and consumes single-use ADM-* code; creates admin account.", table_cell)],
+        [Paragraph("<code>/signup</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Creates soldier account; verifies 6-digit OTP; calls pick_officer().", table_cell)],
+        [Paragraph("<code>/officer_signup</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Validates defense contact + 6-digit OTP; creates officer account.", table_cell)],
+        [Paragraph("<code>/admin_signup</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Validates command contact + 6-digit OTP; creates admin account.", table_cell)],
+        [Paragraph("<code>/api/send_otp</code>", code_style), Paragraph("POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Issues dynamic 6-digit cryptographic OTP (5-min TTL) with domain checks.", table_cell)],
         [Paragraph("<code>/upgrade_password</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Auth", badge_pill), Paragraph("Upgrades legacy/weak password to PBKDF2 hash and syncs to cloud storage.", table_cell)],
         [Paragraph("<code>/submit_survey</code>", code_style), Paragraph("POST", table_cell), Paragraph("Soldier", badge_pill), Paragraph("Validates inputs; invokes Random Forest ML model; writes DailyData record.", table_cell)],
         [Paragraph("<code>/submit_stress_request</code>", code_style), Paragraph("POST", table_cell), Paragraph("Soldier", badge_pill), Paragraph("Dispatches confidential stress relief request to assigned officer.", table_cell)],
@@ -618,8 +619,18 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         [Paragraph("<b>Table Name</b>", table_header), Paragraph("<b>Key Columns & Constraints</b>", table_header), Paragraph("<b>Description & Relationship</b>", table_header)],
         [
             Paragraph("<code>Users</code>", code_style),
-            Paragraph("<code>id (PK), name, unit, password, role, assigned_officer_id (FK)</code>", code_style),
-            Paragraph("Stores personnel credentials (scrypt/PBKDF2 hashes), unit/station, assigned role, and linked officer. Supports weak password intercept and unit-verified forgot password recovery.", table_cell)
+            Paragraph("<code>id (PK), name, unit, password, role, phone, email, assigned_officer_id (FK)</code>", code_style),
+            Paragraph("Stores personnel credentials (scrypt hashes), unit, role, verified contact (phone/email), and linked officer. Supports password policy and forgot password recovery.", table_cell)
+        ],
+        [
+            Paragraph("<code>OTPVerifications</code>", code_style),
+            Paragraph("<code>id (PK), identifier, otp_code, role, expires_at, is_used, created_at</code>", code_style),
+            Paragraph("Cryptographically random 6-digit OTP codes with 5-minute validity window for phone and email registration verification.", table_cell)
+        ],
+        [
+            Paragraph("<code>AuthorizedContacts</code>", code_style),
+            Paragraph("<code>id (PK), contact (NOCASE, UNIQUE), role, notes, created_at</code>", code_style),
+            Paragraph("Defense and command official directory defining authorized emails/phones permitted to register as Officer or Admin.", table_cell)
         ],
         [
             Paragraph("<code>DailyData</code>", code_style),
@@ -627,14 +638,9 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
             Paragraph("Daily wellness check-ins. One record per user per day. Stores physiological telemetry and AI predictions.", table_cell)
         ],
         [
-            Paragraph("<code>OfficerCodes</code>", code_style),
+            Paragraph("<code>OfficerCodes</code> / <code>AdminCodes</code>", code_style),
             Paragraph("<code>id (PK), code (UNIQUE), is_used (0|1)</code>", code_style),
-            Paragraph("Cryptographically seeded one-time registration codes (<code>OFC-XXXXXX</code>) for authorized medical officers.", table_cell)
-        ],
-        [
-            Paragraph("<code>AdminCodes</code>", code_style),
-            Paragraph("<code>id (PK), code (UNIQUE), is_used (0|1)</code>", code_style),
-            Paragraph("Single-use registration tokens (<code>ADM-XXXXXX</code>) for system administrators.", table_cell)
+            Paragraph("Legacy registration codes (<code>OFC-*</code>, <code>ADM-*</code>) maintained for backward compatibility.", table_cell)
         ],
         [
             Paragraph("<code>StressRequests</code>", code_style),
@@ -650,11 +656,6 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
             Paragraph("<code>ActivityLog</code>", code_style),
             Paragraph("<code>id (PK), actor_id (FK), action, target_user_id (FK), details, created_at</code>", code_style),
             Paragraph("Immutable audit trail logging all officer and admin actions for accountability and forensic integrity.", table_cell)
-        ],
-        [
-            Paragraph("<code>PersonnelTags</code>", code_style),
-            Paragraph("<code>id (PK), user_id (FK), tag (NOCASE), officer_id (FK), created_date, UNIQUE(user_id, tag)</code>", code_style),
-            Paragraph("Archived table: Historical categorization tags preserved in database schema.", table_cell)
         ],
     ]
     t_schema = Table(schema_data, colWidths=[90, 200, printable_width - 290])
@@ -731,6 +732,13 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
                       "Audited all views across the platform and replaced 65 legacy Unicode emoji glyphs with custom, scalable inline SVG vector icons. "
                       "Suppressed intrusive browser-native password reveal glyphs (Edge black eye) in favor of bespoke SVG eye toggles, and introduced real-time Confirm Password verification across registration flows.", table_cell),
             Paragraph("Eliminates cross-platform OS font rendering disparities, prevents typo lockouts during registration, and delivers a sleek military-grade aesthetic.", table_cell)
+        ],
+        [
+            Paragraph("<b>Security & Auth</b>", table_cell),
+            Paragraph("<b>Unified 6-Digit OTP Verification:</b><br/>"
+                      "Replaced rigid static access codes with dynamic 6-digit cryptographic OTP verification across Personnel, Officer, and Admin onboarding. "
+                      "Personnel verify mobile/email, while Officer and Admin enforce official defense/command domain authorization and active telemetry.", table_cell),
+            Paragraph("Prevents unauthorized role signups, eliminates code distribution bottlenecks, and elevates onboarding security.", table_cell)
         ],
         [
             Paragraph("<b>Security & Auth</b>", table_cell),
