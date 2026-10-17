@@ -1978,6 +1978,20 @@ html.dark body.admin-page .nav-toggle:hover {
   line-height: 1;
 }
 
+.auth-theme-toggle-wrap {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  z-index: 90;
+}
+
+@media (max-width: 640px) {
+  .auth-theme-toggle-wrap {
+    top: max(12px, env(safe-area-inset-top));
+    right: max(14px, env(safe-area-inset-right));
+  }
+}
+
 .theme-toggle .theme-sun {
   display: none;
   color: #f59e0b;
@@ -2025,7 +2039,7 @@ input::-ms-clear {
 .pwd-input-wrap input {
   width: 100%;
   margin-bottom: 0 !important;
-  padding-right: 44px !important;
+  padding-right: 48px !important;
 }
 
 .pwd-toggle-btn {
@@ -2033,15 +2047,19 @@ input::-ms-clear {
   align-items: center;
   justify-content: center;
   position: absolute;
-  right: 12px;
+  right: 4px;
   top: 50%;
   transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 0;
   color: var(--steel);
   line-height: 1;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transition: color 0.15s ease, opacity 0.15s ease;
   z-index: 2;
 }
@@ -2810,10 +2828,23 @@ img, canvas, svg {
   }
   .nav-toggle {
     display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    padding: 10px;
+    border-radius: 9px;
+    touch-action: manipulation;
   }
 
   .wrap {
     padding: 20px 16px 64px;
+    padding-top: max(20px, env(safe-area-inset-top));
+    padding-bottom: max(64px, env(safe-area-inset-bottom));
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
   }
 
   .auth-shell {
@@ -2886,22 +2917,51 @@ img, canvas, svg {
 
 /* Mobile Screens (<= 640px) */
 @media (max-width: 640px) {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   .wrap {
     padding: 16px 14px 50px;
+    padding-top: max(16px, env(safe-area-inset-top));
+    padding-bottom: max(50px, env(safe-area-inset-bottom));
+    padding-left: max(14px, env(safe-area-inset-left));
+    padding-right: max(14px, env(safe-area-inset-right));
   }
 
   header.top {
     padding-bottom: 12px;
     margin-bottom: 18px;
+    gap: 8px;
+  }
+
+  .header-left {
+    gap: 8px;
+  }
+
+  .header-right {
+    gap: 6px;
   }
 
   header.top .role-pill {
-    max-width: 130px;
+    max-width: 110px;
     font-size: 11px;
-    padding: 4px 10px;
+    padding: 4px 8px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    border-radius: 9px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
   }
 
   h2.page-title {
@@ -2911,12 +2971,15 @@ img, canvas, svg {
 
   .card {
     padding: 18px 14px;
-    border-radius: 12px;
+    border-radius: 14px;
   }
 
   .welcome-banner {
-    padding: 20px 16px;
-    border-radius: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 18px 16px;
+    border-radius: 14px;
     margin-bottom: 20px;
   }
 
@@ -2928,58 +2991,115 @@ img, canvas, svg {
     font-size: 12.5px;
   }
 
-  /* Forms & Inputs touch friendly */
+  .streak-chip {
+    align-self: flex-start;
+  }
+
+  /* Forms & Inputs touch friendly (No Auto-Zoom on iOS) */
   input[type="text"],
   input[type="password"],
+  input[type="email"],
   input[type="number"],
   input[type="date"],
   select,
   textarea {
-    font-size: 16px !important; /* Prevents mobile browser auto-zoom on focus */
+    font-size: 16px !important;
     padding: 12px 14px !important;
-    min-height: 44px;
+    min-height: 46px;
+    border-radius: 10px;
     box-sizing: border-box;
+    -webkit-appearance: none;
+    appearance: none;
   }
 
   .btn {
     padding: 12px 18px !important;
-    font-size: 14px !important;
-    min-height: 44px;
+    font-size: 14.5px !important;
+    min-height: 46px;
+    border-radius: 10px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   /* Personnel detail item in admin unit detail */
   .personnel-list-item {
-    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
     gap: 10px;
+    padding: 14px 12px;
+    border-radius: 12px;
   }
 
   .personnel-stats-row {
     width: 100%;
-    justify-content: space-between !important;
-    border-top: 1px solid var(--line);
-    padding-top: 8px;
-    margin-top: 4px;
+    display: flex;
+    justify-content: space-around !important;
+    background: rgba(0, 0, 0, 0.025);
+    border-radius: 9px;
+    padding: 8px 10px !important;
+    margin-top: 2px;
+  }
+
+  html.dark .personnel-stats-row {
+    background: rgba(255, 255, 255, 0.04);
   }
 
   /* Results entry */
   .result-entry {
     flex-direction: column;
     gap: 8px;
+    padding: 14px 0;
   }
 
   .result-entry .result-badge {
     align-self: flex-start;
   }
 
+  .view-results-link {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    min-height: 44px;
+  }
+
   /* Sticky button on mobile */
   #stickyAddNoteBtn {
-    bottom: 24px !important;
-    right: 18px !important;
+    bottom: max(20px, env(safe-area-inset-bottom)) !important;
+    right: max(16px, env(safe-area-inset-right)) !important;
     z-index: 99 !important;
+    touch-action: manipulation;
+  }
+
+  /* Navigation Drawer enhancements */
+  .nav-drawer {
+    width: 280px;
+    max-width: 84vw;
+    padding-top: max(18px, env(safe-area-inset-top));
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+  }
+
+  .nav-drawer .nav-item {
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    padding: 11px 16px;
+    border-radius: 10px;
+    touch-action: manipulation;
+  }
+
+  .nav-drawer .nav-close {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
   }
 }
 
@@ -2987,6 +3107,16 @@ img, canvas, svg {
 @media (max-width: 480px) {
   .wrap {
     padding: 14px 10px 45px;
+    padding-top: max(14px, env(safe-area-inset-top));
+    padding-bottom: max(45px, env(safe-area-inset-bottom));
+    padding-left: max(10px, env(safe-area-inset-left));
+    padding-right: max(10px, env(safe-area-inset-right));
+  }
+
+  header.top .role-pill {
+    max-width: 95px;
+    font-size: 10.5px;
+    padding: 3px 7px;
   }
 
   .auth-form-panel {
@@ -2994,27 +3124,37 @@ img, canvas, svg {
   }
 
   .auth-card {
-    padding: 20px 14px;
-    border-radius: 12px;
+    padding: 22px 14px;
+    border-radius: 14px;
   }
 
   .auth-card h1 {
     font-size: 20px;
-    margin: 4px 0 16px;
+    margin: 4px 0 14px;
   }
 
   .role-tabs {
     display: flex;
     gap: 4px;
     padding: 3px;
+    width: 100%;
   }
 
   .role-tab {
-    flex: 1;
-    padding: 8px 4px !important;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 8px 3px !important;
     font-size: 11px !important;
     text-align: center;
     justify-content: center;
+    gap: 3px;
+    white-space: nowrap;
+    touch-action: manipulation;
+  }
+
+  .role-tab .role-icon {
+    width: 12px;
+    height: 12px;
   }
 
   .stats-grid {
@@ -3023,8 +3163,9 @@ img, canvas, svg {
   }
 
   .stat-card {
-    padding: 14px 10px;
-    min-height: 100px;
+    padding: 12px 10px;
+    min-height: 95px;
+    border-radius: 12px;
   }
 
   .stat-card .stat-value {
@@ -3036,7 +3177,7 @@ img, canvas, svg {
   }
 
   .stat-hero .stat-value-hero {
-    font-size: 34px;
+    font-size: 32px;
   }
 
   /* Tag forms */
@@ -3055,9 +3196,46 @@ img, canvas, svg {
     flex-shrink: 0;
   }
 
-  /* Navigation drawer sizing */
-  .nav-drawer {
-    width: 270px;
-    max-width: 82vw;
+  /* Mini stats on snapshot page */
+  .mini-stats {
+    padding: 12px 16px;
+    gap: 12px;
+    max-width: 100%;
+  }
+
+  .mini-num {
+    font-size: 22px;
+  }
+
+  /* Units grid on admin units page */
+  .unit-summary-tile {
+    padding: 16px 14px;
+  }
+}
+
+/* Extra-Small Mobile Screens (<= 360px - Galaxy Fold cover, older devices) */
+@media (max-width: 360px) {
+  header.top .role-pill {
+    max-width: 78px;
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+
+  .mark {
+    font-size: 13px;
+    padding: 4px 8px;
+  }
+
+  h2.page-title {
+    font-size: 19px;
+  }
+
+  .welcome-banner h2 {
+    font-size: 18px;
+  }
+
+  .role-tab {
+    font-size: 10px !important;
+    padding: 7px 2px !important;
   }
 }
