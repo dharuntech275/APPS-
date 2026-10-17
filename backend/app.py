@@ -669,9 +669,7 @@ def signup():
     if "user_id" in session:
         return redirect(home_for_role(session.get("role")))
     error = None
-    role = request.args.get("role", "personnel").lower()
-    if role not in ("personnel", "officer", "admin"):
-        role = "personnel"
+    role = "personnel"
 
     if request.method == "POST":
         sync_db_from_blob(force=True)
@@ -679,9 +677,34 @@ def signup():
         unit = request.form.get("unit", "").strip()
         password = request.form.get("password", "")
         confirm_password = request.form.get("confirm_password")
-        role = request.form.get("role", "personnel").lower()
-        if role not in ("personnel", "officer", "admin"):
+        requested_role = request.form.get("role", "personnel").lower()
+
+        # Public signup is strictly restricted to personnel.
+        # Officer and Admin require a valid one-time authorization code.
+        if requested_role in ("officer", "admin"):
+            access_code = request.form.get("access_code", "").strip().upper()
+            if not access_code:
+                return render_template(
+                    "signup.html",
+                    error=f"Unauthorized: {requested_role.capitalize()} accounts cannot be created via standard registration. Please use the authorized portal with an official authorization code.",
+                    name=name
+                )
+            table = "OfficerCodes" if requested_role == "officer" else "AdminCodes"
+            conn = get_db()
+            code_row = conn.execute(f"SELECT id FROM {table} WHERE code = ? AND is_used = 0", (access_code,)).fetchone()
+            if not code_row:
+                conn.close()
+                return render_template(
+                    "signup.html",
+                    error=f"Invalid or expired authorization code for {requested_role.capitalize()} registration.",
+                    name=name
+                )
+            code_id = code_row["id"]
+            conn.close()
+            role = requested_role
+        else:
             role = "personnel"
+            code_id = None
 
         if not name or len(name) > 50:
             error = "Please enter a name (up to 50 characters)."
@@ -699,6 +722,10 @@ def signup():
                     error = "That name is already registered. Please log in or use a different name."
                     conn.close()
                 else:
+                    if role in ("officer", "admin") and code_id is not None:
+                        table = "OfficerCodes" if role == "officer" else "AdminCodes"
+                        conn.execute(f"UPDATE {table} SET is_used = 1 WHERE id = ?", (code_id,))
+
                     assigned_officer = pick_officer(conn) if role == "personnel" else None
                     cur = conn.execute(
                         "INSERT INTO Users (name, unit, password, role, assigned_officer_id) "
@@ -724,21 +751,117 @@ def signup():
                     session["role"] = role
                     return redirect(home_for_role(role))
 
-    return render_template("signup.html", error=error, active_role=role, name=request.args.get("name", ""))
+    return render_template("signup.html", error=error, active_role="personnel", name=request.args.get("name", ""))
 
 
 @app.route("/officer_signup", methods=["GET", "POST"])
 def officer_signup():
+    if "user_id" in session:
+        return redirect(home_for_role(session.get("role")))
+    error = None
     if request.method == "POST":
-        return signup()
-    return redirect(url_for("signup", role="officer"))
+        sync_db_from_blob(force=True)
+        name = request.form.get("name", "").strip()
+        unit = request.form.get("unit", "").strip()
+        code = request.form.get("access_code", "").strip().upper()
+        password = request.form.get("password", "")
+        confirm_password = request.form.get("confirm_password")
+
+        if not code:
+            error = "Official authorization access code is required for Welfare Officer registration."
+        elif not name or len(name) > 50:
+            error = "Please enter your name (up to 50 characters)."
+        elif len(unit) > 50:
+            error = "Unit/Station name is too long (max 50 characters)."
+        elif confirm_password is not None and password != confirm_password:
+            error = "Passwords do not match. Please re-enter your password accurately."
+        else:
+            is_strong, strength_err = validate_password_strength(password)
+            if not is_strong:
+                error = strength_err
+            else:
+                conn = get_db()
+                code_row = conn.execute("SELECT id FROM OfficerCodes WHERE code = ? AND is_used = 0", (code,)).fetchone()
+                if not code_row:
+                    error = "Invalid or expired authorization code. Please obtain a valid code from Senior Administration."
+                    conn.close()
+                elif _name_taken(conn, name):
+                    error = "That name is already registered. Please log in or use a different name."
+                    conn.close()
+                else:
+                    conn.execute("UPDATE OfficerCodes SET is_used = 1 WHERE id = ?", (code_row["id"],))
+                    cur = conn.execute(
+                        "INSERT INTO Users (name, unit, password, role) VALUES (?, ?, ?, 'officer')",
+                        (name, unit, generate_password_hash(password))
+                    )
+                    new_id = cur.lastrowid
+                    conn.commit()
+                    conn.close()
+                    sync_db_to_blob()
+
+                    session.clear()
+                    session.permanent = True
+                    session["user_id"] = new_id
+                    session["user_name"] = name
+                    session["role"] = "officer"
+                    return redirect(home_for_role("officer"))
+
+    return render_template("officer_signup.html", error=error)
 
 
 @app.route("/admin_signup", methods=["GET", "POST"])
 def admin_signup():
+    if "user_id" in session:
+        return redirect(home_for_role(session.get("role")))
+    error = None
     if request.method == "POST":
-        return signup()
-    return redirect(url_for("signup", role="admin"))
+        sync_db_from_blob(force=True)
+        name = request.form.get("name", "").strip()
+        unit = request.form.get("unit", "").strip()
+        code = request.form.get("access_code", "").strip().upper()
+        password = request.form.get("password", "")
+        confirm_password = request.form.get("confirm_password")
+
+        if not code:
+            error = "Official authorization access code is required for Senior Administrator registration."
+        elif not name or len(name) > 50:
+            error = "Please enter your name (up to 50 characters)."
+        elif len(unit) > 50:
+            error = "Unit/Department name is too long (max 50 characters)."
+        elif confirm_password is not None and password != confirm_password:
+            error = "Passwords do not match. Please re-enter your password accurately."
+        else:
+            is_strong, strength_err = validate_password_strength(password)
+            if not is_strong:
+                error = strength_err
+            else:
+                conn = get_db()
+                code_row = conn.execute("SELECT id FROM AdminCodes WHERE code = ? AND is_used = 0", (code,)).fetchone()
+                if not code_row:
+                    error = "Invalid or expired authorization code. Please obtain a valid code from Senior Administration."
+                    conn.close()
+                elif _name_taken(conn, name):
+                    error = "That name is already registered. Please log in or use a different name."
+                    conn.close()
+                else:
+                    conn.execute("UPDATE AdminCodes SET is_used = 1 WHERE id = ?", (code_row["id"],))
+                    cur = conn.execute(
+                        "INSERT INTO Users (name, unit, password, role) VALUES (?, ?, ?, 'admin')",
+                        (name, unit, generate_password_hash(password))
+                    )
+                    new_id = cur.lastrowid
+                    conn.commit()
+                    conn.close()
+                    sync_db_to_blob()
+
+                    session.clear()
+                    session.permanent = True
+                    session["user_id"] = new_id
+                    session["user_name"] = name
+                    session["role"] = "admin"
+                    return redirect(url_for("admin_dashboard"))
+
+    return render_template("admin_signup.html", error=error)
 
 
 def _password_ok(conn, user, entered):
@@ -1708,12 +1831,16 @@ def admin_dashboard():
     conn = get_db()
     unit_summary, levels = get_unit_summary(conn)
     total, high, medium, low = count_levels(conn, levels)
+    officer_codes = conn.execute("SELECT * FROM OfficerCodes ORDER BY id DESC").fetchall()
+    admin_codes = conn.execute("SELECT * FROM AdminCodes ORDER BY id DESC").fetchall()
     conn.close()
     return render_template(
         "admin_dashboard.html",
         admin_name=session["user_name"],
         unit_summary=unit_summary,
         total_personnel=total, total_high=high, total_medium=medium, total_low=low,
+        officer_codes=officer_codes,
+        admin_codes=admin_codes,
     )
 
 

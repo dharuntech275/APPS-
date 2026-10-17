@@ -29,23 +29,16 @@
 
   <div class="auth-form-panel">
     <div class="auth-card">
-      <div class="brand" id="brandPill">APPS <span>•</span> PERSONNEL</div>
-      <h1 id="formTitle">Personnel Sign Up</h1>
-      <p class="sub">Select your role and enter your details to create an account.</p>
-
-      <!-- Role Selector Tabs -->
-      <div class="role-tabs" id="roleTabs">
-        <button type="button" class="role-tab active" data-role="personnel" onclick="switchRole('personnel')"><svg class="role-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Personnel</button>
-        <button type="button" class="role-tab" data-role="officer" onclick="switchRole('officer')"><svg class="role-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Officer</button>
-        <button type="button" class="role-tab" data-role="admin" onclick="switchRole('admin')"><svg class="role-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Admin</button>
-      </div>
+      <div class="brand">APPS <span>•</span> PERSONNEL REGISTRATION</div>
+      <h1>Personnel Sign Up</h1>
+      <p class="sub">Enter your details to create your service personnel account and start wellness check-ins.</p>
 
       {% if error %}
         <div class="error-box">{{ error }}</div>
       {% endif %}
 
       <form method="POST" action="/signup">
-        <input type="hidden" name="role" id="roleInput" value="{{ active_role or 'personnel' }}">
+        <input type="hidden" name="role" id="roleInput" value="personnel">
 
         <label>Name</label>
         <input type="text" name="name" value="{{ name or request.args.get('name', '') }}" placeholder="Full Name" required autofocus>
@@ -70,78 +63,17 @@
         </div>
         <div id="pwMatchStatus" style="font-size:12px; margin-bottom:22px; min-height:16px;"></div>
 
-        <button type="submit" class="btn" id="submitBtn">Register as Personnel</button>
+        <button type="submit" class="btn" id="submitBtn">Register as Personnel &rarr;</button>
       </form>
 
       <p class="foot-link">Already have an account? <a href="/login">Sign In Here</a></p>
+      <p class="foot-link" style="margin-top:14px; font-size:12px; color:var(--steel);">Welfare Officer or Administrator? <a href="/officer_signup" style="font-weight:600;">Authorized Access Registration &rarr;</a></p>
     </div>
   </div>
 
 </div>
 
 <script>
-  var roleData = {
-    personnel: {
-      pill: 'APPS • PERSONNEL',
-      title: 'Personnel Sign Up',
-      brandTitle: 'Join the Welfare Monitoring Network',
-      brandSub: 'Register once to start your daily check-ins, and let the system watch out for you before strain becomes a bigger problem.',
-      unitLabel: 'Unit',
-      unitPlaceholder: 'e.g. 1st Infantry / Alpha',
-      btnText: 'Register as Personnel'
-    },
-    officer: {
-      pill: 'APPS • WELFARE OFFICER',
-      title: 'Welfare Officer Sign Up',
-      brandTitle: 'Welfare Officer Command Portal',
-      brandSub: 'Register your Welfare Officer account to coordinate stress monitoring, support requests, and counseling.',
-      unitLabel: 'Unit / Station',
-      unitPlaceholder: 'e.g. 1st Infantry / Alpha',
-      btnText: 'Register as Officer'
-    },
-    admin: {
-      pill: 'APPS • SENIOR ADMIN',
-      title: 'Senior Admin Sign Up',
-      brandTitle: 'Senior Administration Console',
-      brandSub: 'Register your Senior Administrator account to access organization metrics, reports, and unit breakdowns.',
-      unitLabel: 'Unit / Department',
-      unitPlaceholder: 'e.g. HQ Command / Welfare Directorate',
-      btnText: 'Register as Senior Admin'
-    }
-  };
-
-  function switchRole(role) {
-    if (!roleData[role]) role = 'personnel';
-    var d = roleData[role];
-
-    // Update active tab buttons
-    document.querySelectorAll('.role-tab').forEach(function(tab) {
-      if (tab.getAttribute('data-role') === role) {
-        tab.classList.add('active');
-      } else {
-        tab.classList.remove('active');
-      }
-    });
-
-    // Update hidden form input
-    document.getElementById('roleInput').value = role;
-
-    // Update UI text and placeholders
-    document.getElementById('brandPill').innerHTML = d.pill.replace('•', '<span>•</span>');
-    document.getElementById('formTitle').textContent = d.title;
-    var bt = document.getElementById('brandTitle'); if (bt) bt.textContent = d.brandTitle;
-    var bs = document.getElementById('brandSub'); if (bs) bs.textContent = d.brandSub;
-    document.getElementById('unitLabel').textContent = d.unitLabel;
-    document.getElementById('unitInput').placeholder = d.unitPlaceholder;
-    document.getElementById('submitBtn').textContent = d.btnText;
-
-    // Update URL query string smoothly
-    try {
-      var url = new URL(window.location);
-      url.searchParams.set('role', role);
-      window.history.replaceState({}, '', url);
-    } catch(e) {}
-  }
 
   var EYE_SVG = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
   var EYE_OFF_SVG = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
@@ -191,12 +123,6 @@
     }
   });
 
-  // Initialize on page load
-  (function initRole() {
-    var params = new URLSearchParams(window.location.search);
-    var initial = params.get('role') || '{{ active_role or "personnel" }}';
-    switchRole(initial);
-  })();
 
   // Theme Toggle Handler
   (function(){
