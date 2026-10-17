@@ -782,10 +782,11 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
             Paragraph("Establishes unified institutional identity and professional clarity across clinical and administrative tiers.", table_cell)
         ],
         [
-            Paragraph("<b>Officer Dashboard</b>", table_cell),
-            Paragraph("<b>Personnel Roster Single-Card Redesign:</b><br/>"
-                      "Redesigned the soldier list in <code>officer_personnel.html</code> so each person occupies a clean, single card with inline unit badges and last check-in timestamp.", table_cell),
-            Paragraph("Eliminated visual clutter and disorganized stacked text, presenting medical staff with a clear clinical roster.", table_cell)
+            Paragraph("<b>Inclusive Rosters &amp; Trends</b>", table_cell),
+            Paragraph("<b>Inclusive SQL Architecture &amp; 7-Day Continuous Trends:</b><br/>"
+                      "Engineered resilient SQL <code>LEFT JOIN</code> queries across Officer/Admin dashboards ensuring all registered personnel appear immediately. "
+                      "Built continuous 7-day trend series and auto-baseline engine guaranteeing graphs render without blank screens for single-checkin and new personnel.", table_cell),
+            Paragraph("Guarantees complete organizational visibility and eliminates missing graphs for newly onboarded soldiers.", table_cell)
         ],
         [
             Paragraph("<b>Clinical Safety</b>", table_cell),

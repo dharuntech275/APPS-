@@ -202,12 +202,13 @@
     <div class="p-list">
       {% for p in personnel %}
       {% set unit_txt = (p.unit or '')|string|trim %}
-      <a href="/officer/personnel/{{ p.id }}" class="personnel-row p-row r-{{ p.stress_level|lower }}"
+      {% set risk_cls = (p.stress_level or 'pending')|lower %}
+      <a href="/officer/personnel/{{ p.id }}" class="personnel-row p-row r-{{ risk_cls }}"
          data-idx="{{ loop.index }}"
          data-name="{{ p.name|lower }}"
          data-unit="{{ unit_txt|lower }}"
-         data-risk="{{ p.stress_level }}"
-         data-date="{{ p.date }}" data-sleep="{{ p.sleep_hours }}" data-duty="{{ p.duty_hours }}">
+         data-risk="{{ p.stress_level or 'Pending' }}"
+         data-date="{{ p.date or '' }}" data-sleep="{{ p.sleep_hours or 0 }}" data-duty="{{ p.duty_hours or 0 }}">
 
         <div class="p-avatar">{{ p.name[0]|upper }}</div>
 
@@ -219,16 +220,16 @@
           <div class="p-meta">
             <span class="m-item"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; margin-right:4px;"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="12"/><line x1="15" y1="22" x2="15" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="10" x2="20" y2="10"/><line x1="4" y1="14" x2="20" y2="14"/><line x1="4" y1="18" x2="20" y2="18"/></svg>Unit: <strong>{% if unit_txt %}{{ unit_txt }}{% else %}&mdash;{% endif %}</strong></span>
             <span class="m-sep">&bull;</span>
-            <span class="m-item"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; margin-right:4px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Last check-in: <strong>{% if p.days_since_checkin == 0 %}Today{% elif p.days_since_checkin == 1 %}Yesterday{% else %}{{ p.days_since_checkin }} days ago{% endif %}</strong></span>
+            <span class="m-item"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; margin-right:4px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Last check-in: <strong>{% if p.days_since_checkin is none %}Pending Check-in{% elif p.days_since_checkin == 0 %}Today{% elif p.days_since_checkin == 1 %}Yesterday{% else %}{{ p.days_since_checkin }} days ago{% endif %}</strong></span>
           </div>
         </div>
 
-        <div class="p-stat s1"><span class="v">{{ '%.1f'|format(p.sleep_hours|float) }}<small>h</small></span><span class="l">Sleep</span></div>
-        <div class="p-stat s2"><span class="v">{{ '%.1f'|format(p.duty_hours|float) }}<small>h</small></span><span class="l">Duty</span></div>
+        <div class="p-stat s1"><span class="v">{% if p.sleep_hours is not none %}{{ '%.1f'|format(p.sleep_hours|float) }}<small>h</small>{% else %}&mdash;{% endif %}</span><span class="l">Sleep</span></div>
+        <div class="p-stat s2"><span class="v">{% if p.duty_hours is not none %}{{ '%.1f'|format(p.duty_hours|float) }}<small>h</small>{% else %}&mdash;{% endif %}</span><span class="l">Duty</span></div>
 
         <div class="p-status">
-          <span class="risk-tag badge-{{ p.stress_level|lower }}">{{ p.stress_level }}</span>
-          <span class="p-eng e-{{ p.engagement_label|lower }}"><i></i>{{ p.engagement_label }}</span>
+          <span class="risk-tag badge-{{ risk_cls }}">{{ p.stress_level or 'Pending' }}</span>
+          <span class="p-eng e-{{ (p.engagement_label or 'new')|lower }}"><i></i>{{ p.engagement_label or 'New' }}</span>
         </div>
       </a>
       {% endfor %}
@@ -253,7 +254,7 @@
     const cmp = {
       default: byIdx,
       name:   (a, b) => a.dataset.name.localeCompare(b.dataset.name) || byIdx(a, b),
-      recent: (a, b) => b.dataset.date.localeCompare(a.dataset.date) || byIdx(a, b),
+      recent: (a, b) => (b.dataset.date || '').localeCompare(a.dataset.date || '') || byIdx(a, b),
       sleep:  (a, b) => num(a, 'sleep') - num(b, 'sleep') || byIdx(a, b),
       duty:   (a, b) => num(b, 'duty') - num(a, 'duty') || byIdx(a, b)
     }[mode];

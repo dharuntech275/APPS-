@@ -62,29 +62,29 @@
 
         <div style="flex:1; min-width:160px;">
           <div style="font-family:'Helvetica Neue', Arial, sans-serif; font-size:14px; font-weight:600; color:var(--ink);">{{ p.name }}</div>
-          <div style="font-family:'Helvetica Neue', Arial, sans-serif; font-size:11.5px; color:var(--steel);">Last check-in: {{ p.date }}</div>
+          <div style="font-family:'Helvetica Neue', Arial, sans-serif; font-size:11.5px; color:var(--steel);">Last check-in: {{ p.date or 'Pending check-in' }}</div>
         </div>
 
         <div class="personnel-stats-row" style="display:flex; gap:22px; font-family:'Helvetica Neue', Arial, sans-serif; text-align:center;">
           <div>
-            <div style="font-size:13px; font-weight:600; color:var(--ink);">{{ p.sleep_hours }}h</div>
+            <div style="font-size:13px; font-weight:600; color:var(--ink);">{% if p.sleep_hours is not none %}{{ p.sleep_hours }}h{% else %}&mdash;{% endif %}</div>
             <div style="font-size:10px; color:var(--steel);">SLEEP</div>
           </div>
           <div>
-            <div style="font-size:13px; font-weight:600; color:var(--ink);">{{ p.duty_hours }}h</div>
+            <div style="font-size:13px; font-weight:600; color:var(--ink);">{% if p.duty_hours is not none %}{{ p.duty_hours }}h{% else %}&mdash;{% endif %}</div>
             <div style="font-size:10px; color:var(--steel);">DUTY</div>
           </div>
           <div>
-            <div style="font-size:13px; font-weight:600; color:var(--ink);">{{ p.heart_rate }}</div>
+            <div style="font-size:13px; font-weight:600; color:var(--ink);">{% if p.heart_rate is not none %}{{ p.heart_rate }}{% else %}&mdash;{% endif %}</div>
             <div style="font-size:10px; color:var(--steel);">BPM</div>
           </div>
           <div>
-            <div style="font-size:13px; font-weight:600; color:var(--ink);">{{ p.mood_score }}/5</div>
+            <div style="font-size:13px; font-weight:600; color:var(--ink);">{% if p.mood_score is not none %}{{ p.mood_score }}/5{% else %}&mdash;{% endif %}</div>
             <div style="font-size:10px; color:var(--steel);">MOOD</div>
           </div>
         </div>
 
-        <span class="risk-tag badge-{{ p.stress_level|lower }}" style="flex-shrink:0; min-width:60px; text-align:center;">{{ p.stress_level }}</span>
+        <span class="risk-tag badge-{{ (p.stress_level or 'pending')|lower }}" style="flex-shrink:0; min-width:60px; text-align:center;">{{ p.stress_level or 'Pending' }}</span>
       </div>
       {% endfor %}
     </div>

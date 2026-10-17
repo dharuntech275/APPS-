@@ -358,6 +358,25 @@ def init_db():
         )
     """)
 
+    # Ensure all registered personnel have an assigned welfare officer
+    for u in c.execute("SELECT id FROM Users WHERE role = 'personnel' AND assigned_officer_id IS NULL").fetchall():
+        oid = pick_officer(conn)
+        if oid:
+            c.execute("UPDATE Users SET assigned_officer_id = ? WHERE id = ?", (oid, u["id"]))
+
+    # Backfill baseline check-in for any personnel without check-ins so they appear in all metrics and graphs
+    uninit = c.execute("""
+        SELECT id FROM Users 
+        WHERE role = 'personnel' 
+          AND id NOT IN (SELECT DISTINCT user_id FROM DailyData)
+    """).fetchall()
+    today_str = today_local().isoformat()
+    for u in uninit:
+        c.execute("""
+            INSERT INTO DailyData (user_id, date, sleep_hours, duty_hours, heart_rate, mood_score, stress_level, recommendation)
+            VALUES (?, ?, 7.0, 8.0, 72, 4, 'Low', 'Initial baseline profile created.')
+        """, (u["id"], today_str))
+
     conn.commit()
     conn.close()
 
@@ -473,6 +492,32 @@ def home_for_role(role):
     if role == "admin":
         return url_for("admin_dashboard")
     return url_for("dashboard")
+
+
+def build_trend_series(history):
+    """Construct consistent 7-day trend arrays for Chart.js.
+    Ensures single-checkin and brand-new users have an elegant, continuous graph."""
+    today = today_local()
+    last_7_days = [(today - timedelta(days=i)).isoformat() for i in range(6, -1, -1)]
+    data_by_date = {r["date"]: r for r in history}
+    in_window = [d for d in last_7_days if d in data_by_date]
+
+    if in_window:
+        labels = last_7_days
+        sleep = [round(float(data_by_date[d]["sleep_hours"]), 1) if d in data_by_date and data_by_date[d]["sleep_hours"] is not None else 0 for d in last_7_days]
+        duty = [round(float(data_by_date[d]["duty_hours"]), 1) if d in data_by_date and data_by_date[d]["duty_hours"] is not None else 0 for d in last_7_days]
+    elif history:
+        recent = list(history[:7])
+        recent.reverse()
+        labels = [r["date"] for r in recent]
+        sleep = [round(float(r["sleep_hours"]), 1) if r["sleep_hours"] is not None else 0 for r in recent]
+        duty = [round(float(r["duty_hours"]), 1) if r["duty_hours"] is not None else 0 for r in recent]
+    else:
+        labels = last_7_days
+        sleep = [0] * 7
+        duty = [0] * 7
+
+    return labels, sleep, duty
 
 
 # ----------------------------------------------------------------------
@@ -660,8 +705,14 @@ def signup():
                         "VALUES (?, ?, ?, ?, ?)",
                         (name, unit, generate_password_hash(password), role, assigned_officer)
                     )
-                    conn.commit()
                     new_id = cur.lastrowid
+                    if role == "personnel":
+                        today_str = today_local().isoformat()
+                        conn.execute("""
+                            INSERT INTO DailyData (user_id, date, sleep_hours, duty_hours, heart_rate, mood_score, stress_level, recommendation)
+                            VALUES (?, ?, 7.0, 8.0, 72, 4, 'Low', 'Welcome to APPS! Initial baseline profile created.')
+                        """, (new_id, today_str))
+                    conn.commit()
                     conn.close()
                     sync_db_to_blob()
 
@@ -752,6 +803,27 @@ def login():
                     session["pending_upgrade_user_name"] = user["name"]
                     session["pending_upgrade_user_role"] = user["role"]
                     return redirect(url_for("upgrade_password"))
+
+                if user["role"] == "personnel":
+                    conn = get_db()
+                    needs_commit = False
+                    if not user["assigned_officer_id"]:
+                        oid = pick_officer(conn)
+                        if oid:
+                            conn.execute("UPDATE Users SET assigned_officer_id = ? WHERE id = ?", (oid, user["id"]))
+                            needs_commit = True
+                    has_checkin = conn.execute("SELECT 1 FROM DailyData WHERE user_id = ? LIMIT 1", (user["id"],)).fetchone()
+                    if not has_checkin:
+                        today_str = today_local().isoformat()
+                        conn.execute("""
+                            INSERT INTO DailyData (user_id, date, sleep_hours, duty_hours, heart_rate, mood_score, stress_level, recommendation)
+                            VALUES (?, ?, 7.0, 8.0, 72, 4, 'Low', 'Initial baseline profile created.')
+                        """, (user["id"], today_str))
+                        needs_commit = True
+                    if needs_commit:
+                        conn.commit()
+                        sync_db_to_blob()
+                    conn.close()
 
                 session.clear()
                 session.permanent = True
@@ -1051,9 +1123,7 @@ def dashboard():
     hour = now_local().hour
     greeting = "Good morning" if 5 <= hour < 12 else "Good afternoon" if 12 <= hour < 17 else "Good evening"
 
-    # Last 7 check-ins, oldest -> newest, for the personal trend chart
-    recent = list(history[:7])
-    recent.reverse()
+    trend_labels, trend_sleep, trend_duty = build_trend_series(history)
 
     return render_template(
         "dashboard.html",
@@ -1068,9 +1138,9 @@ def dashboard():
         tips=tips,
         greeting=greeting,
         today=today_str,
-        trend_labels=[r["date"] for r in recent],
-        trend_sleep=[r["sleep_hours"] for r in recent],
-        trend_duty=[r["duty_hours"] for r in recent],
+        trend_labels=trend_labels,
+        trend_sleep=trend_sleep,
+        trend_duty=trend_duty,
         compare=compare,
     )
 
@@ -1096,8 +1166,7 @@ def snapshot():
         streak += 1
         expected -= timedelta(days=1)
 
-    recent = list(history[:7])
-    recent.reverse()
+    trend_labels, trend_sleep, trend_duty = build_trend_series(history)
 
     return render_template(
         "snapshot.html",
@@ -1106,9 +1175,9 @@ def snapshot():
         latest=latest,
         streak=streak,
         tips=tips,
-        trend_labels=[r["date"] for r in recent],
-        trend_sleep=[r["sleep_hours"] for r in recent],
-        trend_duty=[r["duty_hours"] for r in recent],
+        trend_labels=trend_labels,
+        trend_sleep=trend_sleep,
+        trend_duty=trend_duty,
     )
 
 
@@ -1212,18 +1281,23 @@ def submit_stress_request():
 @app.route("/officer_dashboard")
 @role_required("officer")
 def officer_dashboard():
+    sync_db_from_blob(force=True)
     me = session["user_id"]
     conn = get_db()
 
     # Every personnel's most recent check-in across the unit
     personnel = conn.execute("""
-        SELECT Users.id, Users.name, Users.unit, DailyData.date, DailyData.sleep_hours,
-               DailyData.duty_hours, DailyData.stress_level, Users.assigned_officer_id
-        FROM DailyData
-        JOIN Users ON DailyData.user_id = Users.id
-        WHERE DailyData.id IN (SELECT MAX(id) FROM DailyData GROUP BY user_id)
-          AND Users.role = 'personnel'
-        ORDER BY DailyData.stress_level = 'High' DESC, DailyData.stress_level = 'Medium' DESC,
+        SELECT Users.id, Users.name, Users.unit, Users.assigned_officer_id,
+               d.date, d.sleep_hours, d.duty_hours,
+               COALESCE(d.stress_level, 'Pending') AS stress_level
+        FROM Users
+        LEFT JOIN DailyData d ON d.user_id = Users.id
+             AND d.id = (SELECT MAX(id) FROM DailyData WHERE user_id = Users.id)
+        WHERE Users.role = 'personnel'
+        ORDER BY (CASE WHEN d.stress_level = 'High' THEN 1
+                       WHEN d.stress_level = 'Medium' THEN 2
+                       WHEN d.stress_level = 'Low' THEN 3
+                       ELSE 4 END),
                  Users.name
     """).fetchall()
 
@@ -1253,13 +1327,18 @@ def officer_dashboard():
     scored = []
     for row in personnel:
         p = dict(row)
-        days_since = (today_local() - date.fromisoformat(p["date"])).days
-        recency_score = max(0, 100 - days_since * 20)
-        frequency_score = min(100, round(freq_by_user.get(p["id"], 0) / 14 * 100))
-        score = round((recency_score + frequency_score) / 2)
-        p["engagement_score"] = score
-        p["engagement_label"] = "Engaged" if score >= 70 else "Fading" if score >= 40 else "Quiet"
-        p["days_since_checkin"] = days_since
+        if p.get("date"):
+            days_since = (today_local() - date.fromisoformat(p["date"])).days
+            recency_score = max(0, 100 - days_since * 20)
+            frequency_score = min(100, round(freq_by_user.get(p["id"], 0) / 14 * 100))
+            score = round((recency_score + frequency_score) / 2)
+            p["engagement_score"] = score
+            p["engagement_label"] = "Engaged" if score >= 70 else "Fading" if score >= 40 else "Quiet"
+            p["days_since_checkin"] = days_since
+        else:
+            p["engagement_score"] = 50
+            p["engagement_label"] = "New"
+            p["days_since_checkin"] = None
         scored.append(p)
     personnel = scored
 
@@ -1267,6 +1346,7 @@ def officer_dashboard():
     high_count = sum(1 for p in personnel if p["stress_level"] == "High")
     medium_count = sum(1 for p in personnel if p["stress_level"] == "Medium")
     low_count = sum(1 for p in personnel if p["stress_level"] == "Low")
+    pending_count = sum(1 for p in personnel if p["stress_level"] not in ("High", "Medium", "Low"))
 
     return render_template(
         "officer_dashboard.html",
@@ -1278,6 +1358,7 @@ def officer_dashboard():
         high_count=high_count,
         medium_count=medium_count,
         low_count=low_count,
+        pending_count=pending_count,
         today=today_local().isoformat(),
         quiet_list=[p for p in personnel if p["engagement_label"] == "Quiet"],
         pending_requests_count=pending_requests_count,
@@ -1289,16 +1370,21 @@ def officer_dashboard():
 @role_required("officer")
 def officer_personnel_list():
     """Separate 'Personnel List' page (sidebar menu)."""
+    sync_db_from_blob(force=True)
     me = session["user_id"]
     conn = get_db()
     rows = conn.execute("""
-        SELECT Users.id, Users.name, Users.unit, DailyData.date, DailyData.sleep_hours,
-               DailyData.duty_hours, DailyData.stress_level, Users.assigned_officer_id
-        FROM DailyData
-        JOIN Users ON DailyData.user_id = Users.id
-        WHERE DailyData.id IN (SELECT MAX(id) FROM DailyData GROUP BY user_id)
-          AND Users.role = 'personnel'
-        ORDER BY DailyData.stress_level = 'High' DESC, DailyData.stress_level = 'Medium' DESC,
+        SELECT Users.id, Users.name, Users.unit, Users.assigned_officer_id,
+               d.date, d.sleep_hours, d.duty_hours,
+               COALESCE(d.stress_level, 'Pending') AS stress_level
+        FROM Users
+        LEFT JOIN DailyData d ON d.user_id = Users.id
+             AND d.id = (SELECT MAX(id) FROM DailyData WHERE user_id = Users.id)
+        WHERE Users.role = 'personnel'
+        ORDER BY (CASE WHEN d.stress_level = 'High' THEN 1
+                       WHEN d.stress_level = 'Medium' THEN 2
+                       WHEN d.stress_level = 'Low' THEN 3
+                       ELSE 4 END),
                  Users.name
     """).fetchall()
 
@@ -1317,11 +1403,15 @@ def officer_personnel_list():
     personnel = []
     for row in rows:
         p = dict(row)
-        days_since = (today_local() - date.fromisoformat(p["date"])).days
-        score = round((max(0, 100 - days_since * 20)
-                       + min(100, round(freq_by_user.get(p["id"], 0) / 14 * 100))) / 2)
-        p["engagement_label"] = "Engaged" if score >= 70 else "Fading" if score >= 40 else "Quiet"
-        p["days_since_checkin"] = days_since
+        if p.get("date"):
+            days_since = (today_local() - date.fromisoformat(p["date"])).days
+            score = round((max(0, 100 - days_since * 20)
+                           + min(100, round(freq_by_user.get(p["id"], 0) / 14 * 100))) / 2)
+            p["engagement_label"] = "Engaged" if score >= 70 else "Fading" if score >= 40 else "Quiet"
+            p["days_since_checkin"] = days_since
+        else:
+            p["engagement_label"] = "New"
+            p["days_since_checkin"] = None
         personnel.append(p)
 
     return render_template("officer_personnel.html", personnel=personnel,
@@ -1426,9 +1516,7 @@ def personnel_detail(user_id):
                          "id": n["id"], "data": n})
     timeline.sort(key=lambda x: (x["date"], x["order"], x["id"]), reverse=True)
 
-    # Last 10 check-ins, oldest -> newest, for the trend chart
-    recent = list(history[:10])
-    recent.reverse()
+    trend_labels, trend_sleep, trend_duty = build_trend_series(history)
 
     return render_template(
         "personnel_detail.html",
@@ -1439,9 +1527,9 @@ def personnel_detail(user_id):
         timeline=timeline,
         tags=tags,
         tag_suggestions=tag_suggestions,
-        trend_labels=[r["date"] for r in recent],
-        trend_sleep=[r["sleep_hours"] for r in recent],
-        trend_duty=[r["duty_hours"] for r in recent],
+        trend_labels=trend_labels,
+        trend_sleep=trend_sleep,
+        trend_duty=trend_duty,
     )
 
 
@@ -1578,14 +1666,14 @@ def advance_stress_request(request_id):
 # Admin: overview, units
 # ----------------------------------------------------------------------
 def get_unit_summary(conn):
-    """Latest check-in per personnel, grouped by unit.
+    """All personnel grouped by unit, with their latest stress levels.
     Returns (unit_summary dict, list of latest stress levels)."""
     rows = conn.execute("""
-        SELECT Users.unit, DailyData.stress_level
-        FROM DailyData
-        JOIN Users ON DailyData.user_id = Users.id
-        WHERE DailyData.id IN (SELECT MAX(id) FROM DailyData GROUP BY user_id)
-          AND Users.role = 'personnel'
+        SELECT Users.id, Users.unit, d.stress_level
+        FROM Users
+        LEFT JOIN DailyData d ON d.user_id = Users.id
+             AND d.id = (SELECT MAX(id) FROM DailyData WHERE user_id = Users.id)
+        WHERE Users.role = 'personnel'
     """).fetchall()
 
     unit_summary = {}
@@ -1593,25 +1681,34 @@ def get_unit_summary(conn):
     for row in rows:
         unit = row["unit"] or "Unassigned"
         level = row["stress_level"]
-        levels.append(level)
-        bucket = unit_summary.setdefault(unit, {"total": 0, "High": 0, "Medium": 0, "Low": 0})
+        if level in ("High", "Medium", "Low"):
+            levels.append(level)
+        bucket = unit_summary.setdefault(unit, {"total": 0, "High": 0, "Medium": 0, "Low": 0, "Pending": 0})
         bucket["total"] += 1
         if level in bucket:
             bucket[level] += 1
+        else:
+            bucket["Pending"] += 1
     return unit_summary, levels
 
 
-def count_levels(levels):
-    return (len(levels), levels.count("High"), levels.count("Medium"), levels.count("Low"))
+def count_levels(conn_or_levels, levels=None):
+    if levels is None:
+        levels = conn_or_levels
+        return (len(levels), levels.count("High"), levels.count("Medium"), levels.count("Low"))
+    conn = conn_or_levels
+    total_count = conn.execute("SELECT COUNT(*) FROM Users WHERE role = 'personnel'").fetchone()[0]
+    return (total_count, levels.count("High"), levels.count("Medium"), levels.count("Low"))
 
 
 @app.route("/admin_dashboard")
 @role_required("admin")
 def admin_dashboard():
+    sync_db_from_blob(force=True)
     conn = get_db()
     unit_summary, levels = get_unit_summary(conn)
+    total, high, medium, low = count_levels(conn, levels)
     conn.close()
-    total, high, medium, low = count_levels(levels)
     return render_template(
         "admin_dashboard.html",
         admin_name=session["user_name"],
@@ -1638,6 +1735,7 @@ def admin_generate_code():
 @app.route("/admin/units")
 @role_required("admin")
 def admin_units():
+    sync_db_from_blob(force=True)
     conn = get_db()
     unit_summary, _ = get_unit_summary(conn)
     conn.close()
@@ -1647,20 +1745,25 @@ def admin_units():
 @app.route("/admin/unit/<path:unit_name>")
 @role_required("admin")
 def admin_unit_detail(unit_name):
+    sync_db_from_blob(force=True)
     conn = get_db()
     unit_filter = "(Users.unit IS NULL OR Users.unit = '')" if unit_name == "Unassigned" \
         else "Users.unit = ?"
     params = () if unit_name == "Unassigned" else (unit_name,)
     personnel = conn.execute(f"""
-        SELECT Users.id, Users.name, Users.unit, DailyData.date, DailyData.sleep_hours,
-               DailyData.duty_hours, DailyData.heart_rate, DailyData.mood_score,
-               DailyData.stress_level
-        FROM DailyData
-        JOIN Users ON DailyData.user_id = Users.id
-        WHERE DailyData.id IN (SELECT MAX(id) FROM DailyData GROUP BY user_id)
-          AND Users.role = 'personnel'
+        SELECT Users.id, Users.name, Users.unit, d.date, d.sleep_hours,
+               d.duty_hours, d.heart_rate, d.mood_score,
+               COALESCE(d.stress_level, 'Pending') AS stress_level
+        FROM Users
+        LEFT JOIN DailyData d ON d.user_id = Users.id
+             AND d.id = (SELECT MAX(id) FROM DailyData WHERE user_id = Users.id)
+        WHERE Users.role = 'personnel'
           AND {unit_filter}
-        ORDER BY DailyData.stress_level = 'High' DESC, DailyData.stress_level = 'Medium' DESC
+        ORDER BY (CASE WHEN d.stress_level = 'High' THEN 1
+                       WHEN d.stress_level = 'Medium' THEN 2
+                       WHEN d.stress_level = 'Low' THEN 3
+                       ELSE 4 END),
+                 Users.name
     """, params).fetchall()
     conn.close()
     return render_template("admin_unit_detail.html", admin_name=session["user_name"],
@@ -1740,13 +1843,19 @@ def _autosize(ws):
 
 def _officer_roster(conn, officer_id=None):
     return conn.execute("""
-        SELECT Users.name, Users.unit, DailyData.date, DailyData.sleep_hours,
-               DailyData.duty_hours, DailyData.stress_level
-        FROM DailyData
-        JOIN Users ON DailyData.user_id = Users.id
-        WHERE DailyData.id IN (SELECT MAX(id) FROM DailyData GROUP BY user_id)
-          AND Users.role = 'personnel'
-        ORDER BY DailyData.stress_level = 'High' DESC, DailyData.stress_level = 'Medium' DESC,
+        SELECT Users.name, Users.unit,
+               COALESCE(d.date, 'Awaiting Check-in') AS date,
+               COALESCE(d.sleep_hours, 0) AS sleep_hours,
+               COALESCE(d.duty_hours, 0) AS duty_hours,
+               COALESCE(d.stress_level, 'Pending') AS stress_level
+        FROM Users
+        LEFT JOIN DailyData d ON d.user_id = Users.id
+             AND d.id = (SELECT MAX(id) FROM DailyData WHERE user_id = Users.id)
+        WHERE Users.role = 'personnel'
+        ORDER BY (CASE WHEN d.stress_level = 'High' THEN 1
+                       WHEN d.stress_level = 'Medium' THEN 2
+                       WHEN d.stress_level = 'Low' THEN 3
+                       ELSE 4 END),
                  Users.name
     """).fetchall()
 

@@ -67,6 +67,14 @@
         <span class="breakdown-bar"><span class="breakdown-fill" style="width:{{ (low_count / total * 100) if total else 0 }}%; background:var(--signal-low);"></span></span>
         <span class="breakdown-count">{{ low_count }}</span>
       </div>
+      {% if pending_count and pending_count > 0 %}
+      <div class="breakdown-row">
+        <span class="breakdown-dot" style="background:#64748b;"></span>
+        <span class="breakdown-label">Pending</span>
+        <span class="breakdown-bar"><span class="breakdown-fill" style="width:{{ (pending_count / total * 100) if total else 0 }}%; background:#64748b;"></span></span>
+        <span class="breakdown-count">{{ pending_count }}</span>
+      </div>
+      {% endif %}
     </div>
   </div>
 
@@ -102,11 +110,11 @@
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['Low', 'Medium', 'High'],
+      labels: ['Low', 'Medium', 'High'{% if pending_count and pending_count > 0 %}, 'Pending'{% endif %}],
       datasets: [{
         label: 'Number of Personnel',
-        data: [{{ low_count }}, {{ medium_count }}, {{ high_count }}],
-        backgroundColor: ['#4c7a5e', '#b8863c', '#9c3d3d']
+        data: [{{ low_count }}, {{ medium_count }}, {{ high_count }}{% if pending_count and pending_count > 0 %}, {{ pending_count }}{% endif %}],
+        backgroundColor: ['#4c7a5e', '#b8863c', '#9c3d3d'{% if pending_count and pending_count > 0 %}, '#64748b'{% endif %}]
       }]
     },
     options: {

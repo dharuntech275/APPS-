@@ -842,6 +842,12 @@ h2.page-title {
   border: 1px solid rgba(239, 68, 68, 0.28);
 }
 
+.badge-pending {
+  background: rgba(100, 116, 139, 0.12);
+  color: #475569;
+  border: 1px solid rgba(100, 116, 139, 0.28);
+}
+
 .result-card {
   max-height: 420px;
   overflow-y: auto;
@@ -2556,6 +2562,20 @@ html.dark .risk-tag.badge-high {
   background: rgba(239, 68, 68, 0.2) !important;
   color: #f87171 !important;
   border: 1px solid rgba(239, 68, 68, 0.45) !important;
+}
+html.dark .badge-pending,
+html.dark .risk-tag.badge-pending {
+  background: rgba(148, 163, 184, 0.16) !important;
+  color: #94a3b8 !important;
+  border: 1px solid rgba(148, 163, 184, 0.3) !important;
+}
+
+.p-row.r-pending {
+  border-left-color: #94a3b8;
+}
+
+.p-eng.e-new i {
+  background: #3b82f6;
 }
 
 /* ---------- Back Button ---------- */

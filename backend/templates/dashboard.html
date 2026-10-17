@@ -62,6 +62,18 @@
     </div>
   </div>
 
+  {% if trend_labels %}
+  <div style="max-width: 580px; margin: 0 auto 40px;">
+    <div class="card fade-in" style="padding: 22px 24px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
+        <h4 style="font-family:'Helvetica Neue', Arial, sans-serif; font-size:12.5px; color:var(--steel-deep); margin:0; font-weight:700; text-transform:uppercase; letter-spacing:0.04em;">7-Day Sleep &amp; Duty Trend</h4>
+        <a href="/snapshot" class="view-results-link" style="font-size:12px;">Detailed Snapshot &rarr;</a>
+      </div>
+      <canvas id="dashboardTrendChart" style="max-height:180px;"></canvas>
+    </div>
+  </div>
+  {% endif %}
+
 </div>
 
 <script>
@@ -76,6 +88,37 @@
     } catch(e) {}
   })();
 </script>
+
+{% if trend_labels %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script>
+  new Chart(document.getElementById('dashboardTrendChart'), {
+    type: 'bar',
+    data: {
+      labels: {{ trend_labels|tojson }},
+      datasets: [
+        {
+          label: 'Sleep Hrs',
+          data: {{ trend_sleep|tojson }},
+          backgroundColor: '#4c7a5e',
+          borderRadius: 3
+        },
+        {
+          label: 'Duty Hrs',
+          data: {{ trend_duty|tojson }},
+          backgroundColor: '#9c3d3d',
+          borderRadius: 3
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10.5 } } } },
+      scales: { y: { beginAtZero: true } }
+    }
+  });
+</script>
+{% endif %}
 
 </body>
 </html>

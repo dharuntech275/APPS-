@@ -32,7 +32,7 @@
     <div class="card snapshot-card fade-in">
       <h3>Your Latest Snapshot</h3>
 
-      {% if trend_labels and trend_labels|length > 1 %}
+      {% if trend_labels %}
       <div style="margin-bottom:24px;">
         <h4 style="font-family:'Helvetica Neue', Arial, sans-serif; font-size:12px; color:var(--steel); margin:0 0 12px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em;">7-Day Sleep &amp; Duty Trend</h4>
         <canvas id="personalTrendChart" style="max-height:180px;"></canvas>
@@ -80,7 +80,7 @@
 
 </div>
 
-{% if trend_labels and trend_labels|length > 1 %}
+{% if trend_labels %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script>
   new Chart(document.getElementById('personalTrendChart'), {

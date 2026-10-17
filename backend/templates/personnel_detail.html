@@ -54,7 +54,7 @@
   <div class="grid2">
     <div class="card">
       <h3>Activity Timeline</h3>
-      {% if trend_labels and trend_labels|length > 1 %}
+      {% if trend_labels %}
       <div style="margin-bottom:18px;">
         <canvas id="trendChart" style="max-height:160px;"></canvas>
       </div>
@@ -135,7 +135,7 @@
 
 
 
-{% if trend_labels and trend_labels|length > 1 %}
+{% if trend_labels %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script>
   new Chart(document.getElementById('trendChart'), {
