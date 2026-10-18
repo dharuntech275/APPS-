@@ -53,6 +53,21 @@
         <label id="unitLabel">Unit</label>
         <input type="text" name="unit" id="unitInput" placeholder="e.g. 1st Infantry / Alpha" required>
 
+        <!-- Command Authorization PIN (Gated for Officer and Admin) -->
+        <div id="pinSection" style="display:none; margin-bottom:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <label style="margin-bottom:0;" id="pinLabel">Command Authorization PIN</label>
+            <span style="font-size:10.5px; font-weight:700; color:#2563eb; background:rgba(37,99,235,0.1); padding:2px 8px; border-radius:6px; letter-spacing:0.04em;">RESTRICTED ROLE</span>
+          </div>
+          <div class="pwd-input-wrap">
+            <input type="password" name="command_pin" id="commandPinInput" maxlength="6" placeholder="Enter 4-digit Command PIN" style="letter-spacing:4px; font-size:15px; font-weight:700; font-family:monospace;">
+            <button type="button" class="pwd-toggle-btn" onclick="togglePasswordVisibility('commandPinInput', this)" aria-label="Toggle PIN visibility" title="Show / Hide PIN">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <p style="font-size:11.5px; color:var(--steel); margin:4px 0 0;">Official 4-digit authorization PIN required for staff onboarding.</p>
+        </div>
+
         <label>Password</label>
         <div class="pwd-input-wrap">
           <input type="password" name="password" id="signupPassword" minlength="8" placeholder="Minimum 8 characters (letters & numbers)" required>
@@ -134,6 +149,22 @@
     document.getElementById('unitLabel').textContent = d.unitLabel;
     document.getElementById('unitInput').placeholder = d.unitPlaceholder;
     document.getElementById('submitBtn').textContent = d.btnText;
+
+    // Toggle Command Authorization PIN section based on role
+    var pinSec = document.getElementById('pinSection');
+    var pinInp = document.getElementById('commandPinInput');
+    if (role === 'personnel') {
+      if (pinSec) pinSec.style.display = 'none';
+      if (pinInp) {
+        pinInp.required = false;
+        pinInp.value = '';
+      }
+    } else {
+      if (pinSec) pinSec.style.display = 'block';
+      if (pinInp) {
+        pinInp.required = true;
+      }
+    }
 
     // Update URL query string smoothly
     try {

@@ -301,6 +301,15 @@ def init_db():
     _seed_codes(c, "AdminCodes", "ADM", 3)
 
     c.execute("""
+        CREATE TABLE IF NOT EXISTS SystemConfig (
+            key TEXT PRIMARY KEY,
+            value TEXT NOT NULL,
+            updated_at REAL NOT NULL
+        )
+    """)
+    c.execute("INSERT OR IGNORE INTO SystemConfig (key, value, updated_at) VALUES ('command_pin', '2026', ?)", (time.time(),))
+
+    c.execute("""
         CREATE TABLE IF NOT EXISTS StressRequests (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
@@ -472,6 +481,24 @@ def safe_cell(value):
     if isinstance(value, str) and value[:1] in ("=", "+", "-", "@"):
         return "'" + value
     return value
+
+
+def get_command_pin(conn):
+    """Retrieve the active 4-digit Command Authorization PIN."""
+    try:
+        row = conn.execute("SELECT value FROM SystemConfig WHERE key = 'command_pin'").fetchone()
+        return row["value"] if row else "2026"
+    except Exception:
+        return "2026"
+
+
+def set_command_pin(conn, new_pin):
+    """Update the Command Authorization PIN."""
+    pin_str = str(new_pin).strip()
+    conn.execute(
+        "INSERT OR REPLACE INTO SystemConfig (key, value, updated_at) VALUES ('command_pin', ?, ?)",
+        (pin_str, time.time())
+    )
 
 
 def role_required(*roles):
@@ -694,7 +721,15 @@ def signup():
             if not is_strong:
                 error = strength_err
             else:
+                pin = request.form.get("command_pin", "").strip()
                 conn = get_db()
+                if role in ("officer", "admin"):
+                    valid_pin = get_command_pin(conn)
+                    if not pin or pin != valid_pin:
+                        error = f"Invalid Command Authorization PIN. Registration as {role.capitalize()} is restricted to authorized personnel."
+                        conn.close()
+                        return render_template("signup.html", error=error, active_role=role, name=name)
+
                 if _name_taken(conn, name):
                     error = "That name is already registered. Please log in or use a different name."
                     conn.close()
@@ -1708,13 +1743,31 @@ def admin_dashboard():
     conn = get_db()
     unit_summary, levels = get_unit_summary(conn)
     total, high, medium, low = count_levels(conn, levels)
+    active_pin = get_command_pin(conn)
     conn.close()
     return render_template(
         "admin_dashboard.html",
         admin_name=session["user_name"],
         unit_summary=unit_summary,
         total_personnel=total, total_high=high, total_medium=medium, total_low=low,
+        command_pin=active_pin,
     )
+
+
+@app.route("/admin/update_pin", methods=["POST"])
+@role_required("admin")
+def admin_update_pin():
+    sync_db_from_blob(force=True)
+    new_pin = request.form.get("new_pin", "").strip()
+    if not new_pin or not new_pin.isdigit() or len(new_pin) < 4 or len(new_pin) > 6:
+        return redirect(url_for("admin_dashboard"))
+    conn = get_db()
+    set_command_pin(conn, new_pin)
+    log_activity(conn, session["user_id"], "Updated Command Authorization PIN", details=f"PIN set to {new_pin}")
+    conn.commit()
+    conn.close()
+    sync_db_to_blob()
+    return redirect(url_for("admin_dashboard", pin_updated="1"))
 
 
 @app.route("/admin/generate_code", methods=["POST"])

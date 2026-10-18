@@ -386,17 +386,17 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         [
             Paragraph("<code>signup.html</code>", code_style),
             Paragraph("<code>/signup</code>", code_style),
-            Paragraph("Personnel registration form. Unit selection, live password strength requirements meter, and officer auto-assignment notice.", table_cell)
+            Paragraph("Unified 3-tab registration form (Personnel/Officer/Admin). Frictionless soldier signup with Command Security PIN protection for Officer/Admin.", table_cell)
         ],
         [
             Paragraph("<code>officer_signup.html</code>", code_style),
             Paragraph("<code>/officer_signup</code>", code_style),
-            Paragraph("Officer registration. Requires cryptographically verified one-time officer access code (<code>OFC-XXXXXX</code>).", table_cell)
+            Paragraph("Direct welfare officer registration gateway. Auto-selects officer tab and enforces 4-digit Command Authorization PIN validation.", table_cell)
         ],
         [
             Paragraph("<code>admin_signup.html</code>", code_style),
             Paragraph("<code>/admin_signup</code>", code_style),
-            Paragraph("Senior Administrator registration. Requires one-time administrator access code (<code>ADM-XXXXXX</code>).", table_cell)
+            Paragraph("Direct senior command registration gateway. Auto-selects admin tab and enforces 4-digit Command Authorization PIN validation.", table_cell)
         ],
         [
             Paragraph("<code>upgrade_password.html</code>", code_style),
@@ -456,7 +456,7 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         [
             Paragraph("<code>admin_dashboard.html</code>", code_style),
             Paragraph("<code>/admin_dashboard</code>", code_style),
-            Paragraph("Senior Command Command Center. Unit stress distribution breakdown, high-risk flags, one-time code generator, batch export buttons.", table_cell)
+            Paragraph("Senior Command Center. Organization metrics, unit wellness breakdowns, Command Security PIN management console, and force exports.", table_cell)
         ],
         [
             Paragraph("<code>admin_units.html</code>", code_style),
@@ -514,15 +514,15 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         [Paragraph("<b>Route Path</b>", table_header), Paragraph("<b>HTTP</b>", table_header), Paragraph("<b>Role</b>", table_header), Paragraph("<b>Functionality & Behavior</b>", table_header)],
         [Paragraph("<code>/login</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Authenticates users, checks password strength; redirects to upgrade or dashboard.", table_cell)],
         [Paragraph("<code>/forgot_password</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Identity recovery via Name + Unit + Role match; sets strong password & syncs to cloud.", table_cell)],
-        [Paragraph("<code>/signup</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Creates soldier account; enforces strong password; calls pick_officer().", table_cell)],
-        [Paragraph("<code>/officer_signup</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Validates and consumes single-use OFC-* code; creates officer account.", table_cell)],
-        [Paragraph("<code>/admin_signup</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Validates and consumes single-use ADM-* code; creates admin account.", table_cell)],
+        [Paragraph("<code>/signup</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Unified 3-tab registration; verifies PIN for officer/admin; calls pick_officer().", table_cell)],
+        [Paragraph("<code>/officer_signup</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Redirects to officer signup tab; requires 4-digit Command Authorization PIN.", table_cell)],
+        [Paragraph("<code>/admin_signup</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Redirects to admin signup tab; requires 4-digit Command Authorization PIN.", table_cell)],
         [Paragraph("<code>/upgrade_password</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Auth", badge_pill), Paragraph("Upgrades legacy/weak password to PBKDF2 hash and syncs to cloud storage.", table_cell)],
         [Paragraph("<code>/submit_survey</code>", code_style), Paragraph("POST", table_cell), Paragraph("Soldier", badge_pill), Paragraph("Validates inputs; invokes Random Forest ML model; writes DailyData record.", table_cell)],
         [Paragraph("<code>/submit_stress_request</code>", code_style), Paragraph("POST", table_cell), Paragraph("Soldier", badge_pill), Paragraph("Dispatches confidential stress relief request to assigned officer.", table_cell)],
         [Paragraph("<code>/officer/requests/&lt;id&gt;/advance</code>", code_style), Paragraph("POST", table_cell), Paragraph("Officer", badge_pill), Paragraph("Transitions request through stage pipeline (New &rarr; Acknowledged &rarr; Resolved).", table_cell)],
         [Paragraph("<code>/add_note</code>", code_style), Paragraph("POST", table_cell), Paragraph("Officer", badge_pill), Paragraph("Saves confidential clinical counseling note and records audit ActivityLog.", table_cell)],
-        [Paragraph("<code>/admin/generate_code</code>", code_style), Paragraph("POST", table_cell), Paragraph("Admin", badge_pill), Paragraph("Generates cryptographically random one-time registration codes for staff.", table_cell)],
+        [Paragraph("<code>/admin/update_pin</code>", code_style), Paragraph("POST", table_cell), Paragraph("Admin", badge_pill), Paragraph("Rotates the active 4-digit Command Authorization PIN in SystemConfig.", table_cell)],
         [Paragraph("<code>/admin/export_excel</code>", code_style), Paragraph("GET", table_cell), Paragraph("Admin", badge_pill), Paragraph("Generates styled OpenPyXL workbook containing force-wide health data.", table_cell)],
         [Paragraph("<code>/officer/export_report</code>", code_style), Paragraph("GET", table_cell), Paragraph("Officer", badge_pill), Paragraph("Compiles ReportLab PDF wellness dossier for assigned personnel.", table_cell)],
     ]
@@ -627,14 +627,14 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
             Paragraph("Daily wellness check-ins. One record per user per day. Stores physiological telemetry and AI predictions.", table_cell)
         ],
         [
-            Paragraph("<code>OfficerCodes</code>", code_style),
+            Paragraph("<code>OfficerCodes</code> / <code>AdminCodes</code>", code_style),
             Paragraph("<code>id (PK), code (UNIQUE), is_used (0|1)</code>", code_style),
-            Paragraph("Cryptographically seeded one-time registration codes (<code>OFC-XXXXXX</code>) for authorized medical officers.", table_cell)
+            Paragraph("Legacy one-time registration codes (<code>OFC-*</code>, <code>ADM-*</code>) preserved in schema for backward compatibility.", table_cell)
         ],
         [
-            Paragraph("<code>AdminCodes</code>", code_style),
-            Paragraph("<code>id (PK), code (UNIQUE), is_used (0|1)</code>", code_style),
-            Paragraph("Single-use registration tokens (<code>ADM-XXXXXX</code>) for system administrators.", table_cell)
+            Paragraph("<code>SystemConfig</code>", code_style),
+            Paragraph("<code>key (PK), value, updated_at</code>", code_style),
+            Paragraph("Stores platform security configuration including the active 4-digit Command Authorization PIN for staff onboarding.", table_cell)
         ],
         [
             Paragraph("<code>StressRequests</code>", code_style),
@@ -650,11 +650,6 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
             Paragraph("<code>ActivityLog</code>", code_style),
             Paragraph("<code>id (PK), actor_id (FK), action, target_user_id (FK), details, created_at</code>", code_style),
             Paragraph("Immutable audit trail logging all officer and admin actions for accountability and forensic integrity.", table_cell)
-        ],
-        [
-            Paragraph("<code>PersonnelTags</code>", code_style),
-            Paragraph("<code>id (PK), user_id (FK), tag (NOCASE), officer_id (FK), created_date, UNIQUE(user_id, tag)</code>", code_style),
-            Paragraph("Archived table: Historical categorization tags preserved in database schema.", table_cell)
         ],
     ]
     t_schema = Table(schema_data, colWidths=[90, 200, printable_width - 290])
@@ -731,6 +726,13 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
                       "Audited all views across the platform and replaced 65 legacy Unicode emoji glyphs with custom, scalable inline SVG vector icons. "
                       "Suppressed intrusive browser-native password reveal glyphs (Edge black eye) in favor of bespoke SVG eye toggles, and introduced real-time Confirm Password verification across registration flows.", table_cell),
             Paragraph("Eliminates cross-platform OS font rendering disparities, prevents typo lockouts during registration, and delivers a sleek military-grade aesthetic.", table_cell)
+        ],
+        [
+            Paragraph("<b>Security & Auth</b>", table_cell),
+            Paragraph("<b>Anti-Role Elevation Command PIN:</b><br/>"
+                      "Engineered a dynamic 4-digit Command Authorization PIN gating Officer and Admin registrations. "
+                      "Prevents unauthorized public role elevation while maintaining frictionless soldier onboarding and Senior Admin dashboard PIN rotation control.", table_cell),
+            Paragraph("Eliminates front-door privilege escalation risks without imposing external SMS or email dependencies.", table_cell)
         ],
         [
             Paragraph("<b>Security & Auth</b>", table_cell),
