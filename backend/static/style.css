@@ -30,6 +30,8 @@ html, body {
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -3204,9 +3206,9 @@ html.dark .alert-success {
   }
 
   .wrap {
-    padding: 16px 14px 50px;
+    padding: 16px 14px 96px;
     padding-top: max(16px, env(safe-area-inset-top));
-    padding-bottom: max(50px, env(safe-area-inset-bottom));
+    padding-bottom: max(96px, calc(76px + env(safe-area-inset-bottom))) !important;
     padding-left: max(14px, env(safe-area-inset-left));
     padding-right: max(14px, env(safe-area-inset-right));
   }
@@ -3366,9 +3368,9 @@ html.dark .alert-success {
 /* Small Mobile Screens (<= 480px) */
 @media (max-width: 480px) {
   .wrap {
-    padding: 14px 10px 45px;
+    padding: 14px 10px 96px;
     padding-top: max(14px, env(safe-area-inset-top));
-    padding-bottom: max(45px, env(safe-area-inset-bottom));
+    padding-bottom: max(96px, calc(76px + env(safe-area-inset-bottom))) !important;
     padding-left: max(10px, env(safe-area-inset-left));
     padding-right: max(10px, env(safe-area-inset-right));
   }
@@ -3565,6 +3567,8 @@ html.dark .alert-success {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 6px 10px;
 }
 
 .slider-title {
@@ -3912,6 +3916,25 @@ html.dark .filter-pill-btn:hover {
   color: #ffffff;
 }
 
+/* --- Studio & Gauge Header Wrappers --- */
+.studio-header-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.gauge-telemetry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
 /* --- Mobile Bottom Floating Navigation Dock --- */
 .mobile-nav-dock {
   display: none;
@@ -3921,19 +3944,21 @@ html.dark .filter-pill-btn:hover {
   .mobile-nav-dock {
     display: flex;
     position: fixed;
-    bottom: 18px;
+    bottom: max(14px, env(safe-area-inset-bottom));
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(15, 23, 42, 0.92);
+    background: rgba(15, 23, 42, 0.94);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 32px;
-    padding: 6px 16px;
-    gap: 18px;
+    padding: 6px 14px;
+    gap: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
     z-index: 1000;
-    max-width: 90vw;
+    max-width: calc(100vw - 20px);
+    box-sizing: border-box;
+    justify-content: space-around;
   }
 
   .dock-btn {
@@ -3948,6 +3973,7 @@ html.dark .filter-pill-btn:hover {
     padding: 4px 8px;
     border-radius: 12px;
     transition: all 0.2s ease;
+    min-width: 0;
   }
 
   .dock-btn svg {
@@ -3960,5 +3986,142 @@ html.dark .filter-pill-btn:hover {
 
   .dock-btn.active svg {
     stroke: #60a5fa;
+  }
+}
+
+/* --- Mobile Specific Studio & Biometric Alignment Rules --- */
+@media (max-width: 580px) {
+  .precheck-card {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    gap: 10px;
+    padding: 12px 14px;
+  }
+  .precheck-card > div {
+    justify-content: center;
+  }
+  .precheck-pill {
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.35;
+  }
+  .gauge-telemetry-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .studio-header-wrap h3 {
+    font-size: 16px;
+  }
+  
+  .slider-title {
+    font-size: 13px;
+  }
+  
+  .slider-badge {
+    font-size: 11.5px;
+    padding: 2.5px 8px;
+  }
+  
+  .slider-sub-labels {
+    font-size: 10px;
+  }
+
+  .mood-selector-grid {
+    gap: 4px;
+  }
+
+  .mood-btn {
+    padding: 8px 2px;
+    border-radius: 10px;
+    min-width: 0;
+  }
+
+  .mood-val-circle {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+
+  .mood-desc {
+    font-size: 8.5px;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: block;
+  }
+
+  .gauge-card {
+    padding: 18px 12px 16px;
+  }
+
+  .gauge-svg-wrap {
+    width: 100%;
+    max-width: 200px;
+    height: 115px;
+  }
+
+  .gauge-reading-title {
+    font-size: 18px;
+  }
+
+  .gauge-reading-desc {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .mobile-nav-dock {
+    padding: 5px 8px;
+    gap: 4px;
+    width: calc(100vw - 16px);
+    justify-content: space-between;
+  }
+  .dock-btn {
+    padding: 4px 4px;
+    font-size: 9px;
+  }
+  .dock-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .mood-selector-grid {
+    gap: 2.5px;
+  }
+  
+  .mood-btn {
+    padding: 6px 1px;
+  }
+
+  .mood-val-circle {
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+  }
+
+  .mood-desc {
+    font-size: 7.5px;
+  }
+  
+  .slider-title {
+    font-size: 12px;
+  }
+  
+  .slider-badge {
+    font-size: 11px;
+    padding: 2px 6px;
   }
 }
