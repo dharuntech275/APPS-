@@ -60,21 +60,6 @@
         <button type="submit" class="btn">Submit Check-in</button>
       </form>
     </div>
-
-    {% if trend_labels %}
-    <div class="card fade-in" style="padding: 24px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
-        <h4 style="font-family:'Plus Jakarta Sans', sans-serif; font-size:12.5px; color:var(--steel-deep); margin:0; font-weight:700; text-transform:uppercase; letter-spacing:0.04em;">7-Day Sleep &amp; Duty Trend</h4>
-        <a href="/snapshot" class="view-results-link" style="font-size:12px;">Detailed Snapshot &rarr;</a>
-      </div>
-      <canvas id="dashboardTrendChart" style="max-height:190px;"></canvas>
-
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; padding-top:16px; border-top:1px solid var(--line); font-size:12.5px;">
-        <span style="color:var(--steel);">Need to talk confidentially?</span>
-        <a href="/talk_to_officer" class="view-results-link" style="font-size:12px;">Talk to Officer &rarr;</a>
-      </div>
-    </div>
-    {% endif %}
   </div>
 
 </div>
@@ -91,83 +76,6 @@
     } catch(e) {}
   })();
 </script>
-
-{% if trend_labels %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-<script>
-  (function() {
-    var rawLabels = {{ trend_labels|tojson }};
-    var monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    var formattedLabels = rawLabels.map(function(l) {
-      try {
-        var p = l.split('-');
-        if (p.length === 3) {
-          return parseInt(p[2], 10) + ' ' + monthNames[parseInt(p[1], 10) - 1];
-        }
-      } catch(e) {}
-      return l;
-    });
-
-    var isDark = document.documentElement.classList.contains('dark');
-    var tickColor = isDark ? '#94a3b8' : '#64748b';
-    var gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)';
-
-    new Chart(document.getElementById('dashboardTrendChart'), {
-      type: 'bar',
-      data: {
-        labels: formattedLabels,
-        datasets: [
-          {
-            label: 'Sleep Hrs',
-            data: {{ trend_sleep|tojson }},
-            backgroundColor: '#4c7a5e',
-            borderRadius: 4,
-            maxBarThickness: 28
-          },
-          {
-            label: 'Duty Hrs',
-            data: {{ trend_duty|tojson }},
-            backgroundColor: '#9c3d3d',
-            borderRadius: 4,
-            maxBarThickness: 28
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: { boxWidth: 10, boxHeight: 10, font: { size: 11, weight: '600' }, color: tickColor, padding: 12 }
-          }
-        },
-        scales: {
-          x: {
-            ticks: {
-              maxRotation: 0,
-              minRotation: 0,
-              autoSkip: false,
-              font: { size: 10.5, weight: '600' },
-              color: tickColor
-            },
-            grid: { display: false }
-          },
-          y: {
-            beginAtZero: true,
-            ticks: {
-              stepSize: 5,
-              font: { size: 10 },
-              color: tickColor
-            },
-            grid: { color: gridColor }
-          }
-        }
-      }
-    });
-  })();
-</script>
-{% endif %}
 
 </body>
 </html>
