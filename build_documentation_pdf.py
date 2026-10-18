@@ -246,7 +246,7 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
 
     story.append(Paragraph("Complete Technical Documentation", title_style))
     story.append(Spacer(1, 4))
-    story.append(Paragraph("Frontend, Backend Architecture, Database Schema, Machine Learning & Recent Enhancements", subtitle_style))
+    story.append(Paragraph("Frontend, Backend Architecture, Security Matrix, Database Schema, Machine Learning & Recent Enhancements", subtitle_style))
     story.append(Spacer(1, 14))
 
     meta_data = [
@@ -816,11 +816,81 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
     story.append(Spacer(1, 14))
 
     # =========================================================================
-    # SECTION 8: DEPLOYMENT & PRODUCTION SPECIFICATIONS
+    # SECTION 8: SECURITY ARCHITECTURE & THREAT DEFENSE MATRIX
     # =========================================================================
     story.append(PageBreak())
-    story.append(Paragraph("8. Deployment & Production Verification", h1_style))
-    story.append(HRFlowable(width="100%", thickness=1, color=c_primary, spaceBefore=2, spaceAfter=8))
+    story.append(Paragraph("8. Security Architecture & Threat Defense Matrix", h1_style))
+    story.append(HRFlowable(width="100%", thickness=1, color=c_primary, spaceBefore=2, spaceAfter=6))
+
+    security_matrix_data = [
+        [
+            Paragraph("<b>Security Feature / Layer</b>", table_header),
+            Paragraph("<b>Threat / Vulnerability Mitigated</b>", table_header),
+            Paragraph("<b>Protection Mechanism & Technical Defense</b>", table_header)
+        ],
+        [
+            Paragraph("<b>Command Authorization PIN</b>", table_cell),
+            Paragraph("<b>Unauthorized Role Elevation</b><br/>Rogue users or soldiers self-registering as Welfare Officers or Senior Admins.", table_cell),
+            Paragraph("Server-side validation against dynamic 4-digit PIN stored in <code>SystemConfig</code> during staff signup. Rotatable by Senior Admin from dashboard; protects staff roles without SMS/email dependencies.", table_cell)
+        ],
+        [
+            Paragraph("<b>Cryptographic Password Hashing</b>", table_cell),
+            Paragraph("<b>Credential Dumping & Cracking</b><br/>Plaintext password theft via database dumps or memory leaks.", table_cell),
+            Paragraph("Individual per-user cryptographic salting using compute-heavy key derivation (PBKDF2-HMAC-SHA256 / scrypt via Werkzeug), rendering offline dictionary and GPU rainbow table attacks computationally infeasible.", table_cell)
+        ],
+        [
+            Paragraph("<b>Role-Based Access Control (RBAC)</b>", table_cell),
+            Paragraph("<b>Authorization Bypass & IDOR</b><br/>Unauthorized access to clinical dossiers, welfare requests, or admin controls.", table_cell),
+            Paragraph("Server-side view gating via <code>@login_required</code> and <code>@role_required('admin'|'officer'|'personnel')</code> decorators. Session tokens validated on every request; unauthorized attempts redirected with flash warnings.", table_cell)
+        ],
+        [
+            Paragraph("<b>Parameterized SQL Execution</b>", table_cell),
+            Paragraph("<b>SQL Injection (SQLi)</b><br/>Arbitrary SQL injection altering database schema, extracting data, or bypassing authentication.", table_cell),
+            Paragraph("100% of queries use SQLite DB-API parameter substitution (<code>?</code> placeholders). User input is treated strictly as literal data boundaries and never concatenated into executable SQL strings.", table_cell)
+        ],
+        [
+            Paragraph("<b>CSRF & Same-Origin Enforcement</b>", table_cell),
+            Paragraph("<b>Cross-Site Request Forgery (CSRF)</b><br/>Third-party malicious sites issuing forged POST requests on behalf of authenticated users.", table_cell),
+            Paragraph("Strict origin and referer header verification checks on all state-mutating POST requests (surveys, PIN updates, notes), rejecting cross-origin submissions.", table_cell)
+        ],
+        [
+            Paragraph("<b>Rate Limiting & Auth Backoff</b>", table_cell),
+            Paragraph("<b>Brute-Force & Credential Stuffing</b><br/>Automated dictionary attacks and credential guessing scripts.", table_cell),
+            Paragraph("Progressive login delay backoff and attempt throttling on <code>/login</code> endpoints, neutralizing high-velocity automated password guessing attacks.", table_cell)
+        ],
+        [
+            Paragraph("<b>Formula & CSV Injection Defense</b>", table_cell),
+            Paragraph("<b>Spreadsheet Remote Code Execution</b><br/>Formula payloads (<code>=cmd|' /C calc'!A0</code>) executing when opening Excel exports.", table_cell),
+            Paragraph("Sanitizes all exported cell strings starting with formula triggers (<code>=, +, -, @</code>) by prepending a single quote (<code>'</code>), disarming executable command triggers in spreadsheet software.", table_cell)
+        ],
+        [
+            Paragraph("<b>Immutable Audit Logging</b>", table_cell),
+            Paragraph("<b>Repudiation & Insider Tampering</b><br/>Covert modification or denial of clinical counseling notes and case actions.", table_cell),
+            Paragraph("Dedicated append-only <code>ActivityLog</code> table automatically records actor ID, action type, target soldier, and ISO timestamps for all notes, status advancements, and security reconfigurations.", table_cell)
+        ],
+        [
+            Paragraph("<b>Cloud Blob Persistence Engine</b>", table_cell),
+            Paragraph("<b>Serverless Cold-Boot Data Loss</b><br/>Vercel ephemeral container resets wiping SQLite database file.", table_cell),
+            Paragraph("Custom <code>SyncedConnection</code> automatically snapshots SQLite to private Vercel Blob store on every commit and hydrates upon cold boots, guaranteeing zero data loss across container lifecycles.", table_cell)
+        ],
+    ]
+    t_sec = Table(security_matrix_data, colWidths=[115, 140, printable_width - 255])
+    t_sec.setStyle(TableStyle([
+        ('BACKGROUND', (0,0), (-1,0), c_primary),
+        ('ALIGN', (0,0), (-1,-1), 'LEFT'),
+        ('VALIGN', (0,0), (-1,-1), 'TOP'),
+        ('GRID', (0,0), (-1,-1), 0.5, c_border),
+        ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_bg_light]),
+        ('PADDING', (0,0), (-1,-1), 2.8),
+    ]))
+    story.append(t_sec)
+    story.append(Spacer(1, 8))
+
+    # =========================================================================
+    # SECTION 9: DEPLOYMENT & PRODUCTION SPECIFICATIONS
+    # =========================================================================
+    story.append(Paragraph("9. Deployment & Production Verification", h1_style))
+    story.append(HRFlowable(width="100%", thickness=1, color=c_primary, spaceBefore=2, spaceAfter=6))
 
     deploy_data = [
         [Paragraph("<b>Parameter</b>", table_header), Paragraph("<b>Production Configuration Value</b>", table_header)],
@@ -840,10 +910,10 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
         ('GRID', (0,0), (-1,-1), 0.5, c_border),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_bg_light]),
-        ('PADDING', (0,0), (-1,-1), 5),
+        ('PADDING', (0,0), (-1,-1), 3.5),
     ]))
     story.append(t_deploy)
-    story.append(Spacer(1, 12))
+    story.append(Spacer(1, 8))
 
     story.append(callout(
         "DOCUMENT CONCLUSION & SYSTEM HEALTH STATUS",
