@@ -29,44 +29,29 @@
 
   <div class="auth-form-panel">
     <div class="auth-card">
-      <div class="brand">APPS <span>•</span> PERSONNEL REGISTRATION</div>
-      <h1>Personnel Sign Up</h1>
-      <p class="sub">Enter your details to create your service personnel account and start wellness check-ins.</p>
+      <div class="brand" id="brandPill">APPS <span>•</span> PERSONNEL</div>
+      <h1 id="formTitle">Personnel Sign Up</h1>
+      <p class="sub">Select your role and enter your details to create an account.</p>
+
+      <!-- Role Selector Tabs -->
+      <div class="role-tabs" id="roleTabs">
+        <button type="button" class="role-tab active" data-role="personnel" onclick="switchRole('personnel')"><svg class="role-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Personnel</button>
+        <button type="button" class="role-tab" data-role="officer" onclick="switchRole('officer')"><svg class="role-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Officer</button>
+        <button type="button" class="role-tab" data-role="admin" onclick="switchRole('admin')"><svg class="role-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Admin</button>
+      </div>
 
       {% if error %}
         <div class="error-box">{{ error }}</div>
       {% endif %}
 
       <form method="POST" action="/signup">
-        <input type="hidden" name="role" id="roleInput" value="personnel">
+        <input type="hidden" name="role" id="roleInput" value="{{ active_role or 'personnel' }}">
 
         <label>Name</label>
         <input type="text" name="name" value="{{ name or request.args.get('name', '') }}" placeholder="Full Name" required autofocus>
 
         <label id="unitLabel">Unit</label>
         <input type="text" name="unit" id="unitInput" placeholder="e.g. 1st Infantry / Alpha" required>
-
-        <label>Contact (Mobile Number or Email)</label>
-        <div style="display:flex; gap:8px; margin-bottom:14px;">
-          <input type="text" name="contact" id="contactInput" value="{{ contact or '' }}" placeholder="+91 98765 43210 or name@service.mil" required style="flex:1; margin-bottom:0;">
-          <button type="button" id="sendOtpBtn" class="btn" style="width:auto; padding:0 18px; font-size:12.5px; font-weight:700; white-space:nowrap; background:var(--steel-deep); color:#fff; border-radius:10px; cursor:pointer;" onclick="requestOtp('personnel')">Send OTP</button>
-        </div>
-
-        <div id="otpDispatchBanner" style="display:none; margin-bottom:14px; padding:12px 14px; background:rgba(37,99,235,0.08); border:1px solid rgba(37,99,235,0.25); border-radius:10px; font-size:12.5px; color:var(--ink);">
-          <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-            <span style="font-size:16px;">📨</span>
-            <strong style="color:var(--primary);">APPS Security OTP Dispatched</strong>
-          </div>
-          <p style="margin:0; color:var(--steel); font-size:12px;">Verification Code: <span id="demoOtpBadge" style="font-family:monospace; font-weight:700; font-size:15px; color:var(--primary); background:rgba(37,99,235,0.12); padding:2px 7px; border-radius:6px; letter-spacing:2px;"></span> (Valid 5 mins)</p>
-        </div>
-
-        <div id="otpInputSection" style="margin-bottom:16px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-            <label style="margin-bottom:0;">6-Digit Verification OTP</label>
-            <span id="resendTimer" style="font-size:11.5px; color:var(--steel);"></span>
-          </div>
-          <input type="text" name="otp" id="otpInput" maxlength="6" pattern="[0-9]{6}" placeholder="Enter 6-digit OTP" autocomplete="one-time-code" style="letter-spacing:4px; font-size:16px; font-weight:700; font-family:monospace; text-align:center;" required>
-        </div>
 
         <label>Password</label>
         <div class="pwd-input-wrap">
@@ -85,17 +70,78 @@
         </div>
         <div id="pwMatchStatus" style="font-size:12px; margin-bottom:22px; min-height:16px;"></div>
 
-        <button type="submit" class="btn" id="submitBtn">Verify OTP & Register as Personnel &rarr;</button>
+        <button type="submit" class="btn" id="submitBtn">Register as Personnel</button>
       </form>
 
       <p class="foot-link">Already have an account? <a href="/login">Sign In Here</a></p>
-      <p class="foot-link" style="margin-top:14px; font-size:12px; color:var(--steel);">Welfare Officer or Administrator? <a href="/officer_signup" style="font-weight:600;">Authorized Access Registration &rarr;</a></p>
     </div>
   </div>
 
 </div>
 
 <script>
+  var roleData = {
+    personnel: {
+      pill: 'APPS • PERSONNEL',
+      title: 'Personnel Sign Up',
+      brandTitle: 'Join the Welfare Monitoring Network',
+      brandSub: 'Register once to start your daily check-ins, and let the system watch out for you before strain becomes a bigger problem.',
+      unitLabel: 'Unit',
+      unitPlaceholder: 'e.g. 1st Infantry / Alpha',
+      btnText: 'Register as Personnel'
+    },
+    officer: {
+      pill: 'APPS • WELFARE OFFICER',
+      title: 'Welfare Officer Sign Up',
+      brandTitle: 'Welfare Officer Command Portal',
+      brandSub: 'Register your Welfare Officer account to coordinate stress monitoring, support requests, and counseling.',
+      unitLabel: 'Unit / Station',
+      unitPlaceholder: 'e.g. 1st Infantry / Alpha',
+      btnText: 'Register as Officer'
+    },
+    admin: {
+      pill: 'APPS • SENIOR ADMIN',
+      title: 'Senior Admin Sign Up',
+      brandTitle: 'Senior Administration Console',
+      brandSub: 'Register your Senior Administrator account to access organization metrics, reports, and unit breakdowns.',
+      unitLabel: 'Unit / Department',
+      unitPlaceholder: 'e.g. HQ Command / Welfare Directorate',
+      btnText: 'Register as Senior Admin'
+    }
+  };
+
+  function switchRole(role) {
+    if (!roleData[role]) role = 'personnel';
+    var d = roleData[role];
+
+    // Update active tab buttons
+    document.querySelectorAll('.role-tab').forEach(function(tab) {
+      if (tab.getAttribute('data-role') === role) {
+        tab.classList.add('active');
+      } else {
+        tab.classList.remove('active');
+      }
+    });
+
+    // Update hidden form input
+    document.getElementById('roleInput').value = role;
+
+    // Update UI text and placeholders
+    document.getElementById('brandPill').innerHTML = d.pill.replace('•', '<span>•</span>');
+    document.getElementById('formTitle').textContent = d.title;
+    var bt = document.getElementById('brandTitle'); if (bt) bt.textContent = d.brandTitle;
+    var bs = document.getElementById('brandSub'); if (bs) bs.textContent = d.brandSub;
+    document.getElementById('unitLabel').textContent = d.unitLabel;
+    document.getElementById('unitInput').placeholder = d.unitPlaceholder;
+    document.getElementById('submitBtn').textContent = d.btnText;
+
+    // Update URL query string smoothly
+    try {
+      var url = new URL(window.location);
+      url.searchParams.set('role', role);
+      window.history.replaceState({}, '', url);
+    } catch(e) {}
+  }
 
   var EYE_SVG = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
   var EYE_OFF_SVG = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
@@ -145,68 +191,12 @@
     }
   });
 
-  function requestOtp(role) {
-    var contactInp = document.getElementById('contactInput');
-    var btn = document.getElementById('sendOtpBtn');
-    var banner = document.getElementById('otpDispatchBanner');
-    var badge = document.getElementById('demoOtpBadge');
-    var timerSpan = document.getElementById('resendTimer');
-    var otpInp = document.getElementById('otpInput');
-
-    var contactVal = contactInp ? contactInp.value.trim() : '';
-    if (!contactVal) {
-      alert('Please enter your mobile number or email address first.');
-      if (contactInp) contactInp.focus();
-      return;
-    }
-
-    btn.disabled = true;
-    btn.innerText = 'Sending...';
-
-    fetch('/api/send_otp', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ contact: contactVal, role: role })
-    })
-    .then(function(res) { return res.json(); })
-    .then(function(data) {
-      if (data.success) {
-        if (banner) banner.style.display = 'block';
-        if (badge) badge.innerText = data.demo_otp || 'SENT';
-        if (otpInp) {
-          otpInp.value = data.demo_otp || '';
-          otpInp.focus();
-        }
-        startCountdown(btn, timerSpan, 45);
-      } else {
-        alert(data.error || 'Failed to dispatch OTP. Please check your contact and try again.');
-        btn.disabled = false;
-        btn.innerText = 'Send OTP';
-      }
-    })
-    .catch(function(err) {
-      alert('Network error while requesting OTP. Please try again.');
-      btn.disabled = false;
-      btn.innerText = 'Send OTP';
-    });
-  }
-
-  function startCountdown(btn, timerSpan, seconds) {
-    var remaining = seconds;
-    btn.disabled = true;
-    var interval = setInterval(function() {
-      remaining--;
-      if (remaining <= 0) {
-        clearInterval(interval);
-        btn.disabled = false;
-        btn.innerText = 'Resend OTP';
-        if (timerSpan) timerSpan.innerText = '';
-      } else {
-        btn.innerText = 'Wait (' + remaining + 's)';
-        if (timerSpan) timerSpan.innerText = 'Resend in ' + remaining + 's';
-      }
-    }, 1000);
-  }
+  // Initialize on page load
+  (function initRole() {
+    var params = new URLSearchParams(window.location.search);
+    var initial = params.get('role') || '{{ active_role or "personnel" }}';
+    switchRole(initial);
+  })();
 
   // Theme Toggle Handler
   (function(){
