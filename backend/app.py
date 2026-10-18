@@ -159,6 +159,8 @@ def sync_db_to_blob():
 
         with urlopen(req, timeout=15) as resp:
             if resp.status in (200, 201):
+                global _last_blob_sync_time
+                _last_blob_sync_time = time.time()
                 print(f"[Blob Sync] Saved apps.db to Vercel Blob ({len(data)} bytes)")
                 return True
     except Exception as e:
@@ -307,7 +309,6 @@ def init_db():
             updated_at REAL NOT NULL
         )
     """)
-    c.execute("INSERT OR IGNORE INTO SystemConfig (key, value, updated_at) VALUES ('command_pin', '2026', ?)", (time.time(),))
 
     c.execute("""
         CREATE TABLE IF NOT EXISTS StressRequests (
@@ -484,12 +485,12 @@ def safe_cell(value):
 
 
 def get_command_pin(conn):
-    """Retrieve the active 4-digit Command Authorization PIN."""
+    """Retrieve the active 4-digit Command Authorization PIN, or None if not set yet."""
     try:
         row = conn.execute("SELECT value FROM SystemConfig WHERE key = 'command_pin'").fetchone()
-        return row["value"] if row else "2026"
+        return row["value"] if row else None
     except Exception:
-        return "2026"
+        return None
 
 
 def set_command_pin(conn, new_pin):
@@ -700,6 +701,11 @@ def signup():
     if role not in ("personnel", "officer", "admin"):
         role = "personnel"
 
+    conn = get_db()
+    admin_count = conn.execute("SELECT COUNT(*) FROM Users WHERE role = 'admin'").fetchone()[0]
+    is_first_admin = (admin_count == 0)
+    conn.close()
+
     if request.method == "POST":
         sync_db_from_blob(force=True)
         name = request.form.get("name", "").strip()
@@ -723,12 +729,26 @@ def signup():
             else:
                 pin = request.form.get("command_pin", "").strip()
                 conn = get_db()
-                if role in ("officer", "admin"):
+                admin_count = conn.execute("SELECT COUNT(*) FROM Users WHERE role = 'admin'").fetchone()[0]
+                is_first_admin = (admin_count == 0)
+
+                if role == "admin" and is_first_admin:
+                    # First-Time Master Admin creates the Master PIN!
+                    if not pin or not pin.isdigit() or len(pin) < 4 or len(pin) > 6:
+                        error = "Please create a 4-digit Master Command PIN (numbers only, e.g. 7788) for system security."
+                        conn.close()
+                        return render_template("signup.html", error=error, active_role=role, name=name, is_first_admin=True)
+                    set_command_pin(conn, pin)
+                elif role in ("officer", "admin"):
                     valid_pin = get_command_pin(conn)
+                    if not valid_pin:
+                        error = "System initialization required: Senior Administrator must be registered first."
+                        conn.close()
+                        return render_template("signup.html", error=error, active_role=role, name=name, is_first_admin=is_first_admin)
                     if not pin or pin != valid_pin:
                         error = f"Invalid Command Authorization PIN. Registration as {role.capitalize()} is restricted to authorized personnel."
                         conn.close()
-                        return render_template("signup.html", error=error, active_role=role, name=name)
+                        return render_template("signup.html", error=error, active_role=role, name=name, is_first_admin=is_first_admin)
 
                 if _name_taken(conn, name):
                     error = "That name is already registered. Please log in or use a different name."
@@ -759,7 +779,7 @@ def signup():
                     session["role"] = role
                     return redirect(home_for_role(role))
 
-    return render_template("signup.html", error=error, active_role=role, name=request.args.get("name", ""))
+    return render_template("signup.html", error=error, active_role=role, name=request.args.get("name", ""), is_first_admin=is_first_admin)
 
 
 @app.route("/officer_signup", methods=["GET", "POST"])

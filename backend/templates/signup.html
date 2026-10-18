@@ -57,7 +57,7 @@
         <div id="pinSection" style="display:none; margin-bottom:16px;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
             <label style="margin-bottom:0;" id="pinLabel">Command Authorization PIN</label>
-            <span style="font-size:10.5px; font-weight:700; color:#2563eb; background:rgba(37,99,235,0.1); padding:2px 8px; border-radius:6px; letter-spacing:0.04em;">RESTRICTED ROLE</span>
+            <span id="pinBadge" style="font-size:10.5px; font-weight:700; color:#2563eb; background:rgba(37,99,235,0.1); padding:2px 8px; border-radius:6px; letter-spacing:0.04em;">RESTRICTED ROLE</span>
           </div>
           <div class="pwd-input-wrap">
             <input type="password" name="command_pin" id="commandPinInput" maxlength="6" placeholder="Enter 4-digit Command PIN" style="letter-spacing:4px; font-size:15px; font-weight:700; font-family:monospace;">
@@ -65,7 +65,7 @@
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
           </div>
-          <p style="font-size:11.5px; color:var(--steel); margin:4px 0 0;">Official 4-digit authorization PIN required for staff onboarding.</p>
+          <p id="pinHelp" style="font-size:11.5px; color:var(--steel); margin:4px 0 0;">Official 4-digit authorization PIN required for staff onboarding.</p>
         </div>
 
         <label>Password</label>
@@ -151,8 +151,13 @@
     document.getElementById('submitBtn').textContent = d.btnText;
 
     // Toggle Command Authorization PIN section based on role
+    var isFirstAdmin = {{ 'true' if is_first_admin else 'false' }};
     var pinSec = document.getElementById('pinSection');
     var pinInp = document.getElementById('commandPinInput');
+    var pinLabel = document.getElementById('pinLabel');
+    var pinBadge = document.getElementById('pinBadge');
+    var pinHelp = document.getElementById('pinHelp');
+
     if (role === 'personnel') {
       if (pinSec) pinSec.style.display = 'none';
       if (pinInp) {
@@ -161,8 +166,26 @@
       }
     } else {
       if (pinSec) pinSec.style.display = 'block';
-      if (pinInp) {
-        pinInp.required = true;
+      if (pinInp) pinInp.required = true;
+
+      if (role === 'admin' && isFirstAdmin) {
+        if (pinLabel) pinLabel.textContent = 'Create Master Command PIN';
+        if (pinBadge) {
+          pinBadge.textContent = 'SET YOUR PIN';
+          pinBadge.style.color = '#15803d';
+          pinBadge.style.background = 'rgba(21,128,61,0.1)';
+        }
+        if (pinInp) pinInp.placeholder = 'Choose 4-digit Master PIN (e.g. 7788)';
+        if (pinHelp) pinHelp.textContent = 'Initial setup: Choose the 4-digit Master PIN that future officers & admins must use.';
+      } else {
+        if (pinLabel) pinLabel.textContent = 'Command Authorization PIN';
+        if (pinBadge) {
+          pinBadge.textContent = 'RESTRICTED ROLE';
+          pinBadge.style.color = '#2563eb';
+          pinBadge.style.background = 'rgba(37,99,235,0.1)';
+        }
+        if (pinInp) pinInp.placeholder = 'Enter 4-digit Command PIN';
+        if (pinHelp) pinHelp.textContent = 'Official 4-digit authorization PIN required for staff onboarding.';
       }
     }
 
