@@ -235,23 +235,41 @@ header.top {
 
 .mark {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 800;
+  font-weight: 900;
   font-size: 20px;
   letter-spacing: 0.08em;
-  background: linear-gradient(135deg, #0f172a 0%, #2563eb 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #0f172a;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 7px;
+  text-decoration: none;
   transition: transform 0.2s ease;
+  user-select: none;
 }
 .mark:hover {
   transform: scale(1.02);
 }
-.mark span {
-  color: var(--primary);
-  -webkit-text-fill-color: var(--primary);
+
+.mark-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(37, 99, 235, 0.1);
+  color: #2563eb;
+  border: 1px solid rgba(37, 99, 235, 0.22);
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.mark-text,
+.mark {
+  background: linear-gradient(135deg, #0f172a 0%, #2563eb 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 header.top .role-pill {
@@ -996,9 +1014,7 @@ body.admin-page header.top {
 }
 
 body.admin-page .mark {
-  background: linear-gradient(135deg, #0f172a 0%, #2563eb 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: inherit;
 }
 
 body.admin-page header.top .role-pill {
@@ -1762,40 +1778,40 @@ body.personnel-page {
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
-  gap: 5px;
-  width: 40px;
-  height: 40px;
-  padding: 0 10px;
+  align-items: center;
+  gap: 4.5px;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  min-height: 42px;
+  padding: 0;
   background: #ffffff;
-  border: 1.5px solid var(--line);
-  border-radius: 10px;
+  border: 1.5px solid rgba(203, 213, 225, 0.95);
+  border-radius: 11px;
   cursor: pointer;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+  touch-action: manipulation;
 }
 
 .nav-toggle span {
   display: block;
-  height: 2px;
-  background: var(--steel-deep);
-  border-radius: 2px;
-  transition: background 0.2s ease;
+  width: 20px;
+  height: 2.5px;
+  background: #0f172a;
+  border-radius: 3px;
+  transition: all 0.2s ease;
 }
 
 .nav-toggle:hover {
   background: #f1f5f9;
-  border-color: #cbd5e1;
+  border-color: #94a3b8;
+  transform: translateY(-1px);
 }
 
-html.dark body.admin-page .nav-toggle {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-html.dark body.admin-page .nav-toggle span {
-  background: #f8fafc;
-}
-html.dark body.admin-page .nav-toggle:hover {
-  background: rgba(255, 255, 255, 0.16);
+.nav-toggle:active {
+  transform: scale(0.96);
 }
 
 .nav-overlay {
@@ -2197,8 +2213,24 @@ html.dark header.top {
   border-bottom-color: rgba(255, 255, 255, 0.12);
 }
 
-html.dark .mark {
-  color: #f8fafc;
+html.dark .mark,
+html.dark body.admin-page .mark,
+html.dark body.officer-page .mark,
+html.dark body.personnel-page .mark,
+html.dark .mark-text {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #ffffff 0%, #93c5fd 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6));
+}
+
+html.dark .mark-icon-wrap {
+  background: rgba(59, 130, 246, 0.2) !important;
+  color: #60a5fa !important;
+  border-color: rgba(59, 130, 246, 0.45) !important;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.25) !important;
 }
 
 html.dark header.top .role-pill {
@@ -2257,17 +2289,27 @@ html.dark body.admin-page .desk-nav-item.active {
   border-color: rgba(255, 255, 255, 0.25);
 }
 
-/* ---------- Nav Drawer ---------- */
-html.dark .nav-toggle {
-  background: #131d31;
-  border-color: rgba(255, 255, 255, 0.15);
+html.dark .nav-toggle,
+html.dark body.admin-page .nav-toggle,
+html.dark body.officer-page .nav-toggle,
+html.dark body.personnel-page .nav-toggle {
+  background: #131d31 !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.24) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
 }
-html.dark .nav-toggle span {
-  background: #f8fafc;
+html.dark .nav-toggle span,
+html.dark body.admin-page .nav-toggle span,
+html.dark body.officer-page .nav-toggle span,
+html.dark body.personnel-page .nav-toggle span {
+  background: #f8fafc !important;
+  box-shadow: 0 0 3px rgba(255, 255, 255, 0.25);
 }
-html.dark .nav-toggle:hover {
-  background: #1e293b;
-  border-color: rgba(255, 255, 255, 0.25);
+html.dark .nav-toggle:hover,
+html.dark body.admin-page .nav-toggle:hover,
+html.dark body.officer-page .nav-toggle:hover,
+html.dark body.personnel-page .nav-toggle:hover {
+  background: #1e293b !important;
+  border-color: rgba(255, 255, 255, 0.42) !important;
 }
 
 html.dark .nav-drawer {
@@ -2381,6 +2423,13 @@ html.dark .portal-badge-chip {
   background: rgba(59, 130, 246, 0.15);
   border-color: rgba(59, 130, 246, 0.35);
   color: #60a5fa;
+}
+
+html.dark .portal-header .brand-mark {
+  background: linear-gradient(135deg, #ffffff 0%, #60a5fa 50%, #93c5fd 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
 }
 
 html.dark .portal-card {
@@ -3037,15 +3086,22 @@ html.dark .alert-success {
   }
   .nav-toggle {
     display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
-    width: 42px;
-    height: 42px;
-    min-width: 42px;
-    min-height: 42px;
-    padding: 10px;
-    border-radius: 9px;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4.5px !important;
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
+    padding: 0 !important;
+    border-radius: 11px !important;
     touch-action: manipulation;
+  }
+  .nav-toggle span {
+    display: block !important;
+    width: 20px !important;
+    height: 2.5px !important;
   }
 
   .wrap {
@@ -3408,8 +3464,17 @@ html.dark .alert-success {
   }
 
   .mark {
-    font-size: 13px;
-    padding: 4px 8px;
+    font-size: 16px;
+    gap: 5px;
+    padding: 0;
+  }
+  .mark-icon-wrap {
+    width: 24px;
+    height: 24px;
+  }
+  .mark-icon-wrap svg {
+    width: 14px;
+    height: 14px;
   }
 
   h2.page-title {
