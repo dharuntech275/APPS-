@@ -1748,7 +1748,7 @@ body.personnel-page {
 }
 
 /* Timeline & tags */
-.tl-filters { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+.tl-filters { display: flex; gap: 8px; margin-bottom: 20px; align-items: center; }
 .tl-chip {
   background: #ffffff;
   border: 1.5px solid #cbd5e1;
@@ -3367,6 +3367,36 @@ html.dark .alert-success {
     min-height: 44px;
   }
 
+  /* Activity Timeline Filters (Single-Row Track) */
+  .tl-filters {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    gap: 6px;
+    padding: 2px 0 6px;
+    margin-bottom: 16px;
+    width: 100%;
+  }
+  .tl-filters::-webkit-scrollbar {
+    display: none;
+  }
+  .tl-chip {
+    flex: 1 1 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 10px;
+    font-size: 11.5px;
+    border-radius: 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 0;
+    text-align: center;
+  }
+
   /* Sticky button on mobile */
   #stickyAddNoteBtn {
     bottom: max(20px, env(safe-area-inset-bottom)) !important;
@@ -3440,6 +3470,14 @@ html.dark .alert-success {
 
   .streak-lbl {
     font-size: 8px;
+  }
+
+  .tl-filters {
+    gap: 5px;
+  }
+  .tl-chip {
+    padding: 6px 8px;
+    font-size: 11px;
   }
 
   header.top .role-pill {
@@ -3591,6 +3629,15 @@ html.dark .alert-success {
 
   .streak-lbl {
     font-size: 7.5px;
+  }
+
+  .tl-filters {
+    gap: 4px;
+  }
+  .tl-chip {
+    padding: 5px 6px;
+    font-size: 10px;
+    border-radius: 10px;
   }
 
   .role-tab {

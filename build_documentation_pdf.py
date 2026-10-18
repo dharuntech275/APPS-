@@ -816,9 +816,9 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         ],
         [
             Paragraph("<b>Mobile Viewport &amp; UX</b>", table_cell),
-            Paragraph("<b>Mobile Streamlining &amp; Officer Roster Alignment:</b><br/>"
-                      "Decommissioned redundant mobile dock and unified soldier welcome banner. Streamlined Officer Personnel filter pills (All Units, High, Medium, Low) into a single-row zero-wrap responsive track and aligned search toolbar for smartphones (360px–480px).", table_cell),
-            Paragraph("Guarantees clean smartphone readability, zero element wrapping, and flawless alignment across personnel and officer views.", table_cell)
+            Paragraph("<b>Mobile Streamlining, Roster &amp; Timeline Alignment:</b><br/>"
+                      "Streamlined Officer Personnel filters (All Units, High, Medium, Low) and Timeline chips (All, Check-ins, Notes, Requests) into single-row zero-wrap responsive tracks. Decommissioned mobile dock and unified soldier banner for smartphones (360px–480px).", table_cell),
+            Paragraph("Guarantees clean smartphone readability, zero element wrapping, and flawless alignment across personnel, timeline, and officer views.", table_cell)
         ],
     ]
     t_feat = Table(features_added_data, colWidths=[90, 240, printable_width - 330], repeatRows=1)
