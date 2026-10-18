@@ -252,9 +252,29 @@
       <span class="p-count">Showing <b id="shownCount">{{ total }}</b> of {{ total }}</span>
     </div>
 
+    <!-- Segmented Command Filter Bar -->
+    <div class="command-filter-bar" style="margin-top:14px; margin-bottom:12px;">
+      <button type="button" class="filter-pill-btn active" data-risk="" onclick="setPillRisk('', this)">
+        <span>All Units</span>
+        <span class="filter-pill-count">{{ total }}</span>
+      </button>
+      <button type="button" class="filter-pill-btn" data-risk="High" onclick="setPillRisk('High', this)">
+        <span class="radar-pulse-dot pulse-high" style="width:6px; height:6px;"></span>
+        <span>High Risk</span>
+      </button>
+      <button type="button" class="filter-pill-btn" data-risk="Medium" onclick="setPillRisk('Medium', this)">
+        <span class="radar-pulse-dot" style="width:6px; height:6px; background:var(--signal-med);"></span>
+        <span>Medium</span>
+      </button>
+      <button type="button" class="filter-pill-btn" data-risk="Low" onclick="setPillRisk('Low', this)">
+        <span class="radar-pulse-dot" style="width:6px; height:6px; background:var(--signal-low);"></span>
+        <span>Low</span>
+      </button>
+    </div>
+
     <div class="p-toolbar">
       <input id="searchBox" type="text" placeholder="Search by name or unit..." oninput="filterTable()" autocomplete="off">
-      <select id="riskFilter" onchange="filterTable()">
+      <select id="riskFilter" onchange="syncPillFromSelect(); filterTable();" style="display:none;">
         <option value="">All Risk</option>
         <option value="High">High</option>
         <option value="Medium">Medium</option>
@@ -353,10 +373,28 @@
     if (shown) shown.textContent = visibleCount;
   }
 
+  function setPillRisk(risk, btn) {
+    const rf = document.getElementById('riskFilter');
+    if (rf) rf.value = risk;
+    document.querySelectorAll('.filter-pill-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    filterTable();
+  }
+
+  function syncPillFromSelect() {
+    const val = document.getElementById('riskFilter').value;
+    document.querySelectorAll('.filter-pill-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.risk === val);
+    });
+  }
+
   function resetFilters() {
     ['searchBox', 'riskFilter'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.value = '';
+    });
+    document.querySelectorAll('.filter-pill-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.risk === '');
     });
     document.getElementById('sortSelect').value = 'default';
     sortRows();

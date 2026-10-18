@@ -3507,3 +3507,458 @@ html.dark .alert-success {
     padding: 7px 2px !important;
   }
 }
+
+/* =========================================================================
+   ADVANCED DEFENSE-GRADE UI COMPONENTS & MICRO-INTERACTIONS
+   ========================================================================= */
+
+/* --- Live Pulse & Radar Animations --- */
+@keyframes cardiacPulse {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.18); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.12); }
+  70% { transform: scale(1); }
+}
+
+.pulse-cardiac {
+  display: inline-flex;
+  align-items: center;
+  animation: cardiacPulse 1.35s ease-in-out infinite;
+  color: #ef4444;
+}
+
+@keyframes radarPulse {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.radar-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--signal-low);
+  display: inline-block;
+  animation: radarPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  vertical-align: middle;
+}
+
+.radar-pulse-dot.pulse-high {
+  background: var(--signal-high);
+  animation-name: radarPulseHigh;
+}
+
+@keyframes radarPulseHigh {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.75); }
+  70% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* --- Interactive Biometric Range Sliders --- */
+.slider-group {
+  margin-bottom: 22px;
+}
+
+.slider-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.slider-title {
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--steel-deep);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+html.dark .slider-title {
+  color: #f1f5f9;
+}
+
+.slider-badge {
+  font-family: 'Plus Jakarta Sans', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(37, 99, 235, 0.08);
+  color: var(--primary);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  transition: all 0.2s ease;
+}
+
+html.dark .slider-badge {
+  background: rgba(37, 99, 235, 0.2);
+  color: #93c5fd;
+  border-color: rgba(147, 197, 253, 0.3);
+}
+
+.slider-badge.badge-good {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--signal-low);
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.slider-badge.badge-warn {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--signal-med);
+  border-color: rgba(245, 158, 11, 0.25);
+}
+
+.slider-badge.badge-alert {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--signal-high);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+.biometric-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 6px;
+  background: var(--line);
+  outline: none;
+  transition: background 0.2s;
+  cursor: pointer;
+  margin: 8px 0 4px;
+}
+
+html.dark .biometric-slider {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.biometric-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.45);
+  cursor: grab;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.biometric-slider::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(1.15);
+  box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.25);
+}
+
+.biometric-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.45);
+  cursor: grab;
+}
+
+.slider-sub-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--steel);
+  margin-top: 2px;
+}
+
+/* --- 5-Level Operational Mood Matrix --- */
+.mood-matrix-wrap {
+  margin-bottom: 24px;
+}
+
+.mood-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.mood-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 4px;
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
+  background: var(--card);
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  text-align: center;
+}
+
+html.dark .mood-btn {
+  background: #0f172a;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.mood-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+html.dark .mood-btn:hover {
+  border-color: #60a5fa;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.mood-btn.active {
+  border-color: var(--primary) !important;
+  background: rgba(37, 99, 235, 0.08) !important;
+  box-shadow: 0 0 0 2px var(--primary), 0 4px 12px rgba(37, 99, 235, 0.2) !important;
+  transform: translateY(-2px);
+}
+
+html.dark .mood-btn.active {
+  border-color: #60a5fa !important;
+  background: rgba(37, 99, 235, 0.22) !important;
+  box-shadow: 0 0 0 2px #60a5fa, 0 4px 16px rgba(37, 99, 235, 0.4) !important;
+}
+
+.mood-val-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Plus Jakarta Sans', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--steel-deep);
+  transition: all 0.2s;
+}
+
+html.dark .mood-val-circle {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f1f5f9;
+}
+
+.mood-btn.active .mood-val-circle {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.mood-desc {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--steel);
+}
+
+.mood-btn.active .mood-desc {
+  color: var(--primary);
+}
+
+html.dark .mood-btn.active .mood-desc {
+  color: #93c5fd;
+}
+
+/* --- Pre-Check Live Readiness Preview Card --- */
+.precheck-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%);
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  margin-bottom: 22px;
+  gap: 12px;
+}
+
+html.dark .precheck-card {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(16, 185, 129, 0.1) 100%);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.precheck-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--steel-deep);
+}
+
+html.dark .precheck-label {
+  color: #e2e8f0;
+}
+
+.precheck-pill {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* --- Semicircular SVG Stress Gauge --- */
+.gauge-card {
+  text-align: center;
+  padding: 24px 20px 20px;
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 24px;
+}
+
+html.dark .gauge-card {
+  background: #0f172a;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.gauge-svg-wrap {
+  position: relative;
+  width: 220px;
+  height: 125px;
+  margin: 0 auto 10px;
+  overflow: visible;
+}
+
+.gauge-needle {
+  transform-origin: 110px 110px;
+  transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.gauge-reading-title {
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0 0 4px;
+}
+
+.gauge-reading-desc {
+  font-size: 12.5px;
+  color: var(--steel);
+  margin: 0;
+}
+
+/* --- Segmented Command Filter Bar (Officer & Admin) --- */
+.command-filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filter-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--steel-deep);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+html.dark .filter-pill-btn {
+  background: #0f172a;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+}
+
+.filter-pill-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+html.dark .filter-pill-btn:hover {
+  border-color: #60a5fa;
+  color: #93c5fd;
+}
+
+.filter-pill-btn.active {
+  background: var(--primary);
+  color: #ffffff !important;
+  border-color: var(--primary) !important;
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
+}
+
+.filter-pill-count {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.filter-pill-btn.active .filter-pill-count {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* --- Mobile Bottom Floating Navigation Dock --- */
+.mobile-nav-dock {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-nav-dock {
+    display: flex;
+    position: fixed;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 32px;
+    padding: 6px 16px;
+    gap: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    z-index: 1000;
+    max-width: 90vw;
+  }
+
+  .dock-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    text-decoration: none;
+    color: #94a3b8;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+  }
+
+  .dock-btn svg {
+    stroke-width: 2;
+  }
+
+  .dock-btn.active, .dock-btn:hover {
+    color: #60a5fa;
+  }
+
+  .dock-btn.active svg {
+    stroke: #60a5fa;
+  }
+}

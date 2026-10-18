@@ -802,6 +802,24 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
                       "Prioritized official ReportLab PDF clinical dossiers on soldier dashboard while retaining comprehensive administrative Excel and CSV exports for commanders.", table_cell),
             Paragraph("Eliminates raw CSV clutter on soldier views while enabling senior officers and medical boards to produce official physical dossiers.", table_cell)
         ],
+        [
+            Paragraph("<b>Check-in UX</b>", table_cell),
+            Paragraph("<b>Biometric Sliders & 5-Level Mood Matrix Studio:</b><br/>"
+                      "Engineered tactile biometric range sliders with real-time feedback badges, a pulsing cardiac telemetry indicator, a 5-level tactical mood matrix, and an instant pre-check readiness preview card.", table_cell),
+            Paragraph("Eliminates rigid numeric form inputs in favor of intuitive, defense-grade tactile controls with immediate visual telemetry.", table_cell)
+        ],
+        [
+            Paragraph("<b>Telemetry Visuals</b>", table_cell),
+            Paragraph("<b>Semicircular SVG Stress Speedometer Gauge:</b><br/>"
+                      "Engineered high-contrast radial gauges on Results and Snapshot views featuring animated needle rotations pointing across Low (Green), Moderate (Amber), and High (Red) stress zones.", table_cell),
+            Paragraph("Delivers instant, high-impact visual telemetry for service members, transforming raw prediction tags into intuitive diagnostic gauges.", table_cell)
+        ],
+        [
+            Paragraph("<b>Command & Mobile</b>", table_cell),
+            Paragraph("<b>Command Filter Pills & Mobile Floating Dock:</b><br/>"
+                      "Engineered segmented risk filter pills with live counts on officer rosters, breathing radar telemetry pulse dots on dashboards, and an ergonomic floating bottom thumb dock for smartphones.", table_cell),
+            Paragraph("Accelerates commander triage workflows while delivering defense-grade ergonomics on mobile devices.", table_cell)
+        ],
     ]
     t_feat = Table(features_added_data, colWidths=[90, 240, printable_width - 330], repeatRows=1)
     t_feat.setStyle(TableStyle([

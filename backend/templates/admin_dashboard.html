@@ -58,16 +58,22 @@
 
   <div class="stats-grid">
     <div class="stat-card total">
-      <span class="stat-icon">
-        <svg viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-3-3.87M9 20H4v-1a4 4 0 013-3.87m5-9.13a3 3 0 110 6 3 3 0 010-6zm6 3a3 3 0 11-1-2.24M6 9a3 3 0 101 2.24m6 1.76a4 4 0 014 4v1H8v-1a4 4 0 014-4z"/></svg>
-      </span>
+      <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+        <span class="stat-icon">
+          <svg viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-3-3.87M9 20H4v-1a4 4 0 013-3.87m5-9.13a3 3 0 110 6 3 3 0 010-6zm6 3a3 3 0 11-1-2.24M6 9a3 3 0 101 2.24m6 1.76a4 4 0 014 4v1H8v-1a4 4 0 014-4z"/></svg>
+        </span>
+        <span class="radar-pulse-dot" title="Active Force Monitoring"></span>
+      </div>
       <span class="stat-label">Total Personnel</span>
       <p class="stat-value">{{ total_personnel }}</p>
     </div>
     <div class="stat-card high">
-      <span class="stat-icon">
-        <svg viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.29 3.86l-8.18 14.18A1.5 1.5 0 003.43 20.5h17.14a1.5 1.5 0 001.32-2.46L13.71 3.86a1.5 1.5 0 00-2.42 0z"/></svg>
-      </span>
+      <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+        <span class="stat-icon">
+          <svg viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.29 3.86l-8.18 14.18A1.5 1.5 0 003.43 20.5h17.14a1.5 1.5 0 001.32-2.46L13.71 3.86a1.5 1.5 0 00-2.42 0z"/></svg>
+        </span>
+        {% if total_high > 0 %}<span class="radar-pulse-dot pulse-high" title="Active High Risk Alert"></span>{% endif %}
+      </div>
       <span class="stat-label">High Risk</span>
       <p class="stat-value" style="color:var(--signal-high);">{{ total_high }}</p>
     </div>
