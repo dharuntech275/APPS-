@@ -815,10 +815,10 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
             Paragraph("Delivers instant, high-impact visual telemetry for service members, transforming raw prediction tags into intuitive diagnostic gauges.", table_cell)
         ],
         [
-            Paragraph("<b>Mobile & Command UX</b>", table_cell),
-            Paragraph("<b>Mobile Viewport Optimization & Floating Dock Ergonomics:</b><br/>"
-                      "Engineered zero-drift mobile styling (<code>overflow-x: hidden</code>, responsive flex-wrap, 96px bottom offset preventing dock button overlap), stacked readiness pre-check cards, and adaptive 5-level mood touch cells for smartphone screens (360px–480px).", table_cell),
-            Paragraph("Guarantees flawless smartphone readability, eliminating horizontal wobble and button occlusion.", table_cell)
+            Paragraph("<b>Mobile Viewport &amp; UX</b>", table_cell),
+            Paragraph("<b>Mobile Viewport Streamlining &amp; Horizontal Banner Alignment:</b><br/>"
+                      "Decommissioned redundant bottom mobile quick-dock to eliminate viewport occlusion. Restructured soldier welcome banner into unified horizontal flex alignment, vertically centering the streak badge on smartphone screens (360px–480px).", table_cell),
+            Paragraph("Guarantees clean smartphone readability, zero viewport clutter, and flawless header alignment across all devices.", table_cell)
         ],
     ]
     t_feat = Table(features_added_data, colWidths=[90, 240, printable_width - 330], repeatRows=1)
