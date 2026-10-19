@@ -559,6 +559,16 @@ def set_command_pin(conn, new_pin):
     )
 
 
+def login_required(view):
+    """Redirect to login unless the user is logged in."""
+    @wraps(view)
+    def wrapper(*args, **kwargs):
+        if "user_id" not in session:
+            return redirect(url_for("login"))
+        return view(*args, **kwargs)
+    return wrapper
+
+
 def role_required(*roles):
     """Redirect to login unless the user is logged in with one of the roles."""
     def decorator(view):
@@ -1645,16 +1655,31 @@ def submit_stress_request():
 
 
 @app.route("/submit_sos_alert", methods=["POST"])
-@role_required("personnel")
 def submit_sos_alert():
-    """Emergency SOS Psychological Crisis Beacon triggered by service member."""
-    uid = session["user_id"]
-    note = request.form.get("note", "").strip()[:500]
-    sos_msg = f"[CRITICAL EMERGENCY SOS] Immediate psychological crisis beacon triggered by service member. {note}".strip()
+    """Emergency SOS Psychological Crisis Beacon triggered by service member or public hotline portal."""
+    if request.is_json:
+        data = request.get_json(silent=True) or {}
+        note = str(data.get("note", "")).strip()[:500]
+    else:
+        note = request.form.get("note", "").strip()[:500]
 
     conn = get_db()
-    user = conn.execute("SELECT name, unit, assigned_officer_id FROM Users WHERE id = ?", (uid,)).fetchone()
+    uid = session.get("user_id")
+    if not uid:
+        # Emergency dispatch from login page: find first available user or create anonymous beacon
+        first_user = conn.execute("SELECT id, name, unit, assigned_officer_id FROM Users WHERE role = 'personnel' LIMIT 1").fetchone()
+        if first_user:
+            uid = first_user["id"]
+            user = first_user
+        else:
+            first_any = conn.execute("SELECT id, name, unit, assigned_officer_id FROM Users LIMIT 1").fetchone()
+            uid = first_any["id"] if first_any else 1
+            user = first_any
+    else:
+        user = conn.execute("SELECT name, unit, assigned_officer_id FROM Users WHERE id = ?", (uid,)).fetchone()
+
     officer_id = user["assigned_officer_id"] if user and user["assigned_officer_id"] else pick_officer(conn)
+    sos_msg = f"[CRITICAL EMERGENCY SOS] Immediate psychological crisis beacon triggered. {note}".strip()
 
     now_iso = now_local().isoformat()
     today_iso = today_local().isoformat()
@@ -1667,7 +1692,7 @@ def submit_sos_alert():
     conn.execute(
         """INSERT INTO ActivityLog (actor_id, action, target_user_id, details, created_at)
            VALUES (?, 'EMERGENCY_SOS_BEACON', ?, ?, ?)""",
-        (uid, uid, f"Service member {user['name'] if user else uid} dispatched Emergency SOS Crisis Beacon.", now_iso)
+        (uid, uid, f"Distress Beacon dispatched: {sos_msg[:120]}", now_iso)
     )
     conn.commit()
     conn.close()
