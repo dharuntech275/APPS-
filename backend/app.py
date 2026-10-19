@@ -550,6 +550,82 @@ def build_trend_series(history):
     return labels, sleep, duty
 
 
+def compute_cumulative_fatigue(history):
+    """Calculates a clinical 7-day rolling sleep debt and cumulative duty strain forecast.
+    Synthesizes sleep deficit, duty hours, and physiological indicators into a 0-100 strain index."""
+    if not history:
+        return {
+            "has_data": False,
+            "score": 0,
+            "level": "Baseline Optimal",
+            "status": "Awaiting Telemetry",
+            "color": "#10B981",
+            "sleep_debt": 0.0,
+            "avg_sleep": 0.0,
+            "avg_duty": 0.0,
+            "sample_days": 0,
+            "recommendation": "Complete daily check-in to initialize 7-day rolling fatigue and sleep debt forecasting."
+        }
+
+    recent = list(history[:7])
+    count = len(recent)
+    total_sleep = sum(float(r["sleep_hours"]) for r in recent if r["sleep_hours"] is not None)
+    total_duty = sum(float(r["duty_hours"]) for r in recent if r["duty_hours"] is not None)
+
+    avg_sleep = round(total_sleep / count, 1) if count else 0.0
+    avg_duty = round(total_duty / count, 1) if count else 0.0
+    expected_sleep = 7.0 * count
+    sleep_debt = round(max(0.0, expected_sleep - total_sleep), 1)
+
+    high_strain_days = sum(
+        1 for r in recent
+        if (r["duty_hours"] and float(r["duty_hours"]) >= 10.0)
+        or (r["stress_score"] and float(r["stress_score"]) >= 70.0)
+        or r.get("predicted_stress") == "High"
+    )
+
+    sleep_contrib = min(50.0, sleep_debt * 6.0)
+    duty_contrib = min(30.0, max(0.0, (avg_duty - 8.0) * 7.5))
+    strain_contrib = min(20.0, high_strain_days * 6.5)
+
+    score = min(100, int(sleep_contrib + duty_contrib + strain_contrib))
+
+    if score < 25:
+        level = "Optimal Rest"
+        status = "Peak Resilience"
+        color = "#10B981"
+        rec = "Circadian rhythm optimal. Current rest-to-duty ratio supports peak operational alertness."
+    elif score < 50:
+        level = "Mild Strain"
+        status = "Compensated Fatigue"
+        color = "#0EA5E9"
+        rec = f"Mild sleep debt ({sleep_debt} hrs accumulated over {count} days). Target +45m sleep or a 20m power nap."
+    elif score < 75:
+        level = "Moderate Fatigue"
+        status = "Compounding Sleep Debt"
+        color = "#F59E0B"
+        rec = f"Notable deficit ({sleep_debt} hrs sleep debt). Suggest scheduled 90-min recovery cycle before next extended shift."
+    else:
+        level = "Critical Exhaustion"
+        status = "Severe Fatigue Deficit"
+        color = "#EF4444"
+        rec = f"Critical exhaustion threshold crossed ({sleep_debt} hrs deficit, high operational strain). Command rest intervention advised."
+
+    return {
+        "has_data": True,
+        "score": score,
+        "level": level,
+        "status": status,
+        "color": color,
+        "sleep_debt": sleep_debt,
+        "avg_sleep": avg_sleep,
+        "avg_duty": avg_duty,
+        "sample_days": count,
+        "high_strain_days": high_strain_days,
+        "recommendation": rec
+    }
+
+
 # ----------------------------------------------------------------------
 # Security: same-origin check on POST, headers, login rate limit
 # ----------------------------------------------------------------------
@@ -1218,6 +1294,8 @@ def dashboard():
         }
     ]
 
+    fatigue_forecast = compute_cumulative_fatigue(history)
+
     return render_template(
         "dashboard.html",
         user_name=session["user_name"],
@@ -1236,6 +1314,7 @@ def dashboard():
         trend_duty=trend_duty,
         compare=compare,
         badges=badges,
+        fatigue_forecast=fatigue_forecast,
     )
 
 
@@ -1647,6 +1726,7 @@ def personnel_detail(user_id):
     timeline.sort(key=lambda x: (x["date"], x["order"], x["id"]), reverse=True)
 
     trend_labels, trend_sleep, trend_duty = build_trend_series(history)
+    fatigue_forecast = compute_cumulative_fatigue(history)
 
     return render_template(
         "personnel_detail.html",
@@ -1660,6 +1740,7 @@ def personnel_detail(user_id):
         trend_labels=trend_labels,
         trend_sleep=trend_sleep,
         trend_duty=trend_duty,
+        fatigue_forecast=fatigue_forecast,
     )
 
 

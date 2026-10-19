@@ -4571,4 +4571,91 @@ html.dark .filter-pill-btn:hover {
   font-size: 12.5px;
   color: var(--ink);
   font-weight: 600;
+}
+
+/* Cumulative Fatigue Forecaster Styles */
+.fatigue-forecaster-card {
+  margin-top: 4px;
+}
+
+.fatigue-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 600px) {
+  .fatigue-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.fatigue-metric-pill {
+  background: var(--bg-alt, rgba(0, 0, 0, 0.03));
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  text-align: center;
+}
+
+.fatigue-metric-val {
+  display: block;
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.fatigue-metric-lbl {
+  display: block;
+  font-size: 10px;
+  color: var(--steel);
+  font-weight: 600;
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.fatigue-rec-box {
+  background: rgba(14, 165, 233, 0.06);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+/* Multi-Language Vernacular Selector Styles */
+.lang-selector-pill {
+  display: inline-flex;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 2px 7px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink);
+  transition: all 0.2s ease;
+  height: 32px;
+  box-sizing: border-box;
+}
+
+.lang-selector-pill:hover {
+  border-color: var(--primary);
+}
+
+.apps-lang-dropdown {
+  background: transparent;
+  border: none;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+}
+
+.apps-lang-dropdown option {
+  background: var(--surface);
+  color: var(--ink);
 }

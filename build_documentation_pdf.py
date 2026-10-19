@@ -851,6 +851,13 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
                       "Built interactive Tactical 4-7-8 Breathing Stabilizer with animated pulsating SVG/CSS guidance, simulated Smartwatch BLE sync engine, and gamified Morale Badges.", tc_feat),
             Paragraph("Delivers instant psychological stabilization, automated wearable telemetry capture, and priority crisis response.", tc_feat)
         ],
+        [
+            Paragraph("<b>Fatigue &amp; Localization</b>", tc_feat),
+            Paragraph("<b>Cumulative Fatigue Forecaster &amp; Vernacular Switcher:</b><br/>"
+                      "Engineered 7-day rolling sleep debt algorithm calculating deficit from 7h baseline, operational strain index (0-100), and clinical rest recommendations on soldier and officer dossiers. "
+                      "Built zero-latency client-side multi-language localization switcher (English, தமிழ், हिंदी) persisting seamlessly via <code>localStorage</code>.", tc_feat),
+            Paragraph("Provides proactive burnout prevention for commanding officers and native-language operational accessibility across all services.", tc_feat)
+        ],
     ]
     t_feat = Table(features_added_data, colWidths=[90, 240, printable_width - 330], repeatRows=1)
     t_feat.setStyle(TableStyle([

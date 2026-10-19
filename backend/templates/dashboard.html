@@ -176,8 +176,66 @@
           Confirm &amp; Transmit Check-in &rarr;
         </button>
       </form>
-  <!-- Military Morale & Wellness Badges -->
-  <div class="card wellness-badges-card fade-in">
+    </div>
+
+    <!-- Cumulative Fatigue Forecaster & Sleep Debt Monitor -->
+    <div class="card fatigue-forecaster-card fade-in">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
+        <h3 style="margin:0; border:none; padding:0; display:flex; align-items:center; gap:8px; font-size:15px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="{{ fatigue_forecast.color }}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <span>Cumulative Fatigue Forecaster</span>
+        </h3>
+        <span class="slider-badge" style="background:rgba(0,0,0,0.04); border:1px solid {{ fatigue_forecast.color }}; color:{{ fatigue_forecast.color }}; font-weight:700;">
+          {{ fatigue_forecast.status }}
+        </span>
+      </div>
+
+      <!-- Fatigue meter bar -->
+      <div style="margin-bottom:14px;">
+        <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:5px; font-weight:600;">
+          <span style="color:var(--steel);">Rolling 7-Day Strain Index</span>
+          <span style="color:{{ fatigue_forecast.color }}; font-weight:800;">{{ fatigue_forecast.score }}/100 &bull; {{ fatigue_forecast.level }}</span>
+        </div>
+        <div style="height:10px; width:100%; background:var(--line); border-radius:10px; overflow:hidden;">
+          <div style="height:100%; width:{{ fatigue_forecast.score }}%; background:{{ fatigue_forecast.color }}; border-radius:10px; transition:width 0.8s ease;"></div>
+        </div>
+      </div>
+
+      <!-- Quick Biometric Telemetry Matrix -->
+      <div class="fatigue-metrics-grid">
+        <div class="fatigue-metric-pill">
+          <span class="fatigue-metric-val" style="color:{% if fatigue_forecast.sleep_debt > 5 %}#dc2626{% else %}var(--primary){% endif %};">
+            {{ fatigue_forecast.sleep_debt }} hrs
+          </span>
+          <span class="fatigue-metric-lbl">Cumulative Sleep Debt</span>
+        </div>
+        <div class="fatigue-metric-pill">
+          <span class="fatigue-metric-val">{{ fatigue_forecast.avg_sleep }} hrs</span>
+          <span class="fatigue-metric-lbl">7-Day Avg Sleep</span>
+        </div>
+        <div class="fatigue-metric-pill">
+          <span class="fatigue-metric-val">{{ fatigue_forecast.avg_duty }} hrs</span>
+          <span class="fatigue-metric-lbl">7-Day Avg Duty</span>
+        </div>
+        <div class="fatigue-metric-pill">
+          <span class="fatigue-metric-val">{{ fatigue_forecast.sample_days }} / 7</span>
+          <span class="fatigue-metric-lbl">Tracked Days</span>
+        </div>
+      </div>
+
+      <!-- Clinical Recovery Recommendation Box -->
+      <div class="fatigue-rec-box">
+        <div style="display:flex; align-items:flex-start; gap:8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:{{ fatigue_forecast.color }}; margin-top:2px; flex-shrink:0;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span style="font-size:12px; line-height:1.45; color:var(--ink); font-weight:500;">
+            <strong>Clinical Insight:</strong> {{ fatigue_forecast.recommendation }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Military Wellness & Morale Badges -->
+    <div class="card wellness-badges-card fade-in">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
       <h3 style="margin:0; border:none; padding:0; display:flex; align-items:center; gap:8px; font-size:15px;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
