@@ -19,6 +19,30 @@
 
     {% include "_header.html" %}
 
+  {% if sos_alerts %}
+  <div class="card sos-alert-banner" style="margin-bottom:24px; border-left:5px solid #ef4444; background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.25); border-left-width:5px; padding:18px 24px; border-radius:14px; animation: pulseGlow 2.5s infinite;">
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+      <div style="display:flex; align-items:center; gap:14px;">
+        <span class="radar-pulse-dot" style="background:#ef4444; box-shadow:0 0 0 4px rgba(239,68,68,0.3); width:14px; height:14px; display:inline-block; border-radius:50%;"></span>
+        <div>
+          <h4 style="margin:0; font-size:16px; font-weight:800; color:#b91c1c; display:flex; align-items:center; gap:8px;">
+            🚨 URGENT SOS CRISIS BEACON TRIGGERED ({{ sos_alerts|length }})
+          </h4>
+          <p style="margin:5px 0 0; font-size:13.5px; color:var(--ink); line-height:1.45;">
+            {% for a in sos_alerts %}
+              <strong>{{ a.personnel_name }}</strong> ({{ a.personnel_unit or 'Service Member' }}){% if not loop.last %}, {% endif %}
+            {% endfor %}
+            dispatched an immediate emergency distress beacon. Immediate psychological / command contact required.
+          </p>
+        </div>
+      </div>
+      <a href="/officer/requests" class="btn" style="background:#dc2626; color:#ffffff; font-weight:700; width:auto; padding:10px 22px; font-size:13.5px; text-decoration:none; box-shadow:0 4px 12px rgba(220,38,38,0.35);">
+        Respond to SOS Alert &rarr;
+      </a>
+    </div>
+  </div>
+  {% endif %}
+
   {% if pending_requests_count and pending_requests_count > 0 %}
   <div class="card" style="margin-bottom:28px; border-left:4px solid var(--primary); background:rgba(37,99,235,0.06); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; padding:18px 24px; border-radius:14px;">
     <div style="display:flex; align-items:center; gap:14px;">

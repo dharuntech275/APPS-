@@ -696,7 +696,7 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         "3. Zero-Data-Loss Guarantee: Updates to passwords, new users, and welfare requests survive serverless container recycles indefinitely.",
         "#F0FDF4", "#16A34A"
     ))
-    story.append(Spacer(1, 14))
+    story.append(Spacer(1, 8))
 
     # =========================================================================
     # SECTION 7: WHAT WE ADDED & RECENT ENHANCEMENTS
@@ -710,130 +710,146 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
     ))
     story.append(Spacer(1, 4))
 
+    tc_feat = ParagraphStyle(
+        'TableCellFeat',
+        parent=styles['Normal'],
+        fontName='Helvetica',
+        fontSize=7.1,
+        leading=9.0,
+        textColor=c_body
+    )
+
     features_added_data = [
         [Paragraph("<b>Category</b>", table_header), Paragraph("<b>Enhancement / Feature Added</b>", table_header), Paragraph("<b>Impact & Operational Benefit</b>", table_header)],
         [
-            Paragraph("<b>Clinical Care</b>", table_cell),
+            Paragraph("<b>Clinical Care</b>", tc_feat),
             Paragraph("<b>Clinical Counseling Notes & Streamlined UI:</b><br/>"
                       "Maintained the dedicated <b>Add Counseling Note</b> card with focused clinical notes textarea and action taken fields, removing unnecessary date picker inputs for a frictionless note-taking workflow. "
                       "Removed intrusive floating sticky button overlay in favor of a clean, unobstructed dossier layout with high-risk triage shortcuts. "
-                      "Permanently decommissioned subjective tags across soldier dossiers and rosters to focus personnel records purely on objective physiological telemetry and clinical observations.", table_cell),
-            Paragraph("Empowers officers to record structured clinical interventions while providing an unobstructed, clean interface.", table_cell)
+                      "Permanently decommissioned subjective tags across soldier dossiers and rosters to focus personnel records purely on objective physiological telemetry and clinical observations.", tc_feat),
+            Paragraph("Empowers officers to record structured clinical interventions while providing an unobstructed, clean interface.", tc_feat)
         ],
         [
-            Paragraph("<b>Login Reliability</b>", table_cell),
+            Paragraph("<b>Login Reliability</b>", tc_feat),
             Paragraph("<b>Login Diagnostics & Whitespace Resilience:</b><br/>"
                       "Engineered intelligent authentication diagnostics distinguishing unregistered accounts from password mismatches. "
                       "Provides 1-click action buttons (<code>[Register Account]</code> or <code>[Reset Password]</code>). "
-                      "Added mobile trailing-space tolerance in password hashing and interactive visibility vector eye toggles across all forms.", table_cell),
-            Paragraph("Completely prevents false 'Invalid credentials' rejections caused by mobile keyboard autofill or user uncertainty.", table_cell)
+                      "Added mobile trailing-space tolerance in password hashing and interactive visibility vector eye toggles across all forms.", tc_feat),
+            Paragraph("Completely prevents false 'Invalid credentials' rejections caused by mobile keyboard autofill or user uncertainty.", tc_feat)
         ],
         [
-            Paragraph("<b>Design & Security</b>", table_cell),
+            Paragraph("<b>Design & Security</b>", tc_feat),
             Paragraph("<b>Unified Vector Icons & Confirm Password Flow:</b><br/>"
                       "Audited all views across the platform and replaced 65 legacy Unicode emoji glyphs with custom, scalable inline SVG vector icons. "
-                      "Suppressed intrusive browser-native password reveal glyphs (Edge black eye) in favor of bespoke SVG eye toggles, and introduced real-time Confirm Password verification across registration flows.", table_cell),
-            Paragraph("Eliminates cross-platform OS font rendering disparities, prevents typo lockouts during registration, and delivers a sleek military-grade aesthetic.", table_cell)
+                      "Suppressed intrusive browser-native password reveal glyphs (Edge black eye) in favor of bespoke SVG eye toggles, and introduced real-time Confirm Password verification across registration flows.", tc_feat),
+            Paragraph("Eliminates cross-platform OS font rendering disparities, prevents typo lockouts during registration, and delivers a sleek military-grade aesthetic.", tc_feat)
         ],
         [
-            Paragraph("<b>Security & Auth</b>", table_cell),
+            Paragraph("<b>Security & Auth</b>", tc_feat),
             Paragraph("<b>Anti-Role Elevation Command PIN:</b><br/>"
                       "Engineered a dynamic 4-digit Command Authorization PIN gating Officer and Admin registrations. "
-                      "Prevents unauthorized public role elevation while maintaining frictionless soldier onboarding and Senior Admin dashboard PIN rotation control.", table_cell),
-            Paragraph("Eliminates front-door privilege escalation risks without imposing external SMS or email dependencies.", table_cell)
+                      "Prevents unauthorized public role elevation while maintaining frictionless soldier onboarding and Senior Admin dashboard PIN rotation control.", tc_feat),
+            Paragraph("Eliminates front-door privilege escalation risks without imposing external SMS or email dependencies.", tc_feat)
         ],
         [
-            Paragraph("<b>Security & Auth</b>", table_cell),
+            Paragraph("<b>Security & Auth</b>", tc_feat),
             Paragraph("<b>Self-Service Forgot Password & Recovery Engine:</b><br/>"
                       "Engineered dedicated <code>/forgot_password</code> portal with role selector (Personnel/Officer/Admin). "
                       "Verifies user identity via Registered Name, Unit, and Role without external email dependencies. "
-                      "Features real-time client-side password strength validation and automatic cloud sync.", table_cell),
-            Paragraph("Enables users to safely recover locked accounts instantly without administrator intervention while preserving high security standards.", table_cell)
+                      "Features real-time client-side password strength validation and automatic cloud sync.", tc_feat),
+            Paragraph("Enables users to safely recover locked accounts instantly without administrator intervention while preserving high security standards.", tc_feat)
         ],
         [
-            Paragraph("<b>Security & Auth</b>", table_cell),
+            Paragraph("<b>Security & Auth</b>", tc_feat),
             Paragraph("<b>Weak Password Policy & Forced Upgrade Flow:</b><br/>"
                       "Enforced minimum 8-character length and complexity rules. Banned trivial passwords (<code>123</code>, <code>123456</code>, <code>password</code>). "
-                      "Built mandatory <code>/upgrade_password</code> route that intercepts existing users with legacy passwords upon login.", table_cell),
-            Paragraph("Completely eliminated vulnerabilities from default weak credentials; upgraded existing user accounts securely to scrypt hashes.", table_cell)
+                      "Built mandatory <code>/upgrade_password</code> route that intercepts existing users with legacy passwords upon login.", tc_feat),
+            Paragraph("Completely eliminated vulnerabilities from default weak credentials; upgraded existing user accounts securely to scrypt hashes.", tc_feat)
         ],
         [
-            Paragraph("<b>Data Persistence</b>", table_cell),
+            Paragraph("<b>Data Persistence</b>", tc_feat),
             Paragraph("<b>Vercel Blob Storage Integration:</b><br/>"
-                      "Provisioned private store <code>apps-data</code>, configured access tokens, built <code>SyncedConnection</code> and automatic two-way synchronization in <code>app.py</code>.", table_cell),
-            Paragraph("Resolved the serverless container reset bug where password updates disappeared after overnight cold restarts.", table_cell)
+                      "Provisioned private store <code>apps-data</code>, configured access tokens, built <code>SyncedConnection</code> and automatic two-way synchronization in <code>app.py</code>.", tc_feat),
+            Paragraph("Resolved the serverless container reset bug where password updates disappeared after overnight cold restarts.", tc_feat)
         ],
         [
-            Paragraph("<b>Workflow & Triage</b>", table_cell),
+            Paragraph("<b>Workflow & Triage</b>", tc_feat),
             Paragraph("<b>Universal 5-Stage Stress Request Pipeline:</b><br/>"
                       "Transformed requests into an omnipresent triage pipeline accessible to all on-duty officers. "
-                      "Requests from all personnel dispatch directly to the Officer Dashboard with real-time pending badges and alert banners.", table_cell),
-            Paragraph("Ensures no personnel message is missed, enabling collaborative review and transparent status tracking across officers.", table_cell)
+                      "Requests from all personnel dispatch directly to the Officer Dashboard with real-time pending badges and alert banners.", tc_feat),
+            Paragraph("Ensures no personnel message is missed, enabling collaborative review and transparent status tracking across officers.", tc_feat)
         ],
         [
-            Paragraph("<b>Timezone & Clock</b>", table_cell),
+            Paragraph("<b>Timezone & Clock</b>", tc_feat),
             Paragraph("<b>Indian Standard Time (IST) & Dynamic Device Greeting:</b><br/>"
                       "Standardized backend datetime calculations to IST (<code>UTC+05:30</code>) via <code>now_local()</code>. "
-                      "Paired with client-side JavaScript dynamic clock synchronization for accurate morning, afternoon, and evening greetings.", table_cell),
-            Paragraph("Eliminates UTC time-drift errors on check-ins and aligns dashboard greetings with the soldier's actual physical hour of day.", table_cell)
+                      "Paired with client-side JavaScript dynamic clock synchronization for accurate morning, afternoon, and evening greetings.", tc_feat),
+            Paragraph("Eliminates UTC time-drift errors on check-ins and aligns dashboard greetings with the soldier's actual physical hour of day.", tc_feat)
         ],
         [
-            Paragraph("<b>UI / UX Design</b>", table_cell),
+            Paragraph("<b>UI / UX Design</b>", tc_feat),
             Paragraph("<b>Full-Site Visual Overhaul &amp; Theme Harmonization:</b><br/>"
                       "Engineered ambient radial mesh lighting, glassmorphic card elevation, frosted glass streak chips, dual-gradient action buttons, "
-                      "harmonized light/dark palettes across admin unit breakdown views, and glowing portal gateway badges.", table_cell),
-            Paragraph("Transforms the platform into a visually captivating, defense-grade executive interface with seamless responsiveness.", table_cell)
+                      "harmonized light/dark palettes across admin unit breakdown views, and glowing portal gateway badges.", tc_feat),
+            Paragraph("Transforms the platform into a visually captivating, defense-grade executive interface with seamless responsiveness.", tc_feat)
         ],
         [
-            Paragraph("<b>System Brand</b>", table_cell),
+            Paragraph("<b>System Brand</b>", tc_feat),
             Paragraph("<b>Official Full Form & Platform Rebranding:</b><br/>"
                       "Formally established and propagated the project definition: <b>AI Predictive Personnel Stress (Welfare and Monitoring System)</b> "
-                      "across all portal headers, login branding, technical architecture docstrings, and generated physical dossiers.", table_cell),
-            Paragraph("Establishes unified institutional identity and professional clarity across clinical and administrative tiers.", table_cell)
+                      "across all portal headers, login branding, technical architecture docstrings, and generated physical dossiers.", tc_feat),
+            Paragraph("Establishes unified institutional identity and professional clarity across clinical and administrative tiers.", tc_feat)
         ],
         [
-            Paragraph("<b>Inclusive Rosters &amp; Trends</b>", table_cell),
+            Paragraph("<b>Inclusive Rosters &amp; Trends</b>", tc_feat),
             Paragraph("<b>Inclusive SQL Architecture &amp; 7-Day Continuous Trends:</b><br/>"
                       "Engineered resilient SQL <code>LEFT JOIN</code> queries across Officer/Admin dashboards ensuring all registered personnel appear immediately. "
-                      "Built continuous 7-day trend series and auto-baseline engine guaranteeing graphs render without blank screens for single-checkin and new personnel.", table_cell),
-            Paragraph("Guarantees complete organizational visibility and eliminates missing graphs for newly onboarded soldiers.", table_cell)
+                      "Built continuous 7-day trend series and auto-baseline engine guaranteeing graphs render without blank screens for single-checkin and new personnel.", tc_feat),
+            Paragraph("Guarantees complete organizational visibility and eliminates missing graphs for newly onboarded soldiers.", tc_feat)
         ],
         [
-            Paragraph("<b>Clinical Safety</b>", table_cell),
+            Paragraph("<b>Clinical Safety</b>", tc_feat),
             Paragraph("<b>'Going Quiet' Early Warning Watchlist:</b><br/>"
-                      "Automated identification of soldiers who have missed daily check-ins for 3+ consecutive days, surfaced on a dedicated priority monitoring page.", table_cell),
-            Paragraph("Enables welfare officers to proactively reach out to at-risk soldiers before mental distress escalates unnoticed.", table_cell)
+                      "Automated identification of soldiers who have missed daily check-ins for 3+ consecutive days, surfaced on a dedicated priority monitoring page.", tc_feat),
+            Paragraph("Enables welfare officers to proactively reach out to at-risk soldiers before mental distress escalates unnoticed.", tc_feat)
         ],
         [
-            Paragraph("<b>Reporting & Exports</b>", table_cell),
+            Paragraph("<b>Reporting & Exports</b>", tc_feat),
             Paragraph("<b>Sanitized Multi-Format Exports (Prioritized PDF Dossiers):</b><br/>"
-                      "Prioritized official ReportLab PDF clinical dossiers on soldier dashboard while retaining comprehensive administrative Excel and CSV exports for commanders.", table_cell),
-            Paragraph("Eliminates raw CSV clutter on soldier views while enabling senior officers and medical boards to produce official physical dossiers.", table_cell)
+                      "Prioritized official ReportLab PDF clinical dossiers on soldier dashboard while retaining comprehensive administrative Excel and CSV exports for commanders.", tc_feat),
+            Paragraph("Eliminates raw CSV clutter on soldier views while enabling senior officers and medical boards to produce official physical dossiers.", tc_feat)
         ],
         [
-            Paragraph("<b>Check-in UX</b>", table_cell),
+            Paragraph("<b>Check-in UX</b>", tc_feat),
             Paragraph("<b>Biometric Sliders & 5-Level Mood Matrix Studio:</b><br/>"
-                      "Engineered tactile biometric range sliders with real-time feedback badges, a pulsing cardiac telemetry indicator, a 5-level tactical mood matrix, and an instant pre-check readiness preview card.", table_cell),
-            Paragraph("Eliminates rigid numeric form inputs in favor of intuitive, defense-grade tactile controls with immediate visual telemetry.", table_cell)
+                      "Engineered tactile biometric range sliders with real-time feedback badges, a pulsing cardiac telemetry indicator, a 5-level tactical mood matrix, and an instant pre-check readiness preview card.", tc_feat),
+            Paragraph("Eliminates rigid numeric form inputs in favor of intuitive, defense-grade tactile controls with immediate visual telemetry.", tc_feat)
         ],
         [
-            Paragraph("<b>Telemetry Visuals</b>", table_cell),
+            Paragraph("<b>Telemetry Visuals</b>", tc_feat),
             Paragraph("<b>Semicircular SVG Stress Speedometer Gauge:</b><br/>"
-                      "Engineered high-contrast radial gauges on Results and Snapshot views featuring animated needle rotations pointing across Low (Green), Moderate (Amber), and High (Red) stress zones.", table_cell),
-            Paragraph("Delivers instant, high-impact visual telemetry for service members, transforming raw prediction tags into intuitive diagnostic gauges.", table_cell)
+                      "Engineered high-contrast radial gauges on Results and Snapshot views featuring animated needle rotations pointing across Low (Green), Moderate (Amber), and High (Red) stress zones.", tc_feat),
+            Paragraph("Delivers instant, high-impact visual telemetry for service members, transforming raw prediction tags into intuitive diagnostic gauges.", tc_feat)
         ],
         [
-            Paragraph("<b>Mobile Viewport &amp; UX</b>", table_cell),
+            Paragraph("<b>Mobile Viewport &amp; UX</b>", tc_feat),
             Paragraph("<b>Mobile Streamlining, Roster &amp; Timeline Alignment:</b><br/>"
-                      "Streamlined Officer Personnel filters (All Units, High, Medium, Low) and Timeline chips (All, Check-ins, Notes, Requests) into single-row zero-wrap responsive tracks. Decommissioned mobile dock and unified soldier banner for smartphones (360px–480px).", table_cell),
-            Paragraph("Guarantees clean smartphone readability, zero element wrapping, and flawless alignment across personnel, timeline, and officer views.", table_cell)
+                      "Streamlined Officer Personnel filters (All Units, High, Medium, Low) and Timeline chips (All, Check-ins, Notes, Requests) into single-row zero-wrap responsive tracks. Decommissioned mobile dock and unified soldier banner for smartphones (360px–480px).", tc_feat),
+            Paragraph("Guarantees clean smartphone readability, zero element wrapping, and flawless alignment across personnel, timeline, and officer views.", tc_feat)
         ],
         [
-            Paragraph("<b>Scope & Scalability</b>", table_cell),
+            Paragraph("<b>Scope & Scalability</b>", tc_feat),
             Paragraph("<b>Universal Workforce Scalability & Title Standardization:</b><br/>"
                       "Formally ratified the official title: <b>AI PREDICTIVE PERSONNEL STRESS AND WELFARE MONITORING SYSTEM</b>. "
-                      "Architected multi-industry domain mapping validating the 4 telemetry metrics across IT Tech, Healthcare, Police, Aviation, and Industrial Mining.", table_cell),
-            Paragraph("Expands platform market readiness from military defense to universal corporate and public health enterprise deployments.", table_cell)
+                      "Architected multi-industry domain mapping validating the 4 telemetry metrics across IT Tech, Healthcare, Police, Aviation, and Industrial Mining.", tc_feat),
+            Paragraph("Expands platform market readiness from military defense to universal corporate and public health enterprise deployments.", tc_feat)
+        ],
+        [
+            Paragraph("<b>Crisis &amp; Biometrics</b>", tc_feat),
+            Paragraph("<b>Emergency SOS Beacon, 4-7-8 Breathing &amp; Smartwatch Sync:</b><br/>"
+                      "Engineered 1-click Crisis SOS beacon routing to Army helpline (1902) &amp; Tele-MANAS (14416) triggering pulsing urgent red alert banners on Officer Dashboards. "
+                      "Built interactive Tactical 4-7-8 Breathing Stabilizer with animated pulsating SVG/CSS guidance, simulated Smartwatch BLE sync engine, and gamified Morale Badges.", tc_feat),
+            Paragraph("Delivers instant psychological stabilization, automated wearable telemetry capture, and priority crisis response.", tc_feat)
         ],
     ]
     t_feat = Table(features_added_data, colWidths=[90, 240, printable_width - 330], repeatRows=1)
@@ -843,10 +859,9 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
         ('GRID', (0,0), (-1,-1), 0.5, c_border),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_bg_light]),
-        ('PADDING', (0,0), (-1,-1), 3.8),
+        ('PADDING', (0,0), (-1,-1), 1.8),
     ]))
     story.append(t_feat)
-    story.append(Spacer(1, 14))
 
     # =========================================================================
     # SECTION 8: SECURITY ARCHITECTURE & THREAT DEFENSE MATRIX

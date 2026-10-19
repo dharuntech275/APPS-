@@ -329,6 +329,8 @@ def init_db():
         c.execute("ALTER TABLE StressRequests ADD COLUMN stage TEXT NOT NULL DEFAULT 'New'")
     if "stage_updated_at" not in request_cols:
         c.execute("ALTER TABLE StressRequests ADD COLUMN stage_updated_at TEXT")
+    if "is_sos" not in request_cols:
+        c.execute("ALTER TABLE StressRequests ADD COLUMN is_sos INTEGER NOT NULL DEFAULT 0")
     c.execute("UPDATE StressRequests SET stage = 'Resolved' WHERE status = 'Resolved' AND stage = 'New'")
 
     c.execute("""
@@ -1180,6 +1182,42 @@ def dashboard():
 
     trend_labels, trend_sleep, trend_duty = build_trend_series(history)
 
+    # Gamified Military Morale & Wellness Badges
+    badges = [
+        {
+            "id": "streak_3",
+            "name": "Consistency Sentinel",
+            "desc": "3+ consecutive day check-in streak",
+            "icon": "shield",
+            "unlocked": streak >= 3,
+            "progress": f"{min(streak, 3)}/3 Days"
+        },
+        {
+            "id": "sleep_7",
+            "name": "Restoration Champion",
+            "desc": "Optimal sleep duration (≥ 7.0 hrs)",
+            "icon": "moon",
+            "unlocked": bool(latest and latest["sleep_hours"] and latest["sleep_hours"] >= 7.0),
+            "progress": f"{latest['sleep_hours']} hrs" if latest and latest["sleep_hours"] else "Pending"
+        },
+        {
+            "id": "duty_balanced",
+            "name": "Duty Equilibrium",
+            "desc": "Sustainable operational duty (≤ 8.5 hrs)",
+            "icon": "clock",
+            "unlocked": bool(latest and latest["duty_hours"] and latest["duty_hours"] <= 8.5),
+            "progress": f"{latest['duty_hours']} hrs" if latest and latest["duty_hours"] else "Pending"
+        },
+        {
+            "id": "mood_high",
+            "name": "Steadfast Morale",
+            "desc": "Positive psychological resilience (Mood ≥ 4)",
+            "icon": "smile",
+            "unlocked": bool(latest and latest["mood_score"] and latest["mood_score"] >= 4),
+            "progress": f"{latest['mood_score']}/5" if latest and latest["mood_score"] else "Pending"
+        }
+    ]
+
     return render_template(
         "dashboard.html",
         user_name=session["user_name"],
@@ -1197,6 +1235,7 @@ def dashboard():
         trend_sleep=trend_sleep,
         trend_duty=trend_duty,
         compare=compare,
+        badges=badges,
     )
 
 
@@ -1330,6 +1369,40 @@ def submit_stress_request():
     conn.close()
     return redirect(url_for(back))
 
+
+@app.route("/submit_sos_alert", methods=["POST"])
+@role_required("personnel")
+def submit_sos_alert():
+    """Emergency SOS Psychological Crisis Beacon triggered by service member."""
+    uid = session["user_id"]
+    note = request.form.get("note", "").strip()[:500]
+    sos_msg = f"[CRITICAL EMERGENCY SOS] Immediate psychological crisis beacon triggered by service member. {note}".strip()
+
+    conn = get_db()
+    user = conn.execute("SELECT name, unit, assigned_officer_id FROM Users WHERE id = ?", (uid,)).fetchone()
+    officer_id = user["assigned_officer_id"] if user and user["assigned_officer_id"] else pick_officer(conn)
+
+    now_iso = now_local().isoformat()
+    today_iso = today_local().isoformat()
+
+    conn.execute(
+        """INSERT INTO StressRequests (user_id, message, status, stage, officer_id, is_sos, created_date, stage_updated_at)
+           VALUES (?, ?, 'Pending', 'New', ?, 1, ?, ?)""",
+        (uid, sos_msg, officer_id, today_iso, now_iso)
+    )
+    conn.execute(
+        """INSERT INTO ActivityLog (actor_id, action, target_user_id, details, created_at)
+           VALUES (?, 'EMERGENCY_SOS_BEACON', ?, ?, ?)""",
+        (uid, uid, f"Service member {user['name'] if user else uid} dispatched Emergency SOS Crisis Beacon.", now_iso)
+    )
+    conn.commit()
+    conn.close()
+
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest" or request.is_json:
+        return jsonify({"status": "ok", "message": "Emergency SOS Beacon Dispatched. Welfare Officers notified."})
+    return redirect(url_for("dashboard", sos="dispatched"))
+
+
 # ----------------------------------------------------------------------
 # Officer: dashboard, quiet list, activity log, personnel detail
 # ----------------------------------------------------------------------
@@ -1356,15 +1429,16 @@ def officer_dashboard():
                  Users.name
     """).fetchall()
 
-    # Active stress requests across all personnel
+    # Active stress requests across all personnel (SOS beacons prioritized on top)
     active_requests = conn.execute("""
         SELECT StressRequests.*, Users.name AS personnel_name, Users.unit AS personnel_unit
         FROM StressRequests
         JOIN Users ON StressRequests.user_id = Users.id
         WHERE StressRequests.stage != 'Closed'
-        ORDER BY StressRequests.id DESC
+        ORDER BY StressRequests.is_sos DESC, StressRequests.id DESC
     """).fetchall()
     pending_requests_count = len(active_requests)
+    sos_alerts = [r for r in active_requests if dict(r).get("is_sos") == 1 and r["stage"] != "Resolved"]
 
     tag_rows = conn.execute("SELECT user_id, tag FROM PersonnelTags ORDER BY id").fetchall()
     tags_by_user = {}
@@ -1418,6 +1492,7 @@ def officer_dashboard():
         quiet_list=[p for p in personnel if p["engagement_label"] == "Quiet"],
         pending_requests_count=pending_requests_count,
         pending_requests=active_requests[:3],
+        sos_alerts=sos_alerts,
     )
 
 
@@ -1655,7 +1730,7 @@ def view_stress_requests():
         FROM StressRequests
         JOIN Users ON StressRequests.user_id = Users.id
         WHERE StressRequests.stage != 'Closed'
-        ORDER BY StressRequests.id DESC
+        ORDER BY StressRequests.is_sos DESC, StressRequests.id DESC
     """).fetchall()
     conn.close()
 
