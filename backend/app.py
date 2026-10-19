@@ -642,12 +642,14 @@ def compute_cumulative_fatigue(history):
     expected_sleep = 7.0 * count
     sleep_debt = round(max(0.0, expected_sleep - total_sleep), 1)
 
-    high_strain_days = sum(
-        1 for r in recent
-        if (r["duty_hours"] and float(r["duty_hours"]) >= 10.0)
-        or (r["stress_score"] and float(r["stress_score"]) >= 70.0)
-        or r.get("predicted_stress") == "High"
-    )
+    high_strain_days = 0
+    for r in recent:
+        rd = dict(r)
+        duty = float(rd["duty_hours"]) if rd.get("duty_hours") is not None else 0.0
+        score_val = float(rd["stress_score"]) if rd.get("stress_score") is not None else 0.0
+        level_val = rd.get("stress_level") or rd.get("predicted_stress")
+        if duty >= 10.0 or score_val >= 70.0 or level_val == "High":
+            high_strain_days += 1
 
     sleep_contrib = min(50.0, sleep_debt * 6.0)
     duty_contrib = min(30.0, max(0.0, (avg_duty - 8.0) * 7.5))
@@ -1024,7 +1026,8 @@ def login():
                     conn.close()
 
                 # Defense-Grade 2FA Challenge: Redirect to TOTP verification
-                if user.get("totp_enabled") == 1 and user.get("totp_secret"):
+                u_dict = dict(user)
+                if u_dict.get("totp_enabled") == 1 and u_dict.get("totp_secret"):
                     session.clear()
                     session["pending_2fa_user_id"] = user["id"]
                     session["pending_2fa_name"] = user["name"]
