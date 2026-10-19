@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APPS - Two-Factor Security Shield</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script>
+  (function(){
+    var t = localStorage.getItem('apps_theme');
+    if (t === 'dark' || (!t && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+  })();
+</script>
+</head>
+<body class="personnel-page">
+<div class="wrap">
+
+  {% include "_header.html" %}
+
+  <div class="welcome-banner" style="margin-bottom:24px;">
+    <div class="welcome-banner-text">
+      <h2>Two-Factor Authentication (2FA) Shield</h2>
+      <p>Defense-Grade Cryptographic Time-Based One-Time Passwords (RFC 6238 / Google Authenticator)</p>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      {% if totp_enabled %}
+        <span class="slider-badge badge-good" style="padding:6px 14px; font-size:13px; font-weight:700;">
+          ✓ 2FA Shield Active
+        </span>
+      {% else %}
+        <span class="slider-badge badge-alert" style="padding:6px 14px; font-size:13px; font-weight:700;">
+          ⚠️ 2FA Disabled
+        </span>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if success %}
+  <div class="alert alert-success" style="margin-bottom:20px;">
+    <span>{{ success }}</span>
+  </div>
+  {% endif %}
+
+  {% if error %}
+  <div class="alert alert-danger" style="margin-bottom:20px; padding:14px 18px; border-radius:10px; background:#fef2f2; border:1px solid #fecaca; color:#b91c1c; font-size:13.5px;">
+    <strong>Action Notice:</strong> {{ error }}
+  </div>
+  {% endif %}
+
+  <div style="max-width:680px; margin:0 auto;">
+    {% if not totp_enabled %}
+    <!-- 2FA Setup Flow -->
+    <div class="card fade-in" style="margin-bottom:24px;">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
+        <div style="display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:10px; background:rgba(30,58,138,0.1); color:var(--primary);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div>
+          <h3 style="margin:0; border:none; padding:0; font-size:16px;">Activate Google Authenticator 2FA</h3>
+          <p style="margin:2px 0 0; font-size:12.5px; color:var(--steel);">Protects your personnel account against stolen credentials and phishing attacks.</p>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 180px; gap:20px; align-items:center; margin-bottom:22px; flex-wrap:wrap;">
+        <div>
+          <h4 style="margin:0 0 8px; font-size:13.5px; color:var(--ink);">Step 1: Open Google Authenticator</h4>
+          <p style="margin:0 0 12px; font-size:12.5px; color:var(--steel-deep); line-height:1.5;">
+            Download and open <strong>Google Authenticator</strong> (or Microsoft Authenticator / FreeOTP) on your mobile smartphone.
+          </p>
+
+          <h4 style="margin:0 0 6px; font-size:13.5px; color:var(--ink);">Step 2: Add Account Setup Key</h4>
+          <p style="margin:0 0 8px; font-size:12.5px; color:var(--steel-deep);">
+            Tap <strong>'+' &rarr; 'Enter a setup key'</strong> and input this key:
+          </p>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <code id="secretKeyText" style="font-size:16px; font-weight:800; letter-spacing:0.12em; background:var(--bg-alt, rgba(0,0,0,0.04)); padding:8px 12px; border-radius:6px; border:1px solid var(--line); color:var(--primary);">
+              {{ formatted_secret }}
+            </code>
+            <button type="button" class="btn-outline" onclick="copySecretKey()" style="width:auto; padding:7px 12px; font-size:12px;">
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <div style="text-align:center;">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data={{ totp_uri|urlencode }}"
+               alt="Google Authenticator QR Code"
+               style="border:4px solid #fff; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.1); width:150px; height:150px; background:#fff;">
+          <div style="font-size:11px; color:var(--steel); margin-top:4px;">Scan with Authenticator</div>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--line); padding-top:18px;">
+        <h4 style="margin:0 0 8px; font-size:13.5px; color:var(--ink);">Step 3: Confirm 6-Digit Passkey</h4>
+        <p style="margin:0 0 12px; font-size:12.5px; color:var(--steel-deep);">
+          Enter the 6-digit code currently displayed in Google Authenticator for APPS:
+        </p>
+
+        <form method="POST" action="/security/2fa">
+          <input type="hidden" name="action" value="enable">
+          <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+            <input type="text"
+                   name="totp_code"
+                   maxlength="6"
+                   pattern="[0-9]*"
+                   inputmode="numeric"
+                   placeholder="123456"
+                   required
+                   style="width:160px; text-align:center; font-size:20px; font-weight:800; letter-spacing:0.25em; font-family:monospace; padding:10px; border:2px solid var(--primary); border-radius:8px;">
+            <button type="submit" class="btn" style="width:auto; padding:12px 22px; font-size:13.5px; font-weight:700;">
+              Verify &amp; Activate 2FA Shield &rarr;
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    {% else %}
+    <!-- 2FA Active Management -->
+    <div class="card fade-in" style="margin-bottom:24px; border-left:4px solid #16a34a;">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+        <div style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:12px; background:rgba(22,163,74,0.12); color:#16a34a;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <div>
+          <h3 style="margin:0; border:none; padding:0; font-size:17px; color:#15803d;">Defense-Grade 2FA is Active</h3>
+          <p style="margin:2px 0 0; font-size:12.5px; color:var(--steel);">Your account requires a 6-digit Google Authenticator code on every new sign-in.</p>
+        </div>
+      </div>
+
+      <div style="background:var(--bg-alt, rgba(0,0,0,0.03)); border:1px solid var(--line); border-radius:8px; padding:14px; margin-bottom:20px;">
+        <div style="font-size:12.5px; color:var(--steel-deep); line-height:1.55;">
+          <strong>Security Guarantee:</strong> Even if your password is leaked, unauthorized login attempts cannot penetrate your account without your physical smartphone authenticator.
+        </div>
+      </div>
+
+      <details style="border-top:1px solid var(--line); padding-top:14px;">
+        <summary style="font-size:13px; font-weight:700; color:#b91c1c; cursor:pointer;">
+          Deactivate Two-Factor Authentication
+        </summary>
+        <div style="padding-top:14px;">
+          <p style="font-size:12.5px; color:var(--steel); margin-bottom:12px;">
+            To disable 2FA, confirm your identity by providing your account password and the current 6-digit authenticator code:
+          </p>
+          <form method="POST" action="/security/2fa">
+            <input type="hidden" name="action" value="disable">
+            <div style="display:grid; grid-template-columns:1fr 140px auto; gap:10px; align-items:center; flex-wrap:wrap;">
+              <input type="password" name="password" placeholder="Account Password" required style="padding:10px; border:1px solid var(--line); border-radius:8px; font-size:13px;">
+              <input type="text" name="totp_code" maxlength="6" pattern="[0-9]*" inputmode="numeric" placeholder="6-digit TOTP" required style="text-align:center; padding:10px; border:1px solid var(--line); border-radius:8px; font-family:monospace; font-weight:700;">
+              <button type="submit" class="btn" style="background:#dc2626; color:#fff; width:auto; padding:10px 18px; font-size:13px;">
+                Disable 2FA
+              </button>
+            </div>
+          </form>
+        </div>
+      </details>
+    </div>
+    {% endif %}
+
+    <div style="text-align:center;">
+      <a href="/dashboard" class="btn-outline" style="display:inline-block; width:auto; padding:9px 18px; font-size:13px; text-decoration:none;">
+        &larr; Return to Dashboard
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function copySecretKey() {
+    var raw = "{{ setup_secret }}";
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(raw).then(function() {
+        alert("Setup key copied to clipboard!");
+      });
+    } else {
+      var inp = document.createElement("input");
+      inp.value = raw;
+      document.body.appendChild(inp);
+      inp.select();
+      document.execCommand("copy");
+      document.body.removeChild(inp);
+      alert("Setup key copied to clipboard!");
+    }
+  }
+</script>
+</body>
+</html>

@@ -714,8 +714,8 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         'TableCellFeat',
         parent=styles['Normal'],
         fontName='Helvetica',
-        fontSize=7.1,
-        leading=9.0,
+        fontSize=6.8,
+        leading=8.5,
         textColor=c_body
     )
 
@@ -858,6 +858,13 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
                       "Built zero-latency client-side multi-language localization switcher (English, தமிழ், हिंदी) persisting seamlessly via <code>localStorage</code>.", tc_feat),
             Paragraph("Provides proactive burnout prevention for commanding officers and native-language operational accessibility across all services.", tc_feat)
         ],
+        [
+            Paragraph("<b>Defense Security</b>", tc_feat),
+            Paragraph("<b>Google Authenticator (RFC 6238 TOTP 2FA Defense):</b><br/>"
+                      "Engineered zero-dependency RFC 6238 TOTP cryptographic 2FA engine for Personnel, Welfare Officers, and Admins. "
+                      "Features setup key QR generation, 30s rotating passkeys, defense login challenges, and Senior Admin 2FA reset roster.", tc_feat),
+            Paragraph("Provides unbreachable second-factor defense preventing account compromise even if passwords are leaked.", tc_feat)
+        ],
     ]
     t_feat = Table(features_added_data, colWidths=[90, 240, printable_width - 330], repeatRows=1)
     t_feat.setStyle(TableStyle([
@@ -866,7 +873,7 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
         ('GRID', (0,0), (-1,-1), 0.5, c_border),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_bg_light]),
-        ('PADDING', (0,0), (-1,-1), 1.8),
+        ('PADDING', (0,0), (-1,-1), 1.4),
     ]))
     story.append(t_feat)
 
@@ -877,6 +884,15 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
     story.append(Paragraph("8. Security Architecture & Threat Defense Matrix", h1_style))
     story.append(HRFlowable(width="100%", thickness=1, color=c_primary, spaceBefore=2, spaceAfter=6))
 
+    tc_sec = ParagraphStyle(
+        'TableCellSec',
+        parent=styles['Normal'],
+        fontName='Helvetica',
+        fontSize=7.4,
+        leading=9.4,
+        textColor=c_body
+    )
+
     security_matrix_data = [
         [
             Paragraph("<b>Security Feature / Layer</b>", table_header),
@@ -884,49 +900,54 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
             Paragraph("<b>Protection Mechanism & Technical Defense</b>", table_header)
         ],
         [
-            Paragraph("<b>Command Authorization PIN</b>", table_cell),
-            Paragraph("<b>Unauthorized Role Elevation</b><br/>Rogue users or soldiers self-registering as Welfare Officers or Senior Admins.", table_cell),
-            Paragraph("Server-side validation against dynamic 4-digit PIN stored in <code>SystemConfig</code> during staff signup. Rotatable by Senior Admin from dashboard; protects staff roles without SMS/email dependencies.", table_cell)
+            Paragraph("<b>Command Authorization PIN</b>", tc_sec),
+            Paragraph("<b>Unauthorized Role Elevation</b><br/>Rogue users or soldiers self-registering as Welfare Officers or Senior Admins.", tc_sec),
+            Paragraph("Server-side validation against dynamic 4-digit PIN stored in <code>SystemConfig</code> during staff signup. Rotatable by Senior Admin from dashboard; protects staff roles without SMS/email dependencies.", tc_sec)
         ],
         [
-            Paragraph("<b>Cryptographic Password Hashing</b>", table_cell),
-            Paragraph("<b>Credential Dumping & Cracking</b><br/>Plaintext password theft via database dumps or memory leaks.", table_cell),
-            Paragraph("Individual per-user cryptographic salting using compute-heavy key derivation (PBKDF2-HMAC-SHA256 / scrypt via Werkzeug), rendering offline dictionary and GPU rainbow table attacks computationally infeasible.", table_cell)
+            Paragraph("<b>Cryptographic Password Hashing</b>", tc_sec),
+            Paragraph("<b>Credential Dumping & Cracking</b><br/>Plaintext password theft via database dumps or memory leaks.", tc_sec),
+            Paragraph("Individual per-user cryptographic salting using compute-heavy key derivation (PBKDF2-HMAC-SHA256 / scrypt via Werkzeug), rendering offline dictionary and GPU rainbow table attacks computationally infeasible.", tc_sec)
         ],
         [
-            Paragraph("<b>Role-Based Access Control (RBAC)</b>", table_cell),
-            Paragraph("<b>Authorization Bypass & IDOR</b><br/>Unauthorized access to clinical dossiers, welfare requests, or admin controls.", table_cell),
-            Paragraph("Server-side view gating via <code>@login_required</code> and <code>@role_required('admin'|'officer'|'personnel')</code> decorators. Session tokens validated on every request; unauthorized attempts redirected with flash warnings.", table_cell)
+            Paragraph("<b>Role-Based Access Control (RBAC)</b>", tc_sec),
+            Paragraph("<b>Authorization Bypass & IDOR</b><br/>Unauthorized access to clinical dossiers, welfare requests, or admin controls.", tc_sec),
+            Paragraph("Server-side view gating via <code>@login_required</code> and <code>@role_required('admin'|'officer'|'personnel')</code> decorators. Session tokens validated on every request; unauthorized attempts redirected with flash warnings.", tc_sec)
         ],
         [
-            Paragraph("<b>Parameterized SQL Execution</b>", table_cell),
-            Paragraph("<b>SQL Injection (SQLi)</b><br/>Arbitrary SQL injection altering database schema, extracting data, or bypassing authentication.", table_cell),
-            Paragraph("100% of queries use SQLite DB-API parameter substitution (<code>?</code> placeholders). User input is treated strictly as literal data boundaries and never concatenated into executable SQL strings.", table_cell)
+            Paragraph("<b>Parameterized SQL Execution</b>", tc_sec),
+            Paragraph("<b>SQL Injection (SQLi)</b><br/>Arbitrary SQL injection altering database schema, extracting data, or bypassing authentication.", tc_sec),
+            Paragraph("100% of queries use SQLite DB-API parameter substitution (<code>?</code> placeholders). User input is treated strictly as literal data boundaries and never concatenated into executable SQL strings.", tc_sec)
         ],
         [
-            Paragraph("<b>CSRF & Same-Origin Enforcement</b>", table_cell),
-            Paragraph("<b>Cross-Site Request Forgery (CSRF)</b><br/>Third-party malicious sites issuing forged POST requests on behalf of authenticated users.", table_cell),
-            Paragraph("Strict origin and referer header verification checks on all state-mutating POST requests (surveys, PIN updates, notes), rejecting cross-origin submissions.", table_cell)
+            Paragraph("<b>CSRF & Same-Origin Enforcement</b>", tc_sec),
+            Paragraph("<b>Cross-Site Request Forgery (CSRF)</b><br/>Third-party malicious sites issuing forged POST requests on behalf of authenticated users.", tc_sec),
+            Paragraph("Strict origin and referer header verification checks on all state-mutating POST requests (surveys, PIN updates, notes), rejecting cross-origin submissions.", tc_sec)
         ],
         [
-            Paragraph("<b>Rate Limiting & Auth Backoff</b>", table_cell),
-            Paragraph("<b>Brute-Force & Credential Stuffing</b><br/>Automated dictionary attacks and credential guessing scripts.", table_cell),
-            Paragraph("Progressive login delay backoff and attempt throttling on <code>/login</code> endpoints, neutralizing high-velocity automated password guessing attacks.", table_cell)
+            Paragraph("<b>Rate Limiting & Auth Backoff</b>", tc_sec),
+            Paragraph("<b>Brute-Force & Credential Stuffing</b><br/>Automated dictionary attacks and credential guessing scripts.", tc_sec),
+            Paragraph("Progressive login delay backoff and attempt throttling on <code>/login</code> endpoints, neutralizing high-velocity automated password guessing attacks.", tc_sec)
         ],
         [
-            Paragraph("<b>Formula & CSV Injection Defense</b>", table_cell),
-            Paragraph("<b>Spreadsheet Remote Code Execution</b><br/>Formula payloads (<code>=cmd|' /C calc'!A0</code>) executing when opening Excel exports.", table_cell),
-            Paragraph("Sanitizes all exported cell strings starting with formula triggers (<code>=, +, -, @</code>) by prepending a single quote (<code>'</code>), disarming executable command triggers in spreadsheet software.", table_cell)
+            Paragraph("<b>Formula & CSV Injection Defense</b>", tc_sec),
+            Paragraph("<b>Spreadsheet Remote Code Execution</b><br/>Formula payloads (<code>=cmd|' /C calc'!A0</code>) executing when opening Excel exports.", tc_sec),
+            Paragraph("Sanitizes all exported cell strings starting with formula triggers (<code>=, +, -, @</code>) by prepending a single quote (<code>'</code>), disarming executable command triggers in spreadsheet software.", tc_sec)
         ],
         [
-            Paragraph("<b>Immutable Audit Logging</b>", table_cell),
-            Paragraph("<b>Repudiation & Insider Tampering</b><br/>Covert modification or denial of clinical counseling notes and case actions.", table_cell),
-            Paragraph("Dedicated append-only <code>ActivityLog</code> table automatically records actor ID, action type, target soldier, and ISO timestamps for all notes, status advancements, and security reconfigurations.", table_cell)
+            Paragraph("<b>Immutable Audit Logging</b>", tc_sec),
+            Paragraph("<b>Repudiation & Insider Tampering</b><br/>Covert modification or denial of clinical counseling notes and case actions.", tc_sec),
+            Paragraph("Dedicated append-only <code>ActivityLog</code> table automatically records actor ID, action type, target soldier, and ISO timestamps for all notes, status advancements, and security reconfigurations.", tc_sec)
         ],
         [
-            Paragraph("<b>Cloud Blob Persistence Engine</b>", table_cell),
-            Paragraph("<b>Serverless Cold-Boot Data Loss</b><br/>Vercel ephemeral container resets wiping SQLite database file.", table_cell),
-            Paragraph("Custom <code>SyncedConnection</code> automatically snapshots SQLite to private Vercel Blob store on every commit and hydrates upon cold boots, guaranteeing zero data loss across container lifecycles.", table_cell)
+            Paragraph("<b>Cloud Blob Persistence Engine</b>", tc_sec),
+            Paragraph("<b>Serverless Cold-Boot Data Loss</b><br/>Vercel ephemeral container resets wiping SQLite database file.", tc_sec),
+            Paragraph("Custom <code>SyncedConnection</code> automatically snapshots SQLite to private Vercel Blob store on every commit and hydrates upon cold boots, guaranteeing zero data loss across container lifecycles.", tc_sec)
+        ],
+        [
+            Paragraph("<b>Google Authenticator (TOTP 2FA)</b>", tc_sec),
+            Paragraph("<b>Credential Theft &amp; Account Hijacking</b><br/>Compromised soldier or command passwords used in unauthorized login attempts.", tc_sec),
+            Paragraph("RFC 6238 Time-Based One-Time Passwords rotating every 30s with zero external dependencies. Active across all 3 roles with Senior Admin emergency reset capability.", tc_sec)
         ],
     ]
     t_sec = Table(security_matrix_data, colWidths=[115, 140, printable_width - 255])
@@ -936,27 +957,28 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
         ('GRID', (0,0), (-1,-1), 0.5, c_border),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_bg_light]),
-        ('PADDING', (0,0), (-1,-1), 2.8),
+        ('PADDING', (0,0), (-1,-1), 1.5),
     ]))
     story.append(t_sec)
-    story.append(Spacer(1, 8))
+    story.append(Spacer(1, 4))
 
     # =========================================================================
     # SECTION 9: DEPLOYMENT & PRODUCTION SPECIFICATIONS
     # =========================================================================
     story.append(Paragraph("9. Deployment & Production Verification", h1_style))
-    story.append(HRFlowable(width="100%", thickness=1, color=c_primary, spaceBefore=2, spaceAfter=6))
+    story.append(HRFlowable(width="100%", thickness=1, color=c_primary, spaceBefore=2, spaceAfter=4))
 
     deploy_data = [
         [Paragraph("<b>Parameter</b>", table_header), Paragraph("<b>Production Configuration Value</b>", table_header)],
-        [Paragraph("<b>Production Web URL</b>", table_cell), Paragraph("<code>https://apps-nu-henna.vercel.app</code>", code_style)],
-        [Paragraph("<b>Hosting Platform</b>", table_cell), Paragraph("Vercel Serverless Platform (Node.js/Python WSGI Bridge)", table_cell)],
-        [Paragraph("<b>Object Storage Store</b>", table_cell), Paragraph("Vercel Blob Storage &bull; Store: <code>apps-data</code> (ID: <code>store_eS9r7map43Dx32yX</code>)", table_cell)],
-        [Paragraph("<b>Source Control Repository</b>", table_cell), Paragraph("GitHub: <code>https://github.com/dharuntech275/APPS-</code> (Dual-tracked: <code>main</code> &amp; <code>master</code>)", table_cell)],
-        [Paragraph("<b>Credential Recovery</b>", table_cell), Paragraph("Unit-verified self-service recovery (<code>/forgot_password</code>) active in production", table_cell)],
-        [Paragraph("<b>Timezone Standard</b>", table_cell), Paragraph("Indian Standard Time (IST - <code>UTC+05:30</code>) with dynamic client clock sync", table_cell)],
-        [Paragraph("<b>Secret Key Management</b>", table_cell), Paragraph("Environment-backed session secret key with stable production fallback", table_cell)],
-        [Paragraph("<b>Database Verification</b>", table_cell), Paragraph("Verified live: User 'Dharun' upgraded to strong password, persistent across cold boots", table_cell)],
+        [Paragraph("<b>Production Web URL</b>", tc_sec), Paragraph("<code>https://apps-nu-henna.vercel.app</code>", code_style)],
+        [Paragraph("<b>Hosting Platform</b>", tc_sec), Paragraph("Vercel Serverless Platform (Node.js/Python WSGI Bridge)", tc_sec)],
+        [Paragraph("<b>Object Storage Store</b>", tc_sec), Paragraph("Vercel Blob Storage &bull; Store: <code>apps-data</code> (ID: <code>store_eS9r7map43Dx32yX</code>)", tc_sec)],
+        [Paragraph("<b>Source Control Repository</b>", tc_sec), Paragraph("GitHub: <code>https://github.com/dharuntech275/APPS-</code> (Dual-tracked: <code>main</code> &amp; <code>master</code>)", tc_sec)],
+        [Paragraph("<b>Credential Recovery</b>", tc_sec), Paragraph("Unit-verified self-service recovery (<code>/forgot_password</code>) active in production", tc_sec)],
+        [Paragraph("<b>Two-Factor Auth (2FA)</b>", tc_sec), Paragraph("RFC 6238 TOTP Engine (Google Authenticator, Microsoft Auth) live for all 3 roles", tc_sec)],
+        [Paragraph("<b>Timezone Standard</b>", tc_sec), Paragraph("Indian Standard Time (IST - <code>UTC+05:30</code>) with dynamic client clock sync", tc_sec)],
+        [Paragraph("<b>Secret Key Management</b>", tc_sec), Paragraph("Environment-backed session secret key with stable production fallback", tc_sec)],
+        [Paragraph("<b>Database Verification</b>", tc_sec), Paragraph("Verified live: User 'Dharun' upgraded to strong password, persistent across cold boots", tc_sec)],
     ]
     t_deploy = Table(deploy_data, colWidths=[150, printable_width - 150])
     t_deploy.setStyle(TableStyle([
@@ -965,10 +987,10 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
         ('GRID', (0,0), (-1,-1), 0.5, c_border),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_bg_light]),
-        ('PADDING', (0,0), (-1,-1), 3.5),
+        ('PADDING', (0,0), (-1,-1), 1.6),
     ]))
     story.append(t_deploy)
-    story.append(Spacer(1, 8))
+    story.append(Spacer(1, 5))
 
     story.append(callout(
         "DOCUMENT CONCLUSION & SYSTEM HEALTH STATUS",
