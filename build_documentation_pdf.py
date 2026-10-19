@@ -1,7 +1,7 @@
 """
 build_documentation_pdf.py
 Generates a comprehensive, publication-quality technical PDF documentation
-for the APPS (AI Predictive Personnel Stress - Welfare and Monitoring System) system.
+for the APPS (AI Predictive Personnel Stress and Welfare Monitoring System) system.
 """
 
 import os
@@ -46,7 +46,7 @@ class NumberedCanvas(canvas.Canvas):
             # Header
             self.setFont("Helvetica", 8)
             self.setFillColor(colors.HexColor("#475569"))
-            self.drawString(36, page_h - 26, "APPS - AI Predictive Personnel Stress | Technical Architecture")
+            self.drawString(36, page_h - 26, "APPS - AI Predictive Personnel Stress and Welfare Monitoring System")
             self.drawRightString(page_w - 36, page_h - 26, "CONFIDENTIAL & PROPRIETARY")
 
             # Header rule
@@ -230,7 +230,7 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
     header_table_data = [
         [
             Paragraph("<b>APPS</b> &bull; AI PREDICTIVE PERSONNEL STRESS", ParagraphStyle('BannerTop', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=9, textColor=c_accent)),
-            Paragraph("WELFARE & MONITORING SYSTEM", ParagraphStyle('BannerRight', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=8, textColor=c_muted, alignment=2))
+            Paragraph("AND WELFARE MONITORING SYSTEM", ParagraphStyle('BannerRight', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=8, textColor=c_muted, alignment=2))
         ]
     ]
     t_top = Table(header_table_data, colWidths=[320, printable_width - 320])
@@ -251,7 +251,7 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
 
     meta_data = [
         [
-            Paragraph("<b>Project:</b> AI Predictive Personnel Stress (APPS)", table_cell),
+            Paragraph("<b>Project:</b> AI Predictive Personnel Stress and Welfare Monitoring System (APPS)", table_cell),
             Paragraph("<b>Environment:</b> Vercel Serverless / Cloud Blob", table_cell),
         ],
         [
@@ -284,16 +284,25 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
     story.append(HRFlowable(width="100%", thickness=1, color=c_primary, spaceBefore=2, spaceAfter=8))
 
     exec_summary_text = (
-        "<b>APPS (AI Predictive Personnel Stress - Welfare and Monitoring System)</b> is a full-stack, mission-critical digital psychological "
-        "welfare platform designed to monitor, assess, and support the mental wellbeing of military personnel. "
+        "<b>APPS (AI Predictive Personnel Stress and Welfare Monitoring System)</b> is a full-stack, mission-critical digital psychological "
+        "welfare platform designed to monitor, assess, and support the mental wellbeing of operational personnel. "
         "The system incorporates an automated <b>Machine Learning Random Forest classifier</b> to analyze daily physiological "
-        "and operational metrics (sleep duration, active duty hours, resting heart rate, and mood score), flagging soldiers experiencing "
-        "heightened stress levels and delivering personalized coping recommendations.<br/><br/>"
-        "The platform establishes a strict, role-governed operational hierarchy among three distinct user categories: "
-        "<b>(1) Personnel (Soldiers)</b> who submit daily check-ins and request assistance, "
-        "<b>(2) Welfare Officers</b> who monitor unit-wide personnel rosters, author privileged counseling assessments, track physiological risk trends, and resolve welfare requests collaboratively without caseload locking barriers, and "
-        "<b>(3) Senior Administrators</b> who monitor force-wide wellness trends, unit-level risk distributions, generate access credentials, "
-        "and export audit-ready reports."
+        "and operational metrics (sleep duration, active duty hours, resting heart rate, and mood score), flagging individuals experiencing "
+        "heightened stress levels and delivering personalized, non-clinical coping recommendations.<br/><br/>"
+        "The platform establishes a strict, role-governed operational hierarchy across three distinct user categories: "
+        "<b>(1) Personnel (Frontline Workforce / Soldiers)</b> who submit daily check-ins and request assistance, "
+        "<b>(2) Welfare Officers (Counselors / HR Leads / Medical Officers)</b> who monitor unit-wide personnel rosters, author privileged counseling assessments, track physiological risk trends, and resolve welfare requests collaboratively without caseload locking barriers, and "
+        "<b>(3) Senior Administrators (Command HQ / Enterprise Directors)</b> who monitor organization-wide wellness trends, unit-level risk distributions, generate access credentials, "
+        "and export audit-ready reports.<br/><br/>"
+        "<b>Cross-Sector Scalability & Universal Workforce Domain Applicability:</b><br/>"
+        "While Armed Forces and Defense Personnel serve as the primary mission-critical case study due to high-altitude isolation, combat fatigue, and strict operational readiness, "
+        "the platform's 4 core biometric telemetry inputs (sleep duration, duty/work hours, resting heart rate, and mood self-score) and 3-tier hierarchy are fundamentally <b>domain-agnostic</b>. "
+        "The system directly maps across high-pressure civilian and commercial enterprise sectors: "
+        "&bull; <b>IT &amp; Corporate Tech:</b> Sprint crunch, 12h+ screen fatigue, on-call sleep disruption, and developer burnout (<i>Software Engineers &rarr; HR Welfare Lead / Counselor &rarr; Executive VP</i>). "
+        "&bull; <b>Hospitals &amp; Healthcare:</b> Emergency/ICU shifts, traumatic exposure, and compassion fatigue (<i>Staff Nurses / Doctors &rarr; Chief Medical Officer &rarr; Hospital Dean</i>). "
+        "&bull; <b>Police &amp; Emergency Services:</b> 24/7 public safety readiness and acute critical incident trauma (<i>Constables / Firefighters &rarr; Welfare Inspector / DSP &rarr; Police Commissioner</i>). "
+        "&bull; <b>Aviation &amp; Logistics:</b> Circadian disruption and pilot/driver sleep compliance (<i>Pilots / Loco Drivers &rarr; Flight Safety Officer &rarr; Operations Director</i>). "
+        "&bull; <b>Heavy Industry &amp; Mining:</b> Shift fatigue risking fatal machinery accidents (<i>Plant Operators / Miners &rarr; EHS Safety Officer &rarr; Plant General Manager</i>)."
     )
     story.append(Paragraph(exec_summary_text, body_style))
     story.append(Spacer(1, 8))
@@ -355,7 +364,7 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         "built with modern CSS variables, responsive flexbox/grid layouts, and glassmorphic aesthetic cards."
     )
     story.append(Paragraph(fe_overview, body_style))
-    story.append(Spacer(1, 6))
+    story.append(Spacer(1, 4))
 
     story.append(Paragraph("A. Mobile-First & Desktop Ergonomics (Responsive Design)", h2_style))
     fe_resp = (
@@ -367,7 +376,7 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         "and mobile-optimized login shells preventing iOS/Android keyboard zoom."
     )
     story.append(Paragraph(fe_resp, body_style))
-    story.append(Spacer(1, 6))
+    story.append(Spacer(1, 4))
 
     story.append(Paragraph("B. Complete Template Catalog & View Hierarchy", h2_style))
 
@@ -471,10 +480,9 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
         ('GRID', (0,0), (-1,-1), 0.5, c_border),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_bg_light]),
-        ('PADDING', (0,0), (-1,-1), 4),
+        ('PADDING', (0,0), (-1,-1), 2.5),
     ]))
     story.append(t_tmpl)
-    story.append(Spacer(1, 14))
 
     # =========================================================================
     # SECTION 3: BACKEND ARCHITECTURE & APIS
@@ -820,6 +828,13 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
                       "Streamlined Officer Personnel filters (All Units, High, Medium, Low) and Timeline chips (All, Check-ins, Notes, Requests) into single-row zero-wrap responsive tracks. Decommissioned mobile dock and unified soldier banner for smartphones (360px–480px).", table_cell),
             Paragraph("Guarantees clean smartphone readability, zero element wrapping, and flawless alignment across personnel, timeline, and officer views.", table_cell)
         ],
+        [
+            Paragraph("<b>Scope & Scalability</b>", table_cell),
+            Paragraph("<b>Universal Workforce Scalability & Title Standardization:</b><br/>"
+                      "Formally ratified the official title: <b>AI PREDICTIVE PERSONNEL STRESS AND WELFARE MONITORING SYSTEM</b>. "
+                      "Architected multi-industry domain mapping validating the 4 telemetry metrics across IT Tech, Healthcare, Police, Aviation, and Industrial Mining.", table_cell),
+            Paragraph("Expands platform market readiness from military defense to universal corporate and public health enterprise deployments.", table_cell)
+        ],
     ]
     t_feat = Table(features_added_data, colWidths=[90, 240, printable_width - 330], repeatRows=1)
     t_feat.setStyle(TableStyle([
@@ -828,7 +843,7 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
         ('GRID', (0,0), (-1,-1), 0.5, c_border),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_bg_light]),
-        ('PADDING', (0,0), (-1,-1), 4.5),
+        ('PADDING', (0,0), (-1,-1), 3.8),
     ]))
     story.append(t_feat)
     story.append(Spacer(1, 14))
