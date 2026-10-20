@@ -832,10 +832,10 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
             Paragraph("Delivers instant, high-impact visual telemetry for service members, transforming raw prediction tags into intuitive diagnostic gauges.", tc_feat)
         ],
         [
-            Paragraph("<b>Mobile Viewport &amp; UX</b>", tc_feat),
-            Paragraph("<b>Mobile Streamlining, Roster &amp; Timeline Alignment:</b><br/>"
-                      "Streamlined Officer Personnel filters (All Units, High, Medium, Low) and Timeline chips (All, Check-ins, Notes, Requests) into single-row zero-wrap responsive tracks. Decommissioned mobile dock and unified soldier banner for smartphones (360px–480px).", tc_feat),
-            Paragraph("Guarantees clean smartphone readability, zero element wrapping, and flawless alignment across personnel, timeline, and officer views.", tc_feat)
+            Paragraph("<b>Responsive &amp; UX</b>", tc_feat),
+            Paragraph("<b>Laptop Grid &amp; Mobile Alignment Master System:</b><br/>"
+                      "Engineered 2-column executive grid for laptop displays (1024px–1920px) pairing check-in studio with fatigue forecaster and morale badges. Implemented touch-optimized mobile flow (360px–640px) with aligned action banners and zero horizontal overflow.", tc_feat),
+            Paragraph("Guarantees defense-grade mission-control ergonomics on laptops and flawless, zero-clutter readability on mobile smartphones.", tc_feat)
         ],
         [
             Paragraph("<b>Scope & Scalability</b>", tc_feat),
