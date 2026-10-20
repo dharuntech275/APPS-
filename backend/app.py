@@ -1025,15 +1025,6 @@ def login():
                         sync_db_to_blob()
                     conn.close()
 
-                # Defense-Grade 2FA Challenge: Redirect to TOTP verification
-                u_dict = dict(user)
-                if u_dict.get("totp_enabled") == 1 and u_dict.get("totp_secret"):
-                    session.clear()
-                    session["pending_2fa_user_id"] = user["id"]
-                    session["pending_2fa_name"] = user["name"]
-                    session["pending_2fa_role"] = user["role"]
-                    return redirect(url_for("totp_login"))
-
                 session.clear()
                 session.permanent = True
                 session["user_id"] = user["id"]
@@ -1116,133 +1107,20 @@ def upgrade_password():
 
 @app.route("/login/2fa", methods=["GET", "POST"])
 def totp_login():
-    uid = session.get("pending_2fa_user_id")
-    if not uid:
-        return redirect(url_for("login"))
-
-    conn = get_db()
-    user = conn.execute("SELECT * FROM Users WHERE id = ?", (uid,)).fetchone()
-    conn.close()
-    if not user or not user["totp_secret"] or user["totp_enabled"] != 1:
-        session.clear()
-        return redirect(url_for("login"))
-
-    error = None
-    if request.method == "POST":
-        code = request.form.get("totp_code", "").strip()
-        if not code or len(code) != 6:
-            error = "Please enter the complete 6-digit verification code."
-        elif not verify_totp_code(user["totp_secret"], code):
-            error = "Invalid 6-digit Google Authenticator code. Ensure your device clock is accurate and try again."
-        else:
-            conn = get_db()
-            log_activity(conn, user["id"], "2FA Login Verified", user["id"], f"Authenticated via Google Authenticator TOTP as {user['role']}")
-            conn.commit()
-            sync_db_to_blob()
-            conn.close()
-
-            session.clear()
-            session.permanent = True
-            session["user_id"] = user["id"]
-            session["user_name"] = user["name"]
-            session["role"] = user["role"]
-            return redirect(home_for_role(user["role"]))
-
-    return render_template(
-        "totp_login.html",
-        user_name=user["name"],
-        user_role=user["role"],
-        error=error
-    )
+    return redirect(url_for("login"))
 
 
 @app.route("/security/2fa", methods=["GET", "POST"])
-@login_required
 def totp_setup():
-    uid = session["user_id"]
-    conn = get_db()
-    user = conn.execute("SELECT * FROM Users WHERE id = ?", (uid,)).fetchone()
-
-    error = None
-    success = None
-
-    if request.method == "POST":
-        action = request.form.get("action")
-        if action == "enable":
-            setup_secret = session.get("setup_totp_secret")
-            code = request.form.get("totp_code", "").strip()
-            if not setup_secret:
-                error = "Setup session expired. Please refresh the page and try again."
-            elif not verify_totp_code(setup_secret, code):
-                error = "Incorrect 6-digit code. Please enter the current code displayed in your Google Authenticator app."
-            else:
-                conn.execute(
-                    "UPDATE Users SET totp_secret = ?, totp_enabled = 1 WHERE id = ?",
-                    (setup_secret, uid)
-                )
-                log_activity(conn, uid, "2FA Activated", uid, "Enabled Google Authenticator TOTP defense")
-                conn.commit()
-                sync_db_to_blob()
-                session.pop("setup_totp_secret", None)
-                user = conn.execute("SELECT * FROM Users WHERE id = ?", (uid,)).fetchone()
-                success = "Google Authenticator 2-Factor Authentication has been successfully activated on your account!"
-
-        elif action == "disable":
-            password = request.form.get("password", "")
-            code = request.form.get("totp_code", "").strip()
-            if not _password_ok(conn, user, password):
-                error = "Account password verification failed."
-            elif not verify_totp_code(user["totp_secret"], code):
-                error = "Invalid 6-digit authenticator code."
-            else:
-                conn.execute(
-                    "UPDATE Users SET totp_secret = NULL, totp_enabled = 0 WHERE id = ?",
-                    (uid,)
-                )
-                log_activity(conn, uid, "2FA Deactivated", uid, "Disabled Google Authenticator TOTP defense")
-                conn.commit()
-                sync_db_to_blob()
-                user = conn.execute("SELECT * FROM Users WHERE id = ?", (uid,)).fetchone()
-                success = "2-Factor Authentication has been disabled on your account."
-
-    totp_enabled = bool(user["totp_enabled"] and user["totp_secret"])
-    setup_secret = None
-    totp_uri = None
-    formatted_secret = None
-
-    if not totp_enabled:
-        if "setup_totp_secret" not in session:
-            session["setup_totp_secret"] = generate_totp_secret()
-        setup_secret = session["setup_totp_secret"]
-        formatted_secret = " ".join([setup_secret[i:i+4] for i in range(0, len(setup_secret), 4)])
-        totp_uri = get_totp_uri(setup_secret, user["name"], issuer="APPS Defense Shield")
-
-    conn.close()
-
-    return render_template(
-        "totp_setup.html",
-        user_name=user["name"],
-        user_role=user["role"],
-        totp_enabled=totp_enabled,
-        setup_secret=setup_secret,
-        formatted_secret=formatted_secret,
-        totp_uri=totp_uri,
-        error=error,
-        success=success
-    )
+    role = session.get("role")
+    if role:
+        return redirect(home_for_role(role))
+    return redirect(url_for("login"))
 
 
 @app.route("/admin/reset_2fa/<int:user_id>", methods=["POST"])
 @role_required("admin")
 def admin_reset_2fa(user_id):
-    conn = get_db()
-    target = conn.execute("SELECT * FROM Users WHERE id = ?", (user_id,)).fetchone()
-    if target:
-        conn.execute("UPDATE Users SET totp_secret = NULL, totp_enabled = 0 WHERE id = ?", (user_id,))
-        log_activity(conn, session["user_id"], "Admin Reset 2FA", user_id, f"Senior Admin reset 2FA for {target['name']}")
-        conn.commit()
-        sync_db_to_blob()
-    conn.close()
     return redirect(url_for("admin_dashboard"))
 
 
@@ -2143,17 +2021,13 @@ def admin_dashboard():
     unit_summary, levels = get_unit_summary(conn)
     total, high, medium, low = count_levels(conn, levels)
     active_pin = get_command_pin(conn)
-    all_users = conn.execute("""
-        SELECT id, name, unit, role, totp_enabled FROM Users ORDER BY role DESC, name ASC
-    """).fetchall()
     conn.close()
     return render_template(
         "admin_dashboard.html",
         admin_name=session["user_name"],
         unit_summary=unit_summary,
         total_personnel=total, total_high=high, total_medium=medium, total_low=low,
-        command_pin=active_pin,
-        users=all_users,
+        command_pin=active_pin
     )
 
 

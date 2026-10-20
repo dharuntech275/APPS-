@@ -859,11 +859,11 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
             Paragraph("Provides proactive burnout prevention for commanding officers and native-language operational accessibility across all services.", tc_feat)
         ],
         [
-            Paragraph("<b>Defense Security</b>", tc_feat),
-            Paragraph("<b>Google Authenticator (RFC 6238 TOTP 2FA Defense):</b><br/>"
-                      "Engineered zero-dependency RFC 6238 TOTP cryptographic 2FA engine for Personnel, Welfare Officers, and Admins. "
-                      "Features setup key QR generation, 30s rotating passkeys, defense login challenges, and Senior Admin 2FA reset roster.", tc_feat),
-            Paragraph("Provides unbreachable second-factor defense preventing account compromise even if passwords are leaked.", tc_feat)
+            Paragraph("<b>Access &amp; Security</b>", tc_feat),
+            Paragraph("<b>Streamlined Defense Access &amp; Executive Layout:</b><br/>"
+                      "Engineered responsive 2-column executive command grid for desktop and touch-optimized mobile drawer. "
+                      "Features direct credential login with cryptographic PBKDF2 salting, rotatable Command Authorization PIN, and zero-overhead authentication flow.", tc_feat),
+            Paragraph("Delivers friction-free soldier operational access, eliminating authentication lag while maintaining defense-grade cryptographic data security.", tc_feat)
         ],
     ]
     t_feat = Table(features_added_data, colWidths=[90, 240, printable_width - 330], repeatRows=1)
@@ -945,9 +945,9 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
             Paragraph("Custom <code>SyncedConnection</code> automatically snapshots SQLite to private Vercel Blob store on every commit and hydrates upon cold boots, guaranteeing zero data loss across container lifecycles.", tc_sec)
         ],
         [
-            Paragraph("<b>Google Authenticator (TOTP 2FA)</b>", tc_sec),
-            Paragraph("<b>Credential Theft &amp; Account Hijacking</b><br/>Compromised soldier or command passwords used in unauthorized login attempts.", tc_sec),
-            Paragraph("RFC 6238 Time-Based One-Time Passwords rotating every 30s with zero external dependencies. Active across all 3 roles with Senior Admin emergency reset capability.", tc_sec)
+            Paragraph("<b>Direct Defense Session Guard</b>", tc_sec),
+            Paragraph("<b>Session Hijacking &amp; Unauthorized Access</b><br/>Stale or hijacked user sessions persisting across shared military workstations.", tc_sec),
+            Paragraph("Enforces explicit cryptographic HTTP-only cookie signing with automatic server-side session purging on logout and role boundary validation on all internal routes.", tc_sec)
         ],
     ]
     t_sec = Table(security_matrix_data, colWidths=[115, 140, printable_width - 255])
@@ -975,7 +975,7 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         [Paragraph("<b>Object Storage Store</b>", tc_sec), Paragraph("Vercel Blob Storage &bull; Store: <code>apps-data</code> (ID: <code>store_eS9r7map43Dx32yX</code>)", tc_sec)],
         [Paragraph("<b>Source Control Repository</b>", tc_sec), Paragraph("GitHub: <code>https://github.com/dharuntech275/APPS-</code> (Dual-tracked: <code>main</code> &amp; <code>master</code>)", tc_sec)],
         [Paragraph("<b>Credential Recovery</b>", tc_sec), Paragraph("Unit-verified self-service recovery (<code>/forgot_password</code>) active in production", tc_sec)],
-        [Paragraph("<b>Two-Factor Auth (2FA)</b>", tc_sec), Paragraph("RFC 6238 TOTP Engine (Google Authenticator, Microsoft Auth) live for all 3 roles", tc_sec)],
+        [Paragraph("<b>Authentication Flow</b>", tc_sec), Paragraph("Direct credential login with PBKDF2-HMAC-SHA256 salting &amp; Command PIN protection", tc_sec)],
         [Paragraph("<b>Timezone Standard</b>", tc_sec), Paragraph("Indian Standard Time (IST - <code>UTC+05:30</code>) with dynamic client clock sync", tc_sec)],
         [Paragraph("<b>Secret Key Management</b>", tc_sec), Paragraph("Environment-backed session secret key with stable production fallback", tc_sec)],
         [Paragraph("<b>Database Verification</b>", tc_sec), Paragraph("Verified live: User 'Dharun' upgraded to strong password, persistent across cold boots", tc_sec)],
