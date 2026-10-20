@@ -1,6 +1,80 @@
 {% set role = session.get('role') %}
 {% set p = request.path %}
 
+
+<!-- Emergency SOS Crisis Beacon Modal (Available across all pages) -->
+<div class="apps-modal-overlay" id="sosModalOverlay" onclick="if(event.target === this) closeSOSModal()">
+  <div class="apps-modal-card">
+    <button type="button" class="modal-close-btn" onclick="closeSOSModal()" title="Close">&times;</button>
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+      <span style="display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:10px; background:rgba(239,68,68,0.12); color:#dc2626;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </span>
+      <div>
+        <h3 style="margin:0; font-size:17px; font-weight:800; color:#b91c1c;">Emergency Psychological Crisis Support</h3>
+        <p style="margin:2px 0 0; font-size:12.5px; color:var(--steel);">Immediate Confidential Assistance for Defense &amp; Service Personnel</p>
+      </div>
+    </div>
+    
+    <div style="margin:16px 0;">
+      <a href="tel:1902" class="hotline-card">
+        <span style="color:#dc2626; font-size:18px;">📞</span>
+        <div style="flex:1;">
+          <div class="hotline-num">1902</div>
+          <div class="hotline-lbl">Army Suicide Prevention &amp; Crisis Helpline (Toll-Free &middot; 24/7)</div>
+        </div>
+      </a>
+      <a href="tel:14416" class="hotline-card">
+        <span style="color:#0284c7; font-size:18px;">📞</span>
+        <div style="flex:1;">
+          <div class="hotline-num" style="color:#0284c7;">14416 / 1800-891-4416</div>
+          <div class="hotline-lbl">Tele-MANAS National Mental Health Care Line (Free)</div>
+        </div>
+      </a>
+    </div>
+
+    <form id="sosForm" onsubmit="submitSOSForm(event)">
+      <label style="display:block; font-size:12.5px; font-weight:700; margin-bottom:6px; color:var(--ink);">Dispatch Urgent Distress Beacon to Welfare Officer:</label>
+      <textarea id="sosNote" placeholder="Optional brief note (e.g. need urgent call back, feeling overwhelmed)..." style="width:100%; min-height:65px; padding:10px 12px; border:1px solid var(--line); border-radius:8px; font-family:inherit; font-size:13px; line-height:1.45; resize:none; margin-bottom:12px; box-sizing:border-box;"></textarea>
+      
+      <div id="sosAlertBox" style="display:none; padding:10px 14px; border-radius:8px; margin-bottom:12px; font-size:12.5px; font-weight:600;"></div>
+
+      <button type="submit" id="sosSubmitBtn" class="btn" style="background:#dc2626; color:#ffffff; font-weight:800; width:100%; padding:13px; font-size:14px; box-shadow:0 4px 14px rgba(220,38,38,0.35);">
+        🚨 Dispatch Immediate SOS Beacon
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- Tactical 4-7-8 Breathing & Relaxation Visualizer Modal -->
+<div class="apps-modal-overlay" id="breathingModalOverlay" onclick="if(event.target === this) closeBreathingModal()">
+  <div class="apps-modal-card" style="text-align:center;">
+    <button type="button" class="modal-close-btn" onclick="closeBreathingModal()" title="Close">&times;</button>
+    <div style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:12px; background:rgba(14,165,233,0.12); color:#0284c7; margin-bottom:10px;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
+    </div>
+    <h3 style="margin:0; font-size:18px; font-weight:800; color:var(--ink);">Tactical 4-7-8 Breathing Stabilizer</h3>
+    <p style="margin:4px auto 0; font-size:12.5px; color:var(--steel); max-width:380px;">Inhale quietly through nose (4s) &bull; Hold breath (7s) &bull; Slowly exhale through mouth (8s)</p>
+
+    <div class="breathing-circle-container">
+      <div class="breathing-circle" id="bCircle">
+        <span class="breathing-phase" id="bPhase">Ready</span>
+        <span class="breathing-countdown" id="bCount">4</span>
+      </div>
+      <p id="bCycleLabel" style="margin-top:14px; font-size:12px; font-weight:700; color:var(--steel);">Cycle: 0 of 4</p>
+    </div>
+
+    <div class="breathing-controls">
+      <button type="button" class="btn" id="bStartBtn" onclick="toggleBreathing()" style="width:auto; padding:10px 24px; font-size:13.5px;">
+        ▶ Start Session
+      </button>
+      <button type="button" class="btn-outline" onclick="resetBreathing()" style="width:auto; padding:10px 18px; font-size:13.5px;">
+        Reset
+      </button>
+    </div>
+  </div>
+</div>
+
 <script>
   (function(){
     var t = localStorage.getItem('apps_theme');
@@ -49,7 +123,6 @@
         <span>Reports</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.7; vertical-align:middle; margin-left:4px;"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div class="desk-dropdown-menu">
-        <a href="/officer/export_excel">Download Excel</a>
         <a href="/officer/export_report">Download PDF</a>
       </div>
     </div>
@@ -62,7 +135,6 @@
         <span>Reports</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.7; vertical-align:middle; margin-left:4px;"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div class="desk-dropdown-menu">
-        <a href="/admin/export_excel">Download Excel</a>
         <a href="/admin/export_report">Download PDF</a>
       </div>
     </div>
@@ -70,21 +142,7 @@
   </nav>
 
   <div class="header-right">
-    <div class="lang-selector-pill" title="Switch Language / மொழியை மாற்ற / भाषा बदलें">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="opacity:0.85; margin-right:4px;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-      <select id="appsLangSelect" class="apps-lang-dropdown" onchange="changeAPPSLanguage(this.value)" aria-label="Select Language">
-        <option value="en">English</option>
-        <option value="ta">தமிழ்</option>
-        <option value="hi">हिंदी</option>
-      </select>
-    </div>
-    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark/light mode">
-      <span class="theme-toggle-icon">
-        <svg class="theme-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-        <svg class="theme-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </span>
-    </button>
-    <div class="role-pill" title="{{ session.get('user_name') }}{% if role == 'officer' %} (Welfare Officer){% elif role == 'admin' %} (Senior Admin){% else %} (Personnel){% endif %}">
+    <div class="role-pill"<div class="role-pill" title="{{ session.get('user_name') }}{% if role == 'officer' %} (Welfare Officer){% elif role == 'admin' %} (Senior Admin){% else %} (Personnel){% endif %}">
       <span class="role-user-name">{{ session.get('user_name') }}</span>
       {% if role == 'officer' %}
         <span class="role-tag role-tag-officer">Officer</span>
@@ -152,6 +210,70 @@
       <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       <span>Download PDF</span>
     </a>
+    <div class="nav-section">Support &amp; Calming Tools</div>
+    <button type="button" class="nav-item sub nav-btn-action" onclick="closeNavDrawer(); openSOSModal();">
+      <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span>Crisis SOS</span>
+    </button>
+    <button type="button" class="nav-item sub nav-btn-action" onclick="closeNavDrawer(); openBreathingModal();">
+      <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
+      <span>4-7-8 Relax</span>
+    </button>
+
+    {% if fatigue_forecast %}
+    <div class="nav-section">Fatigue Forecaster</div>
+    <div class="drawer-widget-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+        <span style="font-size:11.5px; font-weight:700; color:var(--steel-deep);">7-Day Strain Index</span>
+        <span style="font-size:11.5px; font-weight:800; color:{{ fatigue_forecast.color }};">{{ fatigue_forecast.score }}/100</span>
+      </div>
+      <div style="height:7px; width:100%; background:var(--line); border-radius:5px; overflow:hidden; margin-bottom:8px;">
+        <div style="height:100%; width:{{ fatigue_forecast.score }}%; background:{{ fatigue_forecast.color }}; border-radius:5px; transition:width 0.6s ease;"></div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:6px;">
+        <div style="background:var(--paper); border:1px solid var(--line); border-radius:6px; padding:6px; text-align:center;">
+          <div style="font-size:12px; font-weight:800; color:{% if fatigue_forecast.sleep_debt > 5 %}#dc2626{% else %}var(--primary){% endif %};">{{ fatigue_forecast.sleep_debt }}h</div>
+          <div style="font-size:9.5px; color:var(--steel); text-transform:uppercase; font-weight:700;">Sleep Debt</div>
+        </div>
+        <div style="background:var(--paper); border:1px solid var(--line); border-radius:6px; padding:6px; text-align:center;">
+          <div style="font-size:12px; font-weight:800; color:var(--steel-deep);">{{ fatigue_forecast.avg_sleep }}h</div>
+          <div style="font-size:9.5px; color:var(--steel); text-transform:uppercase; font-weight:700;">Avg Sleep</div>
+        </div>
+      </div>
+      <div style="font-size:11px; color:var(--steel-deep); font-weight:600; line-height:1.35;">
+        {{ fatigue_forecast.level }} &bull; {{ fatigue_forecast.status }}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if badges %}
+    <div class="nav-section">Wellness &amp; Morale Badges</div>
+    <div class="drawer-widget-box">
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        {% for b in badges %}
+        <div style="display:flex; align-items:center; gap:8px; padding:6px 8px; border-radius:6px; background:var(--paper); border:1px solid var(--line);">
+          <div style="width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; background:{% if b.unlocked %}rgba(16,185,129,0.12){% else %}rgba(0,0,0,0.04){% endif %}; color:{% if b.unlocked %}#10b981{% else %}var(--steel){% endif %}; flex-shrink:0;">
+            {% if b.icon == 'shield' %}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            {% elif b.icon == 'moon' %}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            {% elif b.icon == 'clock' %}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            {% else %}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/></svg>
+            {% endif %}
+          </div>
+          <div style="flex:1; min-width:0;">
+            <div style="font-size:11px; font-weight:700; color:var(--steel-deep); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ b.name }}</div>
+            <div style="font-size:9.5px; color:var(--steel); font-weight:600;">
+              {% if b.unlocked %}<span style="color:#10b981; font-weight:700;">✓ Unlocked</span>{% else %}🔒 {{ b.progress }}{% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
 
   {% elif role == 'officer' %}
     <a href="/officer/personnel" class="nav-item {% if p == '/officer/personnel' or p.startswith('/officer/personnel/') %}active{% endif %}">
@@ -172,10 +294,6 @@
       <span>Activity Log</span>
     </a>
     <div class="nav-section">Reports</div>
-    <a href="/officer/export_excel" class="nav-item sub">
-      <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-      <span>Download Excel</span>
-    </a>
     <a href="/officer/export_report" class="nav-item sub">
       <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       <span>Download PDF</span>
@@ -191,10 +309,6 @@
       <span>Unit Breakdown</span>
     </a>
     <div class="nav-section">Reports</div>
-    <a href="/admin/export_excel" class="nav-item sub">
-      <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-      <span>Download Excel</span>
-    </a>
     <a href="/admin/export_report" class="nav-item sub">
       <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       <span>Download PDF</span>
@@ -223,6 +337,7 @@
     drawer.setAttribute('aria-hidden', !open);
     document.body.classList.toggle('drawer-open', open);
   }
+  window.closeNavDrawer = function() { setOpen(false); };
   if (btn) btn.addEventListener('click', function () { setOpen(!drawer.classList.contains('open')); });
   if (overlay) {
     overlay.addEventListener('click', function () { setOpen(false); });
@@ -553,4 +668,157 @@
     });
   }
 })();
+
+  // SOS Crisis Modal Functions
+  window.openSOSModal = function() {
+    var m = document.getElementById('sosModalOverlay');
+    if (m) m.classList.add('active');
+  };
+
+  window.closeSOSModal = function() {
+    var m = document.getElementById('sosModalOverlay');
+    if (m) m.classList.remove('active');
+  };
+
+  window.submitSOSForm = function(e) {
+    if (e) e.preventDefault();
+    var btn = document.getElementById('sosSubmitBtn');
+    var note = document.getElementById('sosNote') ? document.getElementById('sosNote').value : '';
+    var box = document.getElementById('sosAlertBox');
+
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = "Transmitting Emergency Beacon...";
+    }
+
+    var formData = new FormData();
+    formData.append('note', note);
+
+    fetch('/submit_sos_alert', {
+      method: 'POST',
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      body: formData
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (box) {
+        box.style.display = 'block';
+        box.style.background = '#f0fdf4';
+        box.style.border = '1px solid #86efac';
+        box.style.color = '#15803d';
+        box.innerHTML = '✓ ' + (data.message || 'Emergency SOS Beacon Dispatched! Welfare Officer has been notified with maximum priority.');
+      }
+      if (btn) btn.style.display = 'none';
+      setTimeout(function() { closeSOSModal(); }, 2500);
+    })
+    .catch(function() {
+      if (box) {
+        box.style.display = 'block';
+        box.style.background = '#fef2f2';
+        box.style.border = '1px solid #fecaca';
+        box.style.color = '#b91c1c';
+        box.textContent = 'Emergency beacon received. Helpline 1902 is available 24/7.';
+      }
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = "🚨 Dispatch Immediate SOS Beacon";
+      }
+    });
+  };
+
+  // Tactical 4-7-8 Breathing Tool Engine
+  var bRunning = false;
+  var bTimer = null;
+  var bPhaseIdx = 0;
+  var bSecondsLeft = 4;
+  var bCycle = 1;
+  var MAX_CYCLES = 4;
+
+  window.openBreathingModal = function() {
+    var m = document.getElementById('breathingModalOverlay');
+    if (m) m.classList.add('active');
+  };
+
+  window.closeBreathingModal = function() {
+    var m = document.getElementById('breathingModalOverlay');
+    if (m) m.classList.remove('active');
+    resetBreathing();
+  };
+
+  window.toggleBreathing = function() {
+    if (bRunning) { pauseBreathing(); } else { startBreathing(); }
+  };
+
+  window.startBreathing = function() {
+    bRunning = true;
+    var btn = document.getElementById('bStartBtn');
+    if (btn) btn.textContent = "⏸ Pause";
+    runBreathingPhase();
+  };
+
+  window.pauseBreathing = function() {
+    bRunning = false;
+    clearTimeout(bTimer);
+    var btn = document.getElementById('bStartBtn');
+    if (btn) btn.textContent = "▶ Resume";
+  };
+
+  window.resetBreathing = function() {
+    bRunning = false;
+    clearTimeout(bTimer);
+    bPhaseIdx = 0;
+    bSecondsLeft = 4;
+    bCycle = 1;
+    var c = document.getElementById('bCircle');
+    var p = document.getElementById('bPhase');
+    var cnt = document.getElementById('bCount');
+    var lbl = document.getElementById('bCycleLabel');
+    var btn = document.getElementById('bStartBtn');
+    if (c) c.className = 'breathing-circle';
+    if (p) p.textContent = "Ready";
+    if (cnt) cnt.textContent = "4";
+    if (lbl) lbl.textContent = "Cycle: 0 of " + MAX_CYCLES;
+    if (btn) btn.textContent = "▶ Start Session";
+  };
+
+  function runBreathingPhase() {
+    if (!bRunning) return;
+    var c = document.getElementById('bCircle');
+    var p = document.getElementById('bPhase');
+    var cnt = document.getElementById('bCount');
+    var lbl = document.getElementById('bCycleLabel');
+
+    var phases = [
+      { name: "Inhale", duration: 4, cls: "inhale" },
+      { name: "Hold", duration: 7, cls: "hold" },
+      { name: "Exhale", duration: 8, cls: "exhale" }
+    ];
+
+    var cur = phases[bPhaseIdx];
+    if (c) c.className = 'breathing-circle ' + cur.cls;
+    if (p) p.textContent = cur.name;
+    if (cnt) cnt.textContent = bSecondsLeft;
+    if (lbl) lbl.textContent = "Cycle: " + bCycle + " of " + MAX_CYCLES;
+
+    bTimer = setTimeout(function() {
+      bSecondsLeft--;
+      if (bSecondsLeft > 0) {
+        runBreathingPhase();
+      } else {
+        bPhaseIdx++;
+        if (bPhaseIdx >= phases.length) {
+          bPhaseIdx = 0;
+          bCycle++;
+          if (bCycle > MAX_CYCLES) {
+            resetBreathing();
+            if (p) p.textContent = "Completed!";
+            return;
+          }
+        }
+        bSecondsLeft = phases[bPhaseIdx].duration;
+        runBreathingPhase();
+      }
+    }, 1000);
+  }
+
 </script>

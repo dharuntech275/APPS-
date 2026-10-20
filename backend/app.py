@@ -744,8 +744,10 @@ def record_login_fail(key):
 
 @app.context_processor
 def inject_nav_counts():
-    """Badge count for the officer's request pipeline link across all personnel."""
-    if session.get("role") == "officer":
+    """Context processor providing live counts and drawer telemetry metrics."""
+    data = {}
+    role = session.get("role")
+    if role == "officer":
         conn = get_db()
         try:
             n = conn.execute(
@@ -753,10 +755,68 @@ def inject_nav_counts():
                    JOIN Users ON StressRequests.user_id = Users.id
                    WHERE StressRequests.stage != 'Closed'"""
             ).fetchone()[0]
+            data["pending_count"] = n
         finally:
             conn.close()
-        return {"pending_count": n}
-    return {}
+    elif role == "personnel" and session.get("user_id"):
+        uid = session["user_id"]
+        conn = get_db()
+        try:
+            history = conn.execute(
+                "SELECT * FROM DailyData WHERE user_id = ? ORDER BY date DESC, id DESC LIMIT 14", (uid,)
+            ).fetchall()
+            latest = history[0] if history else None
+
+            # Check-in streak calculation
+            streak_rows = conn.execute(
+                "SELECT date FROM DailyData WHERE user_id = ? ORDER BY date DESC", (uid,)
+            ).fetchall()
+            dates = {r["date"] for r in streak_rows}
+            streak = 0
+            exp = today_local()
+            while exp.isoformat() in dates:
+                streak += 1
+                exp -= timedelta(days=1)
+
+            data["streak"] = streak
+            data["fatigue_forecast"] = compute_cumulative_fatigue(history)
+            data["badges"] = [
+                {
+                    "id": "streak_3",
+                    "name": "Consistency Sentinel",
+                    "desc": "3+ consecutive day check-in streak",
+                    "icon": "shield",
+                    "unlocked": streak >= 3,
+                    "progress": f"{min(streak, 3)}/3 Days"
+                },
+                {
+                    "id": "sleep_7",
+                    "name": "Restoration Champion",
+                    "desc": "Optimal sleep duration (≥ 7.0 hrs)",
+                    "icon": "moon",
+                    "unlocked": bool(latest and latest["sleep_hours"] and latest["sleep_hours"] >= 7.0),
+                    "progress": f"{latest['sleep_hours']} hrs" if latest and latest["sleep_hours"] else "Pending"
+                },
+                {
+                    "id": "duty_balanced",
+                    "name": "Duty Equilibrium",
+                    "desc": "Sustainable operational duty (≤ 8.5 hrs)",
+                    "icon": "clock",
+                    "unlocked": bool(latest and latest["duty_hours"] and latest["duty_hours"] <= 8.5),
+                    "progress": f"{latest['duty_hours']} hrs" if latest and latest["duty_hours"] else "Pending"
+                },
+                {
+                    "id": "mood_high",
+                    "name": "Steadfast Morale",
+                    "desc": "Positive psychological resilience (Mood ≥ 4)",
+                    "icon": "smile",
+                    "unlocked": bool(latest and latest["mood_score"] and latest["mood_score"] >= 4),
+                    "progress": f"{latest['mood_score']}/5" if latest and latest["mood_score"] else "Pending"
+                }
+            ]
+        finally:
+            conn.close()
+    return data
 
 
 # ----------------------------------------------------------------------
@@ -861,11 +921,19 @@ def signup():
         if role not in ("personnel", "officer", "admin"):
             role = "personnel"
 
-        if not name or len(name) > 50:
-            error = "Please enter a name (up to 50 characters)."
+        if not name:
+            error = "Name is mandatory. All details must be provided to register."
+        elif len(name) > 50:
+            error = "Name is too long (up to 50 characters allowed)."
+        elif not unit:
+            error = "Unit/Department is mandatory. All details must be provided to register."
         elif len(unit) > 50:
             error = "Unit/Department name is too long (max 50 characters)."
-        elif confirm_password is not None and password != confirm_password:
+        elif not password:
+            error = "Password is mandatory. All details must be provided to register."
+        elif not confirm_password:
+            error = "Confirm Password is mandatory. All details must be provided to register."
+        elif password != confirm_password:
             error = "Passwords do not match. Please re-enter your password accurately."
         else:
             is_strong, strength_err = validate_password_strength(password)

@@ -44,7 +44,7 @@
         <div class="error-box">{{ error }}</div>
       {% endif %}
 
-      <form method="POST" action="/signup">
+      <form method="POST" action="/signup" onsubmit="return validateSignup(this);">
         <input type="hidden" name="role" id="roleInput" value="{{ active_role or 'personnel' }}">
 
         <label>Name</label>
@@ -109,6 +109,22 @@
       btnText: 'Register as Senior Admin'
     }
   };
+
+  function validateSignup(form) {
+    var name = (form.name ? form.name.value : '').trim();
+    var unit = (form.unit ? form.unit.value : '').trim();
+    var pwd = form.password ? form.password.value : '';
+    var cpwd = form.confirm_password ? form.confirm_password.value : '';
+    if (!name || !unit || !pwd || !cpwd) {
+      alert("All fields are mandatory. Please provide all details to register.");
+      return false;
+    }
+    if (pwd !== cpwd) {
+      alert("Passwords do not match. Please re-enter your password accurately.");
+      return false;
+    }
+    return true;
+  }
 
   function switchRole(role) {
     if (!roleData[role]) role = 'personnel';

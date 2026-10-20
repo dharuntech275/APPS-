@@ -1434,13 +1434,13 @@ body.personnel-page {
 }
 
 .mini-stats {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
   max-width: 360px;
   margin: 22px auto 26px;
-  padding: 16px 24px;
+  padding: 16px 20px;
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -1448,8 +1448,12 @@ body.personnel-page {
 }
 
 .mini-stat {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  padding: 4px 6px;
 }
 
 .mini-stat:first-child {
@@ -4830,13 +4834,10 @@ html, body {
    -------------------------------------------------------------------------- */
 @media (min-width: 992px) {
   .personnel-dashboard-grid {
-    display: grid !important;
-    grid-template-columns: 1.15fr 0.85fr !important;
-    gap: 28px !important;
-    max-width: 1240px !important;
+    display: block !important;
+    max-width: 760px !important;
     margin: 24px auto 44px !important;
     width: 100% !important;
-    align-items: start !important;
   }
 
   .personnel-side-col {
@@ -5232,4 +5233,35 @@ html, body {
   .header-right {
     gap: 4px !important;
   }
+}
+
+/* Drawer widgets and actions */
+.drawer-widget-box {
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.025);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  margin: 6px 14px 14px;
+}
+html.dark .drawer-widget-box {
+  background: rgba(255, 255, 255, 0.035);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.nav-btn-action {
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--steel-deep);
+}
+.nav-btn-action:hover {
+  background: #f1f5f9;
+  color: var(--ink);
+}
+html.dark .nav-btn-action:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
 }
