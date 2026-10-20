@@ -345,6 +345,12 @@
 </div>
 
 <script>
+  function trText(text) {
+    var lang = localStorage.getItem('apps_lang') || 'en';
+    if (lang === 'en' || !window.APPS_I18N || !window.APPS_I18N[lang]) return text;
+    return window.APPS_I18N[lang][text] || text;
+  }
+
   function setMood(val) {
     var inp = document.getElementById('moodInput');
     if (inp) inp.value = val;
@@ -356,11 +362,11 @@
       }
     });
     var moodLabels = {
-      1: "Level 1 \u00b7 Struggling",
-      2: "Level 2 \u00b7 Drained",
-      3: "Level 3 \u00b7 Steady",
-      4: "Level 4 \u00b7 Good",
-      5: "Level 5 \u00b7 Peak"
+      1: "Level 1 · " + trText("Struggling"),
+      2: "Level 2 · " + trText("Drained"),
+      3: "Level 3 · " + trText("Steady"),
+      4: "Level 4 · " + trText("Good"),
+      5: "Level 5 · " + trText("Peak")
     };
     var b = document.getElementById('moodBadge');
     if (b) {
@@ -385,7 +391,7 @@
     var sb = document.getElementById('sleepBadge');
     if (sb) {
       var sDesc = sleep < 5 ? "Deficit" : (sleep < 7 ? "Fair" : (sleep <= 9 ? "Restorative" : "Extended"));
-      sb.textContent = sleep.toFixed(1) + " hrs \u00b7 " + sDesc;
+      sb.textContent = sleep.toFixed(1) + " " + trText("hrs") + " · " + trText(sDesc);
       sb.className = "slider-badge " + (sleep < 5 ? "badge-alert" : (sleep < 7 ? "badge-warn" : "badge-good"));
     }
 
@@ -393,7 +399,7 @@
     var db = document.getElementById('dutyBadge');
     if (db) {
       var dDesc = duty < 8 ? "Light" : (duty <= 12 ? "Standard" : (duty <= 16 ? "Heavy Duty" : "Extreme Strain"));
-      db.textContent = duty.toFixed(1) + " hrs \u00b7 " + dDesc;
+      db.textContent = duty.toFixed(1) + " " + trText("hrs") + " · " + trText(dDesc);
       db.className = "slider-badge " + (duty > 14 ? "badge-alert" : (duty > 10 ? "badge-warn" : ""));
     }
 
@@ -401,7 +407,7 @@
     var hb = document.getElementById('hrBadge');
     if (hb) {
       var hDesc = hr < 60 ? "Resting Low" : (hr <= 85 ? "Optimal Baseline" : (hr <= 100 ? "Elevated" : "Tachycardia Alert"));
-      hb.textContent = hr + " bpm \u00b7 " + hDesc;
+      hb.textContent = hr + " bpm · " + trText(hDesc);
       hb.className = "slider-badge " + (hr > 100 ? "badge-alert" : (hr > 85 ? "badge-warn" : "badge-good"));
     }
 
@@ -410,16 +416,18 @@
     if (pill) {
       if (sleep < 5 || duty > 14 || hr > 105 || mood === 1) {
         pill.className = "precheck-pill badge-high";
-        pill.innerHTML = '<span class="radar-pulse-dot pulse-high"></span> High Strain \u00b7 Priority Care Suggested';
+        pill.innerHTML = '<span class="radar-pulse-dot pulse-high"></span> ' + trText("High Strain · Priority Care Suggested");
       } else if (sleep < 6.5 || duty > 10 || hr > 88 || mood <= 2) {
         pill.className = "precheck-pill badge-medium";
-        pill.innerHTML = '<span class="radar-pulse-dot" style="background:var(--signal-med);"></span> Moderate Strain \u00b7 Active Recovery Advised';
+        pill.innerHTML = '<span class="radar-pulse-dot" style="background:var(--signal-med);"></span> ' + trText("Moderate Strain · Active Recovery Advised");
       } else {
         pill.className = "precheck-pill badge-low";
-        pill.innerHTML = '<span class="radar-pulse-dot"></span> Optimal Readiness \u00b7 Normal Baseline';
+        pill.innerHTML = '<span class="radar-pulse-dot"></span> ' + trText("Optimal Readiness · Normal Baseline");
       }
     }
   }
+
+  window.updateCheckinMetrics = updateCheckinMetrics;
 
   // 1. Smartwatch BLE Sync Simulator
   function simulateSmartwatchSync(btn) {

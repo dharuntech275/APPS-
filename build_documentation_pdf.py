@@ -395,17 +395,17 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         [
             Paragraph("<code>signup.html</code>", code_style),
             Paragraph("<code>/signup</code>", code_style),
-            Paragraph("Unified 3-tab registration form (Personnel/Officer/Admin). Frictionless soldier signup with Command Security PIN protection for Officer/Admin.", table_cell)
+            Paragraph("Unified 3-tab registration form (Personnel/Officer/Admin). Direct streamlined onboarding across all roles with instant profile initialization.", table_cell)
         ],
         [
             Paragraph("<code>officer_signup.html</code>", code_style),
             Paragraph("<code>/officer_signup</code>", code_style),
-            Paragraph("Direct welfare officer registration gateway. Auto-selects officer tab and enforces 4-digit Command Authorization PIN validation.", table_cell)
+            Paragraph("Direct welfare officer registration gateway. Auto-selects officer tab for immediate onboarding and command unit assignment.", table_cell)
         ],
         [
             Paragraph("<code>admin_signup.html</code>", code_style),
             Paragraph("<code>/admin_signup</code>", code_style),
-            Paragraph("Direct senior command registration gateway. Auto-selects admin tab and enforces 4-digit Command Authorization PIN validation.", table_cell)
+            Paragraph("Direct senior command registration gateway. Auto-selects admin tab for instant executive command account initialization.", table_cell)
         ],
         [
             Paragraph("<code>upgrade_password.html</code>", code_style),
@@ -465,7 +465,7 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         [
             Paragraph("<code>admin_dashboard.html</code>", code_style),
             Paragraph("<code>/admin_dashboard</code>", code_style),
-            Paragraph("Senior Command Center. Organization metrics, unit wellness breakdowns, Command Security PIN management console, and force exports.", table_cell)
+            Paragraph("Senior Command Center. Organization metrics, unit wellness breakdowns, high/medium/low triage analytics, and force exports.", table_cell)
         ],
         [
             Paragraph("<code>admin_units.html</code>", code_style),
@@ -523,15 +523,14 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         [Paragraph("<code>/login</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Authenticates users, checks password strength; redirects to upgrade or dashboard.", table_cell)],
         [Paragraph("<code>/forgot_password</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Identity recovery via Name + Unit + Role match; sets strong password & syncs to cloud.", table_cell)],
         [Paragraph("<code>/signup</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Unified 3-tab registration; verifies PIN for officer/admin; calls pick_officer().", table_cell)],
-        [Paragraph("<code>/officer_signup</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Redirects to officer signup tab; requires 4-digit Command Authorization PIN.", table_cell)],
-        [Paragraph("<code>/admin_signup</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Redirects to admin signup tab; requires 4-digit Command Authorization PIN.", table_cell)],
+        [Paragraph("<code>/officer_signup</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Redirects to officer signup tab for immediate staff onboarding.", table_cell)],
+        [Paragraph("<code>/admin_signup</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Public", badge_pill), Paragraph("Redirects to admin signup tab for immediate executive onboarding.", table_cell)],
         [Paragraph("<code>/upgrade_password</code>", code_style), Paragraph("GET/POST", table_cell), Paragraph("Auth", badge_pill), Paragraph("Upgrades legacy/weak password to PBKDF2 hash and syncs to cloud storage.", table_cell)],
         [Paragraph("<code>/submit_survey</code>", code_style), Paragraph("POST", table_cell), Paragraph("Soldier", badge_pill), Paragraph("Validates inputs; invokes Random Forest ML model; writes DailyData record.", table_cell)],
         [Paragraph("<code>/submit_stress_request</code>", code_style), Paragraph("POST", table_cell), Paragraph("Soldier", badge_pill), Paragraph("Dispatches confidential stress relief request to assigned officer.", table_cell)],
         [Paragraph("<code>/officer/requests/&lt;id&gt;/advance</code>", code_style), Paragraph("POST", table_cell), Paragraph("Officer", badge_pill), Paragraph("Transitions request through stage pipeline (New &rarr; Acknowledged &rarr; Resolved).", table_cell)],
         [Paragraph("<code>/add_note</code>", code_style), Paragraph("POST", table_cell), Paragraph("Officer", badge_pill), Paragraph("Saves confidential clinical counseling note and records audit ActivityLog.", table_cell)],
-        [Paragraph("<code>/admin/update_pin</code>", code_style), Paragraph("POST", table_cell), Paragraph("Admin", badge_pill), Paragraph("Rotates the active 4-digit Command Authorization PIN in SystemConfig.", table_cell)],
-        [Paragraph("<code>/admin/export_excel</code>", code_style), Paragraph("GET", table_cell), Paragraph("Admin", badge_pill), Paragraph("Generates styled OpenPyXL workbook containing force-wide health data.", table_cell)],
+                [Paragraph("<code>/admin/export_excel</code>", code_style), Paragraph("GET", table_cell), Paragraph("Admin", badge_pill), Paragraph("Generates styled OpenPyXL workbook containing force-wide health data.", table_cell)],
         [Paragraph("<code>/officer/export_report</code>", code_style), Paragraph("GET", table_cell), Paragraph("Officer", badge_pill), Paragraph("Compiles ReportLab PDF wellness dossier for assigned personnel.", table_cell)],
     ]
     t_routes = Table(routes_data, colWidths=[125, 45, 45, printable_width - 215])
@@ -642,7 +641,7 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         [
             Paragraph("<code>SystemConfig</code>", code_style),
             Paragraph("<code>key (PK), value, updated_at</code>", code_style),
-            Paragraph("Stores platform security configuration including the active 4-digit Command Authorization PIN for staff onboarding.", table_cell)
+            Paragraph("Stores platform global configuration including key-value operational parameters and system metadata.", table_cell)
         ],
         [
             Paragraph("<code>StressRequests</code>", code_style),
@@ -862,7 +861,7 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
             Paragraph("<b>Access &amp; Security</b>", tc_feat),
             Paragraph("<b>Streamlined Defense Access &amp; Executive Layout:</b><br/>"
                       "Engineered responsive 2-column executive command grid for desktop and touch-optimized mobile drawer. "
-                      "Features direct credential login with cryptographic PBKDF2 salting, rotatable Command Authorization PIN, and zero-overhead authentication flow.", tc_feat),
+                      "Features direct credential login with cryptographic PBKDF2 salting, unit-verified self-service recovery, and zero-overhead authentication flow.", tc_feat),
             Paragraph("Delivers friction-free soldier operational access, eliminating authentication lag while maintaining defense-grade cryptographic data security.", tc_feat)
         ],
     ]
@@ -900,9 +899,9 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
             Paragraph("<b>Protection Mechanism & Technical Defense</b>", table_header)
         ],
         [
-            Paragraph("<b>Command Authorization PIN</b>", tc_sec),
-            Paragraph("<b>Unauthorized Role Elevation</b><br/>Rogue users or soldiers self-registering as Welfare Officers or Senior Admins.", tc_sec),
-            Paragraph("Server-side validation against dynamic 4-digit PIN stored in <code>SystemConfig</code> during staff signup. Rotatable by Senior Admin from dashboard; protects staff roles without SMS/email dependencies.", tc_sec)
+            Paragraph("<b>Role Boundary Enforcement</b>", tc_sec),
+            Paragraph("<b>Privilege Escalation &amp; Cross-Role Access</b><br/>Soldiers attempting to access officer clinical notes or admin dashboards.", tc_sec),
+            Paragraph("Strict server-side route decorators (<code>@login_required</code> and <code>@role_required</code>) validating user identity and role on every request with immediate unauthorized redirection.", tc_sec)
         ],
         [
             Paragraph("<b>Cryptographic Password Hashing</b>", tc_sec),
@@ -975,7 +974,7 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         [Paragraph("<b>Object Storage Store</b>", tc_sec), Paragraph("Vercel Blob Storage &bull; Store: <code>apps-data</code> (ID: <code>store_eS9r7map43Dx32yX</code>)", tc_sec)],
         [Paragraph("<b>Source Control Repository</b>", tc_sec), Paragraph("GitHub: <code>https://github.com/dharuntech275/APPS-</code> (Dual-tracked: <code>main</code> &amp; <code>master</code>)", tc_sec)],
         [Paragraph("<b>Credential Recovery</b>", tc_sec), Paragraph("Unit-verified self-service recovery (<code>/forgot_password</code>) active in production", tc_sec)],
-        [Paragraph("<b>Authentication Flow</b>", tc_sec), Paragraph("Direct credential login with PBKDF2-HMAC-SHA256 salting &amp; Command PIN protection", tc_sec)],
+        [Paragraph("<b>Authentication Flow</b>", tc_sec), Paragraph("Direct credential login with PBKDF2-HMAC-SHA256 salting &amp; unit-verified recovery", tc_sec)],
         [Paragraph("<b>Timezone Standard</b>", tc_sec), Paragraph("Indian Standard Time (IST - <code>UTC+05:30</code>) with dynamic client clock sync", tc_sec)],
         [Paragraph("<b>Secret Key Management</b>", tc_sec), Paragraph("Environment-backed session secret key with stable production fallback", tc_sec)],
         [Paragraph("<b>Database Verification</b>", tc_sec), Paragraph("Verified live: User 'Dharun' upgraded to strong password, persistent across cold boots", tc_sec)],

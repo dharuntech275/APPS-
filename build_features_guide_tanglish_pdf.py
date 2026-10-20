@@ -284,7 +284,7 @@ def create_tanglish_guide_pdf(output_path="APPS_Features_Guide_Tanglish.pdf"):
 
     story.append(Paragraph("&bull; <b>1. Personnel (Soldier / Jawan):</b> Dhinamum thanga stress, thoongum neram (sleep hours), heart rate, matrum family morale status-ai log panni thanga mental fitness-ai track pannalaam. Instant panic relief-ku 4-7-8 breathing exercise matrum emergency 1-click Crisis SOS call seiyalaam.", bullet_style))
     story.append(Paragraph("&bull; <b>2. Welfare Officer:</b> Thanga command unit-la irukkum anaithu jawans-oda health status-ai live-ah monitor pannalaam. High-risk red alert jawans-ai prioritize panni clinical counseling notes add panni suicide prevention actions edukalaam.", bullet_style))
-    story.append(Paragraph("&bull; <b>3. Senior Admin (HQ Command):</b> Unit-level statistics (High, Medium, Low risk counts), dynamic Command Master PIN update, audit trail activity logs, matrum overall system oversight control seiyalaam.", bullet_style))
+    story.append(Paragraph("&bull; <b>3. Senior Admin (HQ Command):</b> Unit-level statistics (High, Medium, Low risk counts), comprehensive risk analytics, audit trail activity logs, matrum overall system oversight control seiyalaam.", bullet_style))
 
     story.append(Spacer(1, 8))
     story.append(callout("<b>Mukkiya Kurippu:</b> Starting-la login issue irundhadhu, adhai streamline panni login direct aakkiyom. Pinnar 2FA shield kooda thevai illai enbadhaal UI, database, matrum backend flow-la irundhu clean-ah remove panni friction-free direct login ready panniyom.", bg=c_bg_light, border_color=c_teal))
@@ -307,12 +307,12 @@ def create_tanglish_guide_pdf(output_path="APPS_Features_Guide_Tanglish.pdf"):
     ))
 
     story.append(Spacer(1, 4))
-    story.append(Paragraph("2.2 Command Authorization Master PIN Security", h2_style))
+    story.append(Paragraph("2.2 Frictionless Multi-Role Direct Registration", h2_style))
     story.append(Paragraph(
-        "<b>Enna Feature:</b> Pudhu user sign-up aagumpodhu, yaravathu thavaraaga 'Welfare Officer' alladhu 'Senior Admin' role select panni unauthorized access vaanga koodathu enbadharkaana master defense barrier.<br/>"
-        "<b>Epadi Work Aagudhu:</b> Signup page-la 'Officer' alladhu 'Admin' role select panninaal, mandatory-ah 'Command Security PIN' kekkum. "
-        "Indha PIN database-la `SystemConfig` table-la secure-ah store aagi irukkum (Default: `2026`). Senior Admin mattum thaan thanga dashboard-la irundhu indha PIN-ai eppodhu vendumanalum change panna mudiyum. Soldier / Personnel role-kku PIN thevai illai.<br/>"
-        "<b>Benefit:</b> Unauthorized person yaarum officer account create panna mudiyadhu, command hierarchy 100% strictly maintain aagum.",
+        "<b>Enna Feature:</b> User request-kku inanga Command Security PIN-ai neekki, Personnel, Welfare Officer, matrum Senior Admin aana yaarum direct-ah thanga role-ai select panni register seiyyum instant onboarding system.<br/>"
+        "<b>Epadi Work Aagudhu:</b> Signup screen-la 'Personnel', 'Officer', alladhu 'Admin' tab-ai click panni, Name, Unit, and Password enter panninaale podhum. "
+        "Zero delay-la account create aagi respective dashboard-kku login panna mudiyum.<br/>"
+        "<b>Benefit:</b> Onboarding speed adhigam aagividum, network illaatha idathilum staff PIN authentication error illamal account create seiyalaam.",
         body_style
     ))
 
@@ -507,11 +507,11 @@ def create_tanglish_guide_pdf(output_path="APPS_Features_Guide_Tanglish.pdf"):
     ))
 
     story.append(Spacer(1, 4))
-    story.append(Paragraph("5.2 Dynamic Command Master PIN Rotation Engine", h2_style))
+    story.append(Paragraph("5.2 Mobile Responsive Drawer & Touch Layout System", h2_style))
     story.append(Paragraph(
-        "<b>Enna Feature:</b> Officer and Admin registration security-kku thevaiyaana 4-digit master PIN-ai Senior Admin instant-ah change pannum facility.<br/>"
-        "<b>Epadi Use Pannanum:</b> Admin dashboard-la 'Update Master PIN' input box-la pudhiya 4 to 6 digit number (e.g. `2027`) enter panni 'Update' click panninaal udane live-ah update aagividum.<br/>"
-        "<b>Benefit:</b> PIN leak aanaal kooda database alladhu code-ai thodaamal 5 seconds-la live-ah PIN-ai rotate pannividalaam.",
+        "<b>Enna Feature:</b> Smartphone-la view pannum podhu elements olunga theriyadha prachanai-ai fix panna build panna mobile-first responsive layout.<br/>"
+        "<b>Epadi Use Pannanum:</b> Mobile phone-la open pannumpodhu slide-out drawer menu, side-by-side equal height quick action buttons (`Crisis SOS` and `4-7-8 Relax`), 5-column mood selector, and zero horizontal scroll automatically fit aagum.<br/>"
+        "<b>Benefit:</b> Field-la chinna screen phone-la use pannaalum perfect alignment and touch accessibility kidaikkum.",
         body_style
     ))
 
@@ -667,9 +667,9 @@ def create_tanglish_guide_pdf(output_path="APPS_Features_Guide_Tanglish.pdf"):
             Paragraph("Active", tc_bold)
         ],
         [
-            Paragraph("<b>Command Authorization Master PIN</b>", tc_bold),
-            Paragraph("Admin / Security", tc_style),
-            Paragraph("Officer/Admin signup prevent panna 4-digit PIN. Admin-aal dynamically rotate seiyya mudiyum.", tc_style),
+            Paragraph("<b>Direct Multi-Role Access</b>", tc_bold),
+            Paragraph("All Roles", tc_style),
+            Paragraph("PIN barrier illamal direct-ah Personnel, Officer, Admin onboarding seiyyum streamlined system.", tc_style),
             Paragraph("Active", tc_bold)
         ],
         [

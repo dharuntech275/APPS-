@@ -872,29 +872,7 @@ def signup():
             if not is_strong:
                 error = strength_err
             else:
-                pin = request.form.get("command_pin", "").strip()
                 conn = get_db()
-                admin_count = conn.execute("SELECT COUNT(*) FROM Users WHERE role = 'admin'").fetchone()[0]
-                is_first_admin = (admin_count == 0)
-
-                if role == "admin" and is_first_admin:
-                    # First-Time Master Admin creates the Master PIN!
-                    if not pin or not pin.isdigit() or len(pin) < 4 or len(pin) > 6:
-                        error = "Please create a 4-digit Master Command PIN (numbers only, e.g. 7788) for system security."
-                        conn.close()
-                        return render_template("signup.html", error=error, active_role=role, name=name, is_first_admin=True)
-                    set_command_pin(conn, pin)
-                elif role in ("officer", "admin"):
-                    valid_pin = get_command_pin(conn)
-                    if not valid_pin:
-                        error = "System initialization required: Senior Administrator must be registered first."
-                        conn.close()
-                        return render_template("signup.html", error=error, active_role=role, name=name, is_first_admin=is_first_admin)
-                    if not pin or pin != valid_pin:
-                        error = f"Invalid Command Authorization PIN. Registration as {role.capitalize()} is restricted to authorized personnel."
-                        conn.close()
-                        return render_template("signup.html", error=error, active_role=role, name=name, is_first_admin=is_first_admin)
-
                 if _name_taken(conn, name):
                     error = "That name is already registered. Please log in or use a different name."
                     conn.close()
@@ -2020,14 +1998,12 @@ def admin_dashboard():
     conn = get_db()
     unit_summary, levels = get_unit_summary(conn)
     total, high, medium, low = count_levels(conn, levels)
-    active_pin = get_command_pin(conn)
     conn.close()
     return render_template(
         "admin_dashboard.html",
         admin_name=session["user_name"],
         unit_summary=unit_summary,
-        total_personnel=total, total_high=high, total_medium=medium, total_low=low,
-        command_pin=active_pin
+        total_personnel=total, total_high=high, total_medium=medium, total_low=low
     )
 
 
