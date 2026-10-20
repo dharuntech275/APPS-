@@ -2030,6 +2030,40 @@ body.drawer-open {
   color: #ffffff !important;
 }
 
+.nav-delete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: transparent;
+  color: #94a3b8;
+  border: 1px dashed rgba(148, 163, 184, 0.45);
+  font-weight: 600;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+.nav-delete-btn:hover {
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.4);
+}
+html.dark .nav-delete-btn {
+  color: #94a3b8;
+  border-color: rgba(148, 163, 184, 0.25);
+}
+html.dark .nav-delete-btn:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
 /* ========================================================
    Theme Toggle & Dark Mode Support
    ======================================================== */
@@ -2390,6 +2424,40 @@ html.dark .nav-logout {
 html.dark .nav-logout:hover {
   background: #ef4444;
   color: #ffffff !important;
+}
+
+.nav-delete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: transparent;
+  color: #94a3b8;
+  border: 1px dashed rgba(148, 163, 184, 0.45);
+  font-weight: 600;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+.nav-delete-btn:hover {
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.4);
+}
+html.dark .nav-delete-btn {
+  color: #94a3b8;
+  border-color: rgba(148, 163, 184, 0.25);
+}
+html.dark .nav-delete-btn:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.5);
 }
 
 /* ---------- Cards & Layout ---------- */

@@ -1239,6 +1239,60 @@ def logout():
     return redirect(url_for("login"))
 
 
+@app.route("/delete_account", methods=["POST"])
+def delete_account():
+    """Permanently deletes the current user account and cascades removal of all associated data."""
+    if "user_id" not in session:
+        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return jsonify({"success": False, "error": "Not authenticated. Please log in."}), 401
+        return redirect(url_for("login"))
+
+    uid = session["user_id"]
+    password = request.form.get("password", "")
+    if not password:
+        return jsonify({"success": False, "error": "Password confirmation is required."}), 400
+
+    conn = get_db()
+    try:
+        user = conn.execute("SELECT * FROM Users WHERE id = ?", (uid,)).fetchone()
+        if not user:
+            session.clear()
+            return jsonify({"success": False, "error": "User account not found."}), 404
+
+        if not _password_ok(conn, user, password):
+            return jsonify({"success": False, "error": "Incorrect password. Account deletion blocked."}), 403
+
+        # Password verified! Proceed with complete permanent purge
+        # 1. If user was an assigned officer, reassign or unassign their personnel
+        if user["role"] == "officer":
+            alt_officer = conn.execute(
+                "SELECT id FROM Users WHERE role = 'officer' AND id != ? LIMIT 1", (uid,)
+            ).fetchone()
+            alt_id = alt_officer["id"] if alt_officer else None
+            conn.execute("UPDATE Users SET assigned_officer_id = ? WHERE assigned_officer_id = ?", (alt_id, uid))
+            conn.execute("UPDATE StressRequests SET officer_id = ? WHERE officer_id = ?", (alt_id, uid))
+            conn.execute("UPDATE CounselingNotes SET officer_id = ? WHERE officer_id = ?", (alt_id or 0, uid))
+            conn.execute("UPDATE PersonnelTags SET officer_id = ? WHERE officer_id = ?", (alt_id or 0, uid))
+
+        # 2. Delete all records owned by this user
+        conn.execute("DELETE FROM DailyData WHERE user_id = ?", (uid,))
+        conn.execute("DELETE FROM StressRequests WHERE user_id = ?", (uid,))
+        conn.execute("DELETE FROM CounselingNotes WHERE user_id = ?", (uid,))
+        conn.execute("DELETE FROM PersonnelTags WHERE user_id = ?", (uid,))
+        conn.execute("DELETE FROM ActivityLog WHERE actor_id = ? OR target_user_id = ?", (uid, uid))
+        conn.execute("DELETE FROM Users WHERE id = ?", (uid,))
+        conn.commit()
+    finally:
+        conn.close()
+
+    sync_db_to_blob()
+    session.clear()
+
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        return jsonify({"success": True, "redirect": "/login?account_deleted=1"})
+    return redirect(url_for("login", account_deleted=1))
+
+
 # ----------------------------------------------------------------------
 # Personnel: dashboard, comparison, check-in, requests
 # ----------------------------------------------------------------------

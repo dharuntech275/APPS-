@@ -530,7 +530,7 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
         [Paragraph("<code>/submit_stress_request</code>", code_style), Paragraph("POST", table_cell), Paragraph("Soldier", badge_pill), Paragraph("Dispatches confidential stress relief request to assigned officer.", table_cell)],
         [Paragraph("<code>/officer/requests/&lt;id&gt;/advance</code>", code_style), Paragraph("POST", table_cell), Paragraph("Officer", badge_pill), Paragraph("Transitions request through stage pipeline (New &rarr; Acknowledged &rarr; Resolved).", table_cell)],
         [Paragraph("<code>/add_note</code>", code_style), Paragraph("POST", table_cell), Paragraph("Officer", badge_pill), Paragraph("Saves confidential clinical counseling note and records audit ActivityLog.", table_cell)],
-                [Paragraph("<code>/admin/export_excel</code>", code_style), Paragraph("GET", table_cell), Paragraph("Admin", badge_pill), Paragraph("Generates styled OpenPyXL workbook containing force-wide health data.", table_cell)],
+        [Paragraph("<code>/delete_account</code>", code_style), Paragraph("POST", table_cell), Paragraph("Auth", badge_pill), Paragraph("Permanent cascade purge of user account, biometric telemetry, requests, & profile.", table_cell)],
         [Paragraph("<code>/officer/export_report</code>", code_style), Paragraph("GET", table_cell), Paragraph("Officer", badge_pill), Paragraph("Compiles ReportLab PDF wellness dossier for assigned personnel.", table_cell)],
     ]
     t_routes = Table(routes_data, colWidths=[125, 45, 45, printable_width - 215])

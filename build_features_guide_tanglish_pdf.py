@@ -708,6 +708,12 @@ def create_tanglish_guide_pdf(output_path="APPS_Features_Guide_Tanglish.pdf"):
             Paragraph("Soldier Dossier (`/my/export_pdf`), Officer Report, Admin Command Report download panna.", tc_style),
             Paragraph("Active", tc_bold)
         ],
+        [
+            Paragraph("<b>Delete Your Account</b>", tc_bold),
+            Paragraph("All Roles", tc_style),
+            Paragraph("Password verify panni user thanga account &amp; biometric data-vai permanently erase seiya.", tc_style),
+            Paragraph("Active", tc_bold)
+        ],
     ]
 
     t_matrix = Table(matrix_data, colWidths=[105, 75, printable_width - 230, 50], repeatRows=1)

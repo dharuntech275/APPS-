@@ -316,13 +316,56 @@
   {% endif %}
   </div>
 
-  <div style="padding: 12px 14px; border-top: 1px solid var(--line); margin-top: auto;">
+  <div style="padding: 12px 14px; border-top: 1px solid var(--line); margin-top: auto; display: flex; flex-direction: column; gap: 8px;">
     <a href="/logout" class="nav-logout">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
       <span>Sign Out</span>
     </a>
+    <button type="button" class="nav-delete-btn" onclick="closeNavDrawer(); openDeleteAccountModal();" title="Permanently Delete Your Account">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+      <span>Delete Your Account</span>
+    </button>
   </div>
 </nav>
+
+
+<!-- Permanent Delete Account Modal -->
+<div class="apps-modal-overlay" id="deleteAccountModalOverlay" onclick="if(event.target === this) closeDeleteAccountModal()">
+  <div class="apps-modal-card" style="max-width: 440px;">
+    <button type="button" class="modal-close-btn" onclick="closeDeleteAccountModal()" title="Close">&times;</button>
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+      <span style="display:inline-flex; align-items:center; justify-content:center; width:42px; height:42px; border-radius:12px; background:rgba(239,68,68,0.12); color:#dc2626; flex-shrink:0;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>
+        </svg>
+      </span>
+      <div>
+        <h3 style="margin:0; font-size:17px; font-weight:800; color:#b91c1c;">Delete Your Account</h3>
+        <p style="margin:2px 0 0; font-size:12px; color:var(--steel);">Permanent Deletion &bull; Irreversible Action</p>
+      </div>
+    </div>
+
+    <div style="background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.2); border-radius:10px; padding:12px 14px; margin-bottom:16px;">
+      <p style="margin:0; font-size:12.5px; line-height:1.5; color:var(--ink);">
+        <strong>Warning:</strong> Deleting your account will permanently wipe all your check-in telemetry, distress beacons, sleep &amp; duty trends, and profile details from APPS. This action <strong>cannot be undone</strong>.
+      </p>
+    </div>
+
+    <form id="deleteAccountForm" onsubmit="submitDeleteAccount(event)">
+      <label style="display:block; font-size:12.5px; font-weight:700; margin-bottom:6px; color:var(--ink);">
+        Confirm Password to verify identity:
+      </label>
+      <input type="password" id="deleteAccountPassword" placeholder="Enter your account password" required style="width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:8px; font-family:inherit; font-size:13.5px; margin-bottom:14px; box-sizing:border-box;">
+      
+      <div id="deleteAccountAlertBox" style="display:none; padding:10px 14px; border-radius:8px; margin-bottom:14px; font-size:12.5px; font-weight:600;"></div>
+
+      <div style="display:flex; gap:10px; justify-content:flex-end;">
+        <button type="button" class="btn-outline" onclick="closeDeleteAccountModal()" style="width:auto; padding:10px 16px; font-size:13px;">Cancel</button>
+        <button type="submit" id="deleteAccountBtn" class="btn" style="background:#dc2626; color:#ffffff; font-weight:800; width:auto; padding:10px 18px; font-size:13px; box-shadow:0 4px 14px rgba(220,38,38,0.35);">Permanently Delete Account</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 <script>
 (function () {
@@ -382,6 +425,9 @@
       "Download Excel": "Excel பதிவிறக்கம்",
       "Logout": "வெளியேறு",
       "Sign Out": "வெளியேறு",
+      "Delete Your Account": "உங்கள் கணக்கை நீக்கு",
+      "Delete Account": "கணக்கை நீக்கு",
+      "Permanently Delete Account": "கணக்கை நிரந்தரமாக நீக்கு",
       "Crisis SOS": "அவசர உதவி SOS",
       "4-7-8 Relax": "4-7-8 தளர்வு",
       "day streak": "நாள் தொடர்",
@@ -497,6 +543,9 @@
       "Download Excel": "एक्सेल डाउनलोड",
       "Logout": "लॉग आउट",
       "Sign Out": "साइन आउट",
+      "Delete Your Account": "अपना खाता हटाएं",
+      "Delete Account": "खाता हटाएं",
+      "Permanently Delete Account": "स्थायी रूप से खाता हटाएं",
       "Crisis SOS": "संकट एसओएस",
       "4-7-8 Relax": "4-7-8 आराम",
       "day streak": "दिन की लकीर",
@@ -610,7 +659,7 @@
       'h1', 'h2', 'h3', 'h4', '.slider-title', '.slider-sub-labels span',
       '.fatigue-metric-lbl', '.badge-name', '.badge-desc', '.badge-status-pill',
       '.smartwatch-sync-btn span', '.btn-sos-trigger span', '.btn-breathing-trigger span',
-      '.desktop-logout', '.nav-logout span', '.precheck-label', '.btn',
+      '.desktop-logout', '.nav-logout span', '.nav-delete-btn span', '.precheck-label', '.btn',
       '.mood-desc', '.hotline-lbl', '.hotline-num', '#bCycleLabel', '#bPhase',
       'table th', 'table td span', '.stat-label', '.role-chip-link', '#greetingText'
     ];
@@ -820,5 +869,94 @@
       }
     }, 1000);
   }
+
+
+  // Delete Account Modal Engine
+  window.openDeleteAccountModal = function() {
+    var m = document.getElementById('deleteAccountModalOverlay');
+    if (m) m.classList.add('active');
+    var p = document.getElementById('deleteAccountPassword');
+    if (p) { p.value = ''; p.focus(); }
+    var box = document.getElementById('deleteAccountAlertBox');
+    if (box) { box.style.display = 'none'; box.textContent = ''; }
+  };
+
+  window.closeDeleteAccountModal = function() {
+    var m = document.getElementById('deleteAccountModalOverlay');
+    if (m) m.classList.remove('active');
+  };
+
+  window.submitDeleteAccount = function(e) {
+    if (e) e.preventDefault();
+    var pwdInput = document.getElementById('deleteAccountPassword');
+    var pwd = pwdInput ? pwdInput.value : '';
+    var box = document.getElementById('deleteAccountAlertBox');
+    var btn = document.getElementById('deleteAccountBtn');
+
+    if (!pwd) {
+      if (box) {
+        box.style.display = 'block';
+        box.style.background = '#fef2f2';
+        box.style.border = '1px solid #fecaca';
+        box.style.color = '#b91c1c';
+        box.textContent = 'Please enter your password to confirm deletion.';
+      }
+      return;
+    }
+
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'Purging account data...';
+    }
+
+    var formData = new FormData();
+    formData.append('password', pwd);
+
+    fetch('/delete_account', {
+      method: 'POST',
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      body: formData
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.success) {
+        if (box) {
+          box.style.display = 'block';
+          box.style.background = '#f0fdf4';
+          box.style.border = '1px solid #86efac';
+          box.style.color = '#15803d';
+          box.textContent = 'Account successfully deleted. Redirecting...';
+        }
+        setTimeout(function() {
+          window.location.href = data.redirect || '/login?account_deleted=1';
+        }, 1200);
+      } else {
+        if (box) {
+          box.style.display = 'block';
+          box.style.background = '#fef2f2';
+          box.style.border = '1px solid #fecaca';
+          box.style.color = '#b91c1c';
+          box.textContent = data.error || 'Incorrect password. Account deletion blocked.';
+        }
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = 'Permanently Delete Account';
+        }
+      }
+    })
+    .catch(function(err) {
+      if (box) {
+        box.style.display = 'block';
+        box.style.background = '#fef2f2';
+        box.style.border = '1px solid #fecaca';
+        box.style.color = '#b91c1c';
+        box.textContent = 'An error occurred during account deletion. Please try again.';
+      }
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'Permanently Delete Account';
+      }
+    });
+  };
 
 </script>
