@@ -3140,10 +3140,13 @@ img, canvas, svg {
   }
   .nav-drawer {
     display: flex !important;
+    flex-direction: column !important;
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     bottom: 0 !important;
+    height: 100vh !important;
+    height: 100dvh !important;
     width: 270px !important;
     max-width: 270px !important;
     transform: translateX(0) !important;
@@ -3151,8 +3154,31 @@ img, canvas, svg {
     border-right: 1px solid var(--line) !important;
     border-radius: 0 !important;
     z-index: 100 !important;
-    overflow-y: auto !important;
+    overflow: hidden !important;
     visibility: visible !important;
+  }
+  .nav-links {
+    flex: 1 1 auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 10px 10px 24px !important;
+  }
+  .nav-item {
+    padding: 9px 12px !important;
+    font-size: 13.5px !important;
+    border-radius: 8px !important;
+    margin-bottom: 2px !important;
+  }
+  .nav-section {
+    margin: 12px 10px 4px !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em !important;
+  }
+  .drawer-widget-box {
+    padding: 8px 10px !important;
+    margin: 4px 2px 8px !important;
+    border-radius: 8px !important;
   }
   .wrap {
     margin-left: 270px !important;
@@ -3894,6 +3920,42 @@ html.dark .slider-badge {
   color: var(--signal-high);
   border-color: rgba(239, 68, 68, 0.25);
 }
+.slider-badge.badge-orange {
+  background: rgba(249, 115, 22, 0.1);
+  color: #ea580c;
+  border-color: rgba(249, 115, 22, 0.25);
+}
+.slider-badge.badge-cyan {
+  background: rgba(6, 182, 212, 0.1);
+  color: #0891b2;
+  border-color: rgba(6, 182, 212, 0.25);
+}
+html.dark .slider-badge.badge-alert {
+  background: rgba(239, 68, 68, 0.2) !important;
+  color: #fca5a5 !important;
+  border-color: rgba(239, 68, 68, 0.35) !important;
+}
+html.dark .slider-badge.badge-orange {
+  background: rgba(249, 115, 22, 0.2) !important;
+  color: #fdba74 !important;
+  border-color: rgba(249, 115, 22, 0.35) !important;
+}
+html.dark .slider-badge.badge-warn {
+  background: rgba(245, 158, 11, 0.2) !important;
+  color: #fcd34d !important;
+  border-color: rgba(245, 158, 11, 0.35) !important;
+}
+html.dark .slider-badge.badge-good {
+  background: rgba(16, 185, 129, 0.2) !important;
+  color: #6ee7b7 !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
+}
+html.dark .slider-badge.badge-cyan {
+  background: rgba(6, 182, 212, 0.2) !important;
+  color: #67e8f9 !important;
+  border-color: rgba(6, 182, 212, 0.35) !important;
+}
+
 
 .biometric-slider {
   -webkit-appearance: none;
@@ -3992,18 +4054,60 @@ html.dark .mood-btn:hover {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
-.mood-btn.active {
-  border-color: var(--primary) !important;
-  background: rgba(37, 99, 235, 0.08) !important;
-  box-shadow: 0 0 0 2px var(--primary), 0 4px 12px rgba(37, 99, 235, 0.2) !important;
+/* Level 1: Struggling (Red) */
+.mood-btn[data-val="1"]:hover { border-color: #ef4444; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15); }
+.mood-btn[data-val="1"].active {
+  border-color: #ef4444 !important;
+  background: rgba(239, 68, 68, 0.09) !important;
+  box-shadow: 0 0 0 2px #ef4444, 0 4px 14px rgba(239, 68, 68, 0.22) !important;
   transform: translateY(-2px);
 }
+.mood-btn[data-val="1"].active .mood-val-circle { background: #ef4444 !important; color: #ffffff !important; }
+.mood-btn[data-val="1"].active .mood-desc { color: #dc2626 !important; font-weight: 700 !important; }
 
-html.dark .mood-btn.active {
-  border-color: #60a5fa !important;
-  background: rgba(37, 99, 235, 0.22) !important;
-  box-shadow: 0 0 0 2px #60a5fa, 0 4px 16px rgba(37, 99, 235, 0.4) !important;
+/* Level 2: Drained (Orange) */
+.mood-btn[data-val="2"]:hover { border-color: #f97316; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.15); }
+.mood-btn[data-val="2"].active {
+  border-color: #f97316 !important;
+  background: rgba(249, 115, 22, 0.09) !important;
+  box-shadow: 0 0 0 2px #f97316, 0 4px 14px rgba(249, 115, 22, 0.22) !important;
+  transform: translateY(-2px);
 }
+.mood-btn[data-val="2"].active .mood-val-circle { background: #f97316 !important; color: #ffffff !important; }
+.mood-btn[data-val="2"].active .mood-desc { color: #ea580c !important; font-weight: 700 !important; }
+
+/* Level 3: Steady (Amber/Yellow) */
+.mood-btn[data-val="3"]:hover { border-color: #eab308; box-shadow: 0 4px 12px rgba(234, 179, 8, 0.15); }
+.mood-btn[data-val="3"].active {
+  border-color: #eab308 !important;
+  background: rgba(234, 179, 8, 0.1) !important;
+  box-shadow: 0 0 0 2px #eab308, 0 4px 14px rgba(234, 179, 8, 0.22) !important;
+  transform: translateY(-2px);
+}
+.mood-btn[data-val="3"].active .mood-val-circle { background: #eab308 !important; color: #ffffff !important; }
+.mood-btn[data-val="3"].active .mood-desc { color: #ca8a04 !important; font-weight: 700 !important; }
+
+/* Level 4: Good (Green) */
+.mood-btn[data-val="4"]:hover { border-color: #10b981; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15); }
+.mood-btn[data-val="4"].active {
+  border-color: #10b981 !important;
+  background: rgba(16, 185, 129, 0.09) !important;
+  box-shadow: 0 0 0 2px #10b981, 0 4px 14px rgba(16, 185, 129, 0.22) !important;
+  transform: translateY(-2px);
+}
+.mood-btn[data-val="4"].active .mood-val-circle { background: #10b981 !important; color: #ffffff !important; }
+.mood-btn[data-val="4"].active .mood-desc { color: #059669 !important; font-weight: 700 !important; }
+
+/* Level 5: Peak (Cyan) */
+.mood-btn[data-val="5"]:hover { border-color: #06b6d4; box-shadow: 0 4px 12px rgba(6, 182, 212, 0.15); }
+.mood-btn[data-val="5"].active {
+  border-color: #06b6d4 !important;
+  background: rgba(6, 182, 212, 0.09) !important;
+  box-shadow: 0 0 0 2px #06b6d4, 0 4px 14px rgba(6, 182, 212, 0.22) !important;
+  transform: translateY(-2px);
+}
+.mood-btn[data-val="5"].active .mood-val-circle { background: #06b6d4 !important; color: #ffffff !important; }
+.mood-btn[data-val="5"].active .mood-desc { color: #0891b2 !important; font-weight: 700 !important; }
 
 .mood-val-circle {
   width: 28px;
@@ -4898,18 +5002,103 @@ html.dark .mood-btn .mood-desc {
   color: #94a3b8 !important;
 }
 
-html.dark .mood-btn.active {
-  background: rgba(59, 130, 246, 0.25) !important;
-  border-color: #3b82f6 !important;
+/* Dark Level 1: Struggling (Red) */
+html.dark .mood-btn[data-val="1"]:hover {
+  border-color: #ef4444 !important;
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.35) !important;
 }
-
-html.dark .mood-btn.active .mood-val-circle {
-  background: #3b82f6 !important;
+html.dark .mood-btn[data-val="1"].active {
+  border-color: #ef4444 !important;
+  background: rgba(239, 68, 68, 0.24) !important;
+  box-shadow: 0 0 0 2px #ef4444, 0 4px 16px rgba(239, 68, 68, 0.4) !important;
+  transform: translateY(-2px);
+}
+html.dark .mood-btn[data-val="1"].active .mood-val-circle {
+  background: #ef4444 !important;
   color: #ffffff !important;
 }
+html.dark .mood-btn[data-val="1"].active .mood-desc {
+  color: #fca5a5 !important;
+  font-weight: 700 !important;
+}
 
-html.dark .mood-btn.active .mood-desc {
-  color: #93c5fd !important;
+/* Dark Level 2: Drained (Orange) */
+html.dark .mood-btn[data-val="2"]:hover {
+  border-color: #f97316 !important;
+  box-shadow: 0 4px 16px rgba(249, 115, 22, 0.35) !important;
+}
+html.dark .mood-btn[data-val="2"].active {
+  border-color: #f97316 !important;
+  background: rgba(249, 115, 22, 0.24) !important;
+  box-shadow: 0 0 0 2px #f97316, 0 4px 16px rgba(249, 115, 22, 0.4) !important;
+  transform: translateY(-2px);
+}
+html.dark .mood-btn[data-val="2"].active .mood-val-circle {
+  background: #f97316 !important;
+  color: #ffffff !important;
+}
+html.dark .mood-btn[data-val="2"].active .mood-desc {
+  color: #fdba74 !important;
+  font-weight: 700 !important;
+}
+
+/* Dark Level 3: Steady (Amber) */
+html.dark .mood-btn[data-val="3"]:hover {
+  border-color: #f59e0b !important;
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35) !important;
+}
+html.dark .mood-btn[data-val="3"].active {
+  border-color: #f59e0b !important;
+  background: rgba(245, 158, 11, 0.24) !important;
+  box-shadow: 0 0 0 2px #f59e0b, 0 4px 16px rgba(245, 158, 11, 0.4) !important;
+  transform: translateY(-2px);
+}
+html.dark .mood-btn[data-val="3"].active .mood-val-circle {
+  background: #f59e0b !important;
+  color: #ffffff !important;
+}
+html.dark .mood-btn[data-val="3"].active .mood-desc {
+  color: #fcd34d !important;
+  font-weight: 700 !important;
+}
+
+/* Dark Level 4: Good (Green) */
+html.dark .mood-btn[data-val="4"]:hover {
+  border-color: #10b981 !important;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35) !important;
+}
+html.dark .mood-btn[data-val="4"].active {
+  border-color: #10b981 !important;
+  background: rgba(16, 185, 129, 0.24) !important;
+  box-shadow: 0 0 0 2px #10b981, 0 4px 16px rgba(16, 185, 129, 0.4) !important;
+  transform: translateY(-2px);
+}
+html.dark .mood-btn[data-val="4"].active .mood-val-circle {
+  background: #10b981 !important;
+  color: #ffffff !important;
+}
+html.dark .mood-btn[data-val="4"].active .mood-desc {
+  color: #6ee7b7 !important;
+  font-weight: 700 !important;
+}
+
+/* Dark Level 5: Peak (Cyan) */
+html.dark .mood-btn[data-val="5"]:hover {
+  border-color: #06b6d4 !important;
+  box-shadow: 0 4px 16px rgba(6, 182, 212, 0.35) !important;
+}
+html.dark .mood-btn[data-val="5"].active {
+  border-color: #06b6d4 !important;
+  background: rgba(6, 182, 212, 0.24) !important;
+  box-shadow: 0 0 0 2px #06b6d4, 0 4px 16px rgba(6, 182, 212, 0.4) !important;
+  transform: translateY(-2px);
+}
+html.dark .mood-btn[data-val="5"].active .mood-val-circle {
+  background: #06b6d4 !important;
+  color: #ffffff !important;
+}
+html.dark .mood-btn[data-val="5"].active .mood-desc {
+  color: #67e8f9 !important;
   font-weight: 700 !important;
 }
 
@@ -5402,38 +5591,72 @@ html.dark .nav-btn-action:hover {
 
 /* Persistent Sidebar Brand Box & Elements */
 .sidebar-brand-box {
-  padding: 16px 16px;
+  padding: 14px 16px;
   border-bottom: 1px solid var(--line);
   display: flex;
   align-items: center;
-  gap: 12px;
   background: #f8fafc;
+  flex-shrink: 0;
 }
 .sidebar-brand-link {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   text-decoration: none;
   color: inherit;
+  width: 100%;
+}
+.sidebar-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 13.5px;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+.sidebar-brand-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 .sidebar-brand-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 13.5px;
   font-weight: 800;
   color: var(--steel-deep);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   white-space: nowrap;
+  line-height: 1.2;
 }
 .sidebar-brand-sub {
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 10px;
   font-weight: 700;
   color: var(--primary);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   white-space: nowrap;
+  line-height: 1.2;
+  margin-top: 2px;
 }
 html.dark .sidebar-brand-box {
   background: #0c1527 !important;
   border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+}
+html.dark .sidebar-brand-badge {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.45) !important;
 }
 html.dark .sidebar-brand-title {
   color: #f8fafc !important;

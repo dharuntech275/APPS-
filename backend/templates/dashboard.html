@@ -194,7 +194,7 @@
     var b = document.getElementById('moodBadge');
     if (b) {
       b.textContent = moodLabels[val] || ("Level " + val);
-      b.className = "slider-badge " + (val <= 1 ? "badge-alert" : val <= 2 ? "badge-warn" : "badge-good");
+      b.className = "slider-badge " + (val === 1 ? "badge-alert" : val === 2 ? "badge-orange" : val === 3 ? "badge-warn" : val === 4 ? "badge-good" : "badge-cyan");
     }
     updateCheckinMetrics();
   }
