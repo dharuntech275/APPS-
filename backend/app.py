@@ -90,7 +90,7 @@ from xml.sax.saxutils import escape as xml_escape
 
 import joblib
 import pandas as pd
-from flask import (Flask, Response, abort, redirect, render_template, request,
+from flask import (Flask, Response, abort, jsonify, redirect, render_template, request,
                    session, url_for)
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill

@@ -939,9 +939,16 @@
       headers: { 'X-Requested-With': 'XMLHttpRequest' },
       body: formData
     })
-    .then(function(res) { return res.json(); })
-    .then(function(data) {
-      if (data.success) {
+    .then(function(res) {
+      return res.json().then(function(data) {
+        return { ok: res.ok, status: res.status, data: data };
+      }).catch(function() {
+        return { ok: res.ok, status: res.status, data: null };
+      });
+    })
+    .then(function(result) {
+      var data = result.data;
+      if (result.ok && data && data.success) {
         if (box) {
           box.style.display = 'block';
           box.style.background = '#f0fdf4';
@@ -950,7 +957,7 @@
           box.textContent = 'Account successfully deleted. Redirecting...';
         }
         setTimeout(function() {
-          window.location.href = data.redirect || '/login?account_deleted=1';
+          window.location.href = (data && data.redirect) ? data.redirect : '/login?account_deleted=1';
         }, 1200);
       } else {
         if (box) {
@@ -958,7 +965,7 @@
           box.style.background = '#fef2f2';
           box.style.border = '1px solid #fecaca';
           box.style.color = '#b91c1c';
-          box.textContent = data.error || 'Incorrect password. Account deletion blocked.';
+          box.textContent = (data && data.error) ? data.error : 'Account deletion failed. Please check your credentials and try again.';
         }
         if (btn) {
           btn.disabled = false;
@@ -972,7 +979,7 @@
         box.style.background = '#fef2f2';
         box.style.border = '1px solid #fecaca';
         box.style.color = '#b91c1c';
-        box.textContent = 'An error occurred during account deletion. Please try again.';
+        box.textContent = 'Network or server error during account deletion. Please try again.';
       }
       if (btn) {
         btn.disabled = false;
