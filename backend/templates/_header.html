@@ -90,9 +90,15 @@
             aria-expanded="false" aria-controls="navDrawer">
       <span></span><span></span><span></span>
     </button>
-    <a href="{% if role == 'admin' %}/admin_dashboard{% elif role == 'officer' %}/officer/personnel{% else %}/dashboard{% endif %}" class="brand-link" aria-label="APPS Home">
-      <div class="mark">APPS</div>
-    </a>
+    <div class="mobile-brand-only">
+      <a href="{% if role == 'admin' %}/admin_dashboard{% elif role == 'officer' %}/officer/personnel{% else %}/dashboard{% endif %}" class="brand-link" aria-label="APPS Home">
+        <div class="mark">APPS</div>
+      </a>
+    </div>
+    <div class="desktop-status-pill">
+      <span class="radar-pulse-dot" style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10b981; box-shadow:0 0 0 3px rgba(16,185,129,0.22); flex-shrink:0;"></span>
+      <span style="font-size:12.5px; font-weight:700; color:var(--steel-deep);">Welfare Monitoring Network &bull; Live Telemetry</span>
+    </div>
   </div>
 
   <nav class="desktop-nav" aria-label="Desktop primary navigation">
@@ -142,7 +148,7 @@
   </nav>
 
   <div class="header-right">
-    <div class="role-pill"<div class="role-pill" title="{{ session.get('user_name') }}{% if role == 'officer' %} (Welfare Officer){% elif role == 'admin' %} (Senior Admin){% else %} (Personnel){% endif %}">
+    <div class="role-pill" title="{{ session.get('user_name') }}{% if role == 'officer' %} (Welfare Officer){% elif role == 'admin' %} (Senior Admin){% else %} (Personnel){% endif %}">
       <span class="role-user-name">{{ session.get('user_name') }}</span>
       {% if role == 'officer' %}
         <span class="role-tag role-tag-officer">Officer</span>
@@ -156,7 +162,17 @@
 
 <div id="navOverlay" class="nav-overlay"></div>
 
-<nav id="navDrawer" class="nav-drawer" aria-hidden="true">
+<nav id="navDrawer" class="nav-drawer" aria-label="Main Navigation">
+  <div class="sidebar-brand-box">
+    <a href="{% if role == 'admin' %}/admin_dashboard{% elif role == 'officer' %}/officer/personnel{% else %}/dashboard{% endif %}" class="sidebar-brand-link">
+      <div class="mark" style="width:36px; height:36px; font-size:14px; font-weight:800; border-radius:8px; flex-shrink:0;">APPS</div>
+      <div style="min-width:0;">
+        <div class="sidebar-brand-title">APPS MONITOR</div>
+        <div class="sidebar-brand-sub">Welfare System</div>
+      </div>
+    </a>
+  </div>
+
   <div class="nav-head">
     <div>
       <div class="nav-user">{{ session.get('user_name') }}</div>
@@ -391,7 +407,9 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
   if (drawer) {
     drawer.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () { setOpen(false); });
+      a.addEventListener('click', function () {
+        if (window.innerWidth < 992) { setOpen(false); }
+      });
     });
   }
 
