@@ -211,7 +211,7 @@ header.top {
 }
 
 .desktop-logout {
-  display: inline-flex;
+  display: none !important;
   align-items: center;
   gap: 5px;
   padding: 7px 15px;
@@ -3130,7 +3130,7 @@ img, canvas, svg {
     border-radius: 20px;
   }
   .desktop-logout {
-    display: inline-flex !important;
+    display: none !important;
   }
   .nav-overlay {
     display: none !important;
