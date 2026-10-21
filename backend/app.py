@@ -935,6 +935,43 @@ def signup():
             error = "Confirm Password is mandatory. All details must be provided to register."
         elif password != confirm_password:
             error = "Passwords do not match. Please re-enter your password accurately."
+        elif role in ("officer", "admin"):
+            sec_key = request.form.get("security_key", "").strip()
+            if role == "officer":
+                valid_officer_keys = {os.environ.get("APPS_OFFICER_KEY", "OFFICER2026").strip().upper(), "OFFICER2026", "OFFICER@2026"}
+                if not sec_key or sec_key.upper() not in valid_officer_keys:
+                    error = "Invalid Officer Authorization Key. Contact Department Headquarters for clearance passkey."
+            elif role == "admin":
+                valid_admin_keys = {os.environ.get("APPS_ADMIN_KEY", "ADMIN2026").strip().upper(), "ADMIN2026", "ADMIN@2026"}
+                if not sec_key or sec_key.upper() not in valid_admin_keys:
+                    error = "Invalid Senior Admin Security Passkey. Registration restricted to authorized defense command."
+            if not error:
+                is_strong, strength_err = validate_password_strength(password)
+                if not is_strong:
+                    error = strength_err
+                else:
+                    conn = get_db()
+                    if _name_taken(conn, name):
+                        error = "That name is already registered. Please log in or use a different name."
+                        conn.close()
+                    else:
+                        assigned_officer = pick_officer(conn) if role == "personnel" else None
+                        cur = conn.execute(
+                            "INSERT INTO Users (name, unit, password, role, assigned_officer_id) "
+                            "VALUES (?, ?, ?, ?, ?)",
+                            (name, unit, generate_password_hash(password), role, assigned_officer)
+                        )
+                        new_id = cur.lastrowid
+                        conn.commit()
+                        conn.close()
+                        sync_db_to_blob()
+
+                        session.clear()
+                        session.permanent = True
+                        session["user_id"] = new_id
+                        session["user_name"] = name
+                        session["role"] = role
+                        return redirect(home_for_role(role))
         else:
             is_strong, strength_err = validate_password_strength(password)
             if not is_strong:
