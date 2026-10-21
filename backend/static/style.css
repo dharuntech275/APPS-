@@ -4130,24 +4130,11 @@ html.dark .mood-val-circle {
   color: #f1f5f9;
 }
 
-.mood-btn.active .mood-val-circle {
-  background: var(--primary);
-  color: #ffffff;
-}
-
 .mood-desc {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 10.5px;
   font-weight: 600;
   color: var(--steel);
-}
-
-.mood-btn.active .mood-desc {
-  color: var(--primary);
-}
-
-html.dark .mood-btn.active .mood-desc {
-  color: #93c5fd;
 }
 
 /* --- Pre-Check Live Readiness Preview Card --- */

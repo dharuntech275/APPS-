@@ -4,7 +4,164 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>APPS - Dashboard</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=2.5">
+<style>
+  /* 5-Mode Clinical Readiness Colors - Instant Fail-Safe Styles */
+  /* Mode 1: Struggling (Red) */
+  .mood-btn[data-val="1"]:hover, html.dark .mood-btn[data-val="1"]:hover {
+    border-color: #ef4444 !important;
+  }
+  .mood-btn[data-val="1"].active {
+    border-color: #ef4444 !important;
+    background: rgba(239, 68, 68, 0.12) !important;
+    box-shadow: 0 0 0 2px #ef4444, 0 4px 14px rgba(239, 68, 68, 0.25) !important;
+  }
+  .mood-btn[data-val="1"].active .mood-val-circle {
+    background: #ef4444 !important;
+    color: #ffffff !important;
+  }
+  .mood-btn[data-val="1"].active .mood-desc {
+    color: #dc2626 !important;
+    font-weight: 700 !important;
+  }
+  html.dark .mood-btn[data-val="1"].active {
+    border-color: #ef4444 !important;
+    background: rgba(239, 68, 68, 0.28) !important;
+    box-shadow: 0 0 0 2px #ef4444, 0 4px 16px rgba(239, 68, 68, 0.45) !important;
+  }
+  html.dark .mood-btn[data-val="1"].active .mood-val-circle {
+    background: #ef4444 !important;
+    color: #ffffff !important;
+  }
+  html.dark .mood-btn[data-val="1"].active .mood-desc {
+    color: #fca5a5 !important;
+    font-weight: 700 !important;
+  }
+
+  /* Mode 2: Drained (Orange) */
+  .mood-btn[data-val="2"]:hover, html.dark .mood-btn[data-val="2"]:hover {
+    border-color: #f97316 !important;
+  }
+  .mood-btn[data-val="2"].active {
+    border-color: #f97316 !important;
+    background: rgba(249, 115, 22, 0.12) !important;
+    box-shadow: 0 0 0 2px #f97316, 0 4px 14px rgba(249, 115, 22, 0.25) !important;
+  }
+  .mood-btn[data-val="2"].active .mood-val-circle {
+    background: #f97316 !important;
+    color: #ffffff !important;
+  }
+  .mood-btn[data-val="2"].active .mood-desc {
+    color: #ea580c !important;
+    font-weight: 700 !important;
+  }
+  html.dark .mood-btn[data-val="2"].active {
+    border-color: #f97316 !important;
+    background: rgba(249, 115, 22, 0.28) !important;
+    box-shadow: 0 0 0 2px #f97316, 0 4px 16px rgba(249, 115, 22, 0.45) !important;
+  }
+  html.dark .mood-btn[data-val="2"].active .mood-val-circle {
+    background: #f97316 !important;
+    color: #ffffff !important;
+  }
+  html.dark .mood-btn[data-val="2"].active .mood-desc {
+    color: #fdba74 !important;
+    font-weight: 700 !important;
+  }
+
+  /* Mode 3: Steady (Amber/Yellow) */
+  .mood-btn[data-val="3"]:hover, html.dark .mood-btn[data-val="3"]:hover {
+    border-color: #f59e0b !important;
+  }
+  .mood-btn[data-val="3"].active {
+    border-color: #eab308 !important;
+    background: rgba(234, 179, 8, 0.14) !important;
+    box-shadow: 0 0 0 2px #eab308, 0 4px 14px rgba(234, 179, 8, 0.25) !important;
+  }
+  .mood-btn[data-val="3"].active .mood-val-circle {
+    background: #eab308 !important;
+    color: #ffffff !important;
+  }
+  .mood-btn[data-val="3"].active .mood-desc {
+    color: #ca8a04 !important;
+    font-weight: 700 !important;
+  }
+  html.dark .mood-btn[data-val="3"].active {
+    border-color: #f59e0b !important;
+    background: rgba(245, 158, 11, 0.28) !important;
+    box-shadow: 0 0 0 2px #f59e0b, 0 4px 16px rgba(245, 158, 11, 0.45) !important;
+  }
+  html.dark .mood-btn[data-val="3"].active .mood-val-circle {
+    background: #f59e0b !important;
+    color: #ffffff !important;
+  }
+  html.dark .mood-btn[data-val="3"].active .mood-desc {
+    color: #fcd34d !important;
+    font-weight: 700 !important;
+  }
+
+  /* Mode 4: Good (Green) */
+  .mood-btn[data-val="4"]:hover, html.dark .mood-btn[data-val="4"]:hover {
+    border-color: #10b981 !important;
+  }
+  .mood-btn[data-val="4"].active {
+    border-color: #10b981 !important;
+    background: rgba(16, 185, 129, 0.12) !important;
+    box-shadow: 0 0 0 2px #10b981, 0 4px 14px rgba(16, 185, 129, 0.25) !important;
+  }
+  .mood-btn[data-val="4"].active .mood-val-circle {
+    background: #10b981 !important;
+    color: #ffffff !important;
+  }
+  .mood-btn[data-val="4"].active .mood-desc {
+    color: #059669 !important;
+    font-weight: 700 !important;
+  }
+  html.dark .mood-btn[data-val="4"].active {
+    border-color: #10b981 !important;
+    background: rgba(16, 185, 129, 0.28) !important;
+    box-shadow: 0 0 0 2px #10b981, 0 4px 16px rgba(16, 185, 129, 0.45) !important;
+  }
+  html.dark .mood-btn[data-val="4"].active .mood-val-circle {
+    background: #10b981 !important;
+    color: #ffffff !important;
+  }
+  html.dark .mood-btn[data-val="4"].active .mood-desc {
+    color: #6ee7b7 !important;
+    font-weight: 700 !important;
+  }
+
+  /* Mode 5: Peak (Cyan) */
+  .mood-btn[data-val="5"]:hover, html.dark .mood-btn[data-val="5"]:hover {
+    border-color: #06b6d4 !important;
+  }
+  .mood-btn[data-val="5"].active {
+    border-color: #06b6d4 !important;
+    background: rgba(6, 182, 212, 0.12) !important;
+    box-shadow: 0 0 0 2px #06b6d4, 0 4px 14px rgba(6, 182, 212, 0.25) !important;
+  }
+  .mood-btn[data-val="5"].active .mood-val-circle {
+    background: #06b6d4 !important;
+    color: #ffffff !important;
+  }
+  .mood-btn[data-val="5"].active .mood-desc {
+    color: #0891b2 !important;
+    font-weight: 700 !important;
+  }
+  html.dark .mood-btn[data-val="5"].active {
+    border-color: #06b6d4 !important;
+    background: rgba(6, 182, 212, 0.28) !important;
+    box-shadow: 0 0 0 2px #06b6d4, 0 4px 16px rgba(6, 182, 212, 0.45) !important;
+  }
+  html.dark .mood-btn[data-val="5"].active .mood-val-circle {
+    background: #06b6d4 !important;
+    color: #ffffff !important;
+  }
+  html.dark .mood-btn[data-val="5"].active .mood-desc {
+    color: #67e8f9 !important;
+    font-weight: 700 !important;
+  }
+</style>
 </head>
 <body class="personnel-page">
 <div class="wrap">
