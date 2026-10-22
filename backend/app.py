@@ -1869,26 +1869,57 @@ def officer_personnel_list():
 @app.route("/officer/going_quiet")
 @role_required("officer")
 def officer_going_quiet():
-    """Personnel in the unit who haven't checked in for a few days (or never)."""
+    """Personnel in the unit who haven't checked in recently or are classified as 'Quiet' on the Personnel List."""
+    sync_db_from_blob(force=True)
     conn = get_db()
     rows = conn.execute("""
-        SELECT Users.id, Users.name, MAX(DailyData.date) AS last_date
+        SELECT Users.id, Users.name, Users.unit, MAX(DailyData.date) AS last_date
         FROM Users
         LEFT JOIN DailyData ON DailyData.user_id = Users.id
         WHERE Users.role = 'personnel'
         GROUP BY Users.id
     """).fetchall()
+
+    freq_rows = conn.execute(
+        "SELECT user_id, COUNT(*) AS cnt FROM DailyData WHERE date >= ? GROUP BY user_id",
+        ((today_local() - timedelta(days=13)).isoformat(),)).fetchall()
+    freq_by_user = {r["user_id"]: r["cnt"] for r in freq_rows}
     conn.close()
 
     followups = []
     for r in rows:
-        if r["last_date"] is None:
-            days = None  # never checked in
+        uid = r["id"]
+        last_d = r["last_date"]
+        if last_d is None:
+            followups.append({
+                "id": uid,
+                "name": r["name"],
+                "unit": r["unit"] or "",
+                "days": None,
+                "score": 0,
+                "engagement_label": "Quiet",
+                "status_text": "Never checked in"
+            })
         else:
-            days = (today_local() - date.fromisoformat(r["last_date"])).days
-            if days < QUIET_AFTER_DAYS:
-                continue
-        followups.append({"id": r["id"], "name": r["name"], "days": days})
+            days = (today_local() - date.fromisoformat(last_d)).days
+            score = round((max(0, 100 - days * 20)
+                           + min(100, round(freq_by_user.get(uid, 0) / 14 * 100))) / 2)
+            engagement_label = "Engaged" if score >= 70 else "Fading" if score >= 40 else "Quiet"
+
+            # Qualifies as Going Quiet if:
+            # 1. Classified as 'Quiet' on the Personnel List (score < 40)
+            # 2. OR days without check-in >= 2 (or >= QUIET_AFTER_DAYS)
+            if score < 40 or days >= 2 or days >= QUIET_AFTER_DAYS:
+                status_text = f"Last check-in {days} day{'s' if days != 1 else ''} ago"
+                followups.append({
+                    "id": uid,
+                    "name": r["name"],
+                    "unit": r["unit"] or "",
+                    "days": days,
+                    "score": score,
+                    "engagement_label": engagement_label,
+                    "status_text": status_text
+                })
 
     # Never-checked-in first, then the longest silence first
     followups.sort(key=lambda f: (f["days"] is not None, -(f["days"] or 0)))

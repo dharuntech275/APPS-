@@ -19,25 +19,60 @@
 
   {% include "_header.html" %}
 
-  <h2 class="page-title">Going Quiet</h2>
-  <p style="font-family:'Helvetica Neue', Arial, sans-serif; font-size:13px; color:var(--steel); margin:0 0 24px;">
-    Personnel who haven't checked in recently.
-  </p>
+  <a href="/officer_dashboard" class="btn-back">
+    &larr; Back to Dashboard
+  </a>
+
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:24px;">
+    <div>
+      <h2 class="page-title" style="margin:0 0 6px;">Going Quiet Telemetry</h2>
+      <p style="font-size:13px; color:var(--steel); margin:0;">
+        Personnel with low engagement or missing check-ins requiring welfare follow-up.
+      </p>
+    </div>
+    {% if followups %}
+    <span class="badge-role badge-personnel" style="background:rgba(239,68,68,0.12); color:#dc2626; border:1px solid rgba(239,68,68,0.25); font-weight:800; font-size:12px; padding:6px 14px;">
+      ⚠️ {{ followups|length }} Member{% if followups|length > 1 %}s{% endif %} Quiet
+    </span>
+    {% endif %}
+  </div>
 
   {% if followups %}
-  <div class="card" style="margin-bottom:28px; border-left:4px solid var(--signal-high);">
+  <div class="card" style="margin-bottom:28px; border-left:4px solid var(--signal-high); padding:20px 24px;">
     {% for f in followups %}
-    <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 8px; border-bottom:1px solid var(--line); flex-wrap:wrap;">
-      <div>
-        <div style="font-family:'Helvetica Neue', Arial, sans-serif; font-size:14.5px; font-weight:600; color:var(--ink);">{{ f.name }}</div>
-        <div style="font-family:'Helvetica Neue', Arial, sans-serif; font-size:12.5px; color:var(--steel); margin-top:4px;">{% if f.days is none %}Never checked in{% else %}Last check-in {{ f.days }} days ago{% endif %}</div>
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 0; border-bottom:1px solid var(--line); flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:14px;">
+        <div class="avatar-circle" style="width:40px; height:40px; font-size:15px; background:rgba(239,68,68,0.12); color:#dc2626; border:1px solid rgba(239,68,68,0.3);">
+          {{ f.name[0]|upper }}
+        </div>
+        <div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="font-family:'Plus Jakarta Sans', sans-serif; font-size:15px; font-weight:700; color:var(--ink);">{{ f.name }}</div>
+            {% if f.unit and f.unit != '-' %}
+            <span style="font-size:12px; color:var(--steel);">({{ f.unit }})</span>
+            {% endif %}
+            <span class="badge-role badge-personnel" style="background:rgba(239,68,68,0.12); color:#dc2626; border:1px solid rgba(239,68,68,0.25); font-size:10.5px; padding:2px 8px;">Quiet</span>
+          </div>
+          <div style="font-family:'Plus Jakarta Sans', sans-serif; font-size:12.5px; color:var(--steel); margin-top:4px;">
+            {% if f.days is none %}Never checked in{% else %}Last check-in {{ f.days }} day{% if f.days != 1 %}s{% endif %} ago{% endif %} &bull; Engagement Score: {{ f.score }}/100
+          </div>
+        </div>
       </div>
-      <a href="/officer/personnel/{{ f.id }}" class="btn" style="text-decoration:none; width:auto; padding:9px 18px; font-size:13px;">Check in</a>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <button type="button" class="btn-outline" style="width:auto; padding:8px 14px; font-size:12.5px; font-weight:700;" onclick="openCaseBriefModal({{ f.id }}, '{{ f.name }}')">
+          📋 AI Case Brief
+        </button>
+        <a href="/officer/personnel/{{ f.id }}" class="btn" style="text-decoration:none; width:auto; padding:8px 18px; font-size:12.5px;">View Profile &rarr;</a>
+      </div>
     </div>
     {% endfor %}
   </div>
   {% else %}
-    <p class="empty-note">Everyone has checked in recently.</p>
+    <div class="card" style="padding:32px 24px; text-align:center;">
+      <span style="font-size:32px; display:block; margin-bottom:10px;">✅</span>
+      <h3 style="margin:0 0 6px; font-size:16px; color:var(--ink); border:none; padding:0;">All Personnel Active</h3>
+      <p class="empty-note" style="margin:0;">Every member has checked in recently with healthy engagement.</p>
+    </div>
   {% endif %}
 
 </div>
