@@ -5669,3 +5669,714 @@ html.dark .desktop-status-pill {
 html.dark .desktop-status-pill span {
   color: #e2e8f0 !important;
 }
+
+
+/* ======================================================================
+   TACTICAL CYBER GLASSMORPHISM DESIGN SYSTEM (v3.0)
+   Full-Platform Modernization: High-Tech Telemetry & Military Glass
+   ====================================================================== */
+
+/* --- Cyber Grid & Ambient Lighting Backdrop --- */
+body {
+  position: relative;
+  background-color: #f1f5f9;
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(37, 99, 235, 0.10) 0%, transparent 45%),
+    radial-gradient(circle at 88% 12%, rgba(6, 182, 212, 0.09) 0%, transparent 42%),
+    radial-gradient(circle at 50% 88%, rgba(99, 102, 241, 0.07) 0%, transparent 50%),
+    radial-gradient(circle at 82% 82%, rgba(16, 185, 129, 0.07) 0%, transparent 45%);
+  background-attachment: fixed;
+  color: var(--ink);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.022) 1px, transparent 1px);
+  background-size: 38px 38px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+html.dark body {
+  background-color: #070c18 !important;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(37, 99, 235, 0.24), transparent 70%),
+    radial-gradient(ellipse 65% 45% at 92% 22%, rgba(6, 182, 212, 0.16), transparent 60%),
+    radial-gradient(ellipse 55% 55% at 8% 75%, rgba(99, 102, 241, 0.16), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 50% 105%, rgba(16, 185, 129, 0.14), transparent 65%) !important;
+  background-attachment: fixed;
+}
+
+html.dark body::before {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+  background-size: 38px 38px;
+}
+
+.wrap, .portal-shell, .auth-shell {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Floating Glass Command Header (Desktop & Mobile) --- */
+header.top {
+  background: rgba(255, 255, 255, 0.78) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
+  border-radius: 20px !important;
+  padding: 12px 22px !important;
+  box-shadow: 0 10px 32px -4px rgba(15, 23, 42, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+  margin-bottom: 28px !important;
+  transition: all 0.25s ease !important;
+}
+
+html.dark header.top {
+  background: rgba(11, 19, 36, 0.82) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 14px 40px -6px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+.desk-nav-item {
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.desk-nav-item:hover {
+  background: rgba(37, 99, 235, 0.08);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.desk-nav-item.active {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.14) 0%, rgba(6, 182, 212, 0.1) 100%) !important;
+  color: var(--primary) !important;
+  border: 1px solid rgba(37, 99, 235, 0.25) !important;
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.12) !important;
+}
+
+html.dark .desk-nav-item:hover {
+  background: rgba(59, 130, 246, 0.14) !important;
+  color: #60a5fa !important;
+}
+
+html.dark .desk-nav-item.active {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.24) 0%, rgba(6, 182, 212, 0.16) 100%) !important;
+  color: #93c5fd !important;
+  border: 1px solid rgba(59, 130, 246, 0.45) !important;
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.25) !important;
+}
+
+/* --- Live Telemetry Status Pill & Radar Ping --- */
+.desktop-status-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: rgba(16, 185, 129, 0.09) !important;
+  border: 1px solid rgba(16, 185, 129, 0.28) !important;
+  padding: 6px 14px !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.radar-pulse-dot {
+  position: relative !important;
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  background: #10b981 !important;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7) !important;
+  animation: radarBlip 2.2s infinite cubic-bezier(0.4, 0, 0.6, 1) !important;
+}
+
+@keyframes radarBlip {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 9px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+/* --- Role User Badges in Header --- */
+.role-pill {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border: 1px solid rgba(226, 232, 240, 0.9) !important;
+  border-radius: 12px !important;
+  padding: 6px 14px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+html.dark .role-pill {
+  background: rgba(15, 23, 42, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* --- Tactical Cyber Glass Cards (General) --- */
+.card {
+  background: rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: blur(20px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(0, 0, 0, 0.02), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.24s ease, border-color 0.24s ease !important;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 18px 42px -6px rgba(37, 99, 235, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(37, 99, 235, 0.3) !important;
+}
+
+html.dark .card {
+  background: rgba(13, 21, 38, 0.78) !important;
+  backdrop-filter: blur(20px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.11) !important;
+  box-shadow: 0 14px 40px -6px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark .card:hover {
+  transform: translateY(-3px) !important;
+  border-color: rgba(59, 130, 246, 0.45) !important;
+  box-shadow: 0 22px 50px -8px rgba(14, 165, 233, 0.22), 0 6px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+}
+
+/* --- Portal Landing Cards (Select Your Portal) --- */
+.portal-card {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(20px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 16px 40px -8px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.portal-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #94a3b8, #cbd5e1);
+  transition: all 0.3s ease;
+}
+
+.portal-card:hover {
+  transform: translateY(-8px) scale(1.01) !important;
+  box-shadow: 0 28px 56px -12px rgba(15, 23, 42, 0.18), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+
+/* Card 1: Personnel - Emerald Telemetry */
+.portal-card:nth-child(1):hover {
+  border-color: rgba(16, 185, 129, 0.5) !important;
+  box-shadow: 0 28px 56px -12px rgba(16, 185, 129, 0.25), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+.portal-card:nth-child(1)::before {
+  background: linear-gradient(90deg, #10b981, #06b6d4) !important;
+}
+.portal-card:nth-child(1) .portal-icon {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 182, 212, 0.05) 100%) !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.15) !important;
+}
+
+/* Card 2: Officer - Royal Blue Telemetry */
+.portal-card:nth-child(2):hover {
+  border-color: rgba(37, 99, 235, 0.5) !important;
+  box-shadow: 0 28px 56px -12px rgba(37, 99, 235, 0.25), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+.portal-card:nth-child(2)::before {
+  background: linear-gradient(90deg, #2563eb, #38bdf8) !important;
+}
+.portal-card:nth-child(2) .portal-icon {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%) !important;
+  border: 1px solid rgba(37, 99, 235, 0.3) !important;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.15) !important;
+}
+
+/* Card 3: Senior Admin - Command Purple */
+.portal-card:nth-child(3):hover {
+  border-color: rgba(124, 58, 237, 0.5) !important;
+  box-shadow: 0 28px 56px -12px rgba(124, 58, 237, 0.25), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+.portal-card:nth-child(3)::before {
+  background: linear-gradient(90deg, #7c3aed, #a855f7) !important;
+}
+.portal-card:nth-child(3) .portal-icon {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.15) 0%, rgba(168, 85, 247, 0.05) 100%) !important;
+  border: 1px solid rgba(124, 58, 237, 0.3) !important;
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.15) !important;
+}
+
+/* Dark Mode Portal Cards */
+html.dark .portal-card {
+  background: rgba(13, 22, 42, 0.78) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+html.dark .portal-card:hover {
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+html.dark .portal-card:nth-child(1):hover {
+  border-color: rgba(16, 185, 129, 0.6) !important;
+  box-shadow: 0 24px 54px -10px rgba(16, 185, 129, 0.35) !important;
+}
+html.dark .portal-card:nth-child(2):hover {
+  border-color: rgba(59, 130, 246, 0.6) !important;
+  box-shadow: 0 24px 54px -10px rgba(59, 130, 246, 0.35) !important;
+}
+html.dark .portal-card:nth-child(3):hover {
+  border-color: rgba(139, 92, 246, 0.6) !important;
+  box-shadow: 0 24px 54px -10px rgba(139, 92, 246, 0.35) !important;
+}
+
+.portal-icon {
+  width: 64px !important;
+  height: 64px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 18px !important;
+  margin-bottom: 22px !important;
+  transition: transform 0.25s ease !important;
+}
+.portal-card:hover .portal-icon {
+  transform: scale(1.08) !important;
+}
+
+/* --- Authentication Card Glass Shield (Login / Signup / Forgot) --- */
+.auth-card {
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  border-radius: 26px !important;
+  box-shadow: 0 24px 60px -12px rgba(15, 23, 42, 0.14), 0 6px 16px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+  transition: all 0.25s ease !important;
+}
+
+html.dark .auth-card {
+  background: rgba(13, 21, 38, 0.82) !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+  box-shadow: 0 28px 70px -15px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+/* --- Glassmorphic Inputs with Glowing Telemetry Ring --- */
+.auth-card input[type=text],
+.auth-card input[type=password],
+.card input[type=text],
+.card input[type=number],
+.card input[type=password],
+.card textarea,
+.card select {
+  background: rgba(248, 250, 252, 0.85) !important;
+  border: 1px solid rgba(203, 213, 225, 0.9) !important;
+  border-radius: 12px !important;
+  padding: 13px 16px !important;
+  font-family: inherit !important;
+  font-size: 14px !important;
+  color: var(--ink) !important;
+  transition: all 0.2s ease !important;
+}
+
+.auth-card input:focus,
+.card input:focus,
+.card textarea:focus,
+.card select:focus {
+  outline: none !important;
+  background: #ffffff !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.22), 0 4px 14px rgba(59, 130, 246, 0.12) !important;
+}
+
+html.dark .auth-card input[type=text],
+html.dark .auth-card input[type=password],
+html.dark .card input[type=text],
+html.dark .card input[type=number],
+html.dark .card input[type=password],
+html.dark .card textarea,
+html.dark .card select {
+  background: rgba(9, 14, 26, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: #f8fafc !important;
+}
+
+html.dark .auth-card input:focus,
+html.dark .card input:focus,
+html.dark .card textarea:focus,
+html.dark .card select:focus {
+  background: rgba(12, 19, 36, 0.95) !important;
+  border-color: #60a5fa !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.35), 0 0 18px rgba(59, 130, 246, 0.25) !important;
+}
+
+/* --- High-Impact Tactical Gradient Buttons --- */
+.btn {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  border-radius: 12px !important;
+  padding: 12px 24px !important;
+  border: none !important;
+  box-shadow: 0 4px 16px -2px rgba(37, 99, 235, 0.42) !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+}
+
+.btn:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
+  box-shadow: 0 8px 24px -3px rgba(37, 99, 235, 0.58) !important;
+  transform: translateY(-2px) !important;
+  color: #ffffff !important;
+}
+
+.btn-outline {
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(203, 213, 225, 0.9) !important;
+  color: var(--steel-deep) !important;
+  font-weight: 700 !important;
+  border-radius: 12px !important;
+  padding: 12px 22px !important;
+  transition: all 0.2s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+}
+
+.btn-outline:hover {
+  background: rgba(37, 99, 235, 0.08) !important;
+  border-color: rgba(37, 99, 235, 0.4) !important;
+  color: var(--primary) !important;
+  transform: translateY(-2px) !important;
+}
+
+html.dark .btn {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 4px 18px -2px rgba(59, 130, 246, 0.5) !important;
+}
+
+html.dark .btn:hover {
+  background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%) !important;
+  box-shadow: 0 8px 28px -3px rgba(59, 130, 246, 0.7) !important;
+}
+
+html.dark .btn-outline {
+  background: rgba(15, 23, 42, 0.65) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .btn-outline:hover {
+  background: rgba(59, 130, 246, 0.18) !important;
+  border-color: rgba(59, 130, 246, 0.5) !important;
+  color: #93c5fd !important;
+}
+
+/* --- Stat Cards & Telemetry Numbers --- */
+.stat-card {
+  background: rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: blur(18px) !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
+  border-radius: 18px !important;
+  padding: 24px 20px !important;
+  box-shadow: 0 6px 20px -2px rgba(15, 23, 42, 0.05) !important;
+  transition: all 0.22s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 14px 32px -4px rgba(37, 99, 235, 0.14) !important;
+}
+
+html.dark .stat-card {
+  background: rgba(13, 21, 38, 0.76) !important;
+  border: 1px solid rgba(255, 255, 255, 0.11) !important;
+  box-shadow: 0 10px 28px -4px rgba(0, 0, 0, 0.5) !important;
+}
+
+html.dark .stat-card:hover {
+  transform: translateY(-3px) !important;
+  border-color: rgba(59, 130, 246, 0.4) !important;
+  box-shadow: 0 18px 40px -6px rgba(14, 165, 233, 0.2) !important;
+}
+
+/* --- Smartwatch Sync Button Glowing HUD --- */
+.smartwatch-sync-btn {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.12) 0%, rgba(37, 99, 235, 0.12) 100%) !important;
+  border: 1px solid rgba(6, 182, 212, 0.35) !important;
+  color: var(--steel-deep) !important;
+  font-weight: 700 !important;
+  border-radius: 10px !important;
+  padding: 8px 16px !important;
+  backdrop-filter: blur(8px) !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 2px 10px rgba(6, 182, 212, 0.12) !important;
+}
+
+.smartwatch-sync-btn:hover {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.22) 0%, rgba(37, 99, 235, 0.22) 100%) !important;
+  border-color: rgba(6, 182, 212, 0.6) !important;
+  box-shadow: 0 4px 18px rgba(6, 182, 212, 0.3) !important;
+  transform: translateY(-1px) !important;
+}
+
+html.dark .smartwatch-sync-btn {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.18) 0%, rgba(37, 99, 235, 0.18) 100%) !important;
+  border-color: rgba(6, 182, 212, 0.45) !important;
+  color: #67e8f9 !important;
+  box-shadow: 0 0 14px rgba(6, 182, 212, 0.2) !important;
+}
+
+/* --- Biometric Range Sliders (HUD Look) --- */
+.biometric-slider {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  width: 100% !important;
+  height: 8px !important;
+  border-radius: 6px !important;
+  background: rgba(226, 232, 240, 0.8) !important;
+  outline: none !important;
+  transition: background 0.2s ease !important;
+}
+
+html.dark .biometric-slider {
+  background: rgba(30, 41, 59, 0.8) !important;
+}
+
+.biometric-slider::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  background: #2563eb !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.5) !important;
+  cursor: pointer !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.biometric-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.18) !important;
+  box-shadow: 0 0 16px rgba(37, 99, 235, 0.8) !important;
+}
+
+html.dark .biometric-slider::-webkit-slider-thumb {
+  background: #3b82f6 !important;
+  border-color: #0f172a !important;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.7) !important;
+}
+
+/* --- History Tables & Incident Telemetry --- */
+table.history {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  width: 100% !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+}
+
+table.history th {
+  background: rgba(241, 245, 249, 0.85) !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  color: var(--steel) !important;
+  padding: 13px 16px !important;
+  border-bottom: 1px solid var(--line) !important;
+}
+
+html.dark table.history th {
+  background: rgba(15, 23, 42, 0.85) !important;
+  color: #94a3b8 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+table.history tr td {
+  padding: 14px 16px !important;
+  border-bottom: 1px solid var(--line) !important;
+  transition: background 0.15s ease !important;
+}
+
+table.history tr:hover td {
+  background: rgba(37, 99, 235, 0.05) !important;
+}
+
+html.dark table.history tr td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+html.dark table.history tr:hover td {
+  background: rgba(59, 130, 246, 0.09) !important;
+}
+
+/* --- Crisis SOS & Calming Modals Glassmorphism --- */
+.apps-modal-overlay {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  background: rgba(0, 0, 0, 0.55) !important;
+}
+
+.apps-modal-card {
+  background: rgba(255, 255, 255, 0.94) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 24px 60px -10px rgba(0, 0, 0, 0.35) !important;
+}
+
+html.dark .apps-modal-card {
+  background: rgba(13, 21, 38, 0.92) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 28px 70px -12px rgba(0, 0, 0, 0.85) !important;
+}
+
+/* --- Brand Logo Glow in Navigation --- */
+.sidebar-brand-badge {
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
+}
+
+html.dark .sidebar-brand-badge {
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.5) !important;
+}
+
+/* --- Micro-animation Polish --- */
+@keyframes cyberGlow {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+.welcome-banner {
+  border-radius: 20px !important;
+  backdrop-filter: blur(14px) !important;
+}
+
+
+/* --- Portal Features Badges --- */
+.portal-features {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 7px !important;
+  margin: 16px 0 24px !important;
+}
+
+.portal-feat-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 5px 10px !important;
+  border-radius: 9px !important;
+  background: rgba(15, 23, 42, 0.04) !important;
+  color: var(--steel-deep) !important;
+  border: 1px solid rgba(203, 213, 225, 0.8) !important;
+  backdrop-filter: blur(6px) !important;
+  transition: all 0.2s ease !important;
+}
+
+.portal-card:hover .portal-feat-tag {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(37, 99, 235, 0.3) !important;
+}
+
+html.dark .portal-feat-tag {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #cbd5e1 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark .portal-card:hover .portal-feat-tag {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(59, 130, 246, 0.4) !important;
+  color: #f8fafc !important;
+}
+
+
+/* --- Glassmorphic Role Tabs Switcher --- */
+.role-tabs {
+  background: rgba(15, 23, 42, 0.05) !important;
+  border: 1px solid rgba(203, 213, 225, 0.7) !important;
+  border-radius: 14px !important;
+  padding: 5px !important;
+  display: flex !important;
+  gap: 5px !important;
+  margin-bottom: 22px !important;
+}
+
+.role-tab {
+  flex: 1 !important;
+  border-radius: 10px !important;
+  padding: 9px 12px !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  border: none !important;
+  background: transparent !important;
+  color: var(--steel) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  cursor: pointer !important;
+}
+
+.role-tab:hover {
+  color: var(--steel-deep) !important;
+  background: rgba(255, 255, 255, 0.5) !important;
+}
+
+.role-tab.active {
+  background: #ffffff !important;
+  color: var(--primary) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08) !important;
+}
+
+html.dark .role-tabs {
+  background: rgba(9, 14, 26, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark .role-tab:hover {
+  color: #f8fafc !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark .role-tab.active {
+  background: rgba(30, 41, 59, 0.95) !important;
+  color: #60a5fa !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+}
