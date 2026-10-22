@@ -58,7 +58,7 @@
       </svg>
     </div>
 
-    <div class="gauge-reading-title" style="color:{% if history[0].stress_level == 'Low' %}var(--signal-low){% elif history[0].stress_level == 'Moderate' %}var(--signal-med){% else %}var(--signal-high){% endif %};">
+    <div class="gauge-reading-title" style="color:{% if history[0].stress_level == 'Low' %}var(--signal-low){% elif history[0].stress_level in ['Moderate', 'Medium'] %}var(--signal-med){% else %}var(--signal-high){% endif %};">
       {{ history[0].stress_level }} Stress
     </div>
     <p class="gauge-reading-desc" style="max-width:540px; margin:8px auto 0; font-size:13.5px; line-height:1.5;">
@@ -179,7 +179,7 @@
   (function() {
     {% if history %}
     var level = "{{ history[0].stress_level }}";
-    var angle = level === 'Low' ? -55 : (level === 'Moderate' ? 0 : 55);
+    var angle = level === 'Low' ? -55 : ((level === 'Moderate' || level === 'Medium') ? 0 : 55);
     setTimeout(function() {
       var needle = document.getElementById('gaugeNeedle');
       if (needle) {
