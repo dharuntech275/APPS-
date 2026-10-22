@@ -35,9 +35,9 @@
 
       <!-- Role Selector Tabs -->
       <div class="role-tabs" id="roleTabs">
-        <button type="button" class="role-tab active" data-role="personnel" onclick="switchRole('personnel')"><svg class="role-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Personnel</button>
-        <button type="button" class="role-tab" data-role="officer" onclick="switchRole('officer')"><svg class="role-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Officer</button>
-        <button type="button" class="role-tab" data-role="admin" onclick="switchRole('admin')"><svg class="role-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Admin</button>
+        <button type="button" class="role-tab active" data-role="personnel" onclick="switchRole('personnel')"><svg class="role-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Member / Personnel</button>
+        <button type="button" class="role-tab" data-role="officer" onclick="switchRole('officer')"><svg class="role-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Counselor / Officer</button>
+        <button type="button" class="role-tab" data-role="admin" onclick="switchRole('admin')"><svg class="role-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Executive Admin</button>
       </div>
 
       {% if error %}
@@ -50,8 +50,8 @@
         <label>Name</label>
         <input type="text" name="name" value="{{ name or request.args.get('name', '') }}" placeholder="Full Name" required autofocus>
 
-        <label id="unitLabel">Unit</label>
-        <input type="text" name="unit" id="unitInput" placeholder="e.g. 1st Infantry / Alpha" required>
+        <label id="unitLabel">Department / Team / Unit</label>
+        <input type="text" name="unit" id="unitInput" placeholder="e.g. Operations / Alpha / Engineering" required>
 
         <label>Password</label>
         <div class="pwd-input-wrap">
@@ -99,31 +99,31 @@
 <script>
   var roleData = {
     personnel: {
-      pill: 'APPS • PERSONNEL',
-      title: 'Personnel Sign Up',
-      brandTitle: 'Join the Welfare Monitoring Network',
-      brandSub: 'Register once to start your daily check-ins, and let the system watch out for you before strain becomes a bigger problem.',
-      unitLabel: 'Unit',
-      unitPlaceholder: 'e.g. 1st Infantry / Alpha',
-      btnText: 'Register as Personnel'
+      pill: 'APPS • MEMBER / PERSONNEL',
+      title: 'Team Member & Personnel Sign Up',
+      brandTitle: 'Workforce & Team Wellbeing Network',
+      brandSub: 'Register once to start your daily check-ins, track wellness trends, and access 24/7 confidential AI support.',
+      unitLabel: 'Department / Team / Unit',
+      unitPlaceholder: 'e.g. Operations / Alpha / Engineering',
+      btnText: 'Register as Member'
     },
     officer: {
-      pill: 'APPS • WELFARE OFFICER',
-      title: 'Welfare Officer Sign Up',
-      brandTitle: 'Welfare Officer Command Portal',
-      brandSub: 'Register your Welfare Officer account to coordinate stress monitoring, support requests, and counseling.',
-      unitLabel: 'Unit / Station',
-      unitPlaceholder: 'e.g. 1st Infantry / Alpha',
-      btnText: 'Register as Officer'
+      pill: 'APPS • COUNSELOR / OFFICER',
+      title: 'Welfare Officer & Counselor Sign Up',
+      brandTitle: 'Counselor & Officer Intelligence Portal',
+      brandSub: 'Register your Counselor account to coordinate psychological monitoring, automated case briefs, and support requests.',
+      unitLabel: 'Department / Station / Team',
+      unitPlaceholder: 'e.g. Welfare / Operations / HR Lead',
+      btnText: 'Register as Counselor'
     },
     admin: {
-      pill: 'APPS • SENIOR ADMIN',
-      title: 'Senior Admin Sign Up',
-      brandTitle: 'Senior Administration Console',
-      brandSub: 'Register your Senior Administrator account to access organization metrics, reports, and unit breakdowns.',
-      unitLabel: 'Unit / Department',
-      unitPlaceholder: 'e.g. HQ Command / Welfare Directorate',
-      btnText: 'Register as Senior Admin'
+      pill: 'APPS • EXECUTIVE ADMIN',
+      title: 'Executive Admin & Leadership Sign Up',
+      brandTitle: 'Executive Administration Console',
+      brandSub: 'Register your Executive Admin account to access organization-wide health metrics, 7-day burnout forecasts, and reports.',
+      unitLabel: 'Organization / Department / HQ',
+      unitPlaceholder: 'e.g. Operations Command / Management',
+      btnText: 'Register as Executive Admin'
     }
   };
 

@@ -2477,6 +2477,264 @@ def my_export_pdf():
 
 
 # ----------------------------------------------------------------------
+# ----------------------------------------------------------------------
+# AI INTELLIGENCE SUITE: Companion, Case Briefing, & Burnout Forecaster
+# ----------------------------------------------------------------------
+@app.route("/api/ai_companion", methods=["POST"])
+def ai_companion():
+    """Confidential 24/7 AI Psychological Wellness Companion for Personnel & Members."""
+    if "user_id" not in session:
+        return jsonify({"success": False, "error": "Not authenticated"}), 401
+    
+    data = request.get_json(silent=True) or {}
+    user_msg = (data.get("message") or "").strip()
+    if not user_msg:
+        return jsonify({"success": False, "error": "Message is empty"}), 400
+    
+    uid = session["user_id"]
+    conn = get_db()
+    user = conn.execute("SELECT name, unit, role FROM Users WHERE id = ?", (uid,)).fetchone()
+    recent_data = conn.execute(
+        "SELECT sleep_hours, duty_hours, heart_rate, mood_score, stress_level FROM DailyData WHERE user_id = ? ORDER BY id DESC LIMIT 1",
+        (uid,)
+    ).fetchone()
+    conn.close()
+
+    user_name = user["name"] if user else "Friend"
+    sleep = recent_data["sleep_hours"] if recent_data else 7.0
+    duty = recent_data["duty_hours"] if recent_data else 8.0
+    stress = recent_data["stress_level"] if recent_data else "Normal"
+    
+    # NLP Emergency Crisis Filter
+    severe_crisis_keywords = ["suicide", "kill myself", "end my life", "want to die", "no reason to live", "harm myself", "end it all"]
+    lower_msg = user_msg.lower()
+    if any(k in lower_msg for k in severe_crisis_keywords):
+        return jsonify({
+            "success": True,
+            "response": (
+                f"I hear how overwhelmed you are feeling, {user_name}, and I want you to know you are not alone. "
+                "Your life and safety are the absolute highest priority right now. Please connect immediately with our crisis support:\n\n"
+                "📞 Army / Defense Crisis Helpline: 1902 (Toll-Free, 24/7)\n"
+                "📞 Tele-MANAS Mental Health Care Line: 14416 / 1800-891-4416\n\n"
+                "You can also tap the '🚨 Crisis SOS' button in your dashboard right now to notify your Welfare Officer immediately."
+            ),
+            "is_emergency": True
+        })
+
+    # Optional Gemini LLM Integration if API key present
+    gemini_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("APPS_AI_KEY")
+    if gemini_key:
+        try:
+            import urllib.request
+            import json as json_lib
+            prompt = (
+                f"You are the APPS AI Psychological Wellness Companion, a confidential, warm, and highly supportive counseling assistant "
+                f"for workforce, healthcare, public safety, and defense personnel. The user's name is {user_name}. "
+                f"Their latest telemetry: Sleep = {sleep} hrs, Shift = {duty} hrs, Stress Level = {stress}. "
+                f"Respond with empathetic Cognitive Behavioral Therapy (CBT) advice, stress de-escalation, and tactical recovery tips. "
+                f"Keep your response under 100 words, warm, conversational, and direct.\n\n"
+                f"User: {user_msg}"
+            )
+            gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={gemini_key}"
+            payload = json_lib.dumps({
+                "contents": [{"parts": [{"text": prompt}]}]
+            }).encode('utf-8')
+            req = urllib.request.Request(gemini_url, data=payload, headers={'Content-Type': 'application/json'})
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                result = json_lib.loads(resp.read().decode('utf-8'))
+                ai_text = result["candidates"][0]["content"]["parts"][0]["text"]
+                return jsonify({"success": True, "response": ai_text, "is_emergency": False})
+        except Exception as e:
+            print(f"[AI Companion Gemini Error] {e}")
+
+    # Built-in High-Speed Psychological Heuristic Engine (100% reliable, zero downtime)
+    if any(w in lower_msg for w in ["sleep", "insomnia", "tired", "rest", "night"]):
+        reply = (
+            f"Rest is the foundation of operational stamina, {user_name}. "
+            f"With your recent sleep at ~{sleep} hours and shift at ~{duty} hours, your central nervous system needs active decompression. "
+            "Try tactical sleep banking: 1) Block out light and noise 30 minutes before sleep. "
+            "2) Keep your room cool. 3) Practice our Tactical 4-7-8 Breathing stabilizer (inhale 4s, hold 7s, exhale 8s) to drop your heart rate into deep recovery."
+        )
+    elif any(w in lower_msg for w in ["anxious", "anxiety", "panic", "overwhelmed", "pressure", "breath"]):
+        reply = (
+            f"Take a slow breath, {user_name}. What you're experiencing is your sympathetic nervous system reacting to acute pressure. "
+            "Let's reset right now: 1) Feel your feet flat on the floor. 2) Inhale deeply through your nose for 4 counts, hold for 7, and release slowly for 8 counts. "
+            "Remind yourself: 'I have handled tough shifts before, and I can take this one step at a time.' You can also request a confidential chat with your Welfare Officer anytime."
+        )
+    elif any(w in lower_msg for w in ["officer", "counselor", "talk", "request", "help"]):
+        reply = (
+            f"Reaching out is a sign of high mental resilience, {user_name}. "
+            "You can head to the 'Talk to Officer' tab right here to submit a confidential counseling request, or trigger an instant Distress Beacon if it is urgent. "
+            "Your officer receives your note confidentially and will schedule a one-on-one session with you."
+        )
+    elif any(w in lower_msg for w in ["burnout", "exhausted", "workload", "shift", "hours"]):
+        reply = (
+            f"Sustained heavy duty hours inevitably lead to cognitive fatigue, {user_name}. "
+            f"Your current recorded shift strain is around {duty} hours. "
+            "When shifts are demanding, micro-recovery intervals (5-minute sensory breaks, hydration, and stretching) are proven to preserve focus. "
+            "Would you like to schedule a private check-in with your Welfare Officer to review duty rotation?"
+        )
+    else:
+        reply = (
+            f"Thank you for checking in, {user_name}. Tracking your wellness daily builds strong psychological endurance. "
+            f"Based on your recent status ({stress} stress index), focus on balanced hydration and a steady wind-down routine today. "
+            "I'm here 24/7 if you want to talk through anything, practice breathing, or review recovery strategies."
+        )
+    
+    return jsonify({"success": True, "response": reply, "is_emergency": False})
+
+
+@app.route("/api/ai_case_brief/<int:user_id>")
+@role_required("officer", "admin")
+def ai_case_brief(user_id):
+    """AI Pre-Counseling Case Intelligence Brief for Officers and Counselors."""
+    conn = get_db()
+    person = conn.execute("SELECT id, name, unit, role FROM Users WHERE id = ?", (user_id,)).fetchone()
+    if not person:
+        conn.close()
+        return jsonify({"success": False, "error": "User not found"}), 404
+
+    history = conn.execute(
+        "SELECT date, sleep_hours, duty_hours, heart_rate, mood_score, stress_level FROM DailyData WHERE user_id = ? ORDER BY id DESC LIMIT 14",
+        (user_id,)
+    ).fetchall()
+
+    requests_count = conn.execute(
+        "SELECT COUNT(*) FROM StressRequests WHERE user_id = ?", (user_id,)
+    ).fetchone()[0]
+
+    sos_count = conn.execute(
+        "SELECT COUNT(*) FROM StressRequests WHERE user_id = ? AND is_sos = 1", (user_id,)
+    ).fetchone()[0]
+    conn.close()
+
+    if not history:
+        return jsonify({
+            "success": True,
+            "user_name": person["name"],
+            "unit": person["unit"] or "General",
+            "risk_level": "Insufficient Telemetry",
+            "risk_badge": "badge-low",
+            "biometric_summary": "No check-in history logged in the last 14 days.",
+            "assessment_points": ["Personnel has not completed recent check-ins.", "Initiate an informal wellness touchpoint."],
+            "discussion_prompts": ["How have your energy levels and sleep patterns been lately?", "Are you facing any blockers in logging daily check-ins?"],
+            "suggested_actions": ["Conduct introductory welfare orientation", "Verify biometric wearable or check-in app access"]
+        })
+
+    avg_sleep = round(sum(r["sleep_hours"] or 7 for r in history) / len(history), 1)
+    avg_duty = round(sum(r["duty_hours"] or 8 for r in history) / len(history), 1)
+    high_stress_count = sum(1 for r in history if r["stress_level"] == "High")
+    recent_stress = history[0]["stress_level"] or "Normal"
+
+    # Compute risk state
+    if sos_count > 0 or high_stress_count >= 4 or avg_sleep < 5.0 or avg_duty > 13.0:
+        risk_level = "High Priority & Acute Strain"
+        risk_badge = "badge-high"
+    elif high_stress_count >= 2 or avg_sleep < 6.0 or avg_duty > 10.0:
+        risk_level = "Moderate Cumulative Fatigue"
+        risk_badge = "badge-medium"
+    else:
+        risk_level = "Stable Psychological Readiness"
+        risk_badge = "badge-low"
+
+    assessment_points = [
+        f"Average Sleep: {avg_sleep} hrs/night (Baseline target: 7-8 hrs). {'⚠️ Sleep deficit detected.' if avg_sleep < 6.0 else 'Healthy restorative baseline.'}",
+        f"Average Duty: {avg_duty} hrs/shift across recent records. {'⚠️ Elevated shift burden.' if avg_duty > 11.0 else 'Duty load within standard limits.'}",
+        f"Stress Index: {high_stress_count} of last {len(history)} entries flagged High Stress. Recent state: {recent_stress}.",
+        f"Support History: {requests_count} total counseling requests logged, including {sos_count} SOS distress beacons."
+    ]
+
+    discussion_prompts = [
+        f"Explore sleep architecture: 'I noticed your sleep averaged ~{avg_sleep} hours recently. What factors (shift timing, noise, racing thoughts) are impacting your rest?'",
+        f"Probe operational stressors: 'With shifts averaging {avg_duty} hours, where are you feeling the heaviest cognitive or physical fatigue?'",
+        "Assess coping mechanisms: 'What activities or de-escalation habits currently give you the best recovery during off-duty hours?'"
+    ]
+
+    suggested_actions = [
+        "Prescribe 4-7-8 tactical breathing stabilizer protocol for evening wind-down.",
+        "Consider temporary shift rebalancing or duty rotation if duty exceeds 12 consecutive hours.",
+        "Schedule follow-up counseling check-in within 7 to 10 days to monitor sleep rebound."
+    ]
+
+    return jsonify({
+        "success": True,
+        "user_name": person["name"],
+        "unit": person["unit"] or "General",
+        "risk_level": risk_level,
+        "risk_badge": risk_badge,
+        "biometric_summary": f"Avg Sleep: {avg_sleep}h | Avg Duty: {avg_duty}h | High-Stress Rate: {high_stress_count}/{len(history)}",
+        "assessment_points": assessment_points,
+        "discussion_prompts": discussion_prompts,
+        "suggested_actions": suggested_actions
+    })
+
+
+@app.route("/api/ai_burnout_forecast")
+@role_required("admin", "officer")
+def ai_burnout_forecast():
+    """Predictive 7-Day Team Burnout & Workload Fatigue Forecaster for Leadership."""
+    conn = get_db()
+    recent_entries = conn.execute(
+        "SELECT sleep_hours, duty_hours, stress_level FROM DailyData ORDER BY id DESC LIMIT 50"
+    ).fetchall()
+    units_data = conn.execute("""
+        SELECT Users.unit, AVG(d.duty_hours) as avg_duty, AVG(d.sleep_hours) as avg_sleep,
+               SUM(CASE WHEN d.stress_level = 'High' THEN 1 ELSE 0 END) as high_stress
+        FROM Users
+        LEFT JOIN DailyData d ON d.user_id = Users.id
+        WHERE Users.role = 'personnel' AND Users.unit IS NOT NULL
+        GROUP BY Users.unit
+    """).fetchall()
+    conn.close()
+
+    base_strain = 35.0
+    if recent_entries:
+        avg_s = sum(r["sleep_hours"] or 7 for r in recent_entries) / len(recent_entries)
+        avg_d = sum(r["duty_hours"] or 8 for r in recent_entries) / len(recent_entries)
+        high_pct = sum(1 for r in recent_entries if r["stress_level"] == "High") / len(recent_entries)
+        base_strain = min(85.0, max(20.0, (avg_d * 3.5) + ((8.0 - avg_s) * 6.0) + (high_pct * 30.0)))
+    
+    trajectory = []
+    days = ["Day 1 (Mon)", "Day 2 (Tue)", "Day 3 (Wed)", "Day 4 (Thu)", "Day 5 (Fri)", "Day 6 (Sat)", "Day 7 (Sun)"]
+    for i, d in enumerate(days):
+        day_factor = 1.0 + (i * 0.04) if i < 5 else 1.15 - ((i - 4) * 0.08)
+        score = min(96, max(15, int(base_strain * day_factor)))
+        trajectory.append({
+            "day": d,
+            "projected_strain": score,
+            "risk_label": "High Burnout Risk" if score >= 70 else "Moderate Strain" if score >= 45 else "Optimal Readiness"
+        })
+
+    unit_risks = []
+    for u in units_data:
+        u_name = u["unit"] or "General"
+        u_duty = round(u["avg_duty"] or 8.0, 1)
+        u_sleep = round(u["avg_sleep"] or 7.0, 1)
+        u_score = min(95, max(20, int((u_duty * 4.0) + ((8.0 - u_sleep) * 5.0))))
+        unit_risks.append({
+            "unit": u_name,
+            "strain_score": u_score,
+            "status": "Critical Review" if u_score >= 70 else "Moderate" if u_score >= 45 else "Healthy"
+        })
+
+    peak_day = max(trajectory, key=lambda x: x["projected_strain"])
+
+    recommendation = (
+        f"Projected strain peaks on {peak_day['day']} at {peak_day['projected_strain']}% strain index. "
+        "Command advisory: Implement rotational shift relief for teams exceeding 11 hours duty, and mandate 45-minute recovery intervals to avert critical cognitive exhaustion."
+    )
+
+    return jsonify({
+        "success": True,
+        "base_strain": round(base_strain, 1),
+        "peak_day": peak_day["day"],
+        "peak_score": peak_day["projected_strain"],
+        "trajectory": trajectory,
+        "unit_risks": unit_risks,
+        "recommendation": recommendation
+    })
+
+
 # Start-up
 # ----------------------------------------------------------------------
 init_db()  # also runs when started with `flask run`, not only `python app.py`

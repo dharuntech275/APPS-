@@ -37,6 +37,13 @@
             <p style="margin:0; font-family:'Helvetica Neue', Arial, sans-serif; font-weight:700; font-size:14.5px; color:var(--ink);">{{ req.personnel_name }}{% if req.personnel_unit %} <span style="font-weight:400; font-size:12.5px; color:var(--steel);">({{ req.personnel_unit }})</span>{% endif %}</p>
             {% if req.is_sos %}
             <span style="background:#fee2e2; border:1px solid #f87171; color:#b91c1c; font-size:11px; font-weight:800; padding:2px 8px; border-radius:12px; display:inline-flex; align-items:center; gap:4px; letter-spacing:0.04em;">🚨 EMERGENCY SOS</span>
+            <span class="ai-triage-badge badge-triage-urgent">🤖 AI Triage: Critical Priority</span>
+            {% elif 'urgent' in req.message.lower() or 'pain' in req.message.lower() or 'panic' in req.message.lower() or 'overwhelmed' in req.message.lower() %}
+            <span class="ai-triage-badge badge-triage-urgent">🤖 AI Triage: High Urgency</span>
+            {% elif 'sleep' in req.message.lower() or 'tired' in req.message.lower() or 'shift' in req.message.lower() or 'stress' in req.message.lower() %}
+            <span class="ai-triage-badge badge-triage-moderate">🤖 AI Triage: Moderate Review</span>
+            {% else %}
+            <span class="ai-triage-badge badge-triage-routine">🤖 AI Triage: Routine Support</span>
             {% endif %}
           </div>
           <p style="margin:2px 0 0; font-family:'Helvetica Neue', Arial, sans-serif; font-size:12px; color:var(--steel);">Submitted on {{ req.created_date }}</p>
@@ -46,9 +53,15 @@
         </span>
       </div>
 
-      <p style="font-family:'Helvetica Neue', Arial, sans-serif; font-size:14px; color:var(--ink); line-height:1.65; margin-bottom:16px;">
+      <p style="font-family:'Helvetica Neue', Arial, sans-serif; font-size:14px; color:var(--ink); line-height:1.65; margin-bottom:14px;">
         {{ req.message }}
       </p>
+
+      <div style="margin-bottom:16px;">
+        <button type="button" class="btn-outline" style="width:auto; padding:7px 14px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px;" onclick="openCaseBriefModal({{ req.user_id }}, '{{ req.personnel_name }}')">
+          <span>📋 View AI Pre-Counseling Case Brief &rarr;</span>
+        </button>
+      </div>
 
       {% if req.remedy %}
       <div style="background:rgba(76,122,94,0.1); border-left:3px solid var(--signal-low); padding:14px 18px; border-radius:8px; margin-bottom:18px;">

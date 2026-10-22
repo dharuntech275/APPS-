@@ -84,6 +84,93 @@
   })();
 </script>
 
+
+<!-- AI Psychological Wellness Companion Modal -->
+<div class="apps-modal-overlay" id="aiCompanionOverlay" onclick="if(event.target === this) closeAICompanion()">
+  <div class="apps-modal-card ai-companion-card" style="max-width:540px; padding:0; display:flex; flex-direction:column; height:85vh; max-height:620px; overflow:hidden;">
+    <div class="ai-chat-header" style="padding:16px 20px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; background:linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(6,182,212,0.06) 100%);">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div style="width:38px; height:38px; border-radius:12px; background:linear-gradient(135deg, #2563eb, #06b6d4); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 0 14px rgba(37,99,235,0.4); font-size:18px;">
+          🤖
+        </div>
+        <div>
+          <h3 style="margin:0; font-size:15px; font-weight:800; color:var(--ink); display:flex; align-items:center; gap:6px;">
+            APPS AI Wellness Companion
+            <span style="font-size:10px; font-weight:700; color:#10b981; background:rgba(16,185,129,0.12); padding:2px 7px; border-radius:10px;">Live 24/7</span>
+          </h3>
+          <p style="margin:2px 0 0; font-size:11.5px; color:var(--steel);">Confidential empathetic support &amp; self-care guidance</p>
+        </div>
+      </div>
+      <button type="button" class="modal-close-btn" onclick="closeAICompanion()" title="Close" style="position:static; margin:0;">&times;</button>
+    </div>
+
+    <!-- Chat Messages Scroll Area -->
+    <div id="aiChatThread" style="flex:1; overflow-y:auto; padding:20px 18px; display:flex; flex-direction:column; gap:14px;">
+      <!-- Welcome Bubble -->
+      <div class="ai-msg-bubble ai-bot-bubble">
+        <span style="font-weight:700; font-size:11.5px; color:var(--primary); display:block; margin-bottom:4px;">APPS Wellness Companion</span>
+        Hello! I am your 24/7 confidential wellness companion. Whether you are dealing with work fatigue, irregular shifts, sleep trouble, or stress, I am here to help you decompress. How are you feeling today?
+      </div>
+    </div>
+
+    <!-- Suggested Quick Prompts -->
+    <div style="padding:8px 14px; display:flex; gap:6px; overflow-x:auto; border-top:1px solid var(--line); background:rgba(0,0,0,0.01);">
+      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('Help me de-stress from a tough shift')">⚡ De-stress from shift</button>
+      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('I cannot sleep properly tonight')">🌙 Trouble sleeping</button>
+      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('Guide me through a calming exercise')">🧘 Calming exercise</button>
+      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('How do I talk to my Welfare Officer?')">🛡️ Welfare Officer chat</button>
+    </div>
+
+    <!-- Input Bar -->
+    <form id="aiChatForm" onsubmit="submitAIChat(event)" style="padding:12px 16px; border-top:1px solid var(--line); display:flex; gap:10px; background:var(--card);">
+      <input type="text" id="aiUserInput" placeholder="Type what is on your mind confidentially..." autocomplete="off" style="flex:1; padding:11px 14px; border:1px solid var(--line); border-radius:10px; font-size:13px;">
+      <button type="submit" id="aiSendBtn" class="btn" style="width:auto; padding:11px 18px; font-size:13px; font-weight:700;">Send</button>
+    </form>
+  </div>
+</div>
+
+<!-- AI Clinical Pre-Counseling Case Intelligence Brief Modal -->
+<div class="apps-modal-overlay" id="caseBriefOverlay" onclick="if(event.target === this) closeCaseBriefModal()">
+  <div class="apps-modal-card" style="max-width:620px; max-height:85vh; overflow-y:auto; text-align:left;">
+    <button type="button" class="modal-close-btn" onclick="closeCaseBriefModal()" title="Close">&times;</button>
+    
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px; border-bottom:1px solid var(--line); padding-bottom:14px;">
+      <div style="width:40px; height:40px; border-radius:12px; background:linear-gradient(135deg, #7c3aed, #2563eb); color:#fff; display:flex; align-items:center; justify-content:center; font-size:20px; box-shadow:0 0 14px rgba(124,58,237,0.35);">
+        📋
+      </div>
+      <div>
+        <h3 style="margin:0; font-size:16px; font-weight:800; color:var(--ink);">AI Pre-Counseling Clinical Brief</h3>
+        <p style="margin:2px 0 0; font-size:12px; color:var(--steel);" id="briefSubjectLabel">Automated telemetry synthesis &amp; discussion prompts</p>
+      </div>
+    </div>
+
+    <div id="briefLoadingBox" style="text-align:center; padding:30px 0;">
+      <span class="radar-pulse-dot" style="margin:0 auto 10px; width:12px; height:12px;"></span>
+      <p style="font-size:13px; color:var(--steel); margin:0;">Synthesizing 14-day biometric telemetry, sleep debt, and stress patterns...</p>
+    </div>
+
+    <div id="briefContentBox" style="display:none;">
+      <!-- Biometric Summary Badge -->
+      <div style="padding:10px 14px; border-radius:10px; background:rgba(37,99,235,0.06); border:1px solid rgba(37,99,235,0.2); margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <span id="briefRiskBadge" class="slider-badge badge-high" style="font-weight:800;">High Risk</span>
+        <span id="briefBiometricText" style="font-size:12px; font-weight:600; color:var(--steel-deep);">Avg Sleep: 5.2h &bull; Avg Duty: 13.5h</span>
+      </div>
+
+      <!-- Section 1: Clinical Telemetry Points -->
+      <h4 style="margin:0 0 8px; font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; color:var(--steel-deep);">1. Key Telemetry Observations</h4>
+      <ul id="briefAssessmentList" style="margin:0 0 18px; padding-left:18px; font-size:13px; color:var(--ink); line-height:1.55;"></ul>
+
+      <!-- Section 2: Recommended Discussion Prompts -->
+      <h4 style="margin:0 0 8px; font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; color:var(--primary);">2. Recommended Clinical Interview Questions</h4>
+      <div id="briefPromptsBox" style="margin-bottom:18px; display:flex; flex-direction:column; gap:8px;"></div>
+
+      <!-- Section 3: Suggested Actions -->
+      <h4 style="margin:0 0 8px; font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; color:#059669;">3. Suggested Action Plan &amp; Protocol</h4>
+      <ul id="briefActionsList" style="margin:0 0 16px; padding-left:18px; font-size:13px; color:var(--ink); line-height:1.55;"></ul>
+    </div>
+  </div>
+</div>
+
 <header class="top">
   <div class="header-left">
     <button type="button" id="navToggle" class="nav-toggle" aria-label="Open menu"
@@ -148,6 +235,14 @@
   </nav>
 
   <div class="header-right">
+    {% if role == 'personnel' %}
+    <button type="button" class="ai-nav-pill-btn" onclick="openAICompanion()" title="Open 24/7 AI Wellness Companion">
+      <span class="ai-pill-icon">🤖</span>
+      <span class="ai-pill-text">AI Companion</span>
+      <span class="ai-pill-dot"></span>
+    </button>
+    {% endif %}
+
     <div class="role-pill" title="{{ session.get('user_name') }}{% if role == 'officer' %} (Welfare Officer){% elif role == 'admin' %} (Senior Admin){% else %} (Personnel){% endif %}">
       <span class="role-user-name">{{ session.get('user_name') }}</span>
       {% if role == 'officer' %}
@@ -231,6 +326,12 @@
       <span>Download PDF</span>
     </a>
     <div class="nav-section">Support &amp; Calming Tools</div>
+    
+    <button type="button" class="nav-item sub nav-btn-action" onclick="closeNavDrawer(); openAICompanion();">
+      <span style="font-size:14px; margin-right:4px;">🤖</span>
+      <span>AI Wellness Companion</span>
+    </button>
+
     <button type="button" class="nav-item sub nav-btn-action" onclick="closeNavDrawer(); openSOSModal();">
       <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       <span>Crisis SOS</span>
@@ -988,4 +1089,173 @@
     });
   };
 
+</script>
+
+
+<script>
+  /* --- APPS AI Wellness Companion & Case Brief Scripts --- */
+  window.openAICompanion = function() {
+    var overlay = document.getElementById('aiCompanionOverlay');
+    if (overlay) {
+      overlay.classList.add('active');
+      var input = document.getElementById('aiUserInput');
+      if (input) setTimeout(function() { input.focus(); }, 150);
+    }
+  };
+
+  window.closeAICompanion = function() {
+    var overlay = document.getElementById('aiCompanionOverlay');
+    if (overlay) overlay.classList.remove('active');
+  };
+
+  window.sendQuickPrompt = function(promptText) {
+    var input = document.getElementById('aiUserInput');
+    if (input) {
+      input.value = promptText;
+      submitAIChat();
+    }
+  };
+
+  window.submitAIChat = function(e) {
+    if (e) e.preventDefault();
+    var input = document.getElementById('aiUserInput');
+    var thread = document.getElementById('aiChatThread');
+    var sendBtn = document.getElementById('aiSendBtn');
+    if (!input || !thread) return;
+
+    var msg = input.value.trim();
+    if (!msg) return;
+
+    // Append user bubble
+    var userBubble = document.createElement('div');
+    userBubble.className = 'ai-msg-bubble ai-user-bubble';
+    userBubble.textContent = msg;
+    thread.appendChild(userBubble);
+    input.value = '';
+    thread.scrollTop = thread.scrollHeight;
+
+    // Loading indicator
+    var loadingBubble = document.createElement('div');
+    loadingBubble.className = 'ai-msg-bubble ai-bot-bubble';
+    loadingBubble.id = 'aiTempLoadingBubble';
+    loadingBubble.innerHTML = '<span class="radar-pulse-dot" style="display:inline-block; vertical-align:middle; margin-right:6px;"></span> Reflecting & counseling...';
+    thread.appendChild(loadingBubble);
+    thread.scrollTop = thread.scrollHeight;
+
+    if (sendBtn) sendBtn.disabled = true;
+
+    fetch('/api/ai_companion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+      body: JSON.stringify({ message: msg })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      var loader = document.getElementById('aiTempLoadingBubble');
+      if (loader) loader.remove();
+
+      var botBubble = document.createElement('div');
+      botBubble.className = 'ai-msg-bubble ai-bot-bubble';
+      if (data.is_emergency) {
+        botBubble.style.borderColor = '#ef4444';
+        botBubble.style.background = 'rgba(239,68,68,0.08)';
+      }
+      botBubble.innerHTML = '<span style="font-weight:700; font-size:11.5px; color:' + (data.is_emergency ? '#dc2626' : 'var(--primary)') + '; display:block; margin-bottom:4px;">APPS Wellness Companion</span>' +
+                            data.response.replace(/\n/g, '<br>');
+      thread.appendChild(botBubble);
+      thread.scrollTop = thread.scrollHeight;
+      if (sendBtn) sendBtn.disabled = false;
+    })
+    .catch(function(err) {
+      var loader = document.getElementById('aiTempLoadingBubble');
+      if (loader) loader.remove();
+
+      var errBubble = document.createElement('div');
+      errBubble.className = 'ai-msg-bubble ai-bot-bubble';
+      errBubble.textContent = "I'm reflecting on your note right now. Remember, if you are feeling overwhelmed, you can tap Crisis SOS anytime to reach your Welfare Officer immediately.";
+      thread.appendChild(errBubble);
+      thread.scrollTop = thread.scrollHeight;
+      if (sendBtn) sendBtn.disabled = false;
+    });
+  };
+
+  /* --- Case Briefing Modal Logic --- */
+  window.openCaseBriefModal = function(userId, userName) {
+    var overlay = document.getElementById('caseBriefOverlay');
+    var loading = document.getElementById('briefLoadingBox');
+    var content = document.getElementById('briefContentBox');
+    var label = document.getElementById('briefSubjectLabel');
+
+    if (!overlay) return;
+    overlay.classList.add('active');
+    if (loading) loading.style.display = 'block';
+    if (content) content.style.display = 'none';
+    if (label) label.textContent = 'Subject: ' + (userName || 'Personnel #' + userId);
+
+    fetch('/api/ai_case_brief/' + userId)
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        if (!data.success) throw new Error(data.error || 'Failed');
+        if (loading) loading.style.display = 'none';
+        if (content) content.style.display = 'block';
+
+        var badge = document.getElementById('briefRiskBadge');
+        if (badge) {
+          badge.textContent = data.risk_level;
+          badge.className = 'slider-badge ' + (data.risk_badge || 'badge-low');
+        }
+
+        var bioText = document.getElementById('briefBiometricText');
+        if (bioText) bioText.textContent = data.biometric_summary;
+
+        var aList = document.getElementById('briefAssessmentList');
+        if (aList) {
+          aList.innerHTML = '';
+          (data.assessment_points || []).forEach(function(p) {
+            var li = document.createElement('li');
+            li.style.marginBottom = '6px';
+            li.textContent = p;
+            aList.appendChild(li);
+          });
+        }
+
+        var pBox = document.getElementById('briefPromptsBox');
+        if (pBox) {
+          pBox.innerHTML = '';
+          (data.discussion_prompts || []).forEach(function(q, idx) {
+            var card = document.createElement('div');
+            card.style.background = 'rgba(0,0,0,0.03)';
+            card.style.border = '1px solid var(--line)';
+            card.style.padding = '10px 12px';
+            card.style.borderRadius = '8px';
+            card.style.fontSize = '12.5px';
+            card.style.lineHeight = '1.45';
+            card.style.color = 'var(--ink)';
+            card.innerHTML = '<strong>Prompt ' + (idx + 1) + ':</strong> ' + q;
+            pBox.appendChild(card);
+          });
+        }
+
+        var actionsList = document.getElementById('briefActionsList');
+        if (actionsList) {
+          actionsList.innerHTML = '';
+          (data.suggested_actions || []).forEach(function(a) {
+            var li = document.createElement('li');
+            li.style.marginBottom = '6px';
+            li.textContent = a;
+            actionsList.appendChild(li);
+          });
+        }
+      })
+      .catch(function(err) {
+        if (loading) {
+          loading.innerHTML = '<p style="color:#b91c1c; font-size:13px; font-weight:600;">Failed to generate AI brief. Please try again.</p>';
+        }
+      });
+  };
+
+  window.closeCaseBriefModal = function() {
+    var overlay = document.getElementById('caseBriefOverlay');
+    if (overlay) overlay.classList.remove('active');
+  };
 </script>
