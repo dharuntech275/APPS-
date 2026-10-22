@@ -2700,6 +2700,14 @@ def ai_case_brief(user_id):
     })
 
 
+@app.route("/admin/burnout_forecast")
+@role_required("admin", "officer")
+def admin_burnout_forecast():
+    """Dedicated predictive team burnout & workload fatigue analytics dashboard."""
+    sync_db_from_blob(force=True)
+    return render_template("admin_burnout_forecast.html", admin_name=session.get("user_name"))
+
+
 @app.route("/api/ai_burnout_forecast")
 @role_required("admin", "officer")
 def ai_burnout_forecast():

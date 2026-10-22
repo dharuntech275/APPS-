@@ -210,6 +210,7 @@
       {% if pending_count %}<span class="desk-badge">{{ pending_count }}</span>{% endif %}
     </a>
     <a href="/officer/going_quiet" class="desk-nav-item {% if p == '/officer/going_quiet' %}active{% endif %}">Going Quiet</a>
+    <a href="/admin/burnout_forecast" class="desk-nav-item {% if p == '/admin/burnout_forecast' %}active{% endif %}">AI Forecaster</a>
     <a href="/officer/activity_log" class="desk-nav-item {% if p == '/officer/activity_log' %}active{% endif %}">Activity Log</a>
     <div class="desk-dropdown">
       <button type="button" class="desk-nav-item desk-drop-btn">
@@ -223,6 +224,10 @@
   {% elif role == 'admin' %}
     <a href="/admin_dashboard" class="desk-nav-item {% if p == '/admin_dashboard' %}active{% endif %}">Overview</a>
     <a href="/admin/units" class="desk-nav-item {% if p.startswith('/admin/unit') %}active{% endif %}">Unit Breakdown</a>
+    <a href="/admin/burnout_forecast" class="desk-nav-item {% if p == '/admin/burnout_forecast' %}active{% endif %}">
+      <span>AI Forecaster</span>
+      <span class="desk-badge" style="background:rgba(59,130,246,0.18); color:var(--primary); font-size:10px; font-weight:800;">7-Day</span>
+    </a>
     <div class="desk-dropdown">
       <button type="button" class="desk-nav-item desk-drop-btn">
         <span>Reports</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.7; vertical-align:middle; margin-left:4px;"><polyline points="6 9 12 15 18 9"/></svg>
@@ -241,6 +246,12 @@
       <span class="ai-pill-text">AI Companion</span>
       <span class="ai-pill-dot"></span>
     </button>
+    {% elif role == 'admin' %}
+    <a href="/admin/burnout_forecast" class="ai-nav-pill-btn" style="text-decoration:none;" title="Open AI 7-Day Team Burnout Forecaster">
+      <span class="ai-pill-icon">📊</span>
+      <span class="ai-pill-text">AI Forecaster</span>
+      <span class="ai-pill-dot" style="background:#3b82f6;"></span>
+    </a>
     {% endif %}
 
     <div class="role-pill" title="{{ session.get('user_name') }}{% if role == 'officer' %} (Welfare Officer){% elif role == 'admin' %} (Senior Admin){% else %} (Personnel){% endif %}">
@@ -410,6 +421,10 @@
       <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
       <span>Going Quiet</span>
     </a>
+    <a href="/admin/burnout_forecast" class="nav-item {% if p == '/admin/burnout_forecast' %}active{% endif %}">
+      <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      <span>AI Burnout Forecaster</span>
+    </a>
     <a href="/officer/activity_log" class="nav-item {% if p == '/officer/activity_log' %}active{% endif %}">
       <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
       <span>Activity Log</span>
@@ -428,6 +443,10 @@
     <a href="/admin/units" class="nav-item {% if p.startswith('/admin/unit') %}active{% endif %}">
       <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       <span>Unit Breakdown</span>
+    </a>
+    <a href="/admin/burnout_forecast" class="nav-item {% if p == '/admin/burnout_forecast' %}active{% endif %}">
+      <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      <span>AI Burnout Forecaster</span>
     </a>
     <div class="nav-section">Reports</div>
     <a href="/admin/export_report" class="nav-item sub">

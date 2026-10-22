@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>APPS - AI 7-Day Team Burnout & Workload Forecaster</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script>
+  (function(){
+    var t = localStorage.getItem('apps_theme');
+    if (t === 'dark' || (!t && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+  })();
+</script>
+<style>
+  .forecast-guide-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .guide-tier-card {
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .guide-tier-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body class="admin-page">
+<div class="wrap">
+
+  {% include "_header.html" %}
+
+  <a href="/admin_dashboard" class="btn-back">
+    &larr; Back to Admin Overview
+  </a>
+
+  <!-- Header & Status Chip -->
+  <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:14px; margin-bottom:22px;">
+    <div style="display:flex; align-items:center; gap:14px;">
+      <div style="width:46px; height:46px; border-radius:14px; background:linear-gradient(135deg, #3b82f6, #06b6d4); color:#fff; display:flex; align-items:center; justify-content:center; font-size:22px; box-shadow:0 0 16px rgba(59,130,246,0.35);">
+        📊
+      </div>
+      <div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <h2 class="page-title" style="margin:0; font-size:20px; font-weight:800;">AI 7-Day Team Burnout &amp; Workload Forecaster</h2>
+          <span class="badge-role badge-admin" style="font-size:10.5px; padding:3px 10px;">Predictive AI Telemetry</span>
+        </div>
+        <p style="margin:4px 0 0; font-size:13px; color:var(--steel);">Dynamic strain trajectory forecasting based on shift burden, sleep debt &amp; historical fatigue recovery</p>
+      </div>
+    </div>
+    <div id="forecastPeakChip" class="slider-badge badge-good" style="font-size:12.5px; font-weight:700; padding:8px 16px;">
+      <span class="radar-pulse-dot" style="display:inline-block; vertical-align:middle; margin-right:6px;"></span> Analyzing fleet trajectory...
+    </div>
+  </div>
+
+  <!-- Telemetry Interpretation Guide Box -->
+  <div class="card" style="margin-bottom:24px; padding:18px 22px;">
+    <div style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:var(--steel); margin-bottom:12px;">
+      📖 How to Interpret 7-Day Strain Index Telemetry
+    </div>
+    <div class="forecast-guide-box">
+      <div class="guide-tier-card">
+        <span class="guide-tier-dot" style="background:#10b981; box-shadow:0 0 8px rgba(16,185,129,0.5);"></span>
+        <div>
+          <div style="font-size:12.5px; font-weight:800; color:#059669;">0% – 44%: Optimal Readiness</div>
+          <div style="font-size:11px; color:var(--steel); margin-top:2px;">Healthy balance of rest &amp; duty hours</div>
+        </div>
+      </div>
+      <div class="guide-tier-card">
+        <span class="guide-tier-dot" style="background:#f59e0b; box-shadow:0 0 8px rgba(245,158,11,0.5);"></span>
+        <div>
+          <div style="font-size:12.5px; font-weight:800; color:#d97706;">45% – 69%: Moderate Strain</div>
+          <div style="font-size:11px; color:var(--steel); margin-top:2px;">Cumulative fatigue; recovery intervals advised</div>
+        </div>
+      </div>
+      <div class="guide-tier-card">
+        <span class="guide-tier-dot" style="background:#ef4444; box-shadow:0 0 8px rgba(239,68,68,0.5);"></span>
+        <div>
+          <div style="font-size:12.5px; font-weight:800; color:#dc2626;">70% – 100%: High Burnout Risk</div>
+          <div style="font-size:11px; color:var(--steel); margin-top:2px;">Critical exhaustion; mandatory shift rotation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Visual Bar Forecast Card -->
+  <div class="card" style="margin-bottom:24px; padding:24px 26px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
+      <span style="font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; color:var(--ink);">
+        Weekly Force Fatigue Trajectory (Day 1 – Day 7)
+      </span>
+      <span style="font-size:12px; color:var(--steel);" id="baseStrainLabel">Calculating baseline...</span>
+    </div>
+
+    <!-- 7-Day Visual Bar Forecast -->
+    <div id="forecastBarsContainer" style="display:grid; grid-template-columns:repeat(7, 1fr); gap:12px; margin-bottom:22px; align-items:end; min-height:180px; padding:24px 12px 14px; background:rgba(0,0,0,0.018); border-radius:14px; border:1px solid var(--line);">
+      <!-- Rendered dynamically via JS -->
+    </div>
+
+    <!-- AI Command Recommendation Banner -->
+    <div id="forecastRecommendationBox" style="background:rgba(37,99,235,0.06); border:1px solid rgba(37,99,235,0.2); border-left:4px solid var(--primary); padding:16px 20px; border-radius:12px; display:flex; align-items:center; gap:14px;">
+      <span style="font-size:24px; flex-shrink:0;">💡</span>
+      <p id="forecastRecommendationText" style="margin:0; font-size:13.5px; color:var(--ink); line-height:1.55;">
+        Generating proactive workload rebalancing advisory...
+      </p>
+    </div>
+  </div>
+
+  <!-- Unit-Wise Burnout Risk Telemetry Grid -->
+  <div class="card" style="padding:24px 26px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+      <h3 style="margin:0; font-size:15px; font-weight:800; color:var(--ink); border:none; padding:0;">Unit-Level Workload Risk Distribution</h3>
+      <span style="font-size:12px; color:var(--steel);">Telemetry per Operational Unit</span>
+    </div>
+    <div id="unitRisksContainer" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:14px;">
+      <!-- Populated via JS -->
+    </div>
+  </div>
+
+</div>
+
+<script>
+  (function(){
+    fetch('/api/ai_burnout_forecast')
+      .then(function(res){ return res.json(); })
+      .then(function(data){
+        if (!data.success) return;
+
+        var baseLabel = document.getElementById('baseStrainLabel');
+        if (baseLabel && data.base_strain) {
+          baseLabel.textContent = 'Fleet Baseline Strain: ' + data.base_strain + '%';
+        }
+
+        var chip = document.getElementById('forecastPeakChip');
+        if (chip) {
+          chip.textContent = 'Projected Peak: ' + data.peak_day + ' (' + data.peak_score + '% Strain)';
+          chip.className = 'slider-badge ' + (data.peak_score >= 70 ? 'badge-alert' : data.peak_score >= 45 ? 'badge-warn' : 'badge-good');
+        }
+
+        var container = document.getElementById('forecastBarsContainer');
+        if (container && data.trajectory) {
+          container.innerHTML = '';
+          data.trajectory.forEach(function(day){
+            var col = document.createElement('div');
+            col.style.display = 'flex';
+            col.style.flexDirection = 'column';
+            col.style.alignItems = 'center';
+            col.style.height = '100%';
+            col.style.justifyContent = 'flex-end';
+
+            var barColor = day.projected_strain >= 70 ? 'linear-gradient(180deg, #ef4444, #dc2626)' :
+                           day.projected_strain >= 45 ? 'linear-gradient(180deg, #f59e0b, #d97706)' :
+                           'linear-gradient(180deg, #10b981, #059669)';
+
+            var scoreHeight = Math.max(35, Math.min(145, day.projected_strain * 1.45));
+
+            // Extract Day and Name e.g. "Mon", "Tue"
+            var parts = day.day.split(' ');
+            var dNum = parts[0] + ' ' + (parts[1] || '');
+            var dName = parts.length > 2 ? parts[2].replace('(', '').replace(')', '') : (parts[1] || 'Day');
+
+            col.innerHTML = '<span style="font-size:12px; font-weight:800; color:var(--ink); margin-bottom:6px;">' + day.projected_strain + '%</span>' +
+                            '<div style="width:100%; height:' + scoreHeight + 'px; background:' + barColor + '; border-radius:8px 8px 4px 4px; box-shadow:0 3px 10px rgba(0,0,0,0.12); transition:height 0.5s ease;"></div>' +
+                            '<span style="font-size:12px; font-weight:800; color:var(--ink); margin-top:8px; white-space:nowrap;">' + dName + '</span>' +
+                            '<span style="font-size:10px; font-weight:600; color:var(--steel); margin-top:2px; white-space:nowrap;">' + dNum + '</span>';
+            container.appendChild(col);
+          });
+        }
+
+        var recoText = document.getElementById('forecastRecommendationText');
+        if (recoText && data.recommendation) {
+          recoText.textContent = data.recommendation;
+        }
+
+        var unitBox = document.getElementById('unitRisksContainer');
+        if (unitBox && data.unit_risks) {
+          unitBox.innerHTML = '';
+          data.unit_risks.forEach(function(u){
+            var uCard = document.createElement('div');
+            uCard.className = 'card';
+            uCard.style.padding = '14px 16px';
+            uCard.style.margin = '0';
+            uCard.style.border = '1px solid var(--line)';
+
+            var badgeCls = u.status === 'Critical Review' ? 'badge-alert' : u.status === 'Moderate' ? 'badge-warn' : 'badge-good';
+            uCard.innerHTML = '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">' +
+                              '<strong style="font-size:14px; color:var(--ink);">' + u.unit + '</strong>' +
+                              '<span class="slider-badge ' + badgeCls + '" style="font-size:10.5px; padding:3px 8px;">' + u.status + '</span>' +
+                              '</div>' +
+                              '<div style="font-size:12px; color:var(--steel);">' +
+                              'Strain Score: <strong style="color:var(--ink);">' + u.strain_score + '/100</strong>' +
+                              '</div>';
+            unitBox.appendChild(uCard);
+          });
+        }
+      })
+      .catch(function(err){
+        console.log('Burnout forecast load skipped', err);
+      });
+  })();
+</script>
+
+</body>
+</html>
