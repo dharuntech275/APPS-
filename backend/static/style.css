@@ -7236,3 +7236,91 @@ html.dark .badge-triage-routine {
     padding: 4px 6px !important;
   }
 }
+
+
+/* ============================================================
+   TELEMETRY GAUGE CENTERING FIX — All Screen Sizes (v4.1)
+   Ensures the semicircular stress gauge is always centered
+   in both snapshot.html and results.html on all devices.
+   ============================================================ */
+
+/* Base always-centered rule */
+.gauge-svg-wrap {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
+}
+
+.gauge-svg-wrap svg {
+  display: block !important;
+  margin: 0 auto !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* gauge-reading-title and gauge-reading-desc center alignment */
+.gauge-reading-title {
+  text-align: center !important;
+  display: block !important;
+}
+
+.gauge-reading-desc {
+  text-align: center !important;
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* snapshot-card full centering context */
+.snapshot-card {
+  text-align: center;
+}
+
+/* Gauge Telemetry Header row — flex centered on mobile */
+@media (max-width: 768px) {
+  .gauge-telemetry-header {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 4px !important;
+  }
+
+  .gauge-svg-wrap {
+    width: 100% !important;
+    max-width: 220px !important;
+    height: auto !important;
+  }
+
+  .gauge-svg-wrap svg {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .gauge-reading-title {
+    font-size: 18px !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .gauge-reading-desc {
+    font-size: 12.5px !important;
+    max-width: 100% !important;
+    padding: 0 12px !important;
+  }
+
+  /* Snapshot-specific: card inner content centered */
+  .snapshot-card .gauge-svg-wrap {
+    margin: 12px auto 14px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .gauge-svg-wrap {
+    max-width: 200px !important;
+  }
+
+  .gauge-reading-title {
+    font-size: 16px !important;
+  }
+}
