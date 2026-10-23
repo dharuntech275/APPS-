@@ -6566,3 +6566,673 @@ html.dark .badge-triage-routine {
   border-color: rgba(16, 185, 129, 0.5) !important;
   color: #6ee7b7 !important;
 }
+
+
+/* ==========================================================================
+   MOBILE ALIGNMENT PERFECTION SUITE (v4.0)
+   Comprehensive Viewport Alignment for Ultra-Mobile, Mobile & Tablet Displays
+   ========================================================================== */
+
+/* 1. Global Viewport & Boundary Enforcement (<= 768px) */
+@media screen and (max-width: 768px) {
+  html, body {
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    position: relative !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  * {
+    box-sizing: border-box !important;
+  }
+
+  .wrap {
+    width: 100% !important;
+    max-width: 100vw !important;
+    padding: 10px 12px 48px !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Floating Glass Command Header on Mobile */
+  header.top {
+    padding: 8px 10px !important;
+    border-radius: 14px !important;
+    margin-bottom: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    gap: 6px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .header-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-shrink: 0 !important;
+    min-width: 0 !important;
+  }
+
+  .header-right {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+    min-width: 0 !important;
+  }
+
+  .desktop-status-pill,
+  .desktop-nav {
+    display: none !important;
+  }
+
+  .mobile-brand-only {
+    display: flex !important;
+  }
+
+  .nav-toggle {
+    display: inline-flex !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    border-radius: 9px !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* Universal Cards on Mobile */
+  .card {
+    padding: 16px 14px !important;
+    border-radius: 16px !important;
+    margin-bottom: 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .card h3 {
+    font-size: 16px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .card h4 {
+    font-size: 14.5px !important;
+  }
+
+  .btn-back {
+    display: inline-flex !important;
+    align-items: center !important;
+    margin-bottom: 14px !important;
+    font-size: 12.5px !important;
+    padding: 6px 12px !important;
+  }
+
+  h2.page-title {
+    font-size: 20px !important;
+    line-height: 1.25 !important;
+    margin-bottom: 14px !important;
+  }
+
+  /* Welcome Banner */
+  .welcome-banner {
+    padding: 14px 14px !important;
+    border-radius: 14px !important;
+    margin-bottom: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .welcome-banner h2 {
+    font-size: 18px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .welcome-banner p {
+    font-size: 12px !important;
+    margin-bottom: 0 !important;
+  }
+
+  .banner-actions-wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    flex-wrap: wrap !important;
+  }
+
+  .btn-sos-trigger,
+  .btn-breathing-trigger {
+    flex: 1 1 calc(50% - 4px) !important;
+    min-height: 42px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    padding: 8px 10px !important;
+    border-radius: 10px !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .streak-chip {
+    width: 100% !important;
+    justify-content: center !important;
+    margin-top: 2px !important;
+    min-height: 34px !important;
+  }
+
+  /* Modals Optimization */
+  .apps-modal-overlay {
+    padding: 8px !important;
+    z-index: 9999 !important;
+  }
+
+  .apps-modal-card {
+    width: 100% !important;
+    max-width: calc(100vw - 16px) !important;
+    max-height: 90vh !important;
+    padding: 20px 14px !important;
+    border-radius: 18px !important;
+    box-sizing: border-box !important;
+  }
+
+  .apps-modal-card.ai-companion-card {
+    padding: 0 !important;
+    height: 88vh !important;
+    max-height: 88vh !important;
+    width: 100% !important;
+    max-width: calc(100vw - 16px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  #aiChatThread {
+    padding: 14px 12px !important;
+    gap: 10px !important;
+  }
+
+  .ai-msg-bubble {
+    max-width: 88% !important;
+    font-size: 13px !important;
+    padding: 10px 13px !important;
+    border-radius: 14px !important;
+  }
+
+  #aiChatForm {
+    padding: 10px 12px !important;
+    gap: 8px !important;
+  }
+
+  #aiUserInput {
+    padding: 10px 12px !important;
+    font-size: 13px !important;
+    min-width: 0 !important;
+  }
+
+  #aiSendBtn {
+    padding: 10px 14px !important;
+    font-size: 13px !important;
+    width: auto !important;
+  }
+
+  .breathing-circle-container {
+    padding: 12px 0 !important;
+  }
+
+  .breathing-circle {
+    width: 120px !important;
+    height: 120px !important;
+  }
+
+  .breathing-phase {
+    font-size: 15px !important;
+  }
+
+  .breathing-countdown {
+    font-size: 24px !important;
+  }
+
+  .breathing-controls {
+    display: flex !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .breathing-controls button {
+    flex: 1 !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .hotline-card {
+    padding: 10px 12px !important;
+    gap: 10px !important;
+  }
+
+  .hotline-num {
+    font-size: 14px !important;
+  }
+
+  .hotline-lbl {
+    font-size: 11px !important;
+  }
+
+  /* Table Horizontal Scrolling Safeguard */
+  table, table.history {
+    display: block !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  th, td {
+    white-space: nowrap !important;
+  }
+
+  /* Admin Overview Stats Grid */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    margin: 14px 0 20px !important;
+  }
+
+  .stat-card {
+    padding: 14px 12px !important;
+    border-radius: 14px !important;
+    min-height: 90px !important;
+    aspect-ratio: auto !important;
+  }
+
+  .stat-card .stat-value {
+    font-size: 22px !important;
+  }
+
+  .stat-card .stat-label {
+    font-size: 10.5px !important;
+  }
+
+  /* Sliders & Checkin Form */
+  .slider-top-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .slider-title {
+    font-size: 13px !important;
+  }
+
+  .slider-badge {
+    font-size: 11px !important;
+    padding: 3px 8px !important;
+  }
+
+  .biometric-slider {
+    height: 38px !important;
+    margin: 4px 0 !important;
+  }
+
+  .slider-sub-labels {
+    font-size: 10px !important;
+  }
+
+  .mood-selector-grid {
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 4px !important;
+    width: 100% !important;
+  }
+
+  .mood-btn {
+    padding: 8px 2px !important;
+    min-height: 52px !important;
+    border-radius: 8px !important;
+  }
+
+  .mood-val-circle {
+    width: 22px !important;
+    height: 22px !important;
+    font-size: 12px !important;
+    line-height: 22px !important;
+  }
+
+  .mood-desc {
+    font-size: 9px !important;
+    margin-top: 2px !important;
+  }
+
+  .precheck-card {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    padding: 12px !important;
+  }
+
+  .precheck-pill {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+    padding: 8px 12px !important;
+    font-size: 11.5px !important;
+  }
+
+  .checkin-card .btn {
+    width: 100% !important;
+    min-height: 48px !important;
+    font-size: 14px !important;
+    border-radius: 10px !important;
+    justify-content: center !important;
+  }
+}
+
+/* 2. Compact Mobile Screens (<= 600px) */
+@media screen and (max-width: 600px) {
+  /* Portal Landing Page */
+  .portal-header {
+    padding: 20px 10px 16px !important;
+    text-align: center !important;
+  }
+
+  .portal-header h1 {
+    font-size: 24px !important;
+    line-height: 1.25 !important;
+  }
+
+  .portal-header p {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+  }
+
+  .portal-header div[style*="justify-content:center"] {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+
+  .portal-header a.btn,
+  .portal-header a.btn-outline {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .portal-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+
+  .portal-card {
+    padding: 22px 16px !important;
+    border-radius: 18px !important;
+  }
+
+  .portal-card h2 {
+    font-size: 18px !important;
+  }
+
+  .portal-card p {
+    font-size: 13px !important;
+  }
+
+  .portal-features {
+    gap: 6px !important;
+    margin: 12px 0 18px !important;
+  }
+
+  .portal-feat-tag {
+    font-size: 10.5px !important;
+    padding: 4px 8px !important;
+  }
+
+  .btn-group {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  .btn-group a.btn,
+  .btn-group a.btn-outline {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Auth Screens (Login / Signup) */
+  .auth-shell {
+    padding: 16px 10px 32px !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .auth-card {
+    padding: 24px 16px !important;
+    border-radius: 18px !important;
+    width: 100% !important;
+    max-width: 440px !important;
+  }
+
+  .auth-card h1 {
+    font-size: 20px !important;
+  }
+
+  .role-tabs {
+    display: flex !important;
+    width: 100% !important;
+    gap: 4px !important;
+    padding: 4px !important;
+  }
+
+  .role-tab {
+    flex: 1 1 0 !important;
+    font-size: 11px !important;
+    padding: 8px 3px !important;
+    justify-content: center !important;
+  }
+
+  /* Speedometer Gauge & Results Page */
+  .gauge-card {
+    padding: 18px 12px !important;
+  }
+
+  .gauge-svg-wrap {
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 auto 10px !important;
+  }
+
+  .gauge-reading-title {
+    font-size: 18px !important;
+    text-align: center !important;
+  }
+
+  .gauge-reading-desc {
+    font-size: 12px !important;
+    padding: 0 4px !important;
+  }
+
+  /* Results quick action buttons */
+  .gauge-card div[style*="justify-content:center; gap:12px"] {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  .gauge-card div[style*="justify-content:center; gap:12px"] button {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .result-entry {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+    padding: 12px 0 !important;
+  }
+
+  /* Going Quiet Page on Mobile */
+  .card div[style*="justify-content:space-between; align-items:center"] {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  /* Action buttons in Going Quiet rows */
+  .card div[style*="display:flex; align-items:center; gap:10px"] {
+    width: 100% !important;
+    display: flex !important;
+    gap: 8px !important;
+    margin-top: 6px !important;
+  }
+
+  .card div[style*="display:flex; align-items:center; gap:10px"] button,
+  .card div[style*="display:flex; align-items:center; gap:10px"] a.btn {
+    flex: 1 1 calc(50% - 4px) !important;
+    text-align: center !important;
+    justify-content: center !important;
+    padding: 9px 8px !important;
+    font-size: 12px !important;
+  }
+
+  /* Officer Requests Page */
+  .officer-page .card button.btn-outline,
+  .officer-page .card a.btn,
+  .officer-page .card form button.btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Personnel Profile Detail */
+  .officer-page div[style*="display:flex; justify-content:space-between; align-items:center"] button.btn {
+    width: 100% !important;
+    margin-top: 8px !important;
+    justify-content: center !important;
+  }
+
+  /* Admin 7-Day Burnout Forecaster */
+  #forecastBarsContainer {
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr) !important;
+    gap: 3px !important;
+    padding: 14px 2px 10px !important;
+    min-height: 155px !important;
+  }
+
+  #forecastBarsContainer > div span:first-child {
+    font-size: 10px !important;
+    margin-bottom: 4px !important;
+  }
+
+  #forecastBarsContainer > div span:nth-child(3) {
+    font-size: 10px !important;
+    margin-top: 6px !important;
+  }
+
+  #forecastBarsContainer > div span:last-child {
+    font-size: 8px !important;
+  }
+
+  .forecast-guide-box {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  #unitRisksContainer {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  #forecastPeakChip {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  #forecastRecommendationBox {
+    padding: 12px 14px !important;
+    font-size: 12.5px !important;
+    gap: 10px !important;
+  }
+}
+
+/* 3. Ultra-Compact Phones (<= 480px and <= 380px) */
+@media screen and (max-width: 480px) {
+  .ai-nav-pill-btn {
+    padding: 6px 10px !important;
+    border-radius: 10px !important;
+    gap: 4px !important;
+  }
+
+  .ai-nav-pill-btn .ai-pill-text {
+    display: none !important;
+  }
+
+  .role-pill {
+    padding: 4px 8px !important;
+    border-radius: 10px !important;
+    font-size: 11px !important;
+    gap: 4px !important;
+  }
+
+  .role-user-name {
+    max-width: 60px !important;
+  }
+
+  .stats-grid {
+    gap: 8px !important;
+  }
+
+  .stat-card {
+    padding: 12px 10px !important;
+    min-height: 85px !important;
+  }
+
+  .stat-card .stat-value {
+    font-size: 20px !important;
+  }
+
+  .stat-card .stat-label {
+    font-size: 9.5px !important;
+  }
+
+  /* Mini stats */
+  .mini-stats {
+    padding: 10px 12px !important;
+    gap: 8px !important;
+  }
+
+  .mini-num {
+    font-size: 20px !important;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .role-user-name {
+    display: none !important;
+  }
+
+  .header-left {
+    gap: 4px !important;
+  }
+
+  .header-right {
+    gap: 4px !important;
+  }
+
+  .role-pill {
+    padding: 4px 6px !important;
+  }
+}
