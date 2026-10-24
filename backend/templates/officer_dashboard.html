@@ -76,32 +76,33 @@
     <div class="card stat-breakdown">
       <h3>Risk Breakdown</h3>
       <div class="breakdown-row">
-        <span class="breakdown-dot" style="background:var(--signal-high);"></span>
+        <span class="breakdown-dot" style="background:#ef4444; width:12px; height:12px; box-shadow:0 0 6px rgba(239,68,68,0.6);"></span>
         <span class="breakdown-label">High</span>
-        <span class="breakdown-bar"><span class="breakdown-fill" style="width:{{ (high_count / total * 100) if total else 0 }}%; background:var(--signal-high);"></span></span>
+        <span class="breakdown-bar"><span class="breakdown-fill" style="width:{{ (high_count / total * 100) if total else 0 }}%; background:#ef4444;"></span></span>
         <span class="breakdown-count">{{ high_count }}</span>
       </div>
       <div class="breakdown-row">
-        <span class="breakdown-dot" style="background:var(--signal-med);"></span>
+        <span class="breakdown-dot" style="background:#f59e0b; width:12px; height:12px; box-shadow:0 0 6px rgba(245,158,11,0.6);"></span>
         <span class="breakdown-label">Medium</span>
-        <span class="breakdown-bar"><span class="breakdown-fill" style="width:{{ (medium_count / total * 100) if total else 0 }}%; background:var(--signal-med);"></span></span>
+        <span class="breakdown-bar"><span class="breakdown-fill" style="width:{{ (medium_count / total * 100) if total else 0 }}%; background:#f59e0b;"></span></span>
         <span class="breakdown-count">{{ medium_count }}</span>
       </div>
       <div class="breakdown-row">
-        <span class="breakdown-dot" style="background:var(--signal-low);"></span>
+        <span class="breakdown-dot" style="background:#10b981; width:12px; height:12px; box-shadow:0 0 6px rgba(16,185,129,0.6);"></span>
         <span class="breakdown-label">Low</span>
-        <span class="breakdown-bar"><span class="breakdown-fill" style="width:{{ (low_count / total * 100) if total else 0 }}%; background:var(--signal-low);"></span></span>
+        <span class="breakdown-bar"><span class="breakdown-fill" style="width:{{ (low_count / total * 100) if total else 0 }}%; background:#10b981;"></span></span>
         <span class="breakdown-count">{{ low_count }}</span>
       </div>
       {% if pending_count and pending_count > 0 %}
       <div class="breakdown-row">
-        <span class="breakdown-dot" style="background:#64748b;"></span>
+        <span class="breakdown-dot" style="background:#64748b; width:12px; height:12px;"></span>
         <span class="breakdown-label">Pending</span>
         <span class="breakdown-bar"><span class="breakdown-fill" style="width:{{ (pending_count / total * 100) if total else 0 }}%; background:#64748b;"></span></span>
         <span class="breakdown-count">{{ pending_count }}</span>
       </div>
       {% endif %}
     </div>
+
   </div>
 
   <div class="card" style="margin-bottom:28px;">
