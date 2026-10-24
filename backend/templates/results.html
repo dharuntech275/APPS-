@@ -5,6 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>APPS - My Results</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>
+.gauge-center-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 12px 0 14px;
+}
+.gauge-center-wrapper svg {
+  display: block;
+  width: 220px;
+  max-width: 85vw;
+  height: auto;
+}
+</style>
 <script>
   (function(){
     var t = localStorage.getItem('apps_theme');
@@ -42,8 +58,8 @@
       <span style="font-size:12px; color:var(--steel);">Logged: <strong>{{ history[0].date }}</strong></span>
     </div>
 
-    <div class="gauge-svg-wrap" style="text-align:center;">
-      <svg viewBox="0 0 220 120" width="220" height="120" style="max-width:100%; display:block; margin:0 auto;">
+    <div class="gauge-center-wrapper">
+      <svg viewBox="0 0 220 120" xmlns="http://www.w3.org/2000/svg">
         <!-- Gauge Arcs: Low (Green), Moderate (Amber), High (Red) -->
         <path d="M 30 105 A 80 80 0 0 1 70 36" fill="none" stroke="#10b981" stroke-width="12" stroke-linecap="round" />
         <path d="M 74 33 A 80 80 0 0 1 146 33" fill="none" stroke="#f59e0b" stroke-width="12" />
@@ -352,3 +368,4 @@
 </script>
 </body>
 </html>
+

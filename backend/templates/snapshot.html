@@ -1,10 +1,27 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>APPS - Latest Snapshot</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>
+  /* Gauge absolute centering — flex-based */
+  .gauge-center-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 12px 0 14px;
+  }
+  .gauge-center-wrapper svg {
+    display: block;
+    width: 220px;
+    max-width: 85vw;
+    height: auto;
+  }
+</style>
 </head>
 <body class="personnel-page">
 <div class="wrap">
@@ -17,7 +34,7 @@
     </div>
   </div>
 
-  <div style="max-width:680px; margin:0 auto 40px;">
+  <div style="max-width:680px; margin:0 auto 40px; padding:0 16px;">
     <div style="margin-bottom:24px;">
       <a href="/dashboard" class="btn-outline">&larr; Back to Check-in</a>
     </div>
@@ -33,13 +50,13 @@
       {% endif %}
 
       {% if latest %}
-        <!-- Semicircular SVG Speedometer Stress Telemetry Gauge -->
-        <div class="gauge-svg-wrap" style="margin: 12px auto 14px; display:block; text-align:center;">
-          <svg viewBox="0 0 220 120" width="220" height="120" style="max-width:100%; display:block; margin:0 auto;">
+        <!-- Semicircular SVG Speedometer Stress Telemetry Gauge — flex centered -->
+        <div class="gauge-center-wrapper">
+          <svg viewBox="0 0 220 120" xmlns="http://www.w3.org/2000/svg">
             <path d="M 30 105 A 80 80 0 0 1 70 36" fill="none" stroke="#10b981" stroke-width="12" stroke-linecap="round" />
             <path d="M 74 33 A 80 80 0 0 1 146 33" fill="none" stroke="#f59e0b" stroke-width="12" />
             <path d="M 150 36 A 80 80 0 0 1 190 105" fill="none" stroke="#ef4444" stroke-width="12" stroke-linecap="round" />
-            
+
             <g id="snapshotNeedle" style="transform-origin: 110px 105px; transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1); transform: rotate(-90deg);">
               <polygon points="107,105 113,105 110,38" fill="var(--steel-deep)" />
               <circle cx="110" cy="105" r="7" fill="var(--steel-deep)" />
@@ -185,4 +202,3 @@
 
 </body>
 </html>
-
