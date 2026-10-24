@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
   --ink: #0f172a;
@@ -5789,27 +5789,7 @@ html.dark .desk-nav-item.active {
   backdrop-filter: blur(10px) !important;
 }
 
-.radar-pulse-dot {
-  position: relative !important;
-  width: 8px !important;
-  height: 8px !important;
-  border-radius: 50% !important;
-  background: #10b981 !important;
-  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7) !important;
-  animation: radarBlip 2.2s infinite cubic-bezier(0.4, 0, 0.6, 1) !important;
-}
-
-@keyframes radarBlip {
-  0% {
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 9px rgba(16, 185, 129, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-  }
-}
+/* radar-pulse-dot — see consolidated definition earlier in this file */
 
 /* --- Role User Badges in Header --- */
 .role-pill {
