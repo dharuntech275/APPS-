@@ -49,7 +49,7 @@
   </div>
   {% endif %}
 
-  <div style="max-width:680px; margin:0 auto;">
+  <div class="totp-setup-shell" style="max-width:680px; margin:0 auto;">
     {% if not totp_enabled %}
     <!-- 2FA Setup Flow -->
     <div class="card fade-in" style="margin-bottom:24px;">
@@ -65,7 +65,7 @@
         </div>
       </div>
 
-      <div style="display:grid; grid-template-columns:1fr 180px; gap:20px; align-items:center; margin-bottom:22px; flex-wrap:wrap;">
+      <div class="totp-setup-grid" style="display:grid; grid-template-columns:1fr 180px; gap:20px; align-items:center; margin-bottom:22px; flex-wrap:wrap;">
         <div>
           <h4 style="margin:0 0 8px; font-size:13.5px; color:var(--ink);">Step 1: Open Google Authenticator</h4>
           <p style="margin:0 0 12px; font-size:12.5px; color:var(--steel-deep); line-height:1.5;">
@@ -76,7 +76,7 @@
           <p style="margin:0 0 8px; font-size:12.5px; color:var(--steel-deep);">
             Tap <strong>'+' &rarr; 'Enter a setup key'</strong> and input this key:
           </p>
-          <div style="display:flex; align-items:center; gap:8px;">
+          <div class="totp-secret-row" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
             <code id="secretKeyText" style="font-size:16px; font-weight:800; letter-spacing:0.12em; background:var(--bg-alt, rgba(0,0,0,0.04)); padding:8px 12px; border-radius:6px; border:1px solid var(--line); color:var(--primary);">
               {{ formatted_secret }}
             </code>
@@ -102,7 +102,7 @@
 
         <form method="POST" action="/security/2fa">
           <input type="hidden" name="action" value="enable">
-          <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+          <div class="totp-confirm-row" style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
             <input type="text"
                    name="totp_code"
                    maxlength="6"
