@@ -7897,3 +7897,57 @@ html, body {
   .stat-value-hero { font-size: 36px !important; }
   .gauge-reading-title { font-size: 19px !important; }
 }
+
+/* ============================================================
+   USER AVATAR CIRCLE — High Contrast in Light & Dark Modes
+   Fixes white-on-white avatar issue in dark mode
+   ============================================================ */
+.role-avatar-circle {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 50% !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  flex-shrink: 0 !important;
+  color: #ffffff !important;
+  line-height: 1 !important;
+}
+
+.role-avatar-circle.role-avatar-personnel {
+  background: linear-gradient(135deg, #059669, #047857) !important;
+  box-shadow: 0 1px 4px rgba(5, 150, 105, 0.4) !important;
+}
+
+.role-avatar-circle.role-avatar-officer {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  box-shadow: 0 1px 4px rgba(37, 99, 235, 0.4) !important;
+}
+
+.role-avatar-circle.role-avatar-admin {
+  background: linear-gradient(135deg, #7c3aed, #6d28d9) !important;
+  box-shadow: 0 1px 4px rgba(124, 58, 237, 0.4) !important;
+}
+
+/* Dark Mode Avatar Circle — Crisp glow and contrast */
+html.dark .role-avatar-circle {
+  color: #ffffff !important;
+}
+
+html.dark .role-avatar-circle.role-avatar-personnel {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.5), 0 2px 8px rgba(16, 185, 129, 0.3) !important;
+}
+
+html.dark .role-avatar-circle.role-avatar-officer {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.5), 0 2px 8px rgba(37, 99, 235, 0.35) !important;
+}
+
+html.dark .role-avatar-circle.role-avatar-admin {
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9) !important;
+  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.5), 0 2px 8px rgba(124, 58, 237, 0.35) !important;
+}

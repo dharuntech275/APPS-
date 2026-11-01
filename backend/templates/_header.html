@@ -258,7 +258,7 @@
     {% endif %}
 
     <div class="role-pill" title="{{ session.get('user_name') }}{% if role == 'officer' %} (Welfare Officer){% elif role == 'admin' %} (Senior Admin){% else %} (Personnel){% endif %}">
-      <span class="role-avatar-circle" style="display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:var(--ink); color:#ffffff; font-size:11px; font-weight:800; text-transform:uppercase; flex-shrink:0;">
+      <span class="role-avatar-circle role-avatar-{{ role or 'personnel' }}">
         {{ session.get('user_name', 'U')[0] }}
       </span>
       <span class="role-user-name">{{ session.get('user_name') }}</span>
