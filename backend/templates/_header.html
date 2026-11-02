@@ -87,7 +87,7 @@
 
 <!-- AI Psychological Wellness Companion Modal -->
 <div class="apps-modal-overlay" id="aiCompanionOverlay" onclick="if(event.target === this) closeAICompanion()">
-  <div class="apps-modal-card ai-companion-card" style="max-width:540px; padding:0; display:flex; flex-direction:column; height:85vh; max-height:620px; overflow:hidden;">
+  <div class="apps-modal-card ai-companion-card">
     <div class="ai-chat-header" style="padding:16px 20px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; background:linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(6,182,212,0.06) 100%);">
       <div style="display:flex; align-items:center; gap:12px;">
         <div style="width:38px; height:38px; border-radius:12px; background:linear-gradient(135deg, #2563eb, #06b6d4); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 0 14px rgba(37,99,235,0.4); font-size:18px;">
@@ -114,7 +114,7 @@
     </div>
 
     <!-- Suggested Quick Prompts -->
-    <div style="padding:8px 14px; display:flex; gap:6px; overflow-x:auto; border-top:1px solid var(--line); background:rgba(0,0,0,0.01);">
+    <div class="ai-quick-prompts">
       <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('Help me de-stress from a tough shift')">⚡ De-stress from shift</button>
       <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('I cannot sleep properly tonight')">🌙 Trouble sleeping</button>
       <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('Guide me through a calming exercise')">🧘 Calming exercise</button>
@@ -122,9 +122,9 @@
     </div>
 
     <!-- Input Bar -->
-    <form id="aiChatForm" onsubmit="submitAIChat(event)" style="padding:12px 16px; border-top:1px solid var(--line); display:flex; gap:10px; background:var(--card);">
-      <input type="text" id="aiUserInput" placeholder="Type what is on your mind confidentially..." autocomplete="off" style="flex:1; padding:11px 14px; border:1px solid var(--line); border-radius:10px; font-size:13px;">
-      <button type="submit" id="aiSendBtn" class="btn" style="width:auto; padding:11px 18px; font-size:13px; font-weight:700;">Send</button>
+    <form id="aiChatForm" class="ai-chat-form" onsubmit="submitAIChat(event)">
+      <input type="text" id="aiUserInput" class="ai-user-input" placeholder="Type what is on your mind confidentially..." autocomplete="off">
+      <button type="submit" id="aiSendBtn" class="btn ai-send-btn">Send</button>
     </form>
   </div>
 </div>
