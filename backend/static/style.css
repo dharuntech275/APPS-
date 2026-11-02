@@ -8200,3 +8200,15 @@ html.dark .ai-user-input:focus {
     min-width: 60px !important;
   }
 }
+
+
+/* Tactile Feedback for Mobile Brand Shield/Tick Mark Menu Trigger */
+.mobile-brand-only .brand-link {
+  cursor: pointer !important;
+  user-select: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+.mobile-brand-only .brand-link:active .mobile-shield-icon {
+  transform: scale(0.92) !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.4) !important;
+}
