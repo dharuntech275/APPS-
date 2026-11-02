@@ -7956,3 +7956,34 @@ html.dark .role-avatar-circle.role-avatar-admin {
   background: linear-gradient(135deg, #8b5cf6, #6d28d9) !important;
   box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.5), 0 2px 8px rgba(124, 58, 237, 0.35) !important;
 }
+
+
+/* ============================================================
+   MOBILE NAVIGATION DRAWER OVERHAUL (<= 991px)
+   • Prevents sticky header from overlapping the drawer
+   • Hides duplicate sidebar brand badge on mobile
+   • Corrects z-index so drawer & overlay sit above header
+   ============================================================ */
+@media screen and (max-width: 991px) {
+  /* Hide duplicate sidebar brand box on mobile drawer so it never clips under header */
+  .sidebar-brand-box {
+    display: none !important;
+  }
+
+  /* Elevate overlay and drawer above sticky header (which is z-index 990) */
+  .nav-overlay {
+    z-index: 9998 !important;
+  }
+  .nav-drawer {
+    z-index: 9999 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+  .nav-head {
+    padding: max(16px, env(safe-area-inset-top)) 18px 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    border-bottom: 1px solid var(--line) !important;
+  }
+}

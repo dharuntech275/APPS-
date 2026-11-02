@@ -226,6 +226,31 @@
     background: linear-gradient(135deg, #8b5cf6, #6d28d9) !important;
     box-shadow: 0 0 0 1.5px rgba(139, 92, 246, 0.7), 0 2px 8px rgba(124, 58, 237, 0.4) !important;
   }
+
+  /* Mobile Navigation Drawer & Sticky Header Fix (<= 991px) */
+  @media (max-width: 991px) {
+    /* Hide duplicate sidebar brand box on mobile drawer so it never clips under header */
+    .sidebar-brand-box {
+      display: none !important;
+    }
+
+    /* Elevate overlay and drawer above sticky header (which is z-index 990) */
+    .nav-overlay {
+      z-index: 9998 !important;
+    }
+    .nav-drawer {
+      z-index: 9999 !important;
+      padding: 0 !important;
+      box-sizing: border-box !important;
+    }
+    .nav-head {
+      padding: max(16px, env(safe-area-inset-top)) 18px 14px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      border-bottom: 1px solid var(--line) !important;
+    }
+  }
 </style>
 
 <header class="top">
