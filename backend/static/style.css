@@ -7908,12 +7908,17 @@ html, body {
   justify-content: center !important;
   width: 22px !important;
   height: 22px !important;
+  min-width: 22px !important;
+  min-height: 22px !important;
   border-radius: 50% !important;
   font-size: 11px !important;
   font-weight: 800 !important;
   text-transform: uppercase !important;
   flex-shrink: 0 !important;
   color: #ffffff !important;
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  box-shadow: 0 0 0 1.5px rgba(16, 185, 129, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
   line-height: 1 !important;
 }
 

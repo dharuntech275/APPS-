@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - Personnel Detail</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css?v=7.2') }}">
 <script>
   (function(){
     var t = localStorage.getItem('apps_theme');
@@ -302,7 +302,7 @@
     var emptyMsg = document.createElement('div');
     emptyMsg.id = 'tlEmptyFilter';
     emptyMsg.className = 'empty-note';
-    emptyMsg.style.cssText = 'display:none; padding:28px 12px; text-align:center; font-size:13.5px; color:var(--steel);';
+    emptyMsg.style.css?v=7.2Text = 'display:none; padding:28px 12px; text-align:center; font-size:13.5px; color:var(--steel);';
     scrollContainer.appendChild(emptyMsg);
 
     chips.forEach(function(chip) {

@@ -171,6 +171,63 @@
   </div>
 </div>
 
+<style>
+  /* Fail-Safe Role Avatar Circle — High Contrast in Light & Dark Mode */
+  .role-avatar-circle {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    min-height: 22px !important;
+    border-radius: 50% !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    flex-shrink: 0 !important;
+    line-height: 1 !important;
+    color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5) !important;
+  }
+  .role-avatar-circle.role-avatar-personnel,
+  .role-avatar-personnel {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+    box-shadow: 0 0 0 1.5px rgba(16, 185, 129, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+  }
+  .role-avatar-circle.role-avatar-officer,
+  .role-avatar-officer {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
+    box-shadow: 0 0 0 1.5px rgba(59, 130, 246, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+  }
+  .role-avatar-circle.role-avatar-admin,
+  .role-avatar-admin {
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9) !important;
+    box-shadow: 0 0 0 1.5px rgba(139, 92, 246, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  html.dark .role-avatar-circle,
+  .dark .role-avatar-circle {
+    color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6) !important;
+  }
+  html.dark .role-avatar-circle.role-avatar-personnel,
+  .dark .role-avatar-circle.role-avatar-personnel {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+    box-shadow: 0 0 0 1.5px rgba(16, 185, 129, 0.7), 0 2px 8px rgba(16, 185, 129, 0.4) !important;
+  }
+  html.dark .role-avatar-circle.role-avatar-officer,
+  .dark .role-avatar-circle.role-avatar-officer {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
+    box-shadow: 0 0 0 1.5px rgba(59, 130, 246, 0.7), 0 2px 8px rgba(37, 99, 235, 0.4) !important;
+  }
+  html.dark .role-avatar-circle.role-avatar-admin,
+  .dark .role-avatar-circle.role-avatar-admin {
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9) !important;
+    box-shadow: 0 0 0 1.5px rgba(139, 92, 246, 0.7), 0 2px 8px rgba(124, 58, 237, 0.4) !important;
+  }
+</style>
+
 <header class="top">
   <div class="header-left">
     <button type="button" id="navToggle" class="nav-toggle" aria-label="Open menu"
@@ -255,10 +312,20 @@
       <span class="ai-pill-text">AI Forecaster</span>
       <span class="ai-pill-dot" style="background:#3b82f6;"></span>
     </a>
+    {% endif %}    {% if role == 'officer' %}
+      {% set avatar_bg = 'linear-gradient(135deg, #2563eb, #1d4ed8)' %}
+      {% set avatar_ring = 'rgba(59, 130, 246, 0.6)' %}
+    {% elif role == 'admin' %}
+      {% set avatar_bg = 'linear-gradient(135deg, #7c3aed, #6d28d9)' %}
+      {% set avatar_ring = 'rgba(139, 92, 246, 0.6)' %}
+    {% else %}
+      {% set avatar_bg = 'linear-gradient(135deg, #059669, #047857)' %}
+      {% set avatar_ring = 'rgba(16, 185, 129, 0.6)' %}
     {% endif %}
 
+
     <div class="role-pill" title="{{ session.get('user_name') }}{% if role == 'officer' %} (Welfare Officer){% elif role == 'admin' %} (Senior Admin){% else %} (Personnel){% endif %}">
-      <span class="role-avatar-circle role-avatar-{{ role or 'personnel' }}">
+      <span class="role-avatar-circle role-avatar-{{ role or 'personnel' }}" style="display:inline-flex !important; align-items:center !important; justify-content:center !important; width:22px !important; height:22px !important; min-width:22px !important; min-height:22px !important; border-radius:50% !important; font-size:11px !important; font-weight:800 !important; text-transform:uppercase !important; flex-shrink:0 !important; line-height:1 !important; color:#ffffff !important; background:{{ avatar_bg }} !important; box-shadow:0 0 0 1.5px {{ avatar_ring }}, 0 2px 6px rgba(0,0,0,0.3) !important; text-shadow:0 1px 2px rgba(0,0,0,0.5) !important;">
         {{ session.get('user_name', 'U')[0] }}
       </span>
       <span class="role-user-name">{{ session.get('user_name') }}</span>
