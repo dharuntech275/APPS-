@@ -51,7 +51,7 @@ class NumberedCanvas(canvas.Canvas):
             self.drawString(36, page_h - 26, "APPS PLATFORM - COMPLETE FEATURES & USAGE MANUAL (TANGLISH)")
             self.setFont("Helvetica", 8)
             self.setFillColor(colors.HexColor("#64748B"))
-            self.drawRightString(page_w - 36, page_h - 26, "ARMED FORCES DEFENSE SYSTEM")
+            self.drawRightString(page_w - 36, page_h - 26, "DEFENSE & ENTERPRISE WORKFORCE SYSTEM")
 
             # Header rule
             self.setStrokeColor(colors.HexColor("#CBD5E1"))
@@ -235,21 +235,22 @@ def create_tanglish_guide_pdf(output_path="APPS_Features_Guide_Tanglish.pdf"):
     # COVER PAGE (PAGE 1)
     # =========================================================================
     story.append(Spacer(1, 15))
-    story.append(callout("<b>MILITARY CLASSIFICATION: ARMED FORCES INTERNAL USE ONLY</b> &bull; Confidential Welfare Engineering Guide", bg=colors.HexColor("#FEF2F2"), border_color=c_danger))
+    story.append(callout("<b>ENTERPRISE &amp; DEFENSE SPECIFICATION: DUAL-USE WORKFORCE SYSTEM</b> &bull; Confidential Welfare &amp; Stress Engineering Guide", bg=colors.HexColor("#FEF2F2"), border_color=c_danger))
     story.append(Spacer(1, 14))
 
     story.append(Paragraph("APPS Platform - Muzhu Features &amp; Usage Manual", cover_title_style))
     story.append(Spacer(1, 4))
-    story.append(Paragraph("AI Predictive Personnel Stress &amp; Welfare Monitoring System (Tanglish Edition)", cover_sub_style))
+    story.append(Paragraph("AI Predictive Personnel Stress &amp; Welfare Monitoring System — Built for Defense Forces &amp; IT Engineering Teams", cover_sub_style))
     story.append(Spacer(1, 8))
     story.append(HRFlowable(width="100%", thickness=1.5, color=c_accent, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
         "Indha official technical document-la namma APPS system start panna naal-la irundhu ippo varaikkum build panna "
         "<b>ellaa features, tools, clinical algorithms, security mechanisms, matrum UI components</b> patri detailed-ah Tanglish-la "
-        "vilakkapattulladhu. Indha platform soldier psychological health-ai early-stage-la analyze panni, severe burnout, depression, "
-        "matrum PTSD issues-ai prevent panna design panna pattu irukku. Ovvoru feature-um epadi work aagudhu, adhai epadi use pannanum, "
-        "yaaru use pannanum enbadhai keezhe detailed-ah paarkkalaam.",
+        "vilakkapattulladhu. Indha platform Defense Armed Forces matrum IT / Software Engineering / Corporate high-stress teams-kaga "
+        "dual-domain architecture-la design panna pattu irukku. Soldiers field stress matrum IT developers sprint burnout, night shift fatigue, "
+        "continuous on-call exhaustion-ai early stage-laye predict panni prevent seiyum modern solution. Ovvoru feature-um epadi work aagudhu, "
+        "adhai epadi use pannanum, yaaru use pannanum enbadhai keezhe detailed-ah paarkkalaam.",
         cover_desc_style
     ))
     story.append(Spacer(1, 12))
@@ -257,10 +258,11 @@ def create_tanglish_guide_pdf(output_path="APPS_Features_Guide_Tanglish.pdf"):
     # Meta Info Card
     meta_data = [
         [Paragraph("<b>Document Title:</b>", tc_bold), Paragraph("APPS Complete System Features &amp; User Manual (Tanglish)", tc_style)],
-        [Paragraph("<b>Target Audience:</b>", tc_bold), Paragraph("Soldiers (Personnel), Welfare Officers, Senior Command Admins, Developers", tc_style)],
+        [Paragraph("<b>Target Audience:</b>", tc_bold), Paragraph("Defense Service Members, IT Software Engineers, Tech Leads, Welfare Officers, Engineering Directors &amp; Admins", tc_style)],
         [Paragraph("<b>System Core Engine:</b>", tc_bold), Paragraph("Python Flask, SQLite3, Vercel Blob Persistent Snapshot Engine, CSS3 Flex/Grid", tc_style)],
         [Paragraph("<b>Security Baseline:</b>", tc_bold), Paragraph("PBKDF2 Password Salting, Command PIN Gating, Immutable Activity Audit Trail", tc_style)],
         [Paragraph("<b>Live Production URL:</b>", tc_bold), Paragraph("<code>https://apps-nu-henna.vercel.app</code> (Deployed on Vercel)", tc_style)],
+        [Paragraph("<b>Online PDF Viewer:</b>", tc_bold), Paragraph("<code>/guide</code> (Features Guide) &bull; <code>/documentation</code> (System Docs)", tc_style)],
         [Paragraph("<b>Repository:</b>", tc_bold), Paragraph("<code>https://github.com/dharuntech275/APPS-</code> (Dual tracked: <code>main</code> &amp; <code>master</code>)", tc_style)],
     ]
     t_meta = Table(meta_data, colWidths=[120, printable_width - 120])
@@ -584,11 +586,122 @@ def create_tanglish_guide_pdf(output_path="APPS_Features_Guide_Tanglish.pdf"):
         body_style
     ))
 
+    story.append(Spacer(1, 4))
+    story.append(Paragraph("6.5 Dedicated Header [ ⊞ Menu ] Capsule Navigation &amp; Vector SVG Icons", h2_style))
+    story.append(Paragraph(
+        "<b>Enna Feature:</b> User request-kku inanga Option 1 Dedicated Menu Capsule Button (`#headerMenuBtn`) "
+        "matrum 100% sharp high-DPI Vector SVG icons system build panniyom. Pazhaiya informal emojis anaithum complete-ah neekki, "
+        "military &amp; enterprise-grade clean iconography-ah maathiyom.<br/>"
+        "<b>Epadi Work Aagudhu:</b><br/>"
+        "&bull; <b>Dedicated Menu Pill:</b> Top command header-la neat-ana 4-square vector grid icon + 'Menu' text-udan "
+        "tactical capsule button amaikkappattulladhu. Adhan pakkathil irundha duplicate 'APPS' text matrum brand shield tick icon "
+        "anaithu 3 roles (Personnel, Officer, Admin)-lum neekkappattu, Menu button mattum highlight aagum.<br/>"
+        "&bull; <b>Instant Touch &amp; Click Execution:</b> Inline duplicate event conflicts solve panni, single authoritative "
+        "<code>menuBtn.onclick</code> handler bind seiyappattulladhu. Drawer z-index <code>9999</code>-ku elevate panni "
+        "Laptop matrum Mobile rendulayume 0.28s smooth slide-in navigation open aagum.<br/>"
+        "&bull; <b>Zero Informal Emojis:</b> Platform-la irundha emojis anaithum SVG vector paths-aga redesign panni Retina displays-lum sharp clarity tharum.<br/>"
+        "<b>Benefit:</b> Mobile matrum laptop screens-la navigation instant-ah open aagi, modern military &amp; SaaS standard look kidaikkum.",
+        body_style
+    ))
+
     # =========================================================================
-    # SECTION 7: SUMMARY FEATURE MATRIX & USAGE CHEATSHEET
+    # SECTION 7: MULTI-INDUSTRY EXPANSION (DEFENSE & IT / SOFTWARE ENTERPRISE)
     # =========================================================================
     story.append(PageBreak())
-    story.append(Paragraph("7. Comprehensive Feature Matrix &amp; Usage Cheatsheet", h1_style))
+    story.append(Paragraph("7. Multi-Industry Adaptability: Defense Forces &amp; IT / Software Engineering Applications", h1_style))
+    story.append(HRFlowable(width="100%", thickness=0.8, color=c_primary, spaceBefore=2, spaceAfter=6))
+    story.append(Paragraph(
+        "APPS platform armed forces military regiments-kku mattum illaamal, <b>IT companies, software engineering teams, SRE squads, "
+        "matrum high-stress corporate enterprises-kum</b> direct-ah use aagum vagaiyil expand seiyappattulladhu. "
+        "High-stress environments-la irukkum workers psychological burnout-ai early-stage-la track seiya idhu universal solution-ah vela seiyudhu.",
+        body_style
+    ))
+    story.append(Spacer(1, 4))
+
+    # Dual-Domain Mapping Table
+    story.append(Paragraph("7.1 Defense vs IT / Enterprise Role &amp; Metric Equivalence", h2_style))
+    
+    domain_map_data = [
+        [
+            Paragraph("<b>System Core Dimension</b>", table_header),
+            Paragraph("<b>Armed Forces / Defense Use Case</b>", table_header),
+            Paragraph("<b>IT &amp; Software Engineering Enterprise Use Case</b>", table_header),
+        ],
+        [
+            Paragraph("<b>Personnel Role</b>", tc_bold),
+            Paragraph("Combat Soldier, Field Jawan, Border Guard", tc_style),
+            Paragraph("Software Developer, DevOps Engineer, 24/7 SRE on-call Engineer", tc_style),
+        ],
+        [
+            Paragraph("<b>Welfare Officer Role</b>", tc_bold),
+            Paragraph("Regimental Welfare Officer, Battalion Medical Officer", tc_style),
+            Paragraph("Engineering Manager, Tech Lead, Scrum Master, People Ops / HR Lead", tc_style),
+        ],
+        [
+            Paragraph("<b>Admin Role</b>", tc_bold),
+            Paragraph("HQ Unit Commander, Brigade General Staff", tc_style),
+            Paragraph("VP of Engineering, CTO, Chief People Officer, HR Director", tc_style),
+        ],
+        [
+            Paragraph("<b>Duty Hours Metric</b>", tc_bold),
+            Paragraph("Patrol shifts, sentry guard duty, field deployment hours", tc_style),
+            Paragraph("Sprint coding hours, emergency on-call incident shifts, crunch periods", tc_style),
+        ],
+        [
+            Paragraph("<b>Operational Stress (1-10)</b>", tc_bold),
+            Paragraph("Tactical operations tension, isolation, high-altitude fatigue", tc_style),
+            Paragraph("Production outage downtime stress, sprint delivery pressure, merge blockers", tc_style),
+        ],
+        [
+            Paragraph("<b>Smartwatch Telemetry Sync</b>", tc_bold),
+            Paragraph("Garmin Instinct / Military tactical wearable biometrics", tc_style),
+            Paragraph("Apple Watch, Fitbit, Samsung Galaxy Watch, WearOS band biometrics", tc_style),
+        ],
+        [
+            Paragraph("<b>4-7-8 Breathing Tool</b>", tc_bold),
+            Paragraph("Post-patrol combat decompression, adrenaline stabilizer", tc_style),
+            Paragraph("High-severity production P0 post-mortem decompression, anxiety relief", tc_style),
+        ],
+        [
+            Paragraph("<b>APPS AI Wellness Companion</b>", tc_bold),
+            Paragraph("Confidential psychological decompression for remote jawans", tc_style),
+            Paragraph("24/7 empathetic assistant for developer burnout, insomnia &amp; shift fatigue", tc_style),
+        ],
+        [
+            Paragraph("<b>Emergency SOS Beacon</b>", tc_bold),
+            Paragraph("Direct distress signal to Battalion Welfare Officer &amp; Army 1902 helpline", tc_style),
+            Paragraph("Instant confidential escalation to People Ops Lead &amp; Employee Assistance (EAP)", tc_style),
+        ],
+    ]
+
+    t_domain = Table(domain_map_data, colWidths=[110, (printable_width - 110)/2, (printable_width - 110)/2], repeatRows=1)
+    t_domain.setStyle(TableStyle([
+        ('BACKGROUND', (0,0), (-1,0), c_primary),
+        ('ALIGN', (0,0), (-1,-1), 'LEFT'),
+        ('VALIGN', (0,0), (-1,-1), 'TOP'),
+        ('GRID', (0,0), (-1,-1), 0.5, c_border),
+        ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, c_bg_light]),
+        ('PADDING', (0,0), (-1,-1), 2.0),
+    ]))
+    story.append(t_domain)
+    story.append(Spacer(1, 6))
+
+    story.append(Paragraph("7.2 Direct Browser PDF Viewer Endpoints (/guide &amp; /documentation)", h2_style))
+    story.append(Paragraph(
+        "<b>Enna Feature:</b> Documentation matrum Features Guide-ai download pannaamal direct-ah browser tab-le open panni padikkum vasadhi.<br/>"
+        "<b>URLs:</b><br/>"
+        "&bull; <code>https://apps-nu-henna.vercel.app/guide</code> &mdash; Opens indha Features Guide PDF directly in the browser.<br/>"
+        "&bull; <code>https://apps-nu-henna.vercel.app/documentation</code> &mdash; Opens the System Technical Documentation PDF directly in the browser.<br/>"
+        "&bull; Navigation Drawer matrum Landing Portal-la direct 1-click links include seiyappattulladhu.<br/>"
+        "<b>Benefit:</b> Users endha device-la irundhaalum (Mobile / Laptop) PDF viewer app thevai illamal browser-le manual-ai padikkalaam.",
+        body_style
+    ))
+
+    # =========================================================================
+    # SECTION 8: SUMMARY FEATURE MATRIX & USAGE CHEATSHEET
+    # =========================================================================
+    story.append(PageBreak())
+    story.append(Paragraph("8. Comprehensive Feature Matrix &amp; Usage Cheatsheet", h1_style))
     story.append(HRFlowable(width="100%", thickness=0.8, color=c_primary, spaceBefore=2, spaceAfter=6))
     story.append(Paragraph("Keezhe kanda table-la namma platform-oda anaithu features, athai yar yaaru use pannalaam, matrum adhan primary use case quick reference summary-ah kudukappattulladhu:", body_style))
     story.append(Spacer(1, 4))
@@ -712,6 +825,30 @@ def create_tanglish_guide_pdf(output_path="APPS_Features_Guide_Tanglish.pdf"):
             Paragraph("<b>Delete Your Account</b>", tc_bold),
             Paragraph("All Roles", tc_style),
             Paragraph("Password verify panni user thanga account &amp; biometric data-vai permanently erase seiya.", tc_style),
+            Paragraph("Active", tc_bold)
+        ],
+        [
+            Paragraph("<b>Dedicated [ ⊞ Menu ] Capsule</b>", tc_bold),
+            Paragraph("All Roles", tc_style),
+            Paragraph("Header capsule button, single authoritative click handler, elevated z-index 9999 smooth drawer.", tc_style),
+            Paragraph("Active", tc_bold)
+        ],
+        [
+            Paragraph("<b>Zero-Emoji Vector SVGs</b>", tc_bold),
+            Paragraph("All Screens", tc_style),
+            Paragraph("Informal emojis removed, replaced with crisp high-DPI vector SVG icons across 24 templates.", tc_style),
+            Paragraph("Active", tc_bold)
+        ],
+        [
+            Paragraph("<b>Defense &amp; IT Dual-Use</b>", tc_bold),
+            Paragraph("All Workforces", tc_style),
+            Paragraph("Military patrol fatigue &amp; IT sprint burnout, smartwatch band sync, and 24/7 AI wellness companion.", tc_style),
+            Paragraph("Active", tc_bold)
+        ],
+        [
+            Paragraph("<b>Online PDF Viewers</b>", tc_bold),
+            Paragraph("Public / Browser", tc_style),
+            Paragraph("Direct in-browser PDF viewing via `/guide` (Features Guide) and `/documentation` (System Docs).", tc_style),
             Paragraph("Active", tc_bold)
         ],
     ]

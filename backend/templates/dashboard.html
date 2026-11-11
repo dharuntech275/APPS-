@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - Dashboard</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=8.1">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=8.2">
 <style>
   /* 5-Mode Clinical Readiness Colors - Instant Fail-Safe Styles */
   /* Mode 1: Struggling (Red) */
@@ -201,7 +201,7 @@
             <span class="radar-pulse-dot"></span> Live Telemetry Input
           </span>
         </div>
-        <button type="button" class="smartwatch-sync-btn" id="syncWatchBtn" onclick="simulateSmartwatchSync(this)" title="Connect simulated Garmin / Military smartwatch">
+        <button type="button" class="smartwatch-sync-btn" id="syncWatchBtn" onclick="simulateSmartwatchSync(this)" title="Connect Garmin, Apple Watch, WearOS, Fitbit or Military smartwatch">
           <svg class="sync-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
           <span id="syncWatchLabel">Sync Smartwatch Band</span>
         </button>
@@ -227,12 +227,12 @@
           </div>
         </div>
 
-        <!-- 2. Duty Hours Slider -->
+        <!-- 2. Duty / Shift Hours Slider -->
         <div class="slider-group">
           <div class="slider-top-row">
             <span class="slider-title">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#d97706;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              Duty Hours Today
+              Duty / Shift Hours Today
             </span>
             <span id="dutyBadge" class="slider-badge">8.0 hrs &middot; Standard</span>
           </div>
@@ -240,7 +240,7 @@
           <div class="slider-sub-labels">
             <span>0h</span>
             <span>8h (Standard)</span>
-            <span>14h (Fatigue)</span>
+            <span>14h (Overtime/Fatigue)</span>
             <span>24h</span>
           </div>
         </div>

@@ -46,7 +46,7 @@ class NumberedCanvas(canvas.Canvas):
             # Header
             self.setFont("Helvetica", 8)
             self.setFillColor(colors.HexColor("#475569"))
-            self.drawString(36, page_h - 26, "APPS - AI Predictive Personnel Stress and Welfare Monitoring System")
+            self.drawString(36, page_h - 26, "APPS - Workforce Stress & Welfare Monitoring System (Defense & IT Enterprise)")
             self.drawRightString(page_w - 36, page_h - 26, "CONFIDENTIAL & PROPRIETARY")
 
             # Header rule
@@ -970,7 +970,11 @@ def create_docs_pdf(output_path="APPS_System_Documentation.pdf"):
     deploy_data = [
         [Paragraph("<b>Parameter</b>", table_header), Paragraph("<b>Production Configuration Value</b>", table_header)],
         [Paragraph("<b>Production Web URL</b>", tc_sec), Paragraph("<code>https://apps-nu-henna.vercel.app</code>", code_style)],
+        [Paragraph("<b>Online Features Guide</b>", tc_sec), Paragraph("<code>https://apps-nu-henna.vercel.app/guide</code> (Direct In-Browser PDF)", code_style)],
+        [Paragraph("<b>Online Technical Specs</b>", tc_sec), Paragraph("<code>https://apps-nu-henna.vercel.app/documentation</code> (Direct In-Browser PDF)", code_style)],
         [Paragraph("<b>Hosting Platform</b>", tc_sec), Paragraph("Vercel Serverless Platform (Node.js/Python WSGI Bridge)", tc_sec)],
+        [Paragraph("<b>Dual-Industry Scope</b>", tc_sec), Paragraph("Defense Armed Forces &bull; IT &amp; Software Engineering &bull; Mission-Critical Ops", tc_sec)],
+        [Paragraph("<b>UI Navigation Engine</b>", tc_sec), Paragraph("Dedicated [ ⊞ Menu ] capsule trigger &bull; Z-Index 9999 &bull; Zero-Emoji SVG Suite", tc_sec)],
         [Paragraph("<b>Object Storage Store</b>", tc_sec), Paragraph("Vercel Blob Storage &bull; Store: <code>apps-data</code> (ID: <code>store_eS9r7map43Dx32yX</code>)", tc_sec)],
         [Paragraph("<b>Source Control Repository</b>", tc_sec), Paragraph("GitHub: <code>https://github.com/dharuntech275/APPS-</code> (Dual-tracked: <code>main</code> &amp; <code>master</code>)", tc_sec)],
         [Paragraph("<b>Credential Recovery</b>", tc_sec), Paragraph("Unit-verified self-service recovery (<code>/forgot_password</code>) active in production", tc_sec)],

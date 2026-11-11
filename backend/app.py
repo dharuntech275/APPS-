@@ -91,7 +91,7 @@ from xml.sax.saxutils import escape as xml_escape
 import joblib
 import pandas as pd
 from flask import (Flask, Response, abort, jsonify, redirect, render_template, request,
-                   session, url_for)
+                   send_file, session, url_for)
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill
 from reportlab.lib import colors
@@ -2505,6 +2505,36 @@ def my_export_pdf():
     else:
         elements.append(Paragraph("No check-ins recorded yet.", styles["Normal"]))
     return _pdf_response(elements, "my_checkins.pdf", doc)
+
+
+@app.route("/guide")
+def view_features_guide():
+    """Serves the publication-quality Features Guide PDF directly in the browser."""
+    candidates = [
+        os.path.join(app.root_path, "static", "APPS_Features_Guide_Tanglish.pdf"),
+        os.path.join(os.path.dirname(app.root_path), "APPS_Features_Guide_Tanglish.pdf"),
+        os.path.join(os.getcwd(), "APPS_Features_Guide_Tanglish.pdf"),
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), "static", "APPS_Features_Guide_Tanglish.pdf"),
+    ]
+    for p in candidates:
+        if os.path.exists(p):
+            return send_file(p, mimetype="application/pdf", as_attachment=False)
+    return "Features Guide PDF is being compiled. Please try again shortly.", 404
+
+
+@app.route("/documentation")
+def view_system_documentation():
+    """Serves the publication-quality System Documentation PDF directly in the browser."""
+    candidates = [
+        os.path.join(app.root_path, "static", "APPS_System_Documentation.pdf"),
+        os.path.join(os.path.dirname(app.root_path), "APPS_System_Documentation.pdf"),
+        os.path.join(os.getcwd(), "APPS_System_Documentation.pdf"),
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), "static", "APPS_System_Documentation.pdf"),
+    ]
+    for p in candidates:
+        if os.path.exists(p):
+            return send_file(p, mimetype="application/pdf", as_attachment=False)
+    return "System Documentation PDF is being compiled. Please try again shortly.", 404
 
 
 # ----------------------------------------------------------------------
