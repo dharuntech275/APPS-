@@ -8067,10 +8067,15 @@ html.dark .role-avatar-circle.role-avatar-admin {
   scrollbar-width: none !important; /* Firefox */
   -ms-overflow-style: none !important; /* IE 10+ */
 }
-.ai-quick-prompts::-webkit-scrollbar {
-  display: none !important; /* Chrome / Safari / Edge */
+.ai-quick-prompts::-webkit-scrollbar,
+.ai-quick-prompts::-webkit-scrollbar-thumb,
+.ai-quick-prompts::-webkit-scrollbar-track,
+.ai-quick-prompts::-webkit-scrollbar-button {
+  display: none !important; /* Chrome / Safari / Edge / WebView */
   width: 0 !important;
   height: 0 !important;
+  background: transparent !important;
+  opacity: 0 !important;
 }
 
 .ai-prompt-chip {

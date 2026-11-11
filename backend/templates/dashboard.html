@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - Dashboard</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=7.9">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=8.0">
 <style>
   /* 5-Mode Clinical Readiness Colors - Instant Fail-Safe Styles */
   /* Mode 1: Struggling (Red) */
@@ -521,7 +521,7 @@
   function startBreathing() {
     bRunning = true;
     var btn = document.getElementById('bStartBtn');
-    if (btn) btn.textContent = "⏸ Pause";
+    if (btn) btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle; margin-right:5px;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>Pause';
     runBreathingPhase();
   }
 

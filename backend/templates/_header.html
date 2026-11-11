@@ -114,7 +114,7 @@
     </div>
 
     <!-- Suggested Quick Prompts -->
-    <div class="ai-quick-prompts">
+    <div class="ai-quick-prompts" style="scrollbar-width:none; -ms-overflow-style:none;" onwheel="if(event.deltaY !== 0){ this.scrollLeft += event.deltaY; event.preventDefault(); }">
       <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('Help me de-stress from a tough shift')">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="vertical-align:middle; margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>De-stress from shift
       </button>
@@ -400,17 +400,8 @@
 
 <header class="top">
   <div class="header-left">
-    <div class="header-brand-wrap">
-      <a href="{% if role == 'admin' %}/admin_dashboard{% elif role == 'officer' %}/officer/personnel{% else %}/dashboard{% endif %}" class="brand-link" aria-label="APPS Home" title="APPS Home">
-        <span class="brand-shield-icon mobile-shield-icon" style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:8px; background:linear-gradient(135deg, #1e293b, #0f172a); color:#fdfdf9; box-shadow:0 2px 6px rgba(15,23,42,0.25); flex-shrink:0;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-        </span>
-        <span class="mark">APPS</span>
-      </a>
-    </div>
-
     <!-- Dedicated Header Menu Pill Button (Clean Tactical Icon + Text) -->
-    <button type="button" id="headerMenuBtn" class="header-menu-pill-btn" aria-label="Open Navigation Menu" title="Open Navigation Menu">
+    <button type="button" id="headerMenuBtn" class="header-menu-pill-btn" aria-label="Open Navigation Menu" title="Open Navigation Menu" onclick="if(window.toggleNavDrawer){window.toggleNavDrawer(event);}else{var d=document.getElementById('navDrawer'),o=document.getElementById('navDrawerOverlay');if(d)d.classList.toggle('open');if(o)o.classList.toggle('open');}">
       <span class="menu-pill-icon">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="3" width="7" height="7" rx="1.5"/>
@@ -875,7 +866,6 @@
       "Daily Health & Readiness Studio": "தினசரி உடல்நல & தயார்நிலை ஸ்டுடியோ",
       "Live Telemetry Input": "நேரடி உடல்நல அளவீடு",
       "Sync Smartwatch Band": "ஸ்மார்ட்வாட்ச் ஒத்திசை",
-      "⚡ Sync Smartwatch Band": "⚡ ஸ்மார்ட்வாட்ச் ஒத்திசை",
       "Sleep Last Night": "நேற்றிரவு தூக்கம்",
       "Duty Hours Today": "இன்றைய பணி நேரம்",
       "Duty Operational Stress (1 - 10)": "பணி மன அழுத்தம் (1 - 10)",
@@ -915,15 +905,15 @@
       "Army Suicide Prevention & Crisis Helpline (Toll-Free · 24/7)": "இராணுவ அவசர உதவி எண் (இலவசம் · 24/7)",
       "Tele-MANAS National Mental Health Care Line (Free)": "டெலி-மானாஸ் தேசிய மனநல உதவி எண் (இலவசம்)",
       "Dispatch Urgent Distress Beacon to Welfare Officer:": "அதிகாரிக்கு அவசர உதவி எச்சரிக்கையை அனுப்பு:",
-      "<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:6px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Dispatch Immediate SOS Beacon": "🚨 உடனடி SOS எச்சரிக்கையை அனுப்பு",
+      "Dispatch Immediate SOS Beacon": "உடனடி SOS எச்சரிக்கையை அனுப்பு",
       "Tactical 4-7-8 Breathing Stabilizer": "4-7-8 சுவாச தளர்வு கருவி",
       "Inhale quietly through nose (4s) • Hold breath (7s) • Slowly exhale through mouth (8s)": "மூக்கு வழியாக மூச்சை உள்ளிழுக்கவும் (4s) • அடக்கவும் (7s) • வாய் வழியாக மெதுவாக வெளியிடவும் (8s)",
       "Ready": "தயார்",
       "Inhale": "உள்ளிழுக்கவும்",
       "Hold": "அடக்கவும்",
       "Exhale": "வெளியிடவும்",
-      "<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle; margin-right:5px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>Start Session": "▶ தொடங்கு",
-      "⏹ Stop Session": "⏹ நிறுத்து",
+      "Start Session": "தொடங்கு",
+      "Stop Session": "நிறுத்து",
       "Reset": "மீட்டமை",
       "Cycle:": "சுழற்சி:",
       "Cycle: 0 of 4": "சுழற்சி: 0 இல் 4",
@@ -993,7 +983,6 @@
       "Daily Health & Readiness Studio": "दैनिक स्वास्थ्य एवं तत्परता स्टूडियो",
       "Live Telemetry Input": "लाइव टेलीमेट्री इनपुट",
       "Sync Smartwatch Band": "स्मार्टवॉच सिंक करें",
-      "⚡ Sync Smartwatch Band": "⚡ स्मार्टवॉच सिंक करें",
       "Sleep Last Night": "बीती रात की नींद",
       "Duty Hours Today": "आज की ड्यूटी के घंटे",
       "Duty Operational Stress (1 - 10)": "ड्यूटी परिचालन तनाव (1 - 10)",
@@ -1033,15 +1022,15 @@
       "Army Suicide Prevention & Crisis Helpline (Toll-Free · 24/7)": "सेना संकट हेल्पलाइन (टोल-फ्री · 24/7)",
       "Tele-MANAS National Mental Health Care Line (Free)": "टेली-मानस राष्ट्रीय मानसिक स्वास्थ्य लाइन (निःशुल्क)",
       "Dispatch Urgent Distress Beacon to Welfare Officer:": "कल्याण अधिकारी को तत्काल संकट संकेत भेजें:",
-      "<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:6px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Dispatch Immediate SOS Beacon": "🚨 तत्काल एसओएस संकेत भेजें",
+      "Dispatch Immediate SOS Beacon": "तत्काल एसओएस संकेत भेजें",
       "Tactical 4-7-8 Breathing Stabilizer": "रणनीतिक 4-7-8 श्वास स्टेबलाइजर",
       "Inhale quietly through nose (4s) • Hold breath (7s) • Slowly exhale through mouth (8s)": "नाक से सांस लें (4s) • रोकें (7s) • मुंह से छोड़ें (8s)",
       "Ready": "तैयार",
       "Inhale": "सांस लें",
       "Hold": "रोकें",
       "Exhale": "सांस छोड़ें",
-      "<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle; margin-right:5px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>Start Session": "▶ सत्र शुरू करें",
-      "⏹ Stop Session": "⏹ सत्र रोकें",
+      "Start Session": "सत्र शुरू करें",
+      "Stop Session": "सत्र रोकें",
       "Reset": "रीसेट",
       "Cycle:": "चक्र:",
       "Cycle: 0 of 4": "चक्र: 0 का 4",
@@ -1211,7 +1200,7 @@
       }
       if (btn) {
         btn.disabled = false;
-        btn.textContent = "<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:6px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Dispatch Immediate SOS Beacon";
+        btn.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:6px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Dispatch Immediate SOS Beacon';
       }
     });
   };
@@ -1242,7 +1231,7 @@
   window.startBreathing = function() {
     bRunning = true;
     var btn = document.getElementById('bStartBtn');
-    if (btn) btn.textContent = "⏸ Pause";
+    if (btn) btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle; margin-right:5px;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>Pause';
     runBreathingPhase();
   };
 
@@ -1268,7 +1257,7 @@
     if (p) p.textContent = "Ready";
     if (cnt) cnt.textContent = "4";
     if (lbl) lbl.textContent = "Cycle: 0 of " + MAX_CYCLES;
-    if (btn) btn.textContent = "<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle; margin-right:5px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>Start Session";
+    if (btn) btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle; margin-right:5px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>Start Session';
   };
 
   function runBreathingPhase() {
