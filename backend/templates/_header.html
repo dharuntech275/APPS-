@@ -401,7 +401,7 @@
 <header class="top">
   <div class="header-left">
     <!-- Dedicated Header Menu Pill Button (Clean Tactical Icon + Text) -->
-    <button type="button" id="headerMenuBtn" class="header-menu-pill-btn" aria-label="Open Navigation Menu" title="Open Navigation Menu" onclick="if(window.toggleNavDrawer){window.toggleNavDrawer(event);}else{var d=document.getElementById('navDrawer'),o=document.getElementById('navDrawerOverlay');if(d)d.classList.toggle('open');if(o)o.classList.toggle('open');}">
+    <button type="button" id="headerMenuBtn" class="header-menu-pill-btn" aria-label="Open Navigation Menu" title="Open Navigation Menu">
       <span class="menu-pill-icon">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="3" width="7" height="7" rx="1.5"/>
@@ -753,23 +753,29 @@
 
 <script>
 (function () {
-  var drawer = document.getElementById('navDrawer');
-  var overlay = document.getElementById('navOverlay');
-  var menuBtn = document.getElementById('headerMenuBtn');
+  function getElements() {
+    return {
+      drawer: document.getElementById('navDrawer'),
+      overlay: document.getElementById('navOverlay'),
+      menuBtn: document.getElementById('headerMenuBtn'),
+      closeBtn: document.getElementById('navClose')
+    };
+  }
 
   function setOpen(open) {
-    if (!drawer || !overlay) return;
+    var els = getElements();
+    if (!els.drawer) return;
     if (open) {
-      drawer.classList.add('open');
-      overlay.classList.add('open');
-      if (menuBtn) menuBtn.setAttribute('aria-expanded', 'true');
-      drawer.setAttribute('aria-hidden', 'false');
+      els.drawer.classList.add('open');
+      if (els.overlay) els.overlay.classList.add('open');
+      if (els.menuBtn) els.menuBtn.setAttribute('aria-expanded', 'true');
+      els.drawer.setAttribute('aria-hidden', 'false');
       document.body.classList.add('drawer-open');
     } else {
-      drawer.classList.remove('open');
-      overlay.classList.remove('open');
-      if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
-      drawer.setAttribute('aria-hidden', 'true');
+      els.drawer.classList.remove('open');
+      if (els.overlay) els.overlay.classList.remove('open');
+      if (els.menuBtn) els.menuBtn.setAttribute('aria-expanded', 'false');
+      els.drawer.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('drawer-open');
     }
   }
@@ -781,51 +787,61 @@
       if (typeof e.preventDefault === 'function') e.preventDefault();
       if (typeof e.stopPropagation === 'function') e.stopPropagation();
     }
-    if (!drawer) return;
-    var isOpen = drawer.classList.contains('open');
+    var els = getElements();
+    if (!els.drawer) return;
+    var isOpen = els.drawer.classList.contains('open');
     setOpen(!isOpen);
   };
 
-  // Dedicated Option 1 Menu Pill Button click listener
-  if (menuBtn) {
-    menuBtn.addEventListener('click', function (e) {
-      window.toggleNavDrawer(e);
-    });
+  function bindDrawerEvents() {
+    var els = getElements();
+
+    // 1. Menu pill button click (single authoritative onclick)
+    if (els.menuBtn) {
+      els.menuBtn.onclick = function (e) {
+        window.toggleNavDrawer(e);
+      };
+    }
+
+    // 2. Dark backdrop overlay click & touch
+    if (els.overlay) {
+      els.overlay.onclick = function (e) {
+        if (e && e.preventDefault) e.preventDefault();
+        setOpen(false);
+      };
+      els.overlay.ontouchstart = function () {
+        setOpen(false);
+      };
+    }
+
+    // 3. Close [X] button inside drawer
+    if (els.closeBtn) {
+      els.closeBtn.onclick = function (e) {
+        if (e && e.preventDefault) e.preventDefault();
+        setOpen(false);
+      };
+    }
+
+    // 4. Navigation links inside drawer: close menu after selection
+    if (els.drawer) {
+      els.drawer.querySelectorAll('a').forEach(function (a) {
+        a.onclick = function () {
+          setOpen(false);
+        };
+      });
+    }
   }
 
-  // 3. Dark Backdrop Overlay click & touch
-  if (overlay) {
-    overlay.addEventListener('click', function (e) {
-      e.preventDefault();
-      setOpen(false);
-    });
-    overlay.addEventListener('touchstart', function () {
-      setOpen(false);
-    }, {passive: true});
-  }
-
-  // 4. Close [X] button inside drawer
-  var closeBtn = document.getElementById('navClose');
-  if (closeBtn) {
-    closeBtn.addEventListener('click', function (e) {
-      e.preventDefault();
-      setOpen(false);
-    });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindDrawerEvents);
+  } else {
+    bindDrawerEvents();
   }
 
   // 5. ESC key closes drawer
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') setOpen(false);
   });
-
-  // 6. Navigation links inside drawer: close menu after selection
-  if (drawer) {
-    drawer.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () {
-        setOpen(false);
-      });
-    });
-  }
 
   /* Theme Toggle Handler */
   document.querySelectorAll('.theme-toggle').forEach(function(toggleBtn) {
