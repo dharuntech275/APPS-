@@ -8369,3 +8369,632 @@ html.dark .header-menu-pill-btn:hover {
 html.dark .header-menu-pill-btn .menu-pill-icon {
   color: #60a5fa !important;
 }
+
+
+/* ==========================================================================
+   2026 ULTRA-MODERN GLASSMORPHIC & EXECUTIVE SAAS DESIGN OVERHAUL
+   Defense & Military Outposts + IT & Tech Enterprise Workforce
+   Flawless on Laptop/Desktop and Mobile Phones
+   ========================================================================== */
+
+/* Ambient Cyber & Executive Mesh Backgrounds */
+body {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(37, 99, 235, 0.12), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 100% 10%, rgba(14, 165, 233, 0.08), transparent 60%),
+    radial-gradient(ellipse 50% 50% at 0% 80%, rgba(16, 185, 129, 0.06), transparent 60%),
+    #f8fafc !important;
+  background-attachment: fixed !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+html.dark body {
+  background:
+    radial-gradient(ellipse 80% 55% at 50% -20%, rgba(37, 99, 235, 0.18), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 100% 15%, rgba(99, 102, 241, 0.14), transparent 60%),
+    radial-gradient(ellipse 50% 50% at 0% 85%, rgba(16, 185, 129, 0.08), transparent 60%),
+    #080d1a !important;
+  background-attachment: fixed !important;
+}
+
+/* Glassmorphism 2.0 Depth on Main Containers & Cards */
+.card, .checkin-card, .portal-card, .auth-card, .stat-card, .activity-table-wrap {
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.75) !important;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.02),
+    0 12px 32px -4px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+  border-radius: 20px !important;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease !important;
+}
+
+html.dark .card, html.dark .checkin-card, html.dark .portal-card, html.dark .auth-card, html.dark .stat-card, html.dark .activity-table-wrap {
+  background: rgba(15, 23, 42, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.35),
+    0 16px 38px -4px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+.card:hover, .portal-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow:
+    0 14px 30px -4px rgba(37, 99, 235, 0.12),
+    0 24px 50px -10px rgba(15, 23, 42, 0.08) !important;
+  border-color: rgba(37, 99, 235, 0.35) !important;
+}
+
+html.dark .card:hover, html.dark .portal-card:hover {
+  box-shadow:
+    0 16px 36px -4px rgba(37, 99, 235, 0.28),
+    0 28px 55px -10px rgba(0, 0, 0, 0.75) !important;
+  border-color: rgba(59, 130, 246, 0.5) !important;
+}
+
+/* Modern Hero Command Banner */
+.modern-hero-banner {
+  position: relative !important;
+  overflow: hidden !important;
+  padding: 30px 32px !important;
+  border-radius: 22px !important;
+  background: linear-gradient(135deg, rgba(239, 246, 255, 0.92) 0%, rgba(240, 253, 250, 0.85) 50%, rgba(245, 243, 255, 0.9) 100%) !important;
+  border: 1px solid rgba(191, 219, 254, 0.6) !important;
+  box-shadow:
+    0 10px 25px -5px rgba(37, 99, 235, 0.06),
+    0 20px 40px -12px rgba(15, 23, 42, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+  margin-bottom: 26px !important;
+}
+
+html.dark .modern-hero-banner {
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.32) 0%, rgba(15, 23, 42, 0.78) 50%, rgba(13, 148, 136, 0.22) 100%) !important;
+  border-color: rgba(59, 130, 246, 0.25) !important;
+  box-shadow:
+    0 12px 30px -5px rgba(0, 0, 0, 0.5),
+    0 24px 50px -10px rgba(37, 99, 235, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+.hero-glow-orb {
+  position: absolute !important;
+  border-radius: 50% !important;
+  filter: blur(60px) !important;
+  pointer-events: none !important;
+  opacity: 0.6 !important;
+  z-index: 0 !important;
+}
+.hero-glow-1 {
+  top: -40px !important;
+  right: -20px !important;
+  width: 220px !important;
+  height: 220px !important;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.25) 0%, transparent 70%) !important;
+}
+.hero-glow-2 {
+  bottom: -40px !important;
+  left: 30% !important;
+  width: 180px !important;
+  height: 180px !important;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 70%) !important;
+}
+
+.welcome-banner-content {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.hero-badge-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  margin-bottom: 14px !important;
+}
+
+.hero-status-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  padding: 4px 12px !important;
+  border-radius: 20px !important;
+  background: rgba(37, 99, 235, 0.08) !important;
+  border: 1px solid rgba(37, 99, 235, 0.25) !important;
+  color: var(--primary) !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: uppercase !important;
+}
+
+html.dark .hero-status-pill {
+  background: rgba(37, 99, 235, 0.2) !important;
+  border-color: rgba(59, 130, 246, 0.4) !important;
+  color: #93c5fd !important;
+}
+
+.hero-date-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: var(--steel) !important;
+}
+
+.hero-title {
+  margin: 0 0 8px !important;
+  font-size: 26px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.25 !important;
+  color: var(--ink) !important;
+}
+
+.hero-username {
+  background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #0d9488 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  font-weight: 900 !important;
+}
+
+html.dark .hero-username {
+  background: linear-gradient(135deg, #ffffff 0%, #93c5fd 50%, #2dd4bf 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.hero-subtitle {
+  margin: 0 0 20px !important;
+  font-size: 13.5px !important;
+  color: var(--steel) !important;
+  line-height: 1.55 !important;
+  max-width: 640px !important;
+}
+
+/* 3-Stat Glass Telemetry Ribbon */
+.hero-telemetry-ribbon {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 12px !important;
+  margin-bottom: 20px !important;
+}
+
+.hero-telemetry-item {
+  background: rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  border-radius: 14px !important;
+  padding: 10px 14px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+html.dark .hero-telemetry-item {
+  background: rgba(15, 23, 42, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.hero-telemetry-item:hover {
+  transform: translateY(-2px) !important;
+}
+
+.telemetry-label {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  color: var(--steel) !important;
+}
+
+.telemetry-val {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+}
+
+.telemetry-val.val-synced {
+  color: #059669 !important;
+}
+html.dark .telemetry-val.val-synced {
+  color: #34d399 !important;
+}
+
+.telemetry-val.val-pending {
+  color: #d97706 !important;
+}
+html.dark .telemetry-val.val-pending {
+  color: #fbbf24 !important;
+}
+
+.telemetry-val.val-ready {
+  color: var(--primary) !important;
+}
+html.dark .telemetry-val.val-ready {
+  color: #60a5fa !important;
+}
+
+.telemetry-val.val-domain {
+  color: #7c3aed !important;
+}
+html.dark .telemetry-val.val-domain {
+  color: #a78bfa !important;
+}
+
+/* Quick Action Jump Pills */
+.hero-actions-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+}
+
+.hero-action-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 8px 16px !important;
+  border-radius: 20px !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid var(--line) !important;
+  color: var(--ink) !important;
+  cursor: pointer !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  user-select: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+.hero-action-pill:hover {
+  transform: translateY(-2px) !important;
+  border-color: rgba(37, 99, 235, 0.35) !important;
+  color: var(--primary) !important;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.15) !important;
+}
+
+.hero-action-pill:active {
+  transform: scale(0.96) !important;
+}
+
+.hero-action-pill.primary-action {
+  background: var(--primary) !important;
+  color: #ffffff !important;
+  border-color: var(--primary) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) !important;
+}
+
+.hero-action-pill.primary-action:hover {
+  background: #1d4ed8 !important;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45) !important;
+}
+
+.hero-action-pill.companion-glow {
+  border-color: rgba(14, 165, 233, 0.35) !important;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.06), rgba(6, 182, 212, 0.08)) !important;
+}
+
+html.dark .hero-action-pill {
+  background: rgba(30, 41, 59, 0.85) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #f1f5f9 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+html.dark .hero-action-pill:hover {
+  background: rgba(37, 99, 235, 0.22) !important;
+  border-color: rgba(59, 130, 246, 0.5) !important;
+  color: #60a5fa !important;
+  box-shadow: 0 0 16px rgba(37, 99, 235, 0.35) !important;
+}
+
+/* Custom Tactical Neon Biometric Sliders */
+input[type="range"].biometric-slider {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  width: 100% !important;
+  height: 8px !important;
+  border-radius: 6px !important;
+  background: #e2e8f0 !important;
+  outline: none !important;
+  margin: 12px 0 8px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+html.dark input[type="range"].biometric-slider {
+  background: #1e293b !important;
+}
+
+input[type="range"].biometric-slider::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  border: 3px solid var(--primary) !important;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2), 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+  cursor: pointer !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+input[type="range"].biometric-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.18) !important;
+  box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.3), 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+}
+
+input[type="range"].biometric-slider::-moz-range-thumb {
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  border: 3px solid var(--primary) !important;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2), 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+  cursor: pointer !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+/* 5-Level Mood Matrix Modern Sensory Tiles */
+.mood-selector-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 10px !important;
+  margin-top: 10px !important;
+}
+
+.mood-btn {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 14px 6px !important;
+  border-radius: 16px !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid var(--line) !important;
+  cursor: pointer !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+  user-select: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+html.dark .mood-btn {
+  background: rgba(15, 23, 42, 0.6) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.mood-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06) !important;
+}
+
+.mood-btn:active {
+  transform: scale(0.96) !important;
+}
+
+.mood-val-circle {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  margin-bottom: 6px !important;
+  background: #f1f5f9 !important;
+  color: var(--ink) !important;
+  transition: all 0.2s ease !important;
+}
+
+html.dark .mood-val-circle {
+  background: #1e293b !important;
+  color: #f1f5f9 !important;
+}
+
+.mood-desc {
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  color: var(--steel) !important;
+  transition: color 0.2s ease !important;
+}
+
+/* Modern Portal Landing Grid */
+.portal-shell {
+  max-width: 1180px !important;
+  margin: 0 auto !important;
+  padding: 24px 20px 80px !important;
+}
+
+.portal-header {
+  text-align: center !important;
+  margin-bottom: 40px !important;
+  position: relative !important;
+}
+
+.portal-header h1 {
+  font-size: 38px !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.03em !important;
+  margin: 12px 0 10px !important;
+  background: linear-gradient(135deg, #0f172a 0%, #2563eb 60%, #0d9488 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  line-height: 1.15 !important;
+}
+
+html.dark .portal-header h1 {
+  background: linear-gradient(135deg, #ffffff 0%, #93c5fd 60%, #2dd4bf 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.portal-header p {
+  font-size: 15px !important;
+  color: var(--steel) !important;
+  max-width: 680px !important;
+  margin: 0 auto !important;
+  line-height: 1.6 !important;
+}
+
+.portal-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 22px !important;
+}
+
+.portal-card {
+  padding: 30px 24px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border-radius: 22px !important;
+  position: relative !important;
+}
+
+.portal-icon {
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 16px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-bottom: 18px !important;
+  background: rgba(37, 99, 235, 0.08) !important;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.1) !important;
+  transition: transform 0.25s ease !important;
+}
+
+.portal-card:hover .portal-icon {
+  transform: scale(1.08) rotate(-3deg) !important;
+}
+
+.portal-card h2 {
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  margin: 0 0 8px !important;
+  color: var(--ink) !important;
+}
+
+.portal-card p {
+  font-size: 13.5px !important;
+  color: var(--steel) !important;
+  line-height: 1.55 !important;
+  margin: 0 0 18px !important;
+  flex: 1 !important;
+}
+
+.portal-features {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  margin-bottom: 22px !important;
+}
+
+.portal-feat-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: var(--steel-deep) !important;
+  padding: 4px 0 !important;
+}
+
+/* ==========================================================================
+   MOBILE & TOUCH SCREEN OPTIMIZATION (max-width: 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .wrap {
+    padding: 16px 14px 70px !important;
+  }
+
+  .modern-hero-banner {
+    padding: 20px 16px !important;
+    border-radius: 18px !important;
+  }
+
+  .hero-title {
+    font-size: 21px !important;
+  }
+
+  .hero-subtitle {
+    font-size: 12.5px !important;
+    margin-bottom: 14px !important;
+  }
+
+  /* Ribbon transforms into sleek mobile card row */
+  .hero-telemetry-ribbon {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .hero-telemetry-item {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 10px 12px !important;
+  }
+
+  /* Quick action buttons wrap cleanly on phone */
+  .hero-actions-row {
+    gap: 8px !important;
+  }
+
+  .hero-action-pill {
+    padding: 9px 13px !important;
+    font-size: 12px !important;
+    min-height: 42px !important;
+  }
+
+  /* Portal cards stack vertically on phone */
+  .portal-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .portal-header h1 {
+    font-size: 26px !important;
+  }
+
+  /* Mood Matrix on phone: scroll or wrap gracefully */
+  .mood-selector-grid {
+    gap: 6px !important;
+  }
+
+  .mood-btn {
+    padding: 10px 4px !important;
+    border-radius: 12px !important;
+  }
+
+  .mood-desc {
+    font-size: 10.5px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .mood-selector-grid {
+    grid-template-columns: repeat(5, 1fr) !important;
+  }
+  .mood-val-circle {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 11.5px !important;
+  }
+  .mood-desc {
+    display: none !important; /* Keep circle only on ultra-compact screens */
+  }
+}
