@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - Admin Dashboard</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=7.7">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=7.8">
 <script>
   (function(){
     var t = localStorage.getItem('apps_theme');
@@ -97,8 +97,8 @@
     <!-- Quick Navigation Action Cards -->
   <div class="admin-nav-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:16px; margin-top:28px;">
     <a href="/admin/units" class="card" style="text-decoration:none; display:flex; align-items:center; gap:16px; padding:22px; transition:transform 0.2s, box-shadow 0.2s;">
-      <div style="width:44px; height:44px; border-radius:12px; background:rgba(37,99,235,0.1); color:var(--primary); display:flex; align-items:center; justify-content:center; font-size:22px;">
-        🏢
+      <div style="width:44px; height:44px; border-radius:12px; background:rgba(37,99,235,0.1); color:var(--primary); display:flex; align-items:center; justify-content:center;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="22"/><line x1="15" y1="22" x2="15" y2="22"/><line x1="9" y1="6" x2="9.01" y2="6"/><line x1="15" y1="6" x2="15.01" y2="6"/><line x1="9" y1="10" x2="9.01" y2="10"/><line x1="15" y1="10" x2="15.01" y2="10"/><line x1="9" y1="14" x2="9.01" y2="14"/><line x1="15" y1="14" x2="15.01" y2="14"/><line x1="9" y1="18" x2="9.01" y2="18"/><line x1="15" y1="18" x2="15.01" y2="18"/></svg>
       </div>
       <div>
         <h4 style="margin:0; font-size:15px; font-weight:700; color:var(--ink);">Unit-Wise Breakdown</h4>
@@ -107,8 +107,8 @@
     </a>
 
     <a href="/admin/burnout_forecast" class="card" style="text-decoration:none; display:flex; align-items:center; gap:16px; padding:22px; transition:transform 0.2s, box-shadow 0.2s;">
-      <div style="width:44px; height:44px; border-radius:12px; background:rgba(16,185,129,0.1); color:#10b981; display:flex; align-items:center; justify-content:center; font-size:22px;">
-        📊
+      <div style="width:44px; height:44px; border-radius:12px; background:rgba(16,185,129,0.1); color:#10b981; display:flex; align-items:center; justify-content:center;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
       </div>
       <div>
         <div style="display:flex; align-items:center; gap:6px;">

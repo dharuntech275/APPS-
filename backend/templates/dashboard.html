@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - Dashboard</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=7.7">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=7.8">
 <style>
   /* 5-Mode Clinical Readiness Colors - Instant Fail-Safe Styles */
   /* Mode 1: Struggling (Red) */
@@ -203,7 +203,7 @@
         </div>
         <button type="button" class="smartwatch-sync-btn" id="syncWatchBtn" onclick="simulateSmartwatchSync(this)" title="Connect simulated Garmin / Military smartwatch">
           <svg class="sync-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-          <span id="syncWatchLabel">⚡ Sync Smartwatch Band</span>
+          <span id="syncWatchLabel">Sync Smartwatch Band</span>
         </button>
       </div>
 
@@ -427,9 +427,9 @@
       setMood(4);
 
       btn.classList.remove('syncing');
-      if (label) label.textContent = "✓ Synced: Garmin Tactical Band (70 BPM)";
+      if (label) label.textContent = "Synced: Garmin Tactical Band (70 BPM)";
       setTimeout(function() {
-        if (label) label.textContent = "⚡ Sync Smartwatch Band";
+        if (label) label.textContent = "Sync Smartwatch Band";
       }, 3500);
     }, 1100);
   }
@@ -487,7 +487,7 @@
         box.textContent = 'Emergency beacon received. Helpline 1902 is available 24/7.';
       }
       btn.disabled = false;
-      btn.textContent = "🚨 Dispatch Immediate SOS Beacon";
+      btn.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="vertical-align:middle; margin-right:6px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Dispatch Immediate SOS Beacon';
     });
   }
 
@@ -529,7 +529,7 @@
     bRunning = false;
     clearTimeout(bTimer);
     var btn = document.getElementById('bStartBtn');
-    if (btn) btn.textContent = "▶ Resume";
+    if (btn) btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle; margin-right:5px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>Resume';
   }
 
   function resetBreathing() {
@@ -547,7 +547,7 @@
     var cycleEl = document.getElementById('bCycleLabel');
     if (cycleEl) cycleEl.textContent = "Cycle: 0 of " + MAX_CYCLES;
     var btn = document.getElementById('bStartBtn');
-    if (btn) btn.textContent = "▶ Start Session";
+    if (btn) btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle; margin-right:5px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>Start Session';
   }
 
   function runBreathingPhase() {

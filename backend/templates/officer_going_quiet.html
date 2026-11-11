@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - Going Quiet</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=7.7">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=7.8">
 <script>
   (function(){
     var t = localStorage.getItem('apps_theme');
@@ -32,7 +32,7 @@
     </div>
     {% if followups %}
     <span class="badge-role badge-personnel" style="background:rgba(239,68,68,0.12); color:#dc2626; border:1px solid rgba(239,68,68,0.25); font-weight:800; font-size:12px; padding:6px 14px;">
-      ⚠️ {{ followups|length }} Member{% if followups|length > 1 %}s{% endif %} Quiet
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:5px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>{{ followups|length }} Member{% if followups|length > 1 %}s{% endif %} Quiet
     </span>
     {% endif %}
   </div>
@@ -60,7 +60,7 @@
       </div>
       <div class="quiet-actions" style="display:flex; align-items:center; gap:10px;">
         <button type="button" class="btn-outline" style="width:auto; padding:8px 14px; font-size:12.5px; font-weight:700;" onclick="openCaseBriefModal({{ f.id }}, '{{ f.name }}')">
-          📋 AI Case Brief
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><polyline points="9 14 11 16 15 11"/></svg>AI Case Brief
         </button>
         <a href="/officer/personnel/{{ f.id }}" class="btn" style="text-decoration:none; width:auto; padding:8px 18px; font-size:12.5px;">View Profile &rarr;</a>
       </div>
@@ -69,7 +69,7 @@
   </div>
   {% else %}
     <div class="card" style="padding:32px 24px; text-align:center;">
-      <span style="font-size:32px; display:block; margin-bottom:10px;">✅</span>
+      <span style="display:inline-flex; align-items:center; justify-content:center; width:52px; height:52px; border-radius:50%; background:rgba(16,185,129,0.12); color:#10b981; margin:0 auto 12px;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>
       <h3 style="margin:0 0 6px; font-size:16px; color:var(--ink); border:none; padding:0;">All Personnel Active</h3>
       <p class="empty-note" style="margin:0;">Every member has checked in recently with healthy engagement.</p>
     </div>

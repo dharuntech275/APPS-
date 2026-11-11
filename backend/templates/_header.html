@@ -18,14 +18,14 @@
     
     <div style="margin:16px 0;">
       <a href="tel:1902" class="hotline-card">
-        <span style="color:#dc2626; font-size:18px;">📞</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         <div style="flex:1;">
           <div class="hotline-num">1902</div>
           <div class="hotline-lbl">Army Suicide Prevention &amp; Crisis Helpline (Toll-Free &middot; 24/7)</div>
         </div>
       </a>
       <a href="tel:14416" class="hotline-card">
-        <span style="color:#0284c7; font-size:18px;">📞</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         <div style="flex:1;">
           <div class="hotline-num" style="color:#0284c7;">14416 / 1800-891-4416</div>
           <div class="hotline-lbl">Tele-MANAS National Mental Health Care Line (Free)</div>
@@ -40,7 +40,7 @@
       <div id="sosAlertBox" style="display:none; padding:10px 14px; border-radius:8px; margin-bottom:12px; font-size:12.5px; font-weight:600;"></div>
 
       <button type="submit" id="sosSubmitBtn" class="btn" style="background:#dc2626; color:#ffffff; font-weight:800; width:100%; padding:13px; font-size:14px; box-shadow:0 4px 14px rgba(220,38,38,0.35);">
-        🚨 Dispatch Immediate SOS Beacon
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:6px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Dispatch Immediate SOS Beacon
       </button>
     </form>
   </div>
@@ -66,7 +66,7 @@
 
     <div class="breathing-controls">
       <button type="button" class="btn" id="bStartBtn" onclick="toggleBreathing()" style="width:auto; padding:10px 24px; font-size:13.5px;">
-        ▶ Start Session
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle; margin-right:5px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>Start Session
       </button>
       <button type="button" class="btn-outline" onclick="resetBreathing()" style="width:auto; padding:10px 18px; font-size:13.5px;">
         Reset
@@ -91,7 +91,7 @@
     <div class="ai-chat-header" style="padding:16px 20px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; background:linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(6,182,212,0.06) 100%);">
       <div style="display:flex; align-items:center; gap:12px;">
         <div style="width:38px; height:38px; border-radius:12px; background:linear-gradient(135deg, #2563eb, #06b6d4); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 0 14px rgba(37,99,235,0.4); font-size:18px;">
-          🤖
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>
         </div>
         <div>
           <h3 style="margin:0; font-size:15px; font-weight:800; color:var(--ink); display:flex; align-items:center; gap:6px;">
@@ -115,10 +115,18 @@
 
     <!-- Suggested Quick Prompts -->
     <div class="ai-quick-prompts">
-      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('Help me de-stress from a tough shift')">⚡ De-stress from shift</button>
-      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('I cannot sleep properly tonight')">🌙 Trouble sleeping</button>
-      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('Guide me through a calming exercise')">🧘 Calming exercise</button>
-      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('How do I talk to my Welfare Officer?')">🛡️ Welfare Officer chat</button>
+      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('Help me de-stress from a tough shift')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="vertical-align:middle; margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>De-stress from shift
+      </button>
+      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('I cannot sleep properly tonight')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:4px;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Trouble sleeping
+      </button>
+      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('Guide me through a calming exercise')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:4px;"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>Calming exercise
+      </button>
+      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('How do I talk to my Welfare Officer?')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>Welfare Officer chat
+      </button>
     </div>
 
     <!-- Input Bar -->
@@ -136,7 +144,7 @@
     
     <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px; border-bottom:1px solid var(--line); padding-bottom:14px;">
       <div style="width:40px; height:40px; border-radius:12px; background:linear-gradient(135deg, #7c3aed, #2563eb); color:#fff; display:flex; align-items:center; justify-content:center; font-size:20px; box-shadow:0 0 14px rgba(124,58,237,0.35);">
-        📋
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><polyline points="9 14 11 16 15 11"/></svg>
       </div>
       <div>
         <h3 style="margin:0; font-size:16px; font-weight:800; color:var(--ink);">AI Pre-Counseling Clinical Brief</h3>
@@ -342,7 +350,7 @@
     <a href="/results" class="desk-nav-item {% if p == '/results' %}active{% endif %}">My Results</a>
     <div class="desk-dropdown">
       <button type="button" class="desk-nav-item desk-drop-btn">
-        <span>Exports</span> <span style="font-size:10px; opacity:0.7;">▼</span>
+        <span>Exports</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.7; vertical-align:middle; margin-left:4px;"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div class="desk-dropdown-menu">
         <a href="/my/export_pdf">Download PDF</a>
@@ -388,13 +396,13 @@
   <div class="header-right">
     {% if role == 'personnel' %}
     <button type="button" class="ai-nav-pill-btn" onclick="openAICompanion()" title="Open 24/7 AI Wellness Companion">
-      <span class="ai-pill-icon">🤖</span>
+      <span class="ai-pill-icon" style="display:inline-flex; align-items:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg></span>
       <span class="ai-pill-text">AI Companion</span>
       <span class="ai-pill-dot"></span>
     </button>
     {% elif role == 'admin' %}
     <a href="/admin/burnout_forecast" class="ai-nav-pill-btn" style="text-decoration:none;" title="Open AI 7-Day Team Burnout Forecaster">
-      <span class="ai-pill-icon">📊</span>
+      <span class="ai-pill-icon" style="display:inline-flex; align-items:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
       <span class="ai-pill-text">AI Forecaster</span>
       <span class="ai-pill-dot" style="background:#3b82f6;"></span>
     </a>
@@ -498,7 +506,7 @@
     <div class="nav-section">Support &amp; Calming Tools</div>
     
     <button type="button" class="nav-item sub nav-btn-action" onclick="closeNavDrawer(); openAICompanion();">
-      <span style="font-size:14px; margin-right:4px;">🤖</span>
+      <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>
       <span>AI Wellness Companion</span>
     </button>
 
@@ -557,7 +565,7 @@
           <div style="flex:1; min-width:0;">
             <div style="font-size:11px; font-weight:700; color:var(--steel-deep); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ b.name }}</div>
             <div style="font-size:9.5px; color:var(--steel); font-weight:600;">
-              {% if b.unlocked %}<span style="color:#10b981; font-weight:700;">✓ Unlocked</span>{% else %}🔒 {{ b.progress }}{% endif %}
+              {% if b.unlocked %}<span style="color:#10b981; font-weight:700; display:inline-flex; align-items:center; gap:3px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.8"><polyline points="20 6 9 17 4 12"/></svg> Unlocked</span>{% else %}<span style="display:inline-flex; align-items:center; gap:3px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> {{ b.progress }}</span>{% endif %}
             </div>
           </div>
         </div>
@@ -837,14 +845,14 @@
       "Army Suicide Prevention & Crisis Helpline (Toll-Free · 24/7)": "இராணுவ அவசர உதவி எண் (இலவசம் · 24/7)",
       "Tele-MANAS National Mental Health Care Line (Free)": "டெலி-மானாஸ் தேசிய மனநல உதவி எண் (இலவசம்)",
       "Dispatch Urgent Distress Beacon to Welfare Officer:": "அதிகாரிக்கு அவசர உதவி எச்சரிக்கையை அனுப்பு:",
-      "🚨 Dispatch Immediate SOS Beacon": "🚨 உடனடி SOS எச்சரிக்கையை அனுப்பு",
+      "<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:6px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Dispatch Immediate SOS Beacon": "🚨 உடனடி SOS எச்சரிக்கையை அனுப்பு",
       "Tactical 4-7-8 Breathing Stabilizer": "4-7-8 சுவாச தளர்வு கருவி",
       "Inhale quietly through nose (4s) • Hold breath (7s) • Slowly exhale through mouth (8s)": "மூக்கு வழியாக மூச்சை உள்ளிழுக்கவும் (4s) • அடக்கவும் (7s) • வாய் வழியாக மெதுவாக வெளியிடவும் (8s)",
       "Ready": "தயார்",
       "Inhale": "உள்ளிழுக்கவும்",
       "Hold": "அடக்கவும்",
       "Exhale": "வெளியிடவும்",
-      "▶ Start Session": "▶ தொடங்கு",
+      "<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle; margin-right:5px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>Start Session": "▶ தொடங்கு",
       "⏹ Stop Session": "⏹ நிறுத்து",
       "Reset": "மீட்டமை",
       "Cycle:": "சுழற்சி:",
@@ -955,14 +963,14 @@
       "Army Suicide Prevention & Crisis Helpline (Toll-Free · 24/7)": "सेना संकट हेल्पलाइन (टोल-फ्री · 24/7)",
       "Tele-MANAS National Mental Health Care Line (Free)": "टेली-मानस राष्ट्रीय मानसिक स्वास्थ्य लाइन (निःशुल्क)",
       "Dispatch Urgent Distress Beacon to Welfare Officer:": "कल्याण अधिकारी को तत्काल संकट संकेत भेजें:",
-      "🚨 Dispatch Immediate SOS Beacon": "🚨 तत्काल एसओएस संकेत भेजें",
+      "<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:6px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Dispatch Immediate SOS Beacon": "🚨 तत्काल एसओएस संकेत भेजें",
       "Tactical 4-7-8 Breathing Stabilizer": "रणनीतिक 4-7-8 श्वास स्टेबलाइजर",
       "Inhale quietly through nose (4s) • Hold breath (7s) • Slowly exhale through mouth (8s)": "नाक से सांस लें (4s) • रोकें (7s) • मुंह से छोड़ें (8s)",
       "Ready": "तैयार",
       "Inhale": "सांस लें",
       "Hold": "रोकें",
       "Exhale": "सांस छोड़ें",
-      "▶ Start Session": "▶ सत्र शुरू करें",
+      "<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle; margin-right:5px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>Start Session": "▶ सत्र शुरू करें",
       "⏹ Stop Session": "⏹ सत्र रोकें",
       "Reset": "रीसेट",
       "Cycle:": "चक्र:",
@@ -1133,7 +1141,7 @@
       }
       if (btn) {
         btn.disabled = false;
-        btn.textContent = "🚨 Dispatch Immediate SOS Beacon";
+        btn.textContent = "<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:6px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Dispatch Immediate SOS Beacon";
       }
     });
   };
@@ -1172,7 +1180,7 @@
     bRunning = false;
     clearTimeout(bTimer);
     var btn = document.getElementById('bStartBtn');
-    if (btn) btn.textContent = "▶ Resume";
+    if (btn) btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle; margin-right:5px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>Resume';
   };
 
   window.resetBreathing = function() {
@@ -1190,7 +1198,7 @@
     if (p) p.textContent = "Ready";
     if (cnt) cnt.textContent = "4";
     if (lbl) lbl.textContent = "Cycle: 0 of " + MAX_CYCLES;
-    if (btn) btn.textContent = "▶ Start Session";
+    if (btn) btn.textContent = "<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle; margin-right:5px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>Start Session";
   };
 
   function runBreathingPhase() {

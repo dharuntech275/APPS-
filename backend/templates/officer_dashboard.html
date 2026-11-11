@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - Officer Dashboard</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=7.7">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=7.8">
 <script>
   (function(){
     var t = localStorage.getItem('apps_theme');
@@ -26,7 +26,7 @@
         <span class="radar-pulse-dot" style="background:#ef4444; box-shadow:0 0 0 4px rgba(239,68,68,0.3); width:14px; height:14px; display:inline-block; border-radius:50%;"></span>
         <div>
           <h4 style="margin:0; font-size:16px; font-weight:800; color:#b91c1c; display:flex; align-items:center; gap:8px;">
-            🚨 URGENT SOS CRISIS BEACON TRIGGERED ({{ sos_alerts|length }})
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:6px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>URGENT SOS CRISIS BEACON TRIGGERED ({{ sos_alerts|length }})
           </h4>
           <p style="margin:5px 0 0; font-size:13.5px; color:var(--ink); line-height:1.45;">
             {% for a in sos_alerts %}
