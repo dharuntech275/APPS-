@@ -1804,9 +1804,9 @@ body.personnel-page {
 .tag-add-form { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .tag-add-form input[type=text] { flex: 1; min-width: 180px; }
 
-/* ---------- Hamburger Menu & Drawer ---------- */
+/* ---------- Hamburger Menu & Drawer (Hidden - Replaced by Tick Mark Brand Trigger) ---------- */
 .nav-toggle {
-  display: inline-flex;
+  display: none !important;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -3113,7 +3113,7 @@ img, canvas, svg {
 /* Universal Off-Canvas Navigation Drawer for Desktop & Laptop Screens (>= 992px) */
 @media (min-width: 992px) {
   .nav-toggle {
-    display: inline-flex !important;
+    display: none !important;
   }
   .desktop-nav {
     display: none !important;
@@ -3223,7 +3223,7 @@ img, canvas, svg {
 /* Mobile & Tablet Screens (< 992px) */
 @media (max-width: 991px) {
   .nav-toggle {
-    display: inline-flex !important;
+    display: none !important;
   }
   .desktop-status-pill {
     display: none !important;

@@ -288,6 +288,9 @@
     display: inline-flex !important;
     align-items: center !important;
   }
+  .nav-toggle {
+    display: none !important;
+  }
 
   /* Universal Navigation Drawer Elevation (Mobile + Laptop/Desktop) */
   .nav-overlay {
@@ -317,10 +320,6 @@
 
 <header class="top">
   <div class="header-left">
-    <button type="button" id="navToggle" class="nav-toggle" aria-label="Open menu"
-            aria-expanded="false" aria-controls="navDrawer">
-      <span></span><span></span><span></span>
-    </button>
     <div class="header-brand-wrap mobile-brand-only">
       <button type="button" id="brandMenuToggle" class="brand-menu-btn brand-link" aria-label="Toggle Dashboard Menu" title="Click tick mark to open menu">
         <span class="brand-shield-icon mobile-shield-icon" style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:8px; background:linear-gradient(135deg, #1e293b, #0f172a); color:#fdfdf9; box-shadow:0 2px 6px rgba(15,23,42,0.25); flex-shrink:0; cursor:pointer;">
