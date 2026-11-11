@@ -3110,16 +3110,18 @@ img, canvas, svg {
   gap: 16px;
 }
 
-/* Option 1: Persistent Left Sidebar for Desktop & Laptop Screens (>= 992px) */
+/* Universal Off-Canvas Navigation Drawer for Desktop & Laptop Screens (>= 992px) */
 @media (min-width: 992px) {
   .nav-toggle {
-    display: none !important;
+    display: inline-flex !important;
   }
   .desktop-nav {
     display: none !important;
   }
-  .mobile-brand-only {
-    display: none !important;
+  .mobile-brand-only,
+  .header-brand-wrap {
+    display: inline-flex !important;
+    align-items: center !important;
   }
   .desktop-status-pill {
     display: inline-flex !important;
@@ -3134,10 +3136,23 @@ img, canvas, svg {
     display: none !important;
   }
   .nav-overlay {
-    display: none !important;
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: rgba(15, 23, 42, 0.52) !important;
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+    z-index: 9998 !important;
+  }
+  .nav-overlay.open {
+    display: block !important;
+    opacity: 1 !important;
   }
   .nav-close {
-    display: none !important;
+    display: inline-flex !important;
   }
   .nav-drawer {
     display: flex !important;
@@ -3148,15 +3163,25 @@ img, canvas, svg {
     bottom: 0 !important;
     height: 100vh !important;
     height: 100dvh !important;
-    width: 270px !important;
-    max-width: 270px !important;
-    transform: translateX(0) !important;
-    box-shadow: 1px 0 0 var(--line) !important;
+    width: 300px !important;
+    max-width: 300px !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 10px 0 36px rgba(0, 0, 0, 0.25) !important;
     border-right: 1px solid var(--line) !important;
-    border-radius: 0 !important;
-    z-index: 100 !important;
+    z-index: 9999 !important;
     overflow: hidden !important;
+    visibility: hidden;
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+  }
+  .nav-drawer.open {
+    transform: translateX(0) !important;
     visibility: visible !important;
+  }
+  html.dark .nav-drawer {
+    background: rgba(15, 23, 42, 0.98) !important;
   }
   .nav-links {
     flex: 1 1 auto !important;
@@ -3182,17 +3207,15 @@ img, canvas, svg {
     border-radius: 8px !important;
   }
   .wrap {
-    margin-left: 270px !important;
-    margin-right: 0 !important;
-    width: calc(100% - 270px) !important;
+    margin: 0 auto !important;
+    width: 100% !important;
     max-width: 1400px !important;
     padding: 24px 36px 80px !important;
     box-sizing: border-box !important;
   }
   body.admin-page .wrap {
-    margin-left: 270px !important;
-    margin-right: 0 !important;
-    width: calc(100% - 270px) !important;
+    margin: 0 auto !important;
+    width: 100% !important;
     max-width: 1400px !important;
   }
 }
@@ -8202,13 +8225,76 @@ html.dark .ai-user-input:focus {
 }
 
 
-/* Tactile Feedback for Mobile Brand Shield/Tick Mark Menu Trigger */
-.mobile-brand-only .brand-link {
+/* Tactile Feedback & Styling for Brand Shield Tick Mark Menu Trigger (Laptop & Mobile) */
+.brand-menu-btn,
+.brand-link,
+.mobile-brand-only .brand-link,
+.header-brand-wrap .brand-link {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
   cursor: pointer !important;
+  text-decoration: none !important;
+  outline: none !important;
   user-select: none !important;
   -webkit-tap-highlight-color: transparent !important;
 }
-.mobile-brand-only .brand-link:active .mobile-shield-icon {
+
+.brand-shield-icon,
+.mobile-shield-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  min-height: 28px !important;
+  border-radius: 9px !important;
+  background: linear-gradient(135deg, #1e293b, #0f172a) !important;
+  color: #fdfdf9 !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.3) !important;
+  flex-shrink: 0 !important;
+  cursor: pointer !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+html.dark .brand-shield-icon,
+html.dark .mobile-shield-icon {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.45) !important;
+  color: #ffffff !important;
+}
+
+.brand-menu-btn:hover .brand-shield-icon,
+.brand-menu-btn:hover .mobile-shield-icon,
+.brand-link:hover .brand-shield-icon,
+.brand-link:hover .mobile-shield-icon {
+  transform: scale(1.08) !important;
+}
+
+.brand-menu-btn:active .brand-shield-icon,
+.brand-menu-btn:active .mobile-shield-icon,
+.brand-link:active .brand-shield-icon,
+.brand-link:active .mobile-shield-icon {
   transform: scale(0.92) !important;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.4) !important;
+}
+
+.brand-menu-btn .mark,
+.brand-link .mark {
+  font-size: 18px !important;
+  line-height: 1 !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.02em !important;
+  color: var(--ink) !important;
+  cursor: pointer !important;
+}
+
+html.dark .brand-menu-btn .mark,
+html.dark .brand-link .mark {
+  color: #f1f5f9 !important;
 }

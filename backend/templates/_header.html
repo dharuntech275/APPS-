@@ -227,21 +227,83 @@
     box-shadow: 0 0 0 1.5px rgba(139, 92, 246, 0.7), 0 2px 8px rgba(124, 58, 237, 0.4) !important;
   }
 
-  /* Mobile Navigation Drawer & Sticky Header Fix (<= 991px) */
+  /* Mobile & Desktop Navigation Drawer & Brand Menu Trigger */
+  .brand-menu-btn {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    outline: none !important;
+    user-select: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+  .brand-shield-icon,
+  .mobile-shield-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    border-radius: 9px !important;
+    background: linear-gradient(135deg, #1e293b, #0f172a) !important;
+    color: #fdfdf9 !important;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.3) !important;
+    flex-shrink: 0 !important;
+    cursor: pointer !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+  }
+  html.dark .brand-shield-icon,
+  html.dark .mobile-shield-icon {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.45) !important;
+    color: #ffffff !important;
+  }
+  .brand-menu-btn:hover .brand-shield-icon,
+  .brand-menu-btn:hover .mobile-shield-icon {
+    transform: scale(1.08) !important;
+  }
+  .brand-menu-btn:active .brand-shield-icon,
+  .brand-menu-btn:active .mobile-shield-icon {
+    transform: scale(0.92) !important;
+  }
+  .brand-menu-btn .mark {
+    font-size: 18px !important;
+    line-height: 1 !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.02em !important;
+    color: var(--ink) !important;
+    cursor: pointer !important;
+  }
+  html.dark .brand-menu-btn .mark {
+    color: #f1f5f9 !important;
+  }
+  .header-brand-wrap {
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  /* Universal Navigation Drawer Elevation (Mobile + Laptop/Desktop) */
+  .nav-overlay {
+    z-index: 9998 !important;
+  }
+  .nav-drawer {
+    z-index: 9999 !important;
+    box-sizing: border-box !important;
+  }
   @media (max-width: 991px) {
     /* Hide duplicate sidebar brand box on mobile drawer so it never clips under header */
     .sidebar-brand-box {
       display: none !important;
     }
-
-    /* Elevate overlay and drawer above sticky header (which is z-index 990) */
-    .nav-overlay {
-      z-index: 9998 !important;
-    }
     .nav-drawer {
-      z-index: 9999 !important;
       padding: 0 !important;
-      box-sizing: border-box !important;
     }
     .nav-head {
       padding: max(16px, env(safe-area-inset-top)) 18px 14px !important;
@@ -259,13 +321,13 @@
             aria-expanded="false" aria-controls="navDrawer">
       <span></span><span></span><span></span>
     </button>
-    <div class="mobile-brand-only">
-      <a href="javascript:void(0)" class="brand-link" onclick="if(window.innerWidth < 992 && window.toggleNavDrawer) { event.preventDefault(); window.toggleNavDrawer(); }" aria-label="Open Navigation Menu" style="display:inline-flex; align-items:center; gap:6px; text-decoration:none; cursor:pointer;" title="Tap tick mark to open menu">
-        <span class="mobile-shield-icon" style="display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:8px; background:linear-gradient(135deg, #1e293b, #0f172a); color:#fdfdf9; box-shadow:0 2px 6px rgba(15,23,42,0.25); flex-shrink:0; cursor:pointer;">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+    <div class="header-brand-wrap mobile-brand-only">
+      <button type="button" id="brandMenuToggle" class="brand-menu-btn brand-link" aria-label="Toggle Dashboard Menu" title="Click tick mark to open menu">
+        <span class="brand-shield-icon mobile-shield-icon" style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:8px; background:linear-gradient(135deg, #1e293b, #0f172a); color:#fdfdf9; box-shadow:0 2px 6px rgba(15,23,42,0.25); flex-shrink:0; cursor:pointer;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
         </span>
-        <div class="mark">APPS</div>
-      </a>
+        <span class="mark">APPS</span>
+      </button>
     </div>
     <div class="desktop-status-pill">
       <span class="radar-pulse-dot" style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10b981; box-shadow:0 0 0 3px rgba(16,185,129,0.22); flex-shrink:0;"></span>
@@ -610,40 +672,89 @@
   var btn = document.getElementById('navToggle');
   var drawer = document.getElementById('navDrawer');
   var overlay = document.getElementById('navOverlay');
+  var brandBtn = document.getElementById('brandMenuToggle');
+
   function setOpen(open) {
-    if (!drawer || !overlay || !btn) return;
-    drawer.classList.toggle('open', open);
-    overlay.classList.toggle('open', open);
-    btn.setAttribute('aria-expanded', open);
-    drawer.setAttribute('aria-hidden', !open);
-    document.body.classList.toggle('drawer-open', open);
+    if (!drawer || !overlay) return;
+    if (open) {
+      drawer.classList.add('open');
+      overlay.classList.add('open');
+      if (btn) btn.setAttribute('aria-expanded', 'true');
+      drawer.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('drawer-open');
+    } else {
+      drawer.classList.remove('open');
+      overlay.classList.remove('open');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+      drawer.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('drawer-open');
+    }
   }
+
   window.openNavDrawer = function() { setOpen(true); };
   window.closeNavDrawer = function() { setOpen(false); };
-  window.toggleNavDrawer = function() { setOpen(!drawer.classList.contains('open')); };
-  if (btn) btn.addEventListener('click', function () { setOpen(!drawer.classList.contains('open')); });
+  window.toggleNavDrawer = function(e) {
+    if (e) {
+      if (typeof e.preventDefault === 'function') e.preventDefault();
+      if (typeof e.stopPropagation === 'function') e.stopPropagation();
+    }
+    if (!drawer) return;
+    var isOpen = drawer.classList.contains('open');
+    setOpen(!isOpen);
+  };
 
-  // Mobile shield / tick mark icon click handler to toggle menu drawer
-  var mobileBrand = document.querySelector('.mobile-brand-only');
-  if (mobileBrand) {
-    mobileBrand.addEventListener('click', function (e) {
-      if (window.innerWidth < 992) {
-        e.preventDefault();
-        setOpen(!drawer.classList.contains('open'));
-      }
+  // 1. Hamburger button click listener
+  if (btn) {
+    btn.addEventListener('click', function (e) {
+      window.toggleNavDrawer(e);
     });
   }
-  if (overlay) {
-    overlay.addEventListener('click', function () { setOpen(false); });
-    overlay.addEventListener('touchstart', function () { setOpen(false); }, {passive: true});
+
+  // 2. Shield tick mark & APPS brand button click listener (Laptop and Mobile)
+  if (brandBtn) {
+    brandBtn.addEventListener('click', function (e) {
+      window.toggleNavDrawer(e);
+    });
   }
+
+  // Fallback trigger for any element styled as brand tick mark
+  document.querySelectorAll('.brand-menu-btn, .brand-link, .mobile-shield-icon, .brand-shield-icon').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      if (brandBtn && brandBtn.contains(e.target)) return;
+      window.toggleNavDrawer(e);
+    });
+  });
+
+  // 3. Dark Backdrop Overlay click & touch
+  if (overlay) {
+    overlay.addEventListener('click', function (e) {
+      e.preventDefault();
+      setOpen(false);
+    });
+    overlay.addEventListener('touchstart', function () {
+      setOpen(false);
+    }, {passive: true});
+  }
+
+  // 4. Close [X] button inside drawer
   var closeBtn = document.getElementById('navClose');
-  if (closeBtn) closeBtn.addEventListener('click', function () { setOpen(false); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      setOpen(false);
+    });
+  }
+
+  // 5. ESC key closes drawer
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') setOpen(false);
+  });
+
+  // 6. Navigation links inside drawer: close menu after selection
   if (drawer) {
     drawer.querySelectorAll('a').forEach(function (a) {
       a.addEventListener('click', function () {
-        if (window.innerWidth < 992) { setOpen(false); }
+        setOpen(false);
       });
     });
   }
