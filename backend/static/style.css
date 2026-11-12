@@ -9833,3 +9833,159 @@ html.dark .role-admin .role-icon-pill {
     border-radius: 20px !important;
   }
 }
+
+
+/* ==========================================================================
+   TOP RIGHT AUTH BUTTONS & IN-PAGE GLASSMORPHIC LOGIN MODAL
+   ========================================================================== */
+
+.nav-auth-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  height: 36px !important;
+  padding: 0 16px !important;
+  border-radius: 20px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-sizing: border-box !important;
+  user-select: none !important;
+}
+
+.nav-signin-btn {
+  background: rgba(37, 99, 235, 0.08) !important;
+  border: 1.5px solid rgba(37, 99, 235, 0.3) !important;
+  color: var(--primary) !important;
+}
+
+.nav-signin-btn:hover {
+  background: var(--primary) !important;
+  color: #ffffff !important;
+  border-color: var(--primary) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) !important;
+}
+
+html.dark .nav-signin-btn {
+  background: rgba(37, 99, 235, 0.2) !important;
+  border-color: rgba(59, 130, 246, 0.45) !important;
+  color: #93c5fd !important;
+}
+
+html.dark .nav-signin-btn:hover {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 16px rgba(37, 99, 235, 0.45) !important;
+}
+
+.nav-signup-btn {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  border: none !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) !important;
+}
+
+.nav-signup-btn:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.45) !important;
+}
+
+/* In-Page Glassmorphic Login Modal */
+.auth-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1000 !important;
+  background: rgba(15, 23, 42, 0.68) !important;
+  backdrop-filter: blur(14px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(180%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.24s ease, visibility 0.24s ease !important;
+  box-sizing: border-box !important;
+}
+
+.auth-modal-overlay.active {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.auth-modal-card {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 450px !important;
+  transform: translateY(14px) scale(0.96) !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.auth-modal-overlay.active .auth-modal-card {
+  transform: translateY(0) scale(1) !important;
+}
+
+.auth-modal-close-btn {
+  position: absolute !important;
+  top: 14px !important;
+  right: 14px !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  border: 1px solid var(--line) !important;
+  background: var(--paper) !important;
+  color: var(--steel) !important;
+  font-size: 20px !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  z-index: 10 !important;
+  transition: all 0.15s ease !important;
+}
+
+.auth-modal-close-btn:hover {
+  color: var(--ink) !important;
+  background: rgba(239, 68, 68, 0.1) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+html.dark .auth-modal-close-btn {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #94a3b8 !important;
+}
+
+html.dark .auth-modal-close-btn:hover {
+  color: #ffffff !important;
+  background: rgba(239, 68, 68, 0.25) !important;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+}
+
+@media (max-width: 640px) {
+  .auth-top-nav {
+    padding: 10px 14px !important;
+  }
+  .auth-nav-right {
+    gap: 6px !important;
+  }
+  .nav-auth-btn {
+    height: 32px !important;
+    padding: 0 10px !important;
+    font-size: 12px !important;
+  }
+  .auth-live-pill {
+    display: none !important;
+  }
+  .auth-modal-card {
+    max-width: 95% !important;
+    margin: 0 auto !important;
+  }
+}
+

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - AI Predictive Personnel Stress &amp; Readiness Platform</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=9.3">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=9.4">
 <script>
   (function(){
     var t = localStorage.getItem('apps_theme');
@@ -31,17 +31,17 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       </span>
       <span class="brand-text">APPS</span>
-      <span class="auth-live-pill"><span class="radar-pulse-dot"></span> Telemetry v2.6</span>
+      <span class="auth-live-pill"><span class="radar-pulse-dot"></span> Universal Edition v2.6</span>
     </div>
   </div>
 
+  <!-- TOP RIGHT AUTH BUTTONS (Login & Sign Up on the Same Page) -->
   <div class="auth-nav-right" style="display:flex; align-items:center; gap:10px;">
-    <!-- Top Action Buttons for Login & Sign Up -->
-    <a href="/login" class="auth-portal-link" style="color:var(--primary); font-weight:700;">
+    <button type="button" class="nav-auth-btn nav-signin-btn" onclick="openLoginModal()" title="Sign In to Your Dashboard">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
       <span>Sign In</span>
-    </a>
-    <a href="/signup" class="btn" style="padding:7px 16px; font-size:12.5px; width:auto; border-radius:20px; text-decoration:none; display:inline-flex; align-items:center; gap:5px; height:32px;">
+    </button>
+    <a href="/signup" class="nav-auth-btn nav-signup-btn" title="Create New Account">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       <span>Sign Up</span>
     </a>
@@ -60,21 +60,21 @@
   <!-- Hero Header Overview -->
   <div class="portal-header">
     <div class="portal-badge-chip">
-      <span class="chip-pulse"></span> Built for Every Working Professional &bull; Defense &amp; Enterprise
+      <span class="chip-pulse"></span> BUILT FOR EVERY WORKING PROFESSIONAL &bull; DEFENSE &amp; ENTERPRISE
     </div>
-    <div style="margin:12px 0 6px;"><div class="brand-mark">APPS</div></div>
+    <div style="margin:14px 0 6px;"><div class="brand-mark">APPS</div></div>
     <h1 style="font-size:38px; font-weight:900; letter-spacing:-0.03em; margin:10px 0 12px;">
       Proactive Stress Intelligence for Every Working Professional
     </h1>
-    <p style="font-size:15px; color:var(--steel); max-width:700px; margin:0 auto; line-height:1.6;">
+    <p style="font-size:15px; color:var(--steel); max-width:720px; margin:0 auto; line-height:1.6;">
       Continuous psychological readiness monitoring, automated burnout early-warning, and 24/7 confidential AI support &mdash; designed for Personnel, Officers, and Admins across modern corporate, IT, healthcare, and defense operations.
     </p>
 
     <!-- Top Call-to-Action Buttons -->
     <div style="display:flex; justify-content:center; gap:12px; margin-top:24px; flex-wrap:wrap;">
-      <a href="/login" class="btn" style="padding:12px 28px; font-size:14px; width:auto;">
+      <button type="button" class="btn" onclick="openLoginModal()" style="padding:12px 28px; font-size:14px; width:auto; cursor:pointer;">
         Sign In to APPS &rarr;
-      </a>
+      </button>
       <a href="/signup" class="btn-outline" style="padding:12px 24px; font-size:14px; width:auto;">
         Create New Account
       </a>
@@ -130,12 +130,18 @@
         </div>
       </div>
     </div>
+
+    <!-- Security & Privacy Seal -->
+    <div style="display:flex; justify-content:center; align-items:center; gap:8px; margin-top:20px; font-size:12px; font-weight:600; color:var(--steel);">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <span>Enterprise End-to-End Cryptography &bull; Zero Public Telemetry Exposure</span>
+    </div>
   </div>
 
   <!-- Role Portals (Strictly Personnel, Officer, Admin) -->
   <div style="text-align:center; margin-bottom:20px;">
-    <span style="font-size:11px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--primary);">SELECT YOUR PORTAL</span>
-    <h3 style="margin:4px 0 0; font-size:22px; font-weight:800; color:var(--ink);">Role-Based Workspaces</h3>
+    <span style="font-size:11px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--primary);">SELECT YOUR WORKSPACE</span>
+    <h3 style="margin:4px 0 0; font-size:22px; font-weight:800; color:var(--ink);">Role-Based Portals</h3>
   </div>
 
   <div class="portal-grid">
@@ -154,7 +160,7 @@
         <span class="portal-feat-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>Confidential Support</span>
       </div>
       <div class="btn-group">
-        <a href="/login" class="btn">Personnel Login &rarr;</a>
+        <button type="button" class="btn" onclick="openLoginModal('personnel')">Personnel Login &rarr;</button>
         <a href="/signup?role=personnel" class="btn-outline">Register as Personnel</a>
       </div>
     </div>
@@ -173,7 +179,7 @@
         <span class="portal-feat-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:4px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Team Readiness</span>
       </div>
       <div class="btn-group">
-        <a href="/login" class="btn">Officer Login &rarr;</a>
+        <button type="button" class="btn" onclick="openLoginModal('officer')">Officer Login &rarr;</button>
         <a href="/signup?role=officer" class="btn-outline">Register as Officer</a>
       </div>
     </div>
@@ -192,7 +198,7 @@
         <span class="portal-feat-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Executive Reports</span>
       </div>
       <div class="btn-group">
-        <a href="/login" class="btn">Admin Login &rarr;</a>
+        <button type="button" class="btn" onclick="openLoginModal('admin')">Admin Login &rarr;</button>
         <a href="/signup?role=admin" class="btn-outline">Register as Admin</a>
       </div>
     </div>
@@ -201,7 +207,147 @@
 
 </div>
 
+<!-- IN-PAGE GLASSMORPHIC LOGIN MODAL (Opens right on this same page) -->
+<div class="auth-modal-overlay" id="loginModalOverlay" onclick="if(event.target === this) closeLoginModal()">
+  <div class="auth-modal-card">
+    <button type="button" class="auth-modal-close-btn" onclick="closeLoginModal()" title="Close Login Modal">&times;</button>
+    <div class="auth-card modern-auth-card">
+      <div class="card-glow-top"></div>
+
+      <div class="auth-card-header">
+        <div class="auth-card-pill">
+          <span class="auth-pill-dot"></span>
+          <span>SECURE ACCESS PORTAL</span>
+        </div>
+        <h2 class="auth-title">Sign In to APPS</h2>
+        <p class="auth-subtitle">Enter your registered credentials to access your dashboard.</p>
+      </div>
+
+      <form method="POST" action="/login" class="auth-form" id="loginForm">
+        <!-- Field 1: Name -->
+        <div class="auth-field-group">
+          <label class="auth-field-label" for="loginModalName">
+            <span>Registered Name</span>
+          </label>
+          <div class="auth-input-container">
+            <span class="auth-input-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            <input type="text" id="loginModalName" name="name" class="auth-text-input" placeholder="Enter your registered name" required autofocus autocomplete="username">
+          </div>
+        </div>
+
+        <!-- Field 2: Password -->
+        <div class="auth-field-group">
+          <div class="auth-label-row">
+            <label class="auth-field-label" for="loginModalPassword">
+              <span>Account Password</span>
+            </label>
+            <a href="/forgot_password" class="auth-forgot-link">Forgot Password?</a>
+          </div>
+          <div class="auth-input-container">
+            <span class="auth-input-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+            <input type="password" id="loginModalPassword" name="password" class="auth-text-input auth-password-input" placeholder="Enter your password" required autocomplete="current-password">
+            <button type="button" class="pwd-toggle-btn auth-eye-btn" onclick="togglePasswordVisibility('loginModalPassword', this)" aria-label="Toggle password visibility" title="Show / Hide Password">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="auth-submit-btn">
+          <span>Sign In to Dashboard</span>
+          <svg class="submit-arrow-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </form>
+
+      <div class="auth-switch-row">
+        <span>Don't have an account?</span>
+        <a href="/signup" class="auth-switch-link">Create an Account &rarr;</a>
+      </div>
+
+      <!-- Role Registration Selector (Strictly Personnel, Officer, Admin) -->
+      <div class="auth-roles-section">
+        <div class="roles-divider">
+          <span>NEW REGISTRATION BY ROLE</span>
+        </div>
+        <div class="auth-role-chips-grid">
+          <a href="/signup?role=personnel" class="auth-role-card role-employee" title="Register as Personnel">
+            <div class="role-icon-pill">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+            </div>
+            <div class="role-info">
+              <span class="role-title">Personnel</span>
+              <span class="role-desc">Role Registration</span>
+            </div>
+          </a>
+
+          <a href="/signup?role=officer" class="auth-role-card role-counselor" title="Register as Officer">
+            <div class="role-icon-pill">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="role-info">
+              <span class="role-title">Officer</span>
+              <span class="role-desc">Counselor &amp; Lead</span>
+            </div>
+          </a>
+
+          <a href="/signup?role=admin" class="auth-role-card role-admin" title="Register as Admin">
+            <div class="role-icon-pill">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <div class="role-info">
+              <span class="role-title">Admin</span>
+              <span class="role-desc">Leadership &amp; System</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <script>
+  function openLoginModal(roleHint) {
+    var overlay = document.getElementById('loginModalOverlay');
+    if (overlay) {
+      overlay.classList.add('active');
+      setTimeout(function(){
+        var inp = document.getElementById('loginModalName');
+        if (inp) inp.focus();
+      }, 100);
+    }
+  }
+
+  function closeLoginModal() {
+    var overlay = document.getElementById('loginModalOverlay');
+    if (overlay) overlay.classList.remove('active');
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLoginModal();
+  });
+
+  var EYE_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+  var EYE_OFF_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+
+  function togglePasswordVisibility(id, btn) {
+    var inp = document.getElementById(id);
+    if (!inp) return;
+    if (inp.type === 'password') {
+      inp.type = 'text';
+      btn.innerHTML = EYE_OFF_SVG;
+      btn.title = 'Hide Password';
+    } else {
+      inp.type = 'password';
+      btn.innerHTML = EYE_SVG;
+      btn.title = 'Show Password';
+    }
+  }
+
   (function(){
     document.querySelectorAll('.theme-toggle').forEach(function(btn){
       btn.addEventListener('click', function(){
