@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - Unified Login</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=9.5">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=9.6">
 <script>
   (function(){
     var t = localStorage.getItem('apps_theme');
@@ -34,13 +34,12 @@
       <span>Back to Website</span>
     </a>
     <span class="auth-nav-divider"></span>
-    <div class="auth-brand-badge">
+    <a href="/" class="auth-brand-badge" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
       <span class="brand-shield-icon-sm">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       </span>
       <span class="brand-text">APPS</span>
-      <span class="auth-live-pill"><span class="radar-pulse-dot"></span> Unified Login</span>
-    </div>
+    </a>
   </div>
 
   <div class="auth-nav-right">
@@ -60,13 +59,9 @@
     <div class="auth-card modern-auth-card">
       <div class="card-glow-top"></div>
 
-      <div class="auth-card-header">
-        <div class="auth-card-pill">
-          <span class="auth-pill-dot"></span>
-          <span>SECURE ACCESS PORTAL</span>
-        </div>
-        <h2 class="auth-title">Sign In to APPS</h2>
-        <p class="auth-subtitle">Enter your registered credentials to access your unified dashboard.</p>
+      <div class="auth-card-header" style="text-align:center; margin-bottom:24px;">
+        <h1 class="auth-title" style="text-align:center; font-size:26px; margin:0 0 6px;">Sign In to APPS</h1>
+        <p class="auth-subtitle" style="text-align:center;">Enter your registered credentials to access your unified dashboard.</p>
       </div>
 
       <!-- Alerts -->

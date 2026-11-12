@@ -488,41 +488,72 @@ header.top .logout-link:hover {
 .role-tabs {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  background: #f1f5f9;
+  background: rgba(241, 245, 249, 0.7);
   border-radius: 12px;
   padding: 5px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   gap: 6px;
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid rgba(226, 232, 240, 0.8);
+  border: 1px solid var(--line);
+}
+
+html.dark .role-tabs {
+  background: rgba(30, 41, 59, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .role-tab {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 10px 8px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  text-decoration: none;
-  color: var(--steel);
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  white-space: nowrap;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  gap: 6px !important;
+  padding: 10px 8px !important;
+  font-family: inherit !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  color: var(--steel) !important;
+  border-radius: 9px !important;
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+}
+
+.role-tab svg, .role-tab .role-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
 }
 
 .role-tab:hover {
-  color: var(--ink);
-  background: rgba(255, 255, 255, 0.7);
+  color: var(--ink) !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+}
+
+html.dark .role-tab:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #ffffff !important;
 }
 
 .role-tab.active {
-  background: #ffffff;
-  color: var(--steel-deep);
-  box-shadow: var(--shadow-sm);
+  background: #ffffff !important;
+  color: var(--primary) !important;
+  border-color: rgba(37, 99, 235, 0.25) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+}
+
+html.dark .role-tab.active {
+  background: #1e293b !important;
+  color: #60a5fa !important;
+  border-color: rgba(59, 130, 246, 0.35) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
 }
 
 /* Portal Landing Gateway */
@@ -9559,21 +9590,34 @@ html.dark .auth-alert-box.alert-error {
   position: relative !important;
   display: flex !important;
   align-items: center !important;
+  width: 100% !important;
 }
 
 .auth-input-icon {
   position: absolute !important;
   left: 14px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 18px !important;
+  height: 18px !important;
   display: flex !important;
   align-items: center !important;
+  justify-content: center !important;
   color: var(--steel) !important;
   pointer-events: none !important;
+  z-index: 2 !important;
+}
+
+.auth-input-icon svg {
+  width: 17px !important;
+  height: 17px !important;
+  display: block !important;
 }
 
 .auth-text-input {
   width: 100% !important;
   height: 48px !important;
-  padding: 0 14px 0 42px !important;
+  padding: 0 44px 0 42px !important;
   border-radius: 12px !important;
   border: 1.5px solid var(--line) !important;
   background: rgba(255, 255, 255, 0.7) !important;
@@ -9604,7 +9648,7 @@ html.dark .auth-text-input:focus {
 }
 
 .auth-password-input {
-  padding-right: 44px !important;
+  padding-right: 46px !important;
 }
 
 .auth-eye-btn {
@@ -9612,12 +9656,26 @@ html.dark .auth-text-input:focus {
   right: 8px !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
-  width: 32px !important;
-  height: 32px !important;
+  width: 34px !important;
+  height: 34px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   border: none !important;
   background: transparent !important;
   color: var(--steel) !important;
   cursor: pointer !important;
+  z-index: 3 !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  transition: color 0.15s ease, background-color 0.15s ease !important;
+}
+
+.auth-eye-btn svg {
+  width: 17px !important;
+  height: 17px !important;
+  display: block !important;
+}
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
