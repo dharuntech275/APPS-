@@ -10065,3 +10065,205 @@ html.dark .auth-modal-close-btn:hover {
   }
 }
 
+/* ==========================================================================
+   PRECISION ICON & INPUT BOX ALIGNMENT (SIGN IN & SIGN UP)
+   ========================================================================== */
+
+/* Input container as clean relative box with fixed 48px height */
+.auth-card.modern-auth-card .auth-input-container,
+.modern-auth-card .auth-input-container {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Force zero bottom-margin and exact padding on inputs */
+.auth-card.modern-auth-card .auth-input-container input,
+.auth-card.modern-auth-card input.auth-text-input,
+.modern-auth-card input.auth-text-input,
+.auth-card.modern-auth-card input[type="text"],
+.auth-card.modern-auth-card input[type="password"] {
+  display: block !important;
+  width: 100% !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  line-height: 48px !important;
+  margin: 0 !important;
+  margin-bottom: 0 !important;
+  padding: 0 46px 0 44px !important;
+  font-size: 14px !important;
+  box-sizing: border-box !important;
+  border-radius: 12px !important;
+  border: 1.5px solid var(--line) !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  color: var(--ink) !important;
+  outline: none !important;
+}
+
+html.dark .auth-card.modern-auth-card .auth-input-container input,
+html.dark .auth-card.modern-auth-card input.auth-text-input,
+html.dark .modern-auth-card input.auth-text-input,
+html.dark .auth-card.modern-auth-card input[type="text"],
+html.dark .auth-card.modern-auth-card input[type="password"] {
+  background: rgba(30, 41, 59, 0.6) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #f8fafc !important;
+}
+
+/* Left Icon: Exact Vertical Center (top: 50%, translateY(-50%)) */
+.auth-card.modern-auth-card .auth-input-container .auth-input-icon,
+.modern-auth-card .auth-input-container .auth-input-icon {
+  position: absolute !important;
+  left: 14px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  -webkit-transform: translateY(-50%) !important;
+  width: 20px !important;
+  height: 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  pointer-events: none !important;
+  z-index: 5 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--steel) !important;
+}
+
+.auth-card.modern-auth-card .auth-input-container .auth-input-icon svg,
+.modern-auth-card .auth-input-container .auth-input-icon svg {
+  width: 17px !important;
+  height: 17px !important;
+  display: block !important;
+  margin: auto !important;
+}
+
+/* Right Eye Toggle Button: Exact Vertical Center (top: 50%, translateY(-50%)) */
+.auth-card.modern-auth-card .auth-input-container .auth-eye-btn,
+.auth-card.modern-auth-card .auth-input-container .pwd-toggle-btn,
+.modern-auth-card .auth-input-container .auth-eye-btn,
+.modern-auth-card .auth-input-container .pwd-toggle-btn {
+  position: absolute !important;
+  right: 10px !important;
+  top: 50% !important;
+  bottom: auto !important;
+  transform: translateY(-50%) !important;
+  -webkit-transform: translateY(-50%) !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  z-index: 6 !important;
+  color: var(--steel) !important;
+  border-radius: 50% !important;
+  transition: color 0.15s ease, background 0.15s ease !important;
+}
+
+.auth-card.modern-auth-card .auth-input-container .auth-eye-btn:hover,
+.auth-card.modern-auth-card .auth-input-container .pwd-toggle-btn:hover,
+.modern-auth-card .auth-input-container .auth-eye-btn:hover,
+.modern-auth-card .auth-input-container .pwd-toggle-btn:hover {
+  color: var(--ink) !important;
+  background: rgba(0, 0, 0, 0.06) !important;
+}
+
+html.dark .auth-card.modern-auth-card .auth-input-container .auth-eye-btn:hover,
+html.dark .auth-card.modern-auth-card .auth-input-container .pwd-toggle-btn:hover,
+html.dark .modern-auth-card .auth-input-container .auth-eye-btn:hover,
+html.dark .modern-auth-card .auth-input-container .pwd-toggle-btn:hover {
+  color: #f8fafc !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+.auth-card.modern-auth-card .auth-input-container .auth-eye-btn svg,
+.auth-card.modern-auth-card .auth-input-container .pwd-toggle-btn svg,
+.modern-auth-card .auth-input-container .auth-eye-btn svg,
+.modern-auth-card .auth-input-container .pwd-toggle-btn svg {
+  width: 17px !important;
+  height: 17px !important;
+  display: block !important;
+  margin: auto !important;
+}
+
+/* Role Selector Tabs (Signup Page) */
+.auth-card.modern-auth-card .role-tabs,
+.modern-auth-card .role-tabs {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 8px !important;
+  margin: 16px 0 20px !important;
+  padding: 6px !important;
+  box-sizing: border-box !important;
+}
+
+.auth-card.modern-auth-card .role-tab,
+.modern-auth-card .role-tab {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  height: 38px !important;
+  padding: 0 8px !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  box-sizing: border-box !important;
+}
+
+.auth-card.modern-auth-card .role-tab svg,
+.auth-card.modern-auth-card .role-tab .role-icon,
+.modern-auth-card .role-tab svg,
+.modern-auth-card .role-tab .role-icon {
+  width: 14px !important;
+  height: 14px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+}
+
+/* Role Registration Chips (Login Page / Modal) */
+.auth-card.modern-auth-card .auth-role-card,
+.modern-auth-card .auth-role-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  padding: 12px 6px !important;
+  border-radius: 12px !important;
+}
+
+.auth-card.modern-auth-card .role-icon-pill,
+.modern-auth-card .role-icon-pill {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 auto 6px auto !important;
+  flex-shrink: 0 !important;
+}
+
+.auth-card.modern-auth-card .role-icon-pill svg,
+.modern-auth-card .role-icon-pill svg {
+  width: 15px !important;
+  height: 15px !important;
+  display: block !important;
+  margin: auto !important;
+}
+
+
