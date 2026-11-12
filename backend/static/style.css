@@ -9180,27 +9180,38 @@ html.dark .auth-live-pill {
 .auth-theme-btn {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 6px !important;
-  padding: 6px 14px !important;
-  border-radius: 20px !important;
-  border: 1px solid var(--line) !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  border: 1.5px solid var(--line) !important;
   background: var(--paper) !important;
   color: var(--ink) !important;
-  font-size: 12.5px !important;
-  font-weight: 700 !important;
   cursor: pointer !important;
-  transition: all 0.2s ease !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  flex-shrink: 0 !important;
+  box-sizing: border-box !important;
 }
 
 .auth-theme-btn:hover {
   transform: translateY(-1px) !important;
-  border-color: rgba(37, 99, 235, 0.35) !important;
+  border-color: rgba(37, 99, 235, 0.45) !important;
+  background: rgba(37, 99, 235, 0.08) !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08) !important;
 }
 
 html.dark .auth-theme-btn {
   background: rgba(30, 41, 59, 0.8) !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
   color: #f1f5f9 !important;
+}
+
+html.dark .auth-theme-btn:hover {
+  background: rgba(37, 99, 235, 0.22) !important;
+  border-color: rgba(59, 130, 246, 0.5) !important;
+  color: #93c5fd !important;
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.35) !important;
 }
 
 /* Main Split Auth Wrapper */
@@ -9980,12 +9991,19 @@ html.dark .auth-modal-close-btn:hover {
     padding: 0 10px !important;
     font-size: 12px !important;
   }
+  .auth-theme-btn {
+    width: 32px !important;
+    height: 32px !important;
+  }
   .auth-live-pill {
     display: none !important;
   }
   .auth-modal-card {
     max-width: 95% !important;
     margin: 0 auto !important;
+  }
+  .portal-shell {
+    padding: 24px 14px 60px !important;
   }
 }
 

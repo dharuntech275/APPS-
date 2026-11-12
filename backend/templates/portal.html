@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>APPS - AI Predictive Personnel Stress &amp; Readiness Platform</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=9.4">
+<title>APPS - AI Predictive Personnel Stress &amp; Welfare Monitoring Systems</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=9.5">
 <script>
   (function(){
     var t = localStorage.getItem('apps_theme');
@@ -35,7 +35,7 @@
     </div>
   </div>
 
-  <!-- TOP RIGHT AUTH BUTTONS (Login & Sign Up on the Same Page) -->
+  <!-- TOP RIGHT AUTH & THEME CONTROLS -->
   <div class="auth-nav-right" style="display:flex; align-items:center; gap:10px;">
     <button type="button" class="nav-auth-btn nav-signin-btn" onclick="openLoginModal()" title="Sign In to Your Dashboard">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
@@ -50,159 +50,76 @@
         <svg class="theme-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
         <svg class="theme-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </span>
-      <span class="theme-toggle-label">Theme</span>
     </button>
   </div>
 </header>
 
-<div class="portal-shell" style="position:relative; z-index:5;">
+<div class="portal-shell" style="position:relative; z-index:5; max-width:1120px; margin:0 auto; padding:44px 20px 80px; box-sizing:border-box;">
 
   <!-- Hero Header Overview -->
-  <div class="portal-header">
-    <div class="portal-badge-chip">
+  <div class="portal-header" style="text-align:center; max-width:860px; margin:0 auto 46px;">
+    <div class="portal-badge-chip" style="display:inline-flex; align-items:center; gap:8px; margin-bottom:16px;">
       <span class="chip-pulse"></span> BUILT FOR EVERY WORKING PROFESSIONAL &bull; DEFENSE &amp; ENTERPRISE
     </div>
-    <div style="margin:14px 0 6px;"><div class="brand-mark">APPS</div></div>
-    <h1 style="font-size:38px; font-weight:900; letter-spacing:-0.03em; margin:10px 0 12px;">
-      Proactive Stress Intelligence for Every Working Professional
-    </h1>
-    <p style="font-size:15px; color:var(--steel); max-width:720px; margin:0 auto; line-height:1.6;">
-      Continuous psychological readiness monitoring, automated burnout early-warning, and 24/7 confidential AI support &mdash; designed for Personnel, Officers, and Admins across modern corporate, IT, healthcare, and defense operations.
-    </p>
-
-    <!-- Top Call-to-Action Buttons -->
-    <div style="display:flex; justify-content:center; gap:12px; margin-top:24px; flex-wrap:wrap;">
-      <button type="button" class="btn" onclick="openLoginModal()" style="padding:12px 28px; font-size:14px; width:auto; cursor:pointer;">
-        Sign In to APPS &rarr;
-      </button>
-      <a href="/signup" class="btn-outline" style="padding:12px 24px; font-size:14px; width:auto;">
-        Create New Account
-      </a>
-      <a href="/guide" target="_blank" class="btn-outline" style="padding:12px 20px; font-size:13px; width:auto; display:inline-flex; align-items:center; gap:6px;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-        Features Guide (PDF)
-      </a>
-      <a href="/documentation" target="_blank" class="btn-outline" style="padding:12px 20px; font-size:13px; width:auto; display:inline-flex; align-items:center; gap:6px;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        System Docs (PDF)
-      </a>
+    <div style="margin:6px 0 10px;">
+      <div class="brand-mark" style="font-size:36px; font-weight:900; letter-spacing:0.04em;">APPS</div>
     </div>
+    <h1 style="font-size:clamp(24px, 3.8vw, 36px); font-weight:900; letter-spacing:-0.03em; margin:0 0 16px; line-height:1.25; color:var(--ink);">
+      AI Predictive Personnel Stress &amp; Welfare Monitoring Systems
+    </h1>
+    <p style="font-size:clamp(14.5px, 1.8vw, 16px); color:var(--steel); max-width:760px; margin:0 auto; line-height:1.65;">
+      Continuous biometric telemetry and psychological readiness intelligence engineered for high-performance workforces.<br>
+      Automated 7-day fatigue forecasting and 24/7 confidential AI support across Defense, Corporate, and IT operations.
+    </p>
   </div>
 
   <!-- 3 Interactive Feature Showcase Cards -->
-  <div style="max-width:1100px; margin:36px auto 48px;">
-    <div style="text-align:center; margin-bottom:20px;">
-      <span style="font-size:11px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--primary);">CORE INTELLIGENCE FEATURES</span>
-      <h3 style="margin:4px 0 0; font-size:22px; font-weight:800; color:var(--ink);">Comprehensive Telemetry &amp; Early-Warning Stack</h3>
+  <div style="max-width:1050px; margin:0 auto 36px;">
+    <div style="text-align:center; margin-bottom:24px;">
+      <span style="font-size:11px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--primary);">CORE INTELLIGENCE FEATURES</span>
+      <h2 style="margin:6px 0 0; font-size:clamp(19px, 2.4vw, 23px); font-weight:800; color:var(--ink);">Comprehensive Telemetry &amp; Early-Warning Stack</h2>
     </div>
 
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:18px;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:20px;">
       <!-- Feature 1 -->
-      <div class="showcase-feature-card" style="background:rgba(255,255,255,0.85); padding:20px 18px; border-radius:18px;">
+      <div class="showcase-feature-card" style="background:rgba(255,255,255,0.85); padding:24px 20px; border-radius:18px;">
         <div class="feature-icon-box box-blue" style="width:44px; height:44px;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
         </div>
         <div class="feature-text">
-          <div class="feature-title" style="font-size:15px; margin-bottom:4px;">Real-Time Biometric &amp; HRV Telemetry</div>
-          <div class="feature-subtitle" style="font-size:12.5px; line-height:1.5;">Automatic wearable integration with Apple Watch, WearOS, Garmin &amp; Fitbit to track stress baselines, resting pulse, and sleep debt.</div>
+          <div class="feature-title" style="font-size:15px; margin-bottom:6px;">Real-Time Biometric &amp; HRV Telemetry</div>
+          <div class="feature-subtitle" style="font-size:13px; line-height:1.5;">Automatic wearable integration with Apple Watch, WearOS, Garmin &amp; Fitbit to track stress baselines, resting pulse, and sleep debt.</div>
         </div>
       </div>
 
       <!-- Feature 2 -->
-      <div class="showcase-feature-card" style="background:rgba(255,255,255,0.85); padding:20px 18px; border-radius:18px;">
+      <div class="showcase-feature-card" style="background:rgba(255,255,255,0.85); padding:24px 20px; border-radius:18px;">
         <div class="feature-icon-box box-green" style="width:44px; height:44px;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>
         </div>
         <div class="feature-text">
-          <div class="feature-title" style="font-size:15px; margin-bottom:4px;">24/7 AI Psychological Companion</div>
-          <div class="feature-subtitle" style="font-size:12.5px; line-height:1.5;">Confidential empathetic AI support, tactical 4-7-8 breathing visualizer, personalized self-care prompts, and direct crisis beacon support.</div>
+          <div class="feature-title" style="font-size:15px; margin-bottom:6px;">24/7 AI Psychological Wellness Companion</div>
+          <div class="feature-subtitle" style="font-size:13px; line-height:1.5;">Confidential empathetic AI support, tactical 4-7-8 breathing visualizer, personalized self-care prompts, and direct crisis beacon support.</div>
         </div>
       </div>
 
       <!-- Feature 3 -->
-      <div class="showcase-feature-card" style="background:rgba(255,255,255,0.85); padding:20px 18px; border-radius:18px;">
+      <div class="showcase-feature-card" style="background:rgba(255,255,255,0.85); padding:24px 20px; border-radius:18px;">
         <div class="feature-icon-box box-purple" style="width:44px; height:44px;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
         </div>
         <div class="feature-text">
-          <div class="feature-title" style="font-size:15px; margin-bottom:4px;">Predictive Burnout &amp; Fatigue Early-Warning</div>
-          <div class="feature-subtitle" style="font-size:12.5px; line-height:1.5;">7-day risk forecasting algorithms that detect cumulative fatigue and burnout before they impact personal and team performance.</div>
+          <div class="feature-title" style="font-size:15px; margin-bottom:6px;">Predictive Burnout &amp; Fatigue Early-Warning</div>
+          <div class="feature-subtitle" style="font-size:13px; line-height:1.5;">7-day risk forecasting algorithms that detect cumulative fatigue and burnout before they impact personal and team performance.</div>
         </div>
       </div>
     </div>
 
     <!-- Security & Privacy Seal -->
-    <div style="display:flex; justify-content:center; align-items:center; gap:8px; margin-top:20px; font-size:12px; font-weight:600; color:var(--steel);">
+    <div style="display:flex; justify-content:center; align-items:center; gap:8px; margin-top:28px; font-size:12.5px; font-weight:600; color:var(--steel);">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
       <span>Enterprise End-to-End Cryptography &bull; Zero Public Telemetry Exposure</span>
     </div>
-  </div>
-
-  <!-- Role Portals (Strictly Personnel, Officer, Admin) -->
-  <div style="text-align:center; margin-bottom:20px;">
-    <span style="font-size:11px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--primary);">SELECT YOUR WORKSPACE</span>
-    <h3 style="margin:4px 0 0; font-size:22px; font-weight:800; color:var(--ink);">Role-Based Portals</h3>
-  </div>
-
-  <div class="portal-grid">
-
-    <!-- Card 1: Personnel -->
-    <div class="portal-card">
-      <div class="badge-role badge-personnel">Personnel</div>
-      <div class="portal-icon">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
-      </div>
-      <h2>Personnel</h2>
-      <p>Submit daily wellness check-ins, track work fatigue, monitor sleep balance, chat with 24/7 AI wellness companion, and request confidential counseling.</p>
-      <div class="portal-features">
-        <span class="portal-feat-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="vertical-align:middle; margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Health Studio</span>
-        <span class="portal-feat-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:4px;"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>AI Wellness Companion</span>
-        <span class="portal-feat-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>Confidential Support</span>
-      </div>
-      <div class="btn-group">
-        <button type="button" class="btn" onclick="openLoginModal('personnel')">Personnel Login &rarr;</button>
-        <a href="/signup?role=personnel" class="btn-outline">Register as Personnel</a>
-      </div>
-    </div>
-
-    <!-- Card 2: Officer -->
-    <div class="portal-card">
-      <div class="badge-role badge-officer">Officer</div>
-      <div class="portal-icon">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-      </div>
-      <h2>Officer</h2>
-      <p>Monitor team psychological readiness, review automated AI case briefings, triage urgent SOS alerts, and conduct 1-on-1 counseling.</p>
-      <div class="portal-features">
-        <span class="portal-feat-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="vertical-align:middle; margin-right:4px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Smart SOS Triage</span>
-        <span class="portal-feat-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:4px;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><polyline points="9 14 11 16 15 11"/></svg>AI Case Intelligence</span>
-        <span class="portal-feat-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:4px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Team Readiness</span>
-      </div>
-      <div class="btn-group">
-        <button type="button" class="btn" onclick="openLoginModal('officer')">Officer Login &rarr;</button>
-        <a href="/signup?role=officer" class="btn-outline">Register as Officer</a>
-      </div>
-    </div>
-
-    <!-- Card 3: Admin -->
-    <div class="portal-card">
-      <div class="badge-role badge-admin">Admin</div>
-      <div class="portal-icon">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      </div>
-      <h2>Admin</h2>
-      <p>Analyze organization-wide workforce health, simulate 7-day predictive team burnout risk, and generate executive wellness reports.</p>
-      <div class="portal-features">
-        <span class="portal-feat-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="vertical-align:middle; margin-right:4px;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>7-Day Burnout Forecast</span>
-        <span class="portal-feat-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:4px;"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>Team Analytics</span>
-        <span class="portal-feat-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Executive Reports</span>
-      </div>
-      <div class="btn-group">
-        <button type="button" class="btn" onclick="openLoginModal('admin')">Admin Login &rarr;</button>
-        <a href="/signup?role=admin" class="btn-outline">Register as Admin</a>
-      </div>
-    </div>
-
   </div>
 
 </div>
@@ -249,7 +166,7 @@
             <span class="auth-input-icon">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             </span>
-            <input type="password" id="loginModalPassword" name="password" class="auth-text-input auth-password-input" placeholder="Enter your password" required autocomplete="current-password">
+            <input type="password" id="loginModalPassword" name="password" class="auth-text-input" placeholder="Enter your password" required autocomplete="current-password">
             <button type="button" class="pwd-toggle-btn auth-eye-btn" onclick="togglePasswordVisibility('loginModalPassword', this)" aria-label="Toggle password visibility" title="Show / Hide Password">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
@@ -357,6 +274,5 @@
     });
   })();
 </script>
-
 </body>
 </html>
