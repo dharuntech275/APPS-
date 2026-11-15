@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - Talk to Welfare Officer</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=9.9">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=10.0">
 <script>
   (function(){
     var t = localStorage.getItem('apps_theme');
@@ -19,7 +19,27 @@
 
     {% include "_header.html" %}
 
-  <h2 class="page-title" style="margin-bottom:22px;">Talk to Welfare Officer</h2>
+  <div class="welcome-banner personnel-banner modern-hero-banner" style="margin-bottom:24px;">
+    <div class="hero-glow-orb hero-glow-1"></div>
+    <div class="hero-glow-orb hero-glow-2"></div>
+    <div class="welcome-banner-content">
+      <div class="hero-date-row" style="margin-bottom:10px;">
+        <span class="hero-date-pill">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Confidential Communication
+        </span>
+      </div>
+      <h2 class="hero-title">Talk to Welfare Officer</h2>
+      <p class="hero-subtitle">Private, secure communication with your unit welfare officer and psychological support lead.</p>
+    </div>
+  </div>
+
+  <div style="margin-bottom:20px;">
+    <a href="/dashboard" class="btn-outline" style="display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:12px; font-weight:700; font-size:13px; text-decoration:none;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <span>Back to Check-in</span>
+    </a>
+  </div>
 
   <div class="card" id="talk">
     <h3>New Message</h3>

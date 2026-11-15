@@ -556,22 +556,69 @@
 
   <div class="nav-links">
   {% if role == 'personnel' %}
-    <a href="/dashboard" class="nav-item {% if p == '/dashboard' %}active{% endif %}">
+    <a href="/dashboard" class="nav-item nav-item-home {% if p == '/dashboard' %}active{% endif %}">
       <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
-      <span>Dashboard</span>
+      <span style="flex:1;">Dashboard Overview</span>
+      {% if p == '/dashboard' %}<span class="nav-active-pill">Active</span>{% endif %}
     </a>
-    <a href="/snapshot" class="nav-item {% if p == '/snapshot' %}active{% endif %}">
-      <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      <span>Daily Snapshot</span>
-    </a>
-    <a href="/talk_to_officer" class="nav-item {% if p == '/talk_to_officer' %}active{% endif %}">
-      <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      <span>Talk to Officer</span>
-    </a>
-    <a href="/results" class="nav-item {% if p == '/results' %}active{% endif %}">
-      <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-      <span>My Results</span>
-    </a>
+
+    <div class="nav-section">Core Welfare Features</div>
+    <div class="drawer-feature-cards">
+      <!-- Feature 1: Daily Snapshot -->
+      <a href="/snapshot" class="drawer-feat-card feat-snapshot {% if p == '/snapshot' %}active{% endif %}" onclick="closeNavDrawer();">
+        <div class="feat-card-top">
+          <span class="feat-icon-badge feat-badge-snapshot">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </span>
+          <span class="feat-status-pill feat-pill-snapshot">24h Pulse</span>
+        </div>
+        <div class="feat-card-body">
+          <div class="feat-title">Daily Snapshot</div>
+          <div class="feat-desc">Immediate biometric telemetry &amp; stress speedometer</div>
+        </div>
+        <div class="feat-action-link">
+          <span>View Daily Snapshot</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </a>
+
+      <!-- Feature 2: My Results -->
+      <a href="/results" class="drawer-feat-card feat-results {% if p == '/results' %}active{% endif %}" onclick="closeNavDrawer();">
+        <div class="feat-card-top">
+          <span class="feat-icon-badge feat-badge-results">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </span>
+          <span class="feat-status-pill feat-pill-results">7-Day Trends</span>
+        </div>
+        <div class="feat-card-body">
+          <div class="feat-title">My Results</div>
+          <div class="feat-desc">Longitudinal check-in logs &amp; stress analysis history</div>
+        </div>
+        <div class="feat-action-link">
+          <span>Open Full Results</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </a>
+
+      <!-- Feature 3: Talk to Officer -->
+      <a href="/talk_to_officer" class="drawer-feat-card feat-officer {% if p == '/talk_to_officer' %}active{% endif %}" onclick="closeNavDrawer();">
+        <div class="feat-card-top">
+          <span class="feat-icon-badge feat-badge-officer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </span>
+          <span class="feat-status-pill feat-pill-officer">Confidential</span>
+        </div>
+        <div class="feat-card-body">
+          <div class="feat-title">Talk to Officer</div>
+          <div class="feat-desc">Direct private communication &amp; counselor support</div>
+        </div>
+        <div class="feat-action-link">
+          <span>Contact Officer</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </a>
+    </div>
+
     <div class="nav-section">Exports</div>
     <a href="/my/export_pdf" class="nav-item sub">
       <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>

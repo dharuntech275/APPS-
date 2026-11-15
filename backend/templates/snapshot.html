@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - Latest Snapshot</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=9.9">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=10.0">
 <style>
   /* Gauge — text-align+inline-block centering (most reliable across all browsers) */
   .gauge-center-wrapper {
@@ -29,15 +29,27 @@
 
   {% include "_header.html" %}
 
-  <div class="welcome-banner personnel-banner">
-    <div class="welcome-banner-text">
-      <h2>Latest Snapshot</h2>
+  <div class="welcome-banner personnel-banner modern-hero-banner" style="margin-bottom:24px;">
+    <div class="hero-glow-orb hero-glow-1"></div>
+    <div class="hero-glow-orb hero-glow-2"></div>
+    <div class="welcome-banner-content">
+      <div class="hero-date-row" style="margin-bottom:10px;">
+        <span class="hero-date-pill">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Daily Telemetry Snapshot
+        </span>
+      </div>
+      <h2 class="hero-title">Daily Snapshot</h2>
+      <p class="hero-subtitle">Real-time physiological readiness, 24-hour stress gauge telemetry, and operational energy balance.</p>
     </div>
   </div>
 
   <div class="snapshot-shell" style="max-width:680px; margin:0 auto 40px;">
-    <div style="margin-bottom:24px;">
-      <a href="/dashboard" class="btn-outline">&larr; Back to Check-in</a>
+    <div style="margin-bottom:20px;">
+      <a href="/dashboard" class="btn-outline" style="display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:12px; font-weight:700; font-size:13px; text-decoration:none;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <span>Back to Check-in</span>
+      </a>
     </div>
 
     <div class="card snapshot-card fade-in">
