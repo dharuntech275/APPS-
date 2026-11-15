@@ -412,11 +412,6 @@
       </span>
       <span class="menu-pill-text">Menu</span>
     </button>
-
-    <div class="desktop-status-pill">
-      <span class="radar-pulse-dot" style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10b981; box-shadow:0 0 0 3px rgba(16,185,129,0.22); flex-shrink:0;"></span>
-      <span style="font-size:12.5px; font-weight:700; color:var(--steel-deep);">Universal Workforce Telemetry &bull; Built for Every Working Professional</span>
-    </div>
   </div>
 
   <nav class="desktop-nav" aria-label="Desktop primary navigation">
@@ -528,10 +523,15 @@
   </div>
 
   <div class="nav-head">
-    <div>
-      <div class="nav-user">{{ session.get('user_name') }}</div>
-      <div class="nav-role">
-        {% if role == 'officer' %}Welfare Officer{% elif role == 'admin' %}Senior Admin{% else %}Personnel{% endif %}
+    <div style="display:flex; align-items:center; gap:10px;">
+      <span class="drawer-user-avatar" style="width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg, #2563eb, #0d9488); color:#ffffff; display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; box-shadow:0 2px 8px rgba(37,99,235,0.35); flex-shrink:0;">
+        {{ session.get('user_name', 'U')[0] }}
+      </span>
+      <div>
+        <div class="nav-user">{{ session.get('user_name') }}</div>
+        <div class="nav-role">
+          {% if role == 'officer' %}Welfare Officer{% elif role == 'admin' %}Senior Admin{% else %}Personnel{% endif %}
+        </div>
       </div>
     </div>
     <button type="button" id="navClose" class="nav-close" aria-label="Close menu">
@@ -580,21 +580,63 @@
       <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       <span>Download PDF</span>
     </a>
-    <div class="nav-section">Support &amp; Calming Tools</div>
-    
-    <button type="button" class="nav-item sub nav-btn-action" onclick="closeNavDrawer(); openAICompanion();">
-      <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>
-      <span>AI Wellness Companion</span>
-    </button>
 
-    <button type="button" class="nav-item sub nav-btn-action" onclick="closeNavDrawer(); openSOSModal();">
-      <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      <span>Crisis SOS</span>
-    </button>
-    <button type="button" class="nav-item sub nav-btn-action" onclick="closeNavDrawer(); openBreathingModal();">
-      <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
-      <span>4-7-8 Relax</span>
-    </button>
+    <div class="nav-section">Interactive Wellness Tools</div>
+    <div class="drawer-feature-cards">
+      <!-- Feature 1: AI Wellness Companion -->
+      <button type="button" class="drawer-feat-card feat-ai" onclick="closeNavDrawer(); openAICompanion();">
+        <div class="feat-card-top">
+          <span class="feat-icon-badge feat-badge-ai">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>
+          </span>
+          <span class="feat-status-pill feat-pill-live"><span class="radar-pulse-dot" style="width:6px; height:6px;"></span> 24/7 AI</span>
+        </div>
+        <div class="feat-card-body">
+          <div class="feat-title">AI Wellness Companion</div>
+          <div class="feat-desc">Empathetic support &amp; self-care guidance</div>
+        </div>
+        <div class="feat-action-link">
+          <span>Chat confidentially</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </button>
+
+      <!-- Feature 2: 4-7-8 Breathing Tool -->
+      <button type="button" class="drawer-feat-card feat-breathing" onclick="closeNavDrawer(); openBreathingModal();">
+        <div class="feat-card-top">
+          <span class="feat-icon-badge feat-badge-breathing">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
+          </span>
+          <span class="feat-status-pill feat-pill-relax">Breathwork</span>
+        </div>
+        <div class="feat-card-body">
+          <div class="feat-title">4-7-8 Tactical Breathing</div>
+          <div class="feat-desc">Visual rhythm for heart rate recovery &amp; calm</div>
+        </div>
+        <div class="feat-action-link">
+          <span>Start breathwork session</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </button>
+
+      <!-- Feature 3: Emergency Crisis SOS -->
+      <button type="button" class="drawer-feat-card feat-sos" onclick="closeNavDrawer(); openSOSModal();">
+        <div class="feat-card-top">
+          <span class="feat-icon-badge feat-badge-sos">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </span>
+          <span class="feat-status-pill feat-pill-urgent">Priority SOS</span>
+        </div>
+        <div class="feat-card-body">
+          <div class="feat-title">Crisis SOS Beacon</div>
+          <div class="feat-desc">Immediate officer alert &amp; 24/7 mental health lines</div>
+        </div>
+        <div class="feat-action-link">
+          <span>Open emergency beacon</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </button>
+    </div>
 
     {% if fatigue_forecast %}
     <div class="nav-section">Fatigue Forecaster</div>
