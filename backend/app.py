@@ -1474,6 +1474,7 @@ def dashboard():
     milestone = streak if streak in (7, 14, 30, 60, 100) else None
 
     today_str = today_local().isoformat()
+    today_formatted = today_local().strftime('%d-%m-%Y')
     checked_in_today = today_str in dates
 
     hour = now_local().hour
@@ -1532,6 +1533,7 @@ def dashboard():
         tips=tips,
         greeting=greeting,
         today=today_str,
+        today_formatted=today_formatted,
         trend_labels=trend_labels,
         trend_sleep=trend_sleep,
         trend_duty=trend_duty,
