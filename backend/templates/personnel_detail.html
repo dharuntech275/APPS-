@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - Personnel Detail</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=10.0">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=11.0">
 <script>
   (function(){
     var t = localStorage.getItem('apps_theme');
@@ -113,7 +113,7 @@
         {% set ns = namespace(last_date=None) %}
         {% for item in timeline %}
           {% if item.date != ns.last_date %}
-            <p class="history-group-label" data-date="{{ item.date }}">{{ item.date }}</p>
+            <p class="history-group-label" data-date="{{ item.date }}">{{ item.date|format_date }}</p>
             {% set ns.last_date = item.date %}
           {% endif %}
 

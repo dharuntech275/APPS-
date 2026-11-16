@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - My Results</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=10.0">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=11.0">
 <style>
 .gauge-center-wrapper {
   width: 100%;
@@ -43,7 +43,7 @@
       <div class="hero-date-row" style="margin-bottom:10px;">
         <span class="hero-date-pill">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          Stress Diagnostic History
+          {% if today_formatted %}{{ today_formatted }} &middot; {% elif today %}{{ today|format_date }} &middot; {% endif %}Stress Diagnostic History
         </span>
       </div>
       <h2 class="hero-title">My Results</h2>
@@ -70,7 +70,7 @@
   <div class="card gauge-card fade-in">
     <div class="gauge-telemetry-header">
       <span style="font-size:12px; font-weight:700; color:var(--steel); text-transform:uppercase; letter-spacing:0.05em;">Latest Diagnostic Telemetry</span>
-      <span style="font-size:12px; color:var(--steel);">Logged: <strong>{{ history[0].date }}</strong></span>
+      <span style="font-size:12px; color:var(--steel);">Logged: <strong>{{ history[0].date|format_date }}</strong></span>
     </div>
 
     <div class="gauge-center-wrapper">
@@ -117,7 +117,7 @@
         <div class="result-entry">
           <span class="result-badge badge-{{ entry.stress_level|lower }}">{{ entry.stress_level }}</span>
           <div class="result-text">
-            <p><b>Date:</b> {{ entry.date }}</p>
+            <p><b>Date:</b> {{ entry.date|format_date }}</p>
             <p><b>Recommendation:</b> {{ entry.recommendation }}</p>
           </div>
         </div>

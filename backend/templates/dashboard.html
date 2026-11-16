@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - Dashboard</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=10.0">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=11.0">
 <style>
   /* 5-Mode Clinical Readiness Colors - Instant Fail-Safe Styles */
   /* Mode 1: Struggling (Red) */
@@ -175,7 +175,7 @@
       <div class="hero-date-row" style="display:flex; align-items:center; margin-bottom:12px;">
         <span class="hero-date-pill">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          {% if today_formatted %}{{ today_formatted }}{% else %}{% set dp = today.split('-') %}{% if dp|length == 3 %}{{ dp[2] }}-{{ dp[1] }}-{{ dp[0] }}{% else %}{{ today }}{% endif %}{% endif %}
+          {{ today_formatted or (today|format_date) }}
         </span>
       </div>
       <h2 class="hero-title"><span id="greetingText">{{ greeting }}</span>, <span class="hero-username">{{ user_name }}</span></h2>

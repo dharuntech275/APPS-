@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - Latest Snapshot</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=10.0">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=11.0">
 <style>
   /* Gauge — text-align+inline-block centering (most reliable across all browsers) */
   .gauge-center-wrapper {
@@ -36,7 +36,7 @@
       <div class="hero-date-row" style="margin-bottom:10px;">
         <span class="hero-date-pill">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Daily Telemetry Snapshot
+          {% if today_formatted %}{{ today_formatted }} &middot; {% elif today %}{{ today|format_date }} &middot; {% endif %}Daily Telemetry Snapshot
         </span>
       </div>
       <h2 class="hero-title">Daily Snapshot</h2>
@@ -82,7 +82,7 @@
           <div class="gauge-reading-title" style="color:{% if latest.stress_level == 'Low' %}var(--signal-low){% elif latest.stress_level in ['Moderate', 'Medium'] %}var(--signal-med){% else %}var(--signal-high){% endif %};">
             {{ latest.stress_level }} Stress
           </div>
-          <span class="snapshot-date" style="font-size:12.5px; color:var(--steel);">Logged on: <strong>{{ latest.date }}</strong></span>
+          <span class="snapshot-date" style="font-size:12.5px; color:var(--steel);">Logged on: <strong>{{ latest.date|format_date }}</strong></span>
         </div>
         <p class="snapshot-reco" style="font-size:14px; line-height:1.6; color:var(--ink); margin-bottom:24px; text-align:center;">{{ latest.recommendation }}</p>
       {% else %}
@@ -125,12 +125,12 @@
 <script>
   (function() {
     var rawLabels = {{ trend_labels|tojson }};
-    var monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
     var formattedLabels = rawLabels.map(function(l) {
       try {
         var p = l.split('-');
         if (p.length === 3) {
-          return parseInt(p[2], 10) + ' ' + monthNames[parseInt(p[1], 10) - 1];
+          if (p[0].length === 4) return p[2] + '-' + p[1] + '-' + p[0];
+          return p[0] + '-' + p[1] + '-' + p[2];
         }
       } catch(e) {}
       return l;

@@ -249,6 +249,29 @@ app.config.update(
     PERMANENT_SESSION_LIFETIME=timedelta(hours=8),
 )
 
+
+def format_date_dmy(val):
+    """Formats an ISO date string (YYYY-MM-DD) into Indian DD-MM-YYYY format (e.g. 16-11-2026)."""
+    if not val:
+        return ""
+    val_str = str(val).strip()
+    if val_str.lower() in ("none", "null", "pending", "awaiting check-in", "-"):
+        return val_str
+    date_part = val_str
+    if " " in val_str:
+        date_part = val_str.split(" ", 1)[0]
+    elif "T" in val_str:
+        date_part = val_str.split("T", 1)[0]
+
+    parts = date_part.split("-")
+    if len(parts) == 3 and len(parts[0]) == 4:
+        return f"{parts[2]}-{parts[1]}-{parts[0]}"
+    return val_str
+
+
+app.jinja_env.filters["format_date"] = format_date_dmy
+app.jinja_env.globals["format_date"] = format_date_dmy
+
 # Trained Random Forest (made by train_model.py)
 model = joblib.load(MODEL_PATH)
 FEATURE_COLUMNS = ["sleep_hours", "duty_hours", "heart_rate", "mood_score"]
@@ -598,17 +621,17 @@ def build_trend_series(history):
     in_window = [d for d in last_7_days if d in data_by_date]
 
     if in_window:
-        labels = last_7_days
+        labels = [format_date_dmy(d) for d in last_7_days]
         sleep = [round(float(data_by_date[d]["sleep_hours"]), 1) if d in data_by_date and data_by_date[d]["sleep_hours"] is not None else 0 for d in last_7_days]
         duty = [round(float(data_by_date[d]["duty_hours"]), 1) if d in data_by_date and data_by_date[d]["duty_hours"] is not None else 0 for d in last_7_days]
     elif history:
         recent = list(history[:7])
         recent.reverse()
-        labels = [r["date"] for r in recent]
+        labels = [format_date_dmy(r["date"]) for r in recent]
         sleep = [round(float(r["sleep_hours"]), 1) if r["sleep_hours"] is not None else 0 for r in recent]
         duty = [round(float(r["duty_hours"]), 1) if r["duty_hours"] is not None else 0 for r in recent]
     else:
-        labels = last_7_days
+        labels = [format_date_dmy(d) for d in last_7_days]
         sleep = [0] * 7
         duty = [0] * 7
 
@@ -1565,6 +1588,7 @@ def snapshot():
         expected -= timedelta(days=1)
 
     trend_labels, trend_sleep, trend_duty = build_trend_series(history)
+    today_formatted = today_local().strftime('%d-%m-%Y')
 
     return render_template(
         "snapshot.html",
@@ -1573,6 +1597,8 @@ def snapshot():
         latest=latest,
         streak=streak,
         tips=tips,
+        today=today_local().isoformat(),
+        today_formatted=today_formatted,
         trend_labels=trend_labels,
         trend_sleep=trend_sleep,
         trend_duty=trend_duty,
@@ -1588,7 +1614,14 @@ def results():
         (session["user_id"],)
     ).fetchall()
     conn.close()
-    return render_template("results.html", user_name=session["user_name"], history=history)
+    today_formatted = today_local().strftime('%d-%m-%Y')
+    return render_template(
+        "results.html",
+        user_name=session["user_name"],
+        history=history,
+        today=today_local().isoformat(),
+        today_formatted=today_formatted,
+    )
 
 
 @app.route("/submit_survey", methods=["POST"])
@@ -1645,8 +1678,14 @@ def talk_to_officer():
     resolved_request = None
     if not pending_request:
         resolved_request = next((r for r in requests_list if r["stage"] in ("Resolved", "Closed")), None)
-    return render_template("talk_to_officer.html", requests=requests_list,
-   pending_request=pending_request, resolved_request=resolved_request) 
+    today_formatted = today_local().strftime('%d-%m-%Y')
+    return render_template(
+        "talk_to_officer.html",
+        requests=requests_list,
+        pending_request=pending_request,
+        resolved_request=resolved_request,
+        today_formatted=today_formatted,
+    ) 
 
 
 @app.route("/submit_stress_request", methods=["POST"])
@@ -2448,7 +2487,7 @@ def officer_export_excel():
     ws.append(["Name", "Unit", "Date", "Sleep Hrs", "Duty Hrs", "Stress Level"])
     _style_header(ws, ws.max_row)
     for p in personnel:
-        ws.append([safe_cell(p["name"]), safe_cell(p["unit"] or "-"), p["date"] or "-",
+        ws.append([safe_cell(p["name"]), safe_cell(p["unit"] or "-"), format_date_dmy(p["date"]) if p["date"] else "-",
                    p["sleep_hours"], p["duty_hours"], p["stress_level"]])
     _autosize(ws)
     return _excel_response(wb, "officer_report.xlsx")
@@ -2473,7 +2512,7 @@ def my_export_csv():
     writer.writerow(["Date", "Sleep Hours", "Duty Hours", "Heart Rate", "Mood (1-5)",
                      "Stress Level", "Recommendation"])
     for r in rows:
-        writer.writerow([r["date"], r["sleep_hours"], r["duty_hours"], r["heart_rate"],
+        writer.writerow([format_date_dmy(r["date"]), r["sleep_hours"], r["duty_hours"], r["heart_rate"],
                          r["mood_score"], r["stress_level"], safe_cell(r["recommendation"])])
     return Response(
         buffer.getvalue(),
@@ -2501,7 +2540,7 @@ def my_export_pdf():
 
         data = [["Date", "Sleep", "Duty", "Heart Rate", "Mood", "Stress"]]
         for r in rows:
-            data.append([r["date"], r["sleep_hours"], r["duty_hours"],
+            data.append([format_date_dmy(r["date"]), r["sleep_hours"], r["duty_hours"],
            r["heart_rate"], r["mood_score"], r["stress_level"]])
         elements.append(_pdf_table(data, font_size=9, banded=True))
     else:
