@@ -10779,9 +10779,9 @@ html.dark .hero-date-pill {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 8px !important;
-  padding: 6px 14px !important;
-  border-radius: 24px !important;
+  gap: 7px !important;
+  padding: 5px 14px !important;
+  border-radius: 9999px !important;
   font-family: inherit !important;
   font-size: 11px !important;
   font-weight: 700 !important;
@@ -10792,10 +10792,25 @@ html.dark .hero-date-pill {
   border: 1px solid rgba(37, 99, 235, 0.22) !important;
   margin: 0 auto 16px auto !important;
   text-align: center !important;
-  white-space: normal !important;
-  line-height: 1.4 !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
   max-width: 95% !important;
   box-sizing: border-box !important;
+  vertical-align: middle !important;
+}
+
+.portal-badge-chip .chip-pulse {
+  width: 6.5px !important;
+  height: 6.5px !important;
+  min-width: 6.5px !important;
+  min-height: 6.5px !important;
+  border-radius: 50% !important;
+  background: #10b981 !important;
+  box-shadow: 0 0 0 2.5px rgba(16, 185, 129, 0.25) !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  vertical-align: middle !important;
 }
 
 html.dark .portal-badge-chip {
@@ -10915,10 +10930,20 @@ html.dark .showcase-feature-card:hover {
     margin-bottom: 28px !important;
   }
   .portal-badge-chip {
-    font-size: 10px !important;
-    padding: 5px 11px !important;
+    font-size: clamp(8.5px, 2.5vw, 10px) !important;
+    padding: 5px 10px !important;
+    gap: 6px !important;
     margin-bottom: 12px !important;
     letter-spacing: 0.02em !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+  .portal-badge-chip .chip-pulse {
+    width: 5.5px !important;
+    height: 5.5px !important;
+    min-width: 5.5px !important;
+    min-height: 5.5px !important;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25) !important;
   }
   .portal-main-title {
     font-size: 21px !important;
@@ -11153,6 +11178,34 @@ html.dark .nav-signin-btn:hover {
   background: rgba(30, 41, 59, 1) !important;
   border-color: rgba(255, 255, 255, 0.3) !important;
 }
+
+/* Telemetry Gauge Dead-Center Alignment on Mobile & Laptop */
+.gauge-reading-wrap {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  width: 100% !important;
+  margin: 14px auto 16px !important;
+  gap: 5px !important;
+}
+
+.gauge-reading-title {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+}
+
+.snapshot-date {
+  display: block !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+  width: 100% !important;
+}
+
 
 
 

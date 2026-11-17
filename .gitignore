@@ -9,3 +9,5 @@ ENV/
 .vercel
 .env*
 scratch/
+
+.env*

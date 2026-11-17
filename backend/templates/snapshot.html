@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - Latest Snapshot</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=11.0">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=12.0">
 <style>
   /* Gauge — text-align+inline-block centering (most reliable across all browsers) */
   .gauge-center-wrapper {
@@ -78,11 +78,13 @@
           </svg>
         </div>
 
-        <div style="text-align:center; margin-bottom:16px;">
-          <div class="gauge-reading-title" style="color:{% if latest.stress_level == 'Low' %}var(--signal-low){% elif latest.stress_level in ['Moderate', 'Medium'] %}var(--signal-med){% else %}var(--signal-high){% endif %};">
+        <div class="gauge-reading-wrap" style="text-align:center; margin:14px auto 16px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;">
+          <div class="gauge-reading-title" style="color:{% if latest.stress_level == 'Low' %}var(--signal-low){% elif latest.stress_level in ['Moderate', 'Medium'] %}var(--signal-med){% else %}var(--signal-high){% endif %}; display:inline-flex; align-items:center; justify-content:center; margin:0 auto; text-align:center;">
             {{ latest.stress_level }} Stress
           </div>
-          <span class="snapshot-date" style="font-size:12.5px; color:var(--steel);">Logged on: <strong>{{ latest.date|format_date }}</strong></span>
+          <div class="snapshot-date" style="font-size:12.5px; color:var(--steel); margin:0 auto; text-align:center; display:block;">
+            Logged on: <strong>{{ latest.date|format_date }}</strong>
+          </div>
         </div>
         <p class="snapshot-reco" style="font-size:14px; line-height:1.6; color:var(--ink); margin-bottom:24px; text-align:center;">{{ latest.recommendation }}</p>
       {% else %}
@@ -173,11 +175,23 @@
         scales: {
           x: {
             ticks: {
-              maxRotation: 0,
+              callback: function(val, index) {
+                var label = this.getLabelForValue(val);
+                if (window.innerWidth < 640 && typeof label === 'string') {
+                  var p = label.split('-');
+                  if (p.length === 3) {
+                    return p[0] + '-' + p[1]; // e.g. 17-11 on mobile
+                  }
+                }
+                return label;
+              },
+              maxRotation: window.innerWidth < 480 ? 30 : 0,
               minRotation: 0,
-              autoSkip: false,
-              font: { size: 10.5, weight: '600' },
-              color: tickColor
+              autoSkip: true,
+              maxTicksLimit: 7,
+              font: { size: window.innerWidth < 480 ? 9.5 : 10.5, weight: '600' },
+              color: tickColor,
+              padding: 6
             },
             grid: { display: false }
           },

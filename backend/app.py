@@ -1460,14 +1460,42 @@ def build_tips(latest):
     return tips[:3]
 
 
+def get_user_history(conn, user_id):
+    """Retrieve DailyData rows for user_id, merging session-persisted recent checkins.
+    Guarantees instantaneous check-in updates across ephemeral serverless containers."""
+    rows = conn.execute(
+        "SELECT * FROM DailyData WHERE user_id = ? ORDER BY date DESC, id DESC",
+        (user_id,)
+    ).fetchall()
+    history = [dict(r) for r in rows]
+
+    try:
+        session_checkins = session.get("my_checkins", []) if session else []
+    except Exception:
+        session_checkins = []
+
+    if session_checkins:
+        for sc in session_checkins:
+            if sc.get("user_id") == user_id or "user_id" not in sc:
+                matched = False
+                for h in history:
+                    if h.get("date") == sc.get("date"):
+                        h.update(sc)
+                        matched = True
+                        break
+                if not matched:
+                    history.append(sc)
+        history.sort(key=lambda x: (str(x.get("date", "")), int(x.get("id", 0))), reverse=True)
+
+    return history
+
+
 @app.route("/dashboard")
 @role_required("personnel")
 def dashboard():
     uid = session["user_id"]
     conn = get_db()
-    history = conn.execute(
-        "SELECT * FROM DailyData WHERE user_id = ? ORDER BY date DESC, id DESC", (uid,)
-    ).fetchall()
+    history = get_user_history(conn, uid)
 
     me = conn.execute("SELECT unit FROM Users WHERE id = ?", (uid,)).fetchone()
     compare = get_unit_comparison(conn, uid, me["unit"] if me else None)
@@ -1571,9 +1599,7 @@ def dashboard():
 def snapshot():
     uid = session["user_id"]
     conn = get_db()
-    history = conn.execute(
-        "SELECT * FROM DailyData WHERE user_id = ? ORDER BY date DESC, id DESC", (uid,)
-    ).fetchall()
+    history = get_user_history(conn, uid)
     conn.close()
 
     latest = history[0] if history else None
@@ -1609,10 +1635,7 @@ def snapshot():
 @role_required("personnel")
 def results():
     conn = get_db()
-    history = conn.execute(
-        "SELECT * FROM DailyData WHERE user_id = ? ORDER BY date DESC, id DESC",
-        (session["user_id"],)
-    ).fetchall()
+    history = get_user_history(conn, session["user_id"])
     conn.close()
     today_formatted = today_local().strftime('%d-%m-%Y')
     return render_template(
@@ -1638,12 +1661,14 @@ def submit_survey():
 
     level, recommendation = calculate_stress(sleep_hours, duty_hours, heart_rate, mood_score)
     today = today_local().isoformat()
+    uid = session["user_id"]
 
     conn = get_db()
     existing = conn.execute(
         "SELECT id FROM DailyData WHERE user_id = ? AND date = ? ORDER BY id DESC LIMIT 1",
-        (session["user_id"], today)
+        (uid, today)
     ).fetchone()
+    entry_id = existing["id"] if existing else None
     if existing:  # one entry per day: update today's check-in
         conn.execute(
             """UPDATE DailyData SET sleep_hours = ?, duty_hours = ?, heart_rate = ?,
@@ -1652,15 +1677,35 @@ def submit_survey():
             (sleep_hours, duty_hours, heart_rate, mood_score, level, recommendation, existing["id"])
         )
     else:
-        conn.execute(
+        cur = conn.execute(
             """INSERT INTO DailyData (user_id, date, sleep_hours, duty_hours, heart_rate,
                                       mood_score, stress_level, recommendation)
                VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
-            (session["user_id"], today, sleep_hours, duty_hours, heart_rate,
+            (uid, today, sleep_hours, duty_hours, heart_rate,
              mood_score, level, recommendation)
         )
+        entry_id = cur.lastrowid
     conn.commit()
     conn.close()
+
+    # Instant multi-container resilience: save recent check-ins in signed session cookie
+    new_entry = {
+        "id": entry_id or 9999,
+        "user_id": uid,
+        "date": today,
+        "sleep_hours": sleep_hours,
+        "duty_hours": duty_hours,
+        "heart_rate": heart_rate,
+        "mood_score": mood_score,
+        "stress_level": level,
+        "recommendation": recommendation,
+    }
+    my_checkins = session.get("my_checkins", [])
+    my_checkins = [c for c in my_checkins if c.get("date") != today]
+    my_checkins.insert(0, new_entry)
+    session["my_checkins"] = my_checkins[:14]
+    session.modified = True
+
     return redirect(url_for("results", just_submitted=1))
 
 
@@ -2495,10 +2540,7 @@ def officer_export_excel():
 
 def _my_history(user_id):
     conn = get_db()
-    rows = conn.execute(
-        "SELECT date, sleep_hours, duty_hours, heart_rate, mood_score, stress_level, recommendation "
-        "FROM DailyData WHERE user_id = ? ORDER BY date DESC, id DESC", (user_id,)
-    ).fetchall()
+    rows = get_user_history(conn, user_id)
     conn.close()
     return rows
 
