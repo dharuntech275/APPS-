@@ -2630,7 +2630,7 @@ def view_system_documentation():
 @app.route("/api/ai_companion", methods=["POST"])
 def ai_companion():
     """Confidential 24/7 AI Psychological Wellness Companion for Personnel & Members.
-    WhatsApp Meta AI styled conversational experience with natural dialogue support.
+    Natural conversational dialogue and proactive mental health support.
     """
     if "user_id" not in session:
         return jsonify({"success": False, "error": "Not authenticated"}), 401
@@ -2679,11 +2679,11 @@ def ai_companion():
             import urllib.request
             import json as json_lib
             prompt = (
-                f"You are the APPS AI Assistant, an empathetic, conversational, friendly 24/7 wellness companion modeled like WhatsApp Meta AI for working professionals. "
+                f"You are the APPS AI Psychological Wellness Companion, an empathetic, conversational, friendly 24/7 counseling assistant for working professionals. "
                 f"The user's name is {user_name}. "
                 f"Their recent telemetry: Sleep = {sleep}h, Shift = {duty}h, Stress = {stress}. "
                 f"Guidelines:\n"
-                f"1. Respond directly, conversationally, and warmly like a WhatsApp chat companion.\n"
+                f"1. Respond directly, conversationally, and warmly like a personal wellness companion.\n"
                 f"2. If the user greets (e.g. 'hi', 'hello', 'hey', 'vanakkam'), greet them warmly by name, ask how they are feeling, and offer quick assistance.\n"
                 f"3. If they share stress, fatigue, sleep trouble, or questions, offer empathetic, tactical wellness tips and ask helpful follow-ups.\n"
                 f"4. Keep response concise (under 80 words), friendly, formatted with clean bullet points when giving steps.\n\n"
@@ -2702,7 +2702,7 @@ def ai_companion():
         except Exception as e:
             print(f"[AI Companion Gemini Error] {e}")
 
-    # Built-in WhatsApp-Grade Conversational Intelligence Engine (Zero downtime)
+    # Built-in High-Speed Psychological Conversational Engine (Zero downtime)
     # 1. Greetings & Salutations (e.g., "hi", "hello", "hey", "vanakkam", "good morning")
     greeting_patterns = [
         r"^(hi|hii|hiii|hey|heyy|hello|hlo|hola|howdy|sup|yo)\b",
@@ -2756,13 +2756,13 @@ def ai_companion():
     elif is_greeting:
         reply = (
             f"Hello {user_name}! Great to chat with you. "
-            "I am your 24/7 APPS AI Assistant. "
-            "How are you feeling today? Whether you want to de-stress from duty, check your sleep habits, or just talk through something on your mind, I am right here for you. How can I help?"
+            "I am your 24/7 APPS AI Wellness Companion. "
+            "How are you feeling today? Whether you want to de-stress from duty, check your sleep habits, or ask any health question, I am right here for you. How can I help?"
         )
     elif is_who_are_you:
         reply = (
-            f"I am your APPS AI Assistant — your personal, confidential wellness companion built for defense, corporate, and healthcare professionals.\n\n"
-            f"Here is what I can do for you right here on WhatsApp style chat:\n"
+            f"I am your APPS AI Wellness Companion — your personal, confidential health and stress companion built for defense, corporate, and healthcare professionals.\n\n"
+            f"Here is what I can do for you right here:\n"
             f"1. Shift Recovery: Quick de-stressing and Tactical 4-7-8 Breathing.\n"
             f"2. Sleep Support: Guidance for restful sleep after demanding shifts.\n"
             f"3. Biometric Check: Insights on your stress ({stress}) and rest (~{sleep}h).\n"
