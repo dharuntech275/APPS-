@@ -19,6 +19,7 @@ import csv
 import hashlib
 import hmac
 import os
+import re
 import secrets
 import shutil
 import sqlite3
@@ -2626,7 +2627,9 @@ def view_system_documentation():
 # ----------------------------------------------------------------------
 @app.route("/api/ai_companion", methods=["POST"])
 def ai_companion():
-    """Confidential 24/7 AI Psychological Wellness Companion for Personnel & Members."""
+    """Confidential 24/7 AI Psychological Wellness Companion for Personnel & Members.
+    WhatsApp Meta AI styled conversational experience with natural dialogue support.
+    """
     if "user_id" not in session:
         return jsonify({"success": False, "error": "Not authenticated"}), 401
     
@@ -2650,17 +2653,19 @@ def ai_companion():
     stress = recent_data["stress_level"] if recent_data else "Normal"
     
     # NLP Emergency Crisis Filter
-    severe_crisis_keywords = ["suicide", "kill myself", "end my life", "want to die", "no reason to live", "harm myself", "end it all"]
-    lower_msg = user_msg.lower()
+    severe_crisis_keywords = ["suicide", "kill myself", "end my life", "want to die", "no reason to live", "harm myself", "end it all", "kill me"]
+    lower_msg = user_msg.lower().strip()
+    words = set(re.findall(r'\b\w+\b', lower_msg))
+
     if any(k in lower_msg for k in severe_crisis_keywords):
         return jsonify({
             "success": True,
             "response": (
                 f"I hear how overwhelmed you are feeling, {user_name}, and I want you to know you are not alone. "
                 "Your life and safety are the absolute highest priority right now. Please connect immediately with our crisis support:\n\n"
-                "📞 Army / Defense Crisis Helpline: 1902 (Toll-Free, 24/7)\n"
-                "📞 Tele-MANAS Mental Health Care Line: 14416 / 1800-891-4416\n\n"
-                "You can also tap the '🚨 Crisis SOS' button in your dashboard right now to notify your Welfare Officer immediately."
+                "• Army / Defense Crisis Helpline: 1902 (Toll-Free, 24/7)\n"
+                "• Tele-MANAS Mental Health Care Line: 14416 / 1800-891-4416\n\n"
+                "You can also tap the 'Crisis SOS' button in your dashboard right now to alert your Welfare Officer immediately."
             ),
             "is_emergency": True
         })
@@ -2672,11 +2677,14 @@ def ai_companion():
             import urllib.request
             import json as json_lib
             prompt = (
-                f"You are the APPS AI Psychological Wellness Companion, a confidential, warm, and highly supportive counseling assistant "
-                f"for workforce, healthcare, public safety, and defense personnel. The user's name is {user_name}. "
-                f"Their latest telemetry: Sleep = {sleep} hrs, Shift = {duty} hrs, Stress Level = {stress}. "
-                f"Respond with empathetic Cognitive Behavioral Therapy (CBT) advice, stress de-escalation, and tactical recovery tips. "
-                f"Keep your response under 100 words, warm, conversational, and direct.\n\n"
+                f"You are the APPS AI Assistant, an empathetic, conversational, friendly 24/7 wellness companion modeled like WhatsApp Meta AI for working professionals. "
+                f"The user's name is {user_name}. "
+                f"Their recent telemetry: Sleep = {sleep}h, Shift = {duty}h, Stress = {stress}. "
+                f"Guidelines:\n"
+                f"1. Respond directly, conversationally, and warmly like a WhatsApp chat companion.\n"
+                f"2. If the user greets (e.g. 'hi', 'hello', 'hey', 'vanakkam'), greet them warmly by name, ask how they are feeling, and offer quick assistance.\n"
+                f"3. If they share stress, fatigue, sleep trouble, or questions, offer empathetic, tactical wellness tips and ask helpful follow-ups.\n"
+                f"4. Keep response concise (under 80 words), friendly, formatted with clean bullet points when giving steps.\n\n"
                 f"User: {user_msg}"
             )
             gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={gemini_key}"
@@ -2686,46 +2694,173 @@ def ai_companion():
             req = urllib.request.Request(gemini_url, data=payload, headers={'Content-Type': 'application/json'})
             with urllib.request.urlopen(req, timeout=5) as resp:
                 result = json_lib.loads(resp.read().decode('utf-8'))
-                ai_text = result["candidates"][0]["content"]["parts"][0]["text"]
-                return jsonify({"success": True, "response": ai_text, "is_emergency": False})
+                ai_text = result["candidates"][0]["content"]["parts"][0]["text"].strip()
+                if ai_text:
+                    return jsonify({"success": True, "response": ai_text, "is_emergency": False, "timestamp": datetime.now(TZ_IST).strftime("%I:%M %p")})
         except Exception as e:
             print(f"[AI Companion Gemini Error] {e}")
 
-    # Built-in High-Speed Psychological Heuristic Engine (100% reliable, zero downtime)
-    if any(w in lower_msg for w in ["sleep", "insomnia", "tired", "rest", "night"]):
+    # Built-in WhatsApp-Grade Conversational Intelligence Engine (Zero downtime)
+    # 1. Greetings & Salutations (e.g., "hi", "hello", "hey", "vanakkam", "good morning")
+    greeting_patterns = [
+        r"^(hi|hii|hiii|hey|heyy|hello|hlo|hola|howdy|sup|yo)\b",
+        r"^(vanakkam|namaste|namaskaram|good\s*(morning|afternoon|evening|day))\b"
+    ]
+    is_greeting = any(re.search(p, lower_msg) for p in greeting_patterns) or lower_msg in ["hi", "hii", "hello", "hey", "vanakkam", "namaste", "halo"]
+
+    # 2. "How are you"
+    is_how_are_you = any(phrase in lower_msg for phrase in ["how are you", "how r u", "how do you do", "eppadi irukinga", "epadi irukinga", "you good", "how's it going", "how is it going"])
+
+    # 3. "Who are you" / "What can you do"
+    is_who_are_you = any(phrase in lower_msg for phrase in ["who are you", "what are you", "what can you do", "who made you", "your name", "what is this", "what is apps ai"])
+
+    # 4. Gratitude & Acknowledgement
+    is_thanks = any(w in words for w in ["thanks", "thank", "thx", "nandri"]) or "thank you" in lower_msg
+
+    # 5. Farewell & Night wishes
+    is_bye = any(w in words for w in ["bye", "goodbye", "cya"]) or any(phrase in lower_msg for phrase in ["good night", "gn", "see you later", "catch you later"])
+
+    # 6. Stress, Anxiety & Overwhelm
+    is_stress = any(w in words for w in ["stress", "stressed", "anxious", "anxiety", "panic", "tension", "overwhelmed", "pressure", "nervous"]) or any(p in lower_msg for p in ["stress ah", "stress-ah", "tension ah", "romba tension"])
+
+    # 7. Fatigue & Heavy Duty Shifts
+    is_tired = any(w in words for w in ["tired", "exhausted", "fatigue", "drained", "weary", "sleepy", "weak", "overtime", "burnout"]) or any(p in lower_msg for p in ["romba tired", "tired ah", "tired-ah", "duty heavy", "long shift"])
+
+    # 8. Sleep & Insomnia
+    is_sleep = any(w in words for w in ["sleep", "insomnia", "sleepless", "nightmare", "restless"]) or any(p in lower_msg for p in ["thookam varala", "cannot sleep", "can't sleep", "trouble sleeping", "sleep trouble", "no sleep"])
+
+    # 9. Physical Discomfort / Headache
+    is_pain = any(w in words for w in ["headache", "pain", "dizzy", "ache", "sore", "hurt"]) or any(p in lower_msg for p in ["head pain", "body pain", "back pain", "neck pain", "eyes hurt", "eye strain"])
+
+    # 10. Welfare Officer / Human Counselor Request
+    is_officer = any(w in words for w in ["officer", "counselor", "counseling", "doctor", "appointment"]) or any(p in lower_msg for p in ["talk to officer", "welfare officer", "human help", "meet officer"])
+
+    # 11. Breathing & Calming Exercises
+    is_breathing = any(w in words for w in ["breathe", "breathing", "calm", "relax", "meditation"]) or any(p in lower_msg for p in ["4-7-8", "calming exercise", "breathing exercise", "help me relax", "de-stress"])
+
+    # 12. Sadness & Low Mood
+    is_sad = any(w in words for w in ["sad", "unhappy", "depressed", "lonely", "down", "crying", "miserable"]) or any(p in lower_msg for p in ["feeling down", "feeling sad", "bad day", "kashtama irukku"])
+
+    # 13. Motivation & Tips
+    is_motivation = any(w in words for w in ["quote", "motivate", "motivation", "tip", "advice", "inspire"]) or any(p in lower_msg for p in ["wellness tip", "give me a tip", "motivate me"])
+
+    # Generate Dialogue Responses
+    if is_how_are_you:
         reply = (
-            f"Rest is the foundation of operational stamina, {user_name}. "
-            f"With your recent sleep at ~{sleep} hours and shift at ~{duty} hours, your central nervous system needs active decompression. "
-            "Try tactical sleep banking: 1) Block out light and noise 30 minutes before sleep. "
-            "2) Keep your room cool. 3) Practice our Tactical 4-7-8 Breathing stabilizer (inhale 4s, hold 7s, exhale 8s) to drop your heart rate into deep recovery."
+            f"I'm doing great, {user_name}! Thank you for asking. "
+            f"Right now I'm monitoring your wellness baseline (Current Stress: {stress}). "
+            "How has your shift been today? Are you feeling energized or a bit tired?"
         )
-    elif any(w in lower_msg for w in ["anxious", "anxiety", "panic", "overwhelmed", "pressure", "breath"]):
+    elif is_greeting:
         reply = (
-            f"Take a slow breath, {user_name}. What you're experiencing is your sympathetic nervous system reacting to acute pressure. "
-            "Let's reset right now: 1) Feel your feet flat on the floor. 2) Inhale deeply through your nose for 4 counts, hold for 7, and release slowly for 8 counts. "
-            "Remind yourself: 'I have handled tough shifts before, and I can take this one step at a time.' You can also request a confidential chat with your Welfare Officer anytime."
+            f"Hello {user_name}! Great to chat with you. "
+            "I am your 24/7 APPS AI Assistant. "
+            "How are you feeling today? Whether you want to de-stress from duty, check your sleep habits, or just talk through something on your mind, I am right here for you. How can I help?"
         )
-    elif any(w in lower_msg for w in ["officer", "counselor", "talk", "request", "help"]):
+    elif is_who_are_you:
         reply = (
-            f"Reaching out is a sign of high mental resilience, {user_name}. "
-            "You can head to the 'Talk to Officer' tab right here to submit a confidential counseling request, or trigger an instant Distress Beacon if it is urgent. "
-            "Your officer receives your note confidentially and will schedule a one-on-one session with you."
+            f"I am your APPS AI Assistant — your personal, confidential wellness companion built for defense, corporate, and healthcare professionals.\n\n"
+            f"Here is what I can do for you right here on WhatsApp style chat:\n"
+            f"1. Shift Recovery: Quick de-stressing and Tactical 4-7-8 Breathing.\n"
+            f"2. Sleep Support: Guidance for restful sleep after demanding shifts.\n"
+            f"3. Biometric Check: Insights on your stress ({stress}) and rest (~{sleep}h).\n"
+            f"4. Welfare Officer: Direct confidential connection to your Welfare Officer.\n\n"
+            "What would you like to explore today?"
         )
-    elif any(w in lower_msg for w in ["burnout", "exhausted", "workload", "shift", "hours"]):
+    elif is_thanks:
         reply = (
-            f"Sustained heavy duty hours inevitably lead to cognitive fatigue, {user_name}. "
-            f"Your current recorded shift strain is around {duty} hours. "
-            "When shifts are demanding, micro-recovery intervals (5-minute sensory breaks, hydration, and stretching) are proven to preserve focus. "
-            "Would you like to schedule a private check-in with your Welfare Officer to review duty rotation?"
+            f"You're very welcome, {user_name}! "
+            "Always happy to support you. Take a sip of water, take care of yourself during duty, and message me anytime you need a quick reset!"
+        )
+    elif is_bye:
+        reply = (
+            f"Take care, {user_name}! If your shift is ending, make sure to get some peaceful rest. "
+            "I'll be right here whenever you check in next time. Stay safe!"
+        )
+    elif is_stress:
+        reply = (
+            f"Take a slow breath with me right now, {user_name}. Stress is your sympathetic nervous system reacting to high operational demand.\n\n"
+            "Let's do a 60-second Tactical Reset:\n"
+            "1. Drop your shoulders and unclamp your jaw.\n"
+            "2. Inhale gently through your nose for 4 seconds.\n"
+            "3. Hold your breath for 7 seconds.\n"
+            "4. Exhale slowly through your mouth for 8 seconds.\n\n"
+            "Repeat this twice. Remind yourself: You have navigated intense shifts before. If you'd like, you can also send a private note to your Welfare Officer from the dashboard."
+        )
+    elif is_tired:
+        reply = (
+            f"I hear you, {user_name}. Heavy duties and long shifts demand significant cognitive stamina. "
+            f"Your recent recorded shift strain is around {duty} hours with ~{sleep} hours of sleep.\n\n"
+            "Quick 3-step duty recovery:\n"
+            "1. Rehydrate: Drink a tall glass of cool water immediately.\n"
+            "2. Sensory Pause: Step away from bright displays for 3 minutes.\n"
+            "3. Post-Shift Wind-down: When duty ends, avoid intense screen glare to allow cortisol levels to drop.\n\n"
+            "Would you like me to guide you through a quick 2-minute relaxation exercise?"
+        )
+    elif is_sleep:
+        reply = (
+            f"Sleep recovery is vital for mental resilience, {user_name}. With your recent sleep recorded at ~{sleep} hours, let's optimize your rest tonight:\n\n"
+            "1. Dim light & screens 30 minutes before bed to allow melatonin release.\n"
+            "2. Practice the Tactical 4-7-8 Breathing stabilizer in bed to lower your heart rate into deep recovery.\n"
+            "3. Keep your sleep environment dark and cool.\n\n"
+            "Would you like to try 4-7-8 breathing together right now?"
+        )
+    elif is_pain:
+        reply = (
+            f"I'm sorry you are feeling discomfort, {user_name}. Long hours, sustained posture, and dehydration are frequent causes of headaches and body strain.\n\n"
+            "Try these three steps right away:\n"
+            "1. Hydrate with a full glass of water.\n"
+            "2. 20-20-20 Eye Rest: Look at an object 20 feet away for 20 seconds to relieve eye fatigue.\n"
+            "3. Gently roll your shoulders back and tilt your neck slowly from side to side.\n\n"
+            "If the discomfort continues, please check in with your unit medical officer."
+        )
+    elif is_officer:
+        reply = (
+            f"Connecting with your Welfare Officer is 100% confidential and straightforward, {user_name}.\n\n"
+            "To connect:\n"
+            "1. Open the top-left menu and click 'Talk to Officer'.\n"
+            "2. Fill in your convenient date, time, and private message.\n"
+            "3. If this is an urgent distress situation, trigger the 'Crisis SOS' button for instant priority alert.\n\n"
+            "Your officer will receive your note privately and schedule a one-on-one session."
+        )
+    elif is_breathing:
+        reply = (
+            f"Let's practice the Tactical 4-7-8 Breathing Exercise right now, {user_name}:\n\n"
+            "1. Inhale deeply through your nose for 4 counts... (1, 2, 3, 4)\n"
+            "2. Hold your breath gently for 7 counts... (1, 2, 3, 4, 5, 6, 7)\n"
+            "3. Exhale completely through your mouth with a soft whoosh for 8 counts... (1, 2, 3, 4, 5, 6, 7, 8)\n\n"
+            "Do this 3 to 4 rounds. It directly triggers your parasympathetic relaxation response and settles acute tension."
+        )
+    elif is_sad:
+        reply = (
+            f"I'm really sorry to hear that you're feeling down today, {user_name}. Demanding duty environments can sometimes feel isolating or heavy.\n\n"
+            "Please remember: Having tough days does not diminish your strength or capability. Be kind to yourself today.\n"
+            "If you want to talk through what is troubling you, I am right here listening. You can also reach out to your Welfare Officer confidentially anytime."
+        )
+    elif is_motivation:
+        reply = (
+            f"Here is your wellness takeaway for today, {user_name}:\n\n"
+            "'Resilience is not about never feeling tired; it is about knowing when to recharge and step back into balance.'\n\n"
+            f"You have put in solid effort with ~{duty}h on duty. Take pride in your dedication, drink water, and prioritize quality rest tonight!"
         )
     else:
+        # Context-aware conversational fallback
         reply = (
-            f"Thank you for checking in, {user_name}. Tracking your wellness daily builds strong psychological endurance. "
-            f"Based on your recent status ({stress} stress index), focus on balanced hydration and a steady wind-down routine today. "
-            "I'm here 24/7 if you want to talk through anything, practice breathing, or review recovery strategies."
+            f"Thank you for sharing, {user_name}. I understand you mentioned: '{user_msg}'.\n\n"
+            f"Based on your recent status (Stress: {stress}, Sleep: ~{sleep}h, Duty: ~{duty}h), I am here to help you navigate your day.\n\n"
+            "How would you like to proceed?\n"
+            "1. De-stress from shift / Breathing reset\n"
+            "2. Sleep recovery advice\n"
+            "3. Confidential Welfare Officer check-in\n\n"
+            "Feel free to reply with what you need, or ask me any question!"
         )
-    
-    return jsonify({"success": True, "response": reply, "is_emergency": False})
+
+    return jsonify({
+        "success": True,
+        "response": reply,
+        "is_emergency": False,
+        "timestamp": datetime.now(TZ_IST).strftime("%I:%M %p")
+    })
 
 
 @app.route("/api/ai_case_brief/<int:user_id>")

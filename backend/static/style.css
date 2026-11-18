@@ -6972,1296 +6972,624 @@ html, body {
     gap: 10px !important;
   }
 
-  /* Modals Optimization - Native Mobile Bottom-Sheet Behavior */
-  .apps-modal-overlay {
-    padding: 10px !important;
-    z-index: 9999 !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-
-  .apps-modal-card {
-    width: 100% !important;
-    max-width: calc(100vw - 16px) !important;
-    max-height: 88vh !important;
-    padding: 20px 16px max(20px, env(safe-area-inset-bottom)) !important;
-    border-radius: 20px !important;
-    box-sizing: border-box !important;
-  }
-
-  .apps-modal-card.ai-companion-card {
-    padding: 0 !important;
-    height: 88vh !important;
-    max-height: 88vh !important;
-    width: 100% !important;
-    max-width: calc(100vw - 16px) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    border-radius: 20px !important;
-  }
-
-  #aiChatThread {
-    padding: 14px 12px !important;
-    gap: 10px !important;
-  }
-
-  .ai-msg-bubble {
-    max-width: 88% !important;
-    font-size: 13px !important;
-    padding: 10px 14px !important;
-    border-radius: 16px !important;
-  }
-
-  #aiChatForm {
-    padding: 10px 12px max(10px, env(safe-area-inset-bottom)) !important;
-    gap: 8px !important;
-  }
-
-  #aiUserInput {
-    padding: 11px 14px !important;
-    font-size: 14px !important;
-    min-width: 0 !important;
-    border-radius: 12px !important;
-  }
-
-  #aiSendBtn {
-    padding: 11px 16px !important;
-    font-size: 13.5px !important;
-    width: auto !important;
-    border-radius: 12px !important;
-  }
-
-  .breathing-circle-container {
-    padding: 14px 0 !important;
-  }
-
-  .breathing-circle {
-    width: 130px !important;
-    height: 130px !important;
-  }
-
-  .breathing-phase {
-    font-size: 16px !important;
-  }
-
-  .breathing-countdown {
-    font-size: 26px !important;
-  }
-
-  .breathing-controls {
-    display: flex !important;
-    gap: 10px !important;
-    width: 100% !important;
-    margin-top: 10px !important;
-  }
-
-  .breathing-controls button {
-    flex: 1 !important;
-    width: 100% !important;
-    min-height: 44px !important;
-    justify-content: center !important;
-    border-radius: 12px !important;
-    font-weight: 700 !important;
-  }
-
-  .hotline-card {
-    padding: 12px 14px !important;
-    gap: 12px !important;
-    border-radius: 14px !important;
-    margin-bottom: 10px !important;
-  }
-
-  .hotline-num {
-    font-size: 15px !important;
-    font-weight: 800 !important;
-  }
-
-  .hotline-lbl {
-    font-size: 11.5px !important;
-    line-height: 1.3 !important;
-  }
-
-  /* Table Horizontal Scrolling Safeguard */
-  table, table.history {
-    display: block !important;
-    width: 100% !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-  }
-
-  th, td {
-    white-space: nowrap !important;
-  }
-
-  /* Stats Grids */
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px !important;
-    margin: 12px 0 18px !important;
-  }
-
-  .stat-card {
-    padding: 14px 12px !important;
-    border-radius: 16px !important;
-    min-height: 85px !important;
-    aspect-ratio: auto !important;
-  }
-
-  .stat-card .stat-value {
-    font-size: 22px !important;
-    font-weight: 800 !important;
-  }
-
-  .stat-card .stat-label {
-    font-size: 10.5px !important;
-    font-weight: 600 !important;
-  }
-
-  /* Biometric Health Studio Check-in Form */
-  .slider-group {
-    padding: 12px 10px !important;
-    border-radius: 14px !important;
-    background: rgba(0, 0, 0, 0.015) !important;
-    border: 1px solid var(--line) !important;
-    margin-bottom: 12px !important;
-  }
-
-  html.dark .slider-group {
-    background: rgba(255, 255, 255, 0.02) !important;
-  }
-
-  .slider-top-row {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    flex-wrap: wrap !important;
-    gap: 6px !important;
-    margin-bottom: 6px !important;
-  }
-
-  .slider-title {
-    font-size: 13px !important;
-    font-weight: 700 !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-  }
-
-  .slider-badge {
-    font-size: 11px !important;
-    font-weight: 700 !important;
-    padding: 3px 9px !important;
-    border-radius: 10px !important;
-  }
-
-  .slider-sub-labels {
-    font-size: 10.5px !important;
-    font-weight: 600 !important;
-    color: var(--steel) !important;
-    margin-top: 4px !important;
-  }
-
-  .mood-selector-grid {
-    display: grid !important;
-    grid-template-columns: repeat(5, 1fr) !important;
-    gap: 5px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    margin: 8px 0 4px !important;
-  }
-
-  .mood-btn {
-    padding: 8px 2px !important;
-    min-height: 54px !important;
-    border-radius: 12px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  }
-
-  .mood-btn:active {
-    transform: scale(0.94) !important;
-  }
-
-  .mood-val-circle {
-    width: 24px !important;
-    height: 24px !important;
-    font-size: 12px !important;
-    line-height: 24px !important;
-    font-weight: 800 !important;
-    border-radius: 50% !important;
-  }
-
-  .mood-desc {
-    font-size: 9.5px !important;
-    font-weight: 700 !important;
-    margin-top: 3px !important;
-    letter-spacing: -0.2px !important;
-  }
-
-  .precheck-card {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 8px !important;
-    padding: 12px 14px !important;
-    border-radius: 14px !important;
-    margin: 14px 0 16px !important;
-  }
-
-  .precheck-pill {
-    width: 100% !important;
-    text-align: center !important;
-    justify-content: center !important;
-    padding: 9px 14px !important;
-    font-size: 12px !important;
-    font-weight: 700 !important;
-    border-radius: 12px !important;
-  }
-
-  .checkin-card .btn {
-    width: 100% !important;
-    min-height: 48px !important;
-    font-size: 14px !important;
-    font-weight: 800 !important;
-    border-radius: 12px !important;
-    justify-content: center !important;
-    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3) !important;
-  }
-}
-
-/* ------------------------------------------------------------
-   C. COMPACT PHONES & HANDHELDS (<= 600px)
-   ------------------------------------------------------------ */
-@media screen and (max-width: 600px) {
-  /* Portal Landing Page */
-  .portal-header {
-    padding: 24px 12px 18px !important;
-    text-align: center !important;
-  }
-
-  .portal-header h1 {
-    font-size: 24px !important;
-    line-height: 1.25 !important;
-  }
-
-  .portal-header p {
-    font-size: 13px !important;
-    line-height: 1.5 !important;
-  }
-
-  .portal-header div[style*="justify-content:center"] {
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
-    gap: 10px !important;
-  }
-
-  .portal-header a.btn,
-  .portal-header a.btn-outline {
-    width: 100% !important;
-    min-height: 44px !important;
-    justify-content: center !important;
-  }
-
-  .portal-grid {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 14px !important;
-    width: 100% !important;
-    max-width: 440px !important;
-    margin: 0 auto !important;
-  }
-
-  .portal-card {
-    padding: 20px 16px !important;
-    border-radius: 18px !important;
-  }
-
-  .portal-card h2 {
-    font-size: 18px !important;
-  }
-
-  .portal-card p {
-    font-size: 13px !important;
-  }
-
-  .portal-features {
-    gap: 6px !important;
-    margin: 12px 0 16px !important;
-  }
-
-  .portal-feat-tag {
-    font-size: 10.5px !important;
-    padding: 4px 8px !important;
-  }
-
-  .btn-group {
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
-    gap: 8px !important;
-  }
-
-  .btn-group a.btn,
-  .btn-group a.btn-outline {
-    width: 100% !important;
-    min-height: 44px !important;
-    justify-content: center !important;
-  }
-
-  /* Auth Screens (Login / Signup / Forgot Password / TOTP) */
-  .auth-shell {
-    padding: 16px 12px 32px !important;
-    min-height: 100vh !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-
-  .auth-card {
-    padding: 24px 16px !important;
-    border-radius: 20px !important;
-    width: 100% !important;
-    max-width: 420px !important;
-    box-sizing: border-box !important;
-    margin: 0 auto !important;
-  }
-
-  .auth-card h1 {
-    font-size: 20px !important;
-    font-weight: 800 !important;
-  }
-
-  .auth-card input,
-  .auth-card select {
-    font-size: 16px !important; /* Prevents auto-zoom on iOS Safari */
-    min-height: 44px !important;
-    border-radius: 12px !important;
-  }
-
-  /* Personnel Dashboard Studio Sync Button */
-  .studio-header-wrap {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 8px !important;
-  }
-
-  .smartwatch-sync-btn {
-    width: 100% !important;
-    justify-content: center !important;
-    padding: 11px 16px !important;
-    min-height: 44px !important;
-    font-size: 13px !important;
-    margin-top: 6px !important;
-    border-radius: 12px !important;
-  }
-
-  /* Speedometer Gauge & Results Page */
-  .gauge-card {
-    padding: 18px 14px !important;
-    border-radius: 18px !important;
-  }
-
-  .gauge-reading-title {
-    font-size: 16.5px !important;
-    text-align: center !important;
-  }
-
-  .gauge-reading-desc {
-    font-size: 12.5px !important;
-    padding: 0 4px !important;
-  }
-
-  /* Results quick action buttons */
-  .results-quick-actions {
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
-    gap: 8px !important;
-    margin-top: 18px !important;
-  }
-
-  .results-quick-actions button,
-  .results-quick-actions a {
-    width: 100% !important;
-    min-height: 44px !important;
-    justify-content: center !important;
-    border-radius: 12px !important;
-  }
-
-  .result-entry {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 6px !important;
-    padding: 12px 0 !important;
-  }
-
-  /* Snapshot Page */
-  .snapshot-shell {
-    padding: 0 !important;
-    width: 100% !important;
-  }
-
-  .snapshot-bottom-links {
-    flex-direction: column !important;
-    gap: 10px !important;
-    width: 100% !important;
-  }
-
-  .snapshot-bottom-links .view-results-link {
-    width: 100% !important;
-    justify-content: center !important;
-    text-align: center !important;
-    padding: 12px 16px !important;
-    min-height: 44px !important;
-    border: 1px solid var(--line) !important;
-    border-radius: 12px !important;
-    box-sizing: border-box !important;
-  }
-
-  /* Going Quiet Page on Mobile */
-  .quiet-row {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 12px !important;
-    padding: 14px !important;
-    border-radius: 14px !important;
-  }
-
-  .quiet-actions {
-    width: 100% !important;
-    display: flex !important;
-    gap: 8px !important;
-    margin-top: 6px !important;
-  }
-
-  .quiet-actions button,
-  .quiet-actions a.btn {
-    flex: 1 1 calc(50% - 4px) !important;
-    text-align: center !important;
-    justify-content: center !important;
-    padding: 11px 8px !important;
-    min-height: 44px !important;
-    font-size: 12.5px !important;
-    border-radius: 10px !important;
-  }
-
-  /* Officer Dashboard & Pipeline */
-  .officer-banner-btn {
-    width: 100% !important;
-    text-align: center !important;
-    justify-content: center !important;
-    margin-top: 10px !important;
-    min-height: 44px !important;
-    display: flex !important;
-    align-items: center !important;
-    border-radius: 12px !important;
-  }
-
-  .officer-req-brief-btn {
-    width: 100% !important;
-    justify-content: center !important;
-    display: flex !important;
-    padding: 11px 16px !important;
-    min-height: 44px !important;
-    border-radius: 10px !important;
-  }
-
-  .officer-req-advance-btn {
-    width: 100% !important;
-    justify-content: center !important;
-    display: flex !important;
-    padding: 12px 16px !important;
-    min-height: 44px !important;
-    border-radius: 10px !important;
-  }
-
-  /* Personnel Profile Detail */
-  .p-detail-brief-btn,
-  .p-detail-schedule-btn {
-    width: 100% !important;
-    justify-content: center !important;
-    display: flex !important;
-    margin-top: 8px !important;
-    min-height: 44px !important;
-    border-radius: 10px !important;
-  }
-
-  #counselingCard #saveNoteBtn {
-    width: 100% !important;
-    justify-content: center !important;
-    display: flex !important;
-    padding: 13px !important;
-    min-height: 46px !important;
-    border-radius: 12px !important;
-  }
-
-  .fatigue-metrics-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 8px !important;
-  }
-
-  /* Talk to Officer */
-  .talk-submit-btn {
-    width: 100% !important;
-    justify-content: center !important;
-    display: flex !important;
-    min-height: 48px !important;
-    border-radius: 12px !important;
-  }
-
-  /* Admin Dashboard & Unit Overviews */
-  .admin-nav-grid {
-    grid-template-columns: 1fr !important;
-    gap: 12px !important;
-  }
-
-  .admin-units-grid {
-    grid-template-columns: 1fr !important;
-    gap: 12px !important;
-  }
-
-  .unit-risk-grid {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 8px !important;
-  }
-
-  .unit-risk-grid .card {
-    padding: 12px 6px !important;
-    text-align: center !important;
-  }
-
-  .unit-risk-grid .card h3 {
-    font-size: 11px !important;
-    margin-bottom: 4px !important;
-    white-space: nowrap !important;
-  }
-
-  .unit-risk-grid .card .stat-value {
-    font-size: 20px !important;
-    margin: 0 !important;
-  }
-
-  /* Admin 7-Day Burnout Forecaster */
-  .forecast-header-row {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 10px !important;
-  }
-
-  #forecastBarsContainer {
-    display: grid !important;
-    grid-template-columns: repeat(7, 1fr) !important;
-    gap: 4px !important;
-    padding: 14px 2px 10px !important;
-    min-height: 155px !important;
-  }
-
-  #forecastBarsContainer > div span:first-child {
-    font-size: 10px !important;
-    margin-bottom: 4px !important;
-  }
-
-  #forecastBarsContainer > div span:nth-child(3) {
-    font-size: 10px !important;
-    margin-top: 6px !important;
-  }
-
-  #forecastBarsContainer > div span:last-child {
-    font-size: 8.5px !important;
-  }
-
-  .forecast-guide-box {
-    grid-template-columns: 1fr !important;
-    gap: 8px !important;
-  }
-
-  #unitRisksContainer {
-    grid-template-columns: 1fr !important;
-    gap: 10px !important;
-  }
-
-  #forecastPeakChip {
-    width: 100% !important;
-    text-align: center !important;
-    justify-content: center !important;
-  }
-
-  #forecastRecommendationBox {
-    padding: 12px 14px !important;
-    font-size: 12.5px !important;
-    gap: 10px !important;
-    border-radius: 14px !important;
-  }
-
-  /* 2FA Setup Flow */
-  .totp-setup-grid {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-    text-align: center !important;
-  }
-
-  .totp-secret-row {
-    justify-content: center !important;
-    width: 100% !important;
-    flex-wrap: wrap !important;
-  }
-
-  .totp-confirm-row {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    width: 100% !important;
-  }
-
-  .totp-confirm-row input {
-    width: 100% !important;
-    max-width: 240px !important;
-    margin: 0 auto 10px !important;
-    min-height: 44px !important;
-    font-size: 16px !important;
-  }
-
-  .totp-confirm-row button.btn {
-    width: 100% !important;
-    min-height: 44px !important;
-    justify-content: center !important;
-  }
-}
-
-/* ------------------------------------------------------------
-   D. STANDARD PHONES (<= 480px)
-   ------------------------------------------------------------ */
-@media screen and (max-width: 480px) {
-  .ai-nav-pill-btn {
-    padding: 0 8px !important;
-    gap: 4px !important;
-  }
-
-  .ai-nav-pill-btn .ai-pill-text {
-    display: none !important;
-  }
-
-  .role-pill {
-    padding: 0 8px !important;
-    gap: 4px !important;
-    font-size: 11px !important;
-  }
-
-  .role-user-name {
-    max-width: 58px !important;
-  }
-
-  /* Role Tabs in Signup / Forgot Password */
-  .role-tabs {
-    display: flex !important;
-    gap: 4px !important;
-    padding: 4px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    border-radius: 12px !important;
-  }
-
-  .role-tab {
-    flex: 1 1 0 !important;
-    min-width: 0 !important;
-    font-size: 11px !important;
-    padding: 8px 3px !important;
-    min-height: 40px !important;
-    justify-content: center !important;
-    text-align: center !important;
-    gap: 2px !important;
-    white-space: normal !important;
-    line-height: 1.2 !important;
-    border-radius: 8px !important;
-  }
-
-  .role-tab .role-icon {
-    display: none !important;
-  }
-
-  .stats-grid {
-    gap: 8px !important;
-  }
-
-  .stat-card {
-    padding: 12px 10px !important;
-    min-height: 80px !important;
-  }
-
-  .stat-card .stat-value {
-    font-size: 20px !important;
-  }
-
-  .stat-card .stat-label {
-    font-size: 9.5px !important;
-  }
-
-  .mini-stats {
-    padding: 10px 12px !important;
-    gap: 8px !important;
-    border-radius: 14px !important;
-  }
-
-  .mini-num {
-    font-size: 20px !important;
-  }
-
-  .gauge-svg-wrap svg,
-  .gauge-center-wrapper svg {
-    max-width: 200px !important;
-  }
-
-  .gauge-reading-title {
-    font-size: 15px !important;
-  }
-}
-
-/* ------------------------------------------------------------
-   E. ULTRA-COMPACT PHONES (<= 380px)
-   ------------------------------------------------------------ */
-@media screen and (max-width: 380px) {
-  header.top {
-    padding: 6px 8px !important;
-    gap: 4px !important;
-  }
-
-  .mobile-brand-only .mark {
-    font-size: 17px !important;
-  }
-
-  .role-user-name {
-    display: none !important;
-  }
-
-  .header-left {
-    gap: 4px !important;
-  }
-
-  .header-right {
-    gap: 4px !important;
-  }
-
-  .role-pill {
-    padding: 0 6px !important;
-  }
-
-  .mood-selector-grid {
-    gap: 3px !important;
-  }
-
-  .mood-btn {
-    padding: 6px 1px !important;
-    min-height: 50px !important;
-    border-radius: 10px !important;
-  }
-
-  .mood-val-circle {
-    width: 22px !important;
-    height: 22px !important;
-    font-size: 11px !important;
-    line-height: 22px !important;
-  }
-
-  .mood-desc {
-    font-size: 8.5px !important;
-    letter-spacing: -0.3px !important;
-  }
-
-  .command-filter-bar {
-    gap: 4px !important;
-  }
-
-  .filter-pill-btn {
-    padding: 6px 6px !important;
-    font-size: 10.5px !important;
-  }
-}
-
-/* ============================================================
-   APPS MOBILE UX v7.0 — COMPLETE OVERHAUL
-   • Gauge: text-align+inline-block (guaranteed center)
-   • Snapshot card full-width padded layout
-   • Portal page stacked cards with full-width CTAs
-   • Login/Signup full-width inputs + bigger tap targets
-   • Dashboard mood grid improved spacing
-   • Officer/Admin tables card-list on mobile
-   • Results page gauge & history cards
-   • AI Companion chat mobile optimized
-   • General typography & safe-area insets
+  /* ============================================================
+   WHATSAPP / META AI CHATBOT SYSTEM (Laptop & Mobile Responsive)
+   • Authentic WhatsApp chat UI with emerald / dark header
+   • Meta AI sparkle gradient avatar & live status indicator
+   • WhatsApp wallpaper background texture (Light: #efeae2, Dark: #0b141a)
+   • Authentic speech bubbles: Left (Bot, #fff/#202c33) & Right (User, #d9fdd3/#005c4b)
+   • Double blue checkmarks (read ticks) on user messages
+   • Animated 3-dot typing indicator
+   • Rounded pill quick suggestions & pill input bar with circular WhatsApp send button
+   • 100% Responsive: centered floating modal on laptop, full bottom-sheet on mobile
    ============================================================ */
 
-/* 1. GAUGE — GUARANTEED CENTER (text-align + inline-block) */
-.gauge-center-wrapper {
+/* 1. Modal Container */
+.apps-modal-card.ai-companion-card,
+.apps-modal-card.wa-chat-card {
+  max-width: 460px !important;
   width: 100% !important;
-  display: block !important;
-  text-align: center !important;
-  margin: 16px 0 8px !important;
-  line-height: 0 !important;
-  overflow: visible !important;
-}
-.gauge-center-wrapper svg {
-  display: inline-block !important;
-  vertical-align: top !important;
-  width: 220px !important;
-  max-width: 85% !important;
-  height: auto !important;
-}
-
-/* 2. SNAPSHOT */
-@media (max-width: 768px) {
-  .snapshot-shell { padding: 0 12px !important; }
-  .snapshot-card {
-    padding: 20px 16px !important;
-    border-radius: 18px !important;
-    text-align: center !important;
-  }
-  .snapshot-card h3 { font-size: 17px !important; text-align: left !important; }
-  .gauge-center-wrapper svg { width: 200px !important; max-width: 80% !important; }
-  .gauge-reading-title {
-    font-size: 22px !important; font-weight: 800 !important;
-    text-align: center !important; display: block !important;
-  }
-  .snapshot-reco { font-size: 13.5px !important; text-align: center !important; }
-  .mini-stats { flex-wrap: wrap !important; gap: 10px !important; }
-  .mini-stat { flex: 1 1 calc(50% - 10px) !important; }
-}
-
-/* 3. PORTAL PAGE */
-@media (max-width: 768px) {
-  .portal-shell { padding: 0 12px 80px !important; }
-  .portal-header { padding: 32px 16px 24px !important; text-align: center !important; }
-  .portal-header h1 { font-size: 22px !important; line-height: 1.3 !important; }
-  .portal-header p { font-size: 13.5px !important; }
-  .portal-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
-  .portal-card { padding: 22px 18px !important; border-radius: 20px !important; }
-  .portal-card h2 { font-size: 17px !important; }
-  .portal-card p { font-size: 13px !important; }
-  .portal-features { gap: 6px !important; flex-wrap: wrap !important; }
-  .portal-feat-tag { font-size: 11px !important; padding: 4px 10px !important; }
-  .btn-group { flex-direction: column !important; gap: 10px !important; }
-  .btn-group .btn, .btn-group .btn-outline {
-    width: 100% !important; text-align: center !important;
-    padding: 13px 16px !important; font-size: 13.5px !important;
-  }
-}
-
-/* 4. LOGIN / SIGNUP */
-@media (max-width: 768px) {
-  .auth-shell { padding: 0 !important; align-items: flex-start !important; }
-  .auth-form-panel { width: 100% !important; max-width: 100% !important; padding: 0 !important; }
-  .auth-card {
-    width: 100% !important; max-width: 100% !important;
-    border-radius: 0 !important; box-shadow: none !important;
-    padding: 32px 20px 28px !important; min-height: 100svh !important;
-  }
-  .auth-card h1 { font-size: 24px !important; }
-  .auth-card .sub { font-size: 13px !important; }
-  .auth-card input[type="text"],
-  .auth-card input[type="password"],
-  .auth-card input[type="email"] {
-    height: 50px !important; font-size: 15px !important;
-    border-radius: 12px !important; padding: 0 16px !important;
-  }
-  .auth-card .btn, .auth-card button[type="submit"] {
-    height: 52px !important; font-size: 15px !important; border-radius: 14px !important;
-  }
-  .auth-card .form-group { margin-bottom: 16px !important; }
-  .auth-card label { font-size: 12.5px !important; margin-bottom: 6px !important; }
-  .auth-theme-toggle-wrap { top: 12px !important; right: 14px !important; }
-}
-
-/* 5. DASHBOARD MOOD GRID */
-@media (max-width: 768px) {
-  .mood-selector-grid { grid-template-columns: repeat(5, 1fr) !important; gap: 5px !important; }
-  .mood-btn { padding: 10px 4px !important; min-height: 68px !important; }
-  .mood-val-circle { width: 28px !important; height: 28px !important; font-size: 13px !important; line-height: 28px !important; }
-  .mood-desc { font-size: 9.5px !important; line-height: 1.2 !important; }
-  .slider-group { margin-bottom: 18px !important; }
-}
-
-/* 6. RESULTS PAGE */
-@media (max-width: 768px) {
-  .gauge-card { padding: 18px 14px !important; text-align: center !important; }
-  .gauge-telemetry-header {
-    flex-direction: column !important; align-items: center !important;
-    gap: 4px !important; text-align: center !important;
-  }
-  .result-entry { flex-direction: column !important; gap: 8px !important; padding: 14px !important; }
-  .result-badge { font-size: 11px !important; align-self: flex-start !important; }
-}
-
-/* 7. OFFICER / ADMIN PANELS */
-@media (max-width: 768px) {
-  .stat-panel { grid-template-columns: 1fr !important; gap: 12px !important; }
-  .stat-value-hero { font-size: 40px !important; }
-  .breakdown-row { padding: 10px 0 !important; gap: 10px !important; }
-  .breakdown-label { font-size: 12px !important; width: 52px !important; }
-  .admin-stat-grid, .stats-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
-  .unit-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
-  .quiet-row { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
-  .quiet-actions {
-    width: 100% !important; flex-direction: row !important;
-    flex-wrap: wrap !important; gap: 8px !important;
-  }
-  .quiet-actions .btn, .quiet-actions .btn-outline {
-    flex: 1 1 auto !important; text-align: center !important;
-    padding: 10px 12px !important; font-size: 12.5px !important;
-  }
-}
-
-/* 8. AI COMPANION CHAT */
-@media (max-width: 768px) {
-  #companionChat, .companion-chat-area { max-height: 55vh !important; padding: 12px !important; }
-  .companion-chat-bubble {
-    max-width: 90% !important; font-size: 13.5px !important;
-    padding: 10px 14px !important; line-height: 1.55 !important;
-  }
-  .companion-input-row { gap: 8px !important; }
-  .companion-input-row input, .companion-input-row textarea {
-    font-size: 14px !important; padding: 12px 14px !important; border-radius: 14px !important;
-  }
-}
-
-/* 9. GENERAL TYPOGRAPHY & SPACING */
-@media (max-width: 768px) {
-  .page-title { font-size: 20px !important; margin-bottom: 16px !important; }
-  .welcome-banner { padding: 16px !important; margin-bottom: 18px !important; }
-  .welcome-banner h2 { font-size: 18px !important; }
-  .card { padding: 18px 14px !important; border-radius: 18px !important; margin-bottom: 14px !important; }
-  .card h3 { font-size: 15.5px !important; margin-bottom: 12px !important; }
-  .tips-box { padding: 14px !important; border-radius: 14px !important; }
-  .tips-list li { font-size: 13px !important; }
-  .error-box { font-size: 13px !important; padding: 12px 14px !important; }
-  .command-filter-bar { gap: 6px !important; flex-wrap: wrap !important; }
-  .filter-pill-btn { padding: 8px 12px !important; font-size: 12px !important; }
-  .view-results-link { font-size: 13px !important; }
-  .wrap { padding-bottom: env(safe-area-inset-bottom, 16px) !important; }
-  .table-wrap { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
-}
-
-/* 10. SMALL PHONES <= 390px */
-@media (max-width: 390px) {
-  .auth-card { padding: 26px 16px 22px !important; }
-  .portal-card { padding: 18px 14px !important; }
-  .gauge-center-wrapper svg { width: 180px !important; max-width: 76% !important; }
-  .mood-btn { min-height: 60px !important; }
-  .mood-val-circle { width: 25px !important; height: 25px !important; font-size: 12px !important; line-height: 25px !important; }
-  .mood-desc { font-size: 9px !important; }
-  .card { padding: 14px 12px !important; border-radius: 16px !important; }
-  .page-title { font-size: 18px !important; }
-  .stat-value-hero { font-size: 36px !important; }
-  .gauge-reading-title { font-size: 19px !important; }
-}
-
-/* ============================================================
-   USER AVATAR CIRCLE — High Contrast in Light & Dark Modes
-   Fixes white-on-white avatar issue in dark mode
-   ============================================================ */
-.role-avatar-circle {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 22px !important;
-  height: 22px !important;
-  min-width: 22px !important;
-  min-height: 22px !important;
-  border-radius: 50% !important;
-  font-size: 11px !important;
-  font-weight: 800 !important;
-  text-transform: uppercase !important;
-  flex-shrink: 0 !important;
-  color: #ffffff !important;
-  background: linear-gradient(135deg, #10b981, #059669) !important;
-  box-shadow: 0 0 0 1.5px rgba(16, 185, 129, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3) !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
-  line-height: 1 !important;
-}
-
-.role-avatar-circle.role-avatar-personnel {
-  background: linear-gradient(135deg, #059669, #047857) !important;
-  box-shadow: 0 1px 4px rgba(5, 150, 105, 0.4) !important;
-}
-
-.role-avatar-circle.role-avatar-officer {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
-  box-shadow: 0 1px 4px rgba(37, 99, 235, 0.4) !important;
-}
-
-.role-avatar-circle.role-avatar-admin {
-  background: linear-gradient(135deg, #7c3aed, #6d28d9) !important;
-  box-shadow: 0 1px 4px rgba(124, 58, 237, 0.4) !important;
-}
-
-/* Dark Mode Avatar Circle — Crisp glow and contrast */
-html.dark .role-avatar-circle {
-  color: #ffffff !important;
-}
-
-html.dark .role-avatar-circle.role-avatar-personnel {
-  background: linear-gradient(135deg, #10b981, #059669) !important;
-  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.5), 0 2px 8px rgba(16, 185, 129, 0.3) !important;
-}
-
-html.dark .role-avatar-circle.role-avatar-officer {
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
-  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.5), 0 2px 8px rgba(37, 99, 235, 0.35) !important;
-}
-
-html.dark .role-avatar-circle.role-avatar-admin {
-  background: linear-gradient(135deg, #8b5cf6, #6d28d9) !important;
-  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.5), 0 2px 8px rgba(124, 58, 237, 0.35) !important;
-}
-
-
-/* ============================================================
-   MOBILE NAVIGATION DRAWER OVERHAUL (<= 991px)
-   • Prevents sticky header from overlapping the drawer
-   • Hides duplicate sidebar brand badge on mobile
-   • Corrects z-index so drawer & overlay sit above header
-   ============================================================ */
-@media screen and (max-width: 991px) {
-  /* Hide duplicate sidebar brand box on mobile drawer so it never clips under header */
-  .sidebar-brand-box {
-    display: none !important;
-  }
-
-  /* Elevate overlay and drawer above sticky header (which is z-index 990) */
-  .nav-overlay {
-    z-index: 9998 !important;
-  }
-  .nav-drawer {
-    z-index: 9999 !important;
-    padding: 0 !important;
-    box-sizing: border-box !important;
-  }
-  .nav-head {
-    padding: max(16px, env(safe-area-inset-top)) 18px 14px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    border-bottom: 1px solid var(--line) !important;
-  }
-}
-
-
-/* ============================================================
-   AI WELLNESS COMPANION — MOBILE & DARK MODE POLISH
-   • Removes ugly native horizontal scrollbar on prompt chips
-   • Flawless dark-mode input theming (no stark white box)
-   • Responsive modal sizing (adaptive height & full width on mobile)
-   • Crisp message bubble contrast and alignment
-   ============================================================ */
-.apps-modal-card.ai-companion-card {
-  max-width: 540px !important;
-  width: 100% !important;
-  height: 85vh !important;
-  max-height: 640px !important;
+  height: 650px !important;
+  max-height: 86vh !important;
   padding: 0 !important;
   display: flex !important;
   flex-direction: column !important;
   overflow: hidden !important;
   border-radius: 20px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+  background: var(--card) !important;
+  border: none !important;
 }
 
-.ai-chat-header {
-  padding: 14px 18px !important;
-  border-bottom: 1px solid var(--line) !important;
+/* 2. WhatsApp Header */
+.wa-chat-header {
+  padding: 10px 14px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  background: linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(6,182,212,0.06) 100%) !important;
+  background: #008069 !important;
+  color: #ffffff !important;
   flex-shrink: 0 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+  z-index: 5 !important;
 }
 
-#aiChatThread {
-  flex: 1 1 auto !important;
-  overflow-y: auto !important;
-  padding: 16px 16px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 12px !important;
-  -webkit-overflow-scrolling: touch !important;
+html.dark .wa-chat-header {
+  background: #202c33 !important;
+  color: #e9edef !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
-/* Quick prompt chips row — Scrollable with ZERO scrollbar */
-.ai-quick-prompts {
+.wa-header-left {
   display: flex !important;
   align-items: center !important;
-  gap: 8px !important;
-  padding: 10px 14px !important;
-  overflow-x: auto !important;
-  overflow-y: hidden !important;
-  white-space: nowrap !important;
-  border-top: 1px solid var(--line) !important;
-  background: rgba(0, 0, 0, 0.02) !important;
-  flex-shrink: 0 !important;
-  -webkit-overflow-scrolling: touch !important;
-  scrollbar-width: none !important; /* Firefox */
-  -ms-overflow-style: none !important; /* IE 10+ */
+  gap: 10px !important;
+  min-width: 0 !important;
 }
-.ai-quick-prompts::-webkit-scrollbar,
-.ai-quick-prompts::-webkit-scrollbar-thumb,
-.ai-quick-prompts::-webkit-scrollbar-track,
-.ai-quick-prompts::-webkit-scrollbar-button {
-  display: none !important; /* Chrome / Safari / Edge / WebView */
-  width: 0 !important;
-  height: 0 !important;
+
+.wa-back-btn {
   background: transparent !important;
-  opacity: 0 !important;
-}
-
-.ai-prompt-chip {
-  flex-shrink: 0 !important;
-  white-space: nowrap !important;
-  padding: 6px 12px !important;
-  border-radius: 20px !important;
-  font-size: 11.5px !important;
-  font-weight: 600 !important;
+  border: none !important;
+  color: inherit !important;
   cursor: pointer !important;
-}
-
-/* Chat Input Bar */
-.ai-chat-form {
-  padding: 12px 14px !important;
-  border-top: 1px solid var(--line) !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  background: var(--card) !important;
-  flex-shrink: 0 !important;
-}
-
-.ai-user-input {
-  flex: 1 1 auto !important;
-  height: 44px !important;
-  padding: 0 14px !important;
-  border: 1px solid var(--line) !important;
-  border-radius: 12px !important;
-  font-family: inherit !important;
-  font-size: 14px !important; /* 14px avoids iOS zoom on focus */
-  color: var(--ink) !important;
-  background: #ffffff !important;
-  outline: none !important;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
-}
-
-.ai-user-input:focus {
-  border-color: var(--primary) !important;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2) !important;
-}
-
-.ai-send-btn {
-  height: 44px !important;
-  width: auto !important;
-  min-width: 68px !important;
-  padding: 0 18px !important;
-  border-radius: 12px !important;
-  font-size: 13.5px !important;
-  font-weight: 700 !important;
-  flex-shrink: 0 !important;
+  padding: 4px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
+  border-radius: 50% !important;
+  opacity: 0.9 !important;
+  transition: opacity 0.15s ease, background 0.15s ease !important;
+}
+.wa-back-btn:hover {
+  opacity: 1 !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.wa-avatar-wrap {
+  position: relative !important;
+  width: 40px !important;
+  height: 40px !important;
+  flex-shrink: 0 !important;
+}
+
+.wa-ai-avatar {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, #00c6ff 0%, #0072ff 50%, #25D366 100%) !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 2px 8px rgba(0, 198, 255, 0.4) !important;
+}
+
+.wa-avatar-online-dot {
+  position: absolute !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50% !important;
+  background: #25D366 !important;
+  border: 2px solid #008069 !important;
+}
+
+html.dark .wa-avatar-online-dot {
+  border-color: #202c33 !important;
+}
+
+.wa-header-info {
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+}
+
+.wa-header-title {
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.wa-meta-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+}
+
+.wa-header-status {
+  font-size: 11px !important;
+  opacity: 0.85 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  margin-top: 1px !important;
+}
+
+.wa-status-dot {
+  width: 5.5px !important;
+  height: 5.5px !important;
+  border-radius: 50% !important;
+  background: #25D366 !important;
+  display: inline-block !important;
+}
+
+.wa-header-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  flex-shrink: 0 !important;
+}
+
+.wa-header-action-btn,
+.wa-close-btn {
+  background: transparent !important;
+  border: none !important;
+  color: inherit !important;
   cursor: pointer !important;
+  padding: 6px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  opacity: 0.85 !important;
+  transition: opacity 0.15s ease, background 0.15s ease !important;
+}
+.wa-header-action-btn:hover,
+.wa-close-btn:hover {
+  opacity: 1 !important;
+  background: rgba(255, 255, 255, 0.12) !important;
 }
 
-/* Dark Mode Overrides */
-html.dark .ai-quick-prompts {
-  background: rgba(15, 23, 42, 0.65) !important;
-  border-top-color: rgba(255, 255, 255, 0.08) !important;
+.wa-close-btn {
+  font-size: 22px !important;
+  line-height: 1 !important;
+  width: 32px !important;
+  height: 32px !important;
 }
 
-html.dark .ai-chat-form {
-  background: #0f172a !important;
-  border-top-color: rgba(255, 255, 255, 0.08) !important;
+/* 3. WhatsApp Chat Thread & Wallpaper */
+.wa-chat-thread,
+#aiChatThread {
+  flex: 1 1 auto !important;
+  overflow-y: auto !important;
+  padding: 14px 14px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  -webkit-overflow-scrolling: touch !important;
+  background-color: #efeae2 !important;
+  background-image: radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px) !important;
+  background-size: 20px 20px !important;
 }
 
-html.dark .ai-user-input {
-  background: #1e293b !important;
-  border-color: rgba(255, 255, 255, 0.14) !important;
-  color: #f8fafc !important;
+html.dark .wa-chat-thread,
+html.dark #aiChatThread {
+  background-color: #0b141a !important;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px) !important;
+  background-size: 20px 20px !important;
 }
 
-html.dark .ai-user-input::placeholder {
-  color: #64748b !important;
+/* Date Divider */
+.wa-date-divider {
+  display: flex !important;
+  justify-content: center !important;
+  margin: 4px 0 10px !important;
 }
 
-html.dark .ai-user-input:focus {
-  border-color: #3b82f6 !important;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25) !important;
+.wa-date-divider span {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 4px 12px !important;
+  border-radius: 8px !important;
+  letter-spacing: 0.04em !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: #54656f !important;
+  box-shadow: 0 1px 1px rgba(11, 20, 26, 0.12) !important;
 }
 
-/* Mobile Screens (<= 768px) */
-@media screen and (max-width: 768px) {
+html.dark .wa-date-divider span {
+  background: #182229 !important;
+  color: #8696a0 !important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* 4. Message Rows & Bubbles */
+.wa-msg-row {
+  display: flex !important;
+  width: 100% !important;
+  margin-bottom: 2px !important;
+}
+
+.wa-msg-row.wa-msg-bot {
+  justify-content: flex-start !important;
+}
+
+.wa-msg-row.wa-msg-user {
+  justify-content: flex-end !important;
+}
+
+.wa-msg-bubble {
+  max-width: 82% !important;
+  padding: 8px 12px 6px 12px !important;
+  font-size: 13.5px !important;
+  line-height: 1.48 !important;
+  word-break: break-word !important;
+  position: relative !important;
+  animation: waBubbleFade 0.2s ease !important;
+}
+
+@keyframes waBubbleFade {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Bot Bubble (Left) */
+.wa-bot-bubble {
+  background: #ffffff !important;
+  color: #111b21 !important;
+  border-radius: 0px 10px 10px 10px !important;
+  box-shadow: 0 1px 1.5px rgba(11, 20, 26, 0.13) !important;
+}
+
+html.dark .wa-bot-bubble {
+  background: #202c33 !important;
+  color: #e9edef !important;
+  border-radius: 0px 10px 10px 10px !important;
+  box-shadow: 0 1px 1.5px rgba(0, 0, 0, 0.25) !important;
+}
+
+.wa-bot-bubble.wa-emergency-bubble {
+  border-left: 3px solid #ef4444 !important;
+  background: #fff5f5 !important;
+}
+
+html.dark .wa-bot-bubble.wa-emergency-bubble {
+  background: rgba(239, 68, 68, 0.12) !important;
+  border-left: 3px solid #ef4444 !important;
+}
+
+/* User Bubble (Right) */
+.wa-user-bubble {
+  background: #d9fdd3 !important;
+  color: #111b21 !important;
+  border-radius: 10px 0px 10px 10px !important;
+  box-shadow: 0 1px 1.5px rgba(11, 20, 26, 0.13) !important;
+}
+
+html.dark .wa-user-bubble {
+  background: #005c4b !important;
+  color: #e9edef !important;
+  border-radius: 10px 0px 10px 10px !important;
+  box-shadow: 0 1px 1.5px rgba(0, 0, 0, 0.25) !important;
+}
+
+.wa-bubble-sender {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin-bottom: 3px !important;
+}
+
+.wa-sender-name {
+  font-weight: 700 !important;
+  font-size: 11.5px !important;
+  color: #008069 !important;
+}
+
+html.dark .wa-sender-name {
+  color: #00a884 !important;
+}
+
+.wa-sender-badge {
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  background: rgba(0, 168, 132, 0.12) !important;
+  color: #00a884 !important;
+  padding: 1px 5px !important;
+  border-radius: 4px !important;
+  letter-spacing: 0.02em !important;
+}
+
+.wa-bubble-text {
+  font-size: 13.5px !important;
+  line-height: 1.5 !important;
+}
+
+.wa-bubble-meta {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 4px !important;
+  margin-top: 3px !important;
+}
+
+.wa-msg-time {
+  font-size: 10px !important;
+  opacity: 0.6 !important;
+  white-space: nowrap !important;
+}
+
+.wa-double-check {
+  display: inline-block !important;
+  vertical-align: middle !important;
+}
+
+/* Typing Indicator */
+.wa-typing-bubble {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 8px 12px !important;
+}
+
+.wa-typing-dots {
+  display: flex !important;
+  gap: 4px !important;
+  align-items: center !important;
+}
+
+.wa-typing-dots span {
+  width: 6.5px !important;
+  height: 6.5px !important;
+  border-radius: 50% !important;
+  background: #00a884 !important;
+  animation: waTypingBounce 1.2s infinite ease-in-out !important;
+}
+
+.wa-typing-dots span:nth-child(2) {
+  animation-delay: 0.2s !important;
+}
+
+.wa-typing-dots span:nth-child(3) {
+  animation-delay: 0.4s !important;
+}
+
+@keyframes waTypingBounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1.1); opacity: 1; }
+}
+
+.wa-typing-label {
+  font-size: 11.5px !important;
+  opacity: 0.75 !important;
+  font-style: italic !important;
+}
+
+/* 5. Quick Suggestion Chips */
+.wa-quick-chips {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 7px 12px !important;
+  overflow-x: auto !important;
+  white-space: nowrap !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  background: #f0f2f5 !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+  flex-shrink: 0 !important;
+}
+
+.wa-quick-chips::-webkit-scrollbar {
+  display: none !important;
+}
+
+html.dark .wa-quick-chips {
+  background: #111b21 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.wa-chip-btn {
+  background: transparent !important;
+  border: 1px solid #00a884 !important;
+  color: #00a884 !important;
+  border-radius: 9999px !important;
+  padding: 4px 11px !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  transition: all 0.15s ease !important;
+}
+
+.wa-chip-btn:hover {
+  background: #00a884 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(0, 168, 132, 0.3) !important;
+}
+
+html.dark .wa-chip-btn {
+  border-color: rgba(0, 168, 132, 0.5) !important;
+  color: #25D366 !important;
+}
+
+html.dark .wa-chip-btn:hover {
+  background: #00a884 !important;
+  color: #ffffff !important;
+}
+
+/* 6. WhatsApp Input Footer */
+.wa-chat-form {
+  padding: 8px 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: #f0f2f5 !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.04) !important;
+}
+
+html.dark .wa-chat-form {
+  background: #202c33 !important;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.25) !important;
+}
+
+.wa-input-pill-wrap {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  border-radius: 24px !important;
+  padding: 0 10px 0 14px !important;
+  height: 44px !important;
+  background: #ffffff !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08) !important;
+}
+
+html.dark .wa-input-pill-wrap {
+  background: #2a3942 !important;
+  box-shadow: none !important;
+}
+
+.wa-emoji-btn {
+  background: transparent !important;
+  border: none !important;
+  color: #8696a0 !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  margin-right: 8px !important;
+  transition: color 0.15s ease !important;
+}
+
+.wa-emoji-btn:hover {
+  color: #00a884 !important;
+}
+
+.wa-user-input {
+  flex: 1 1 auto !important;
+  height: 100% !important;
+  border: none !important;
+  background: transparent !important;
+  font-family: inherit !important;
+  font-size: 14px !important;
+  outline: none !important;
+  color: #111b21 !important;
+  padding: 0 !important;
+}
+
+html.dark .wa-user-input {
+  color: #e9edef !important;
+}
+
+.wa-user-input::placeholder {
+  color: #8696a0 !important;
+}
+
+.wa-send-btn {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  background: #00a884 !important;
+  border: none !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 2px 8px rgba(0, 168, 132, 0.4) !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.15s ease, background 0.15s ease !important;
+}
+
+.wa-send-btn:hover {
+  background: #029474 !important;
+  transform: scale(1.06) !important;
+}
+
+.wa-send-btn:active {
+  transform: scale(0.95) !important;
+}
+
+.wa-send-btn:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+
+/* 7. Mobile Viewport Rules (<= 640px) */
+@media screen and (max-width: 640px) {
   .apps-modal-overlay#aiCompanionOverlay {
-    padding: 8px !important;
+    padding: 0 !important;
     align-items: flex-end !important;
   }
 
-  .apps-modal-card.ai-companion-card {
+  .apps-modal-card.ai-companion-card,
+  .apps-modal-card.wa-chat-card {
     width: 100% !important;
     max-width: 100% !important;
-    height: 88vh !important;
-    height: 88dvh !important;
-    max-height: calc(100dvh - 16px) !important;
-    border-radius: 20px 20px 14px 14px !important;
+    height: 92vh !important;
+    height: 92dvh !important;
+    max-height: 92dvh !important;
+    border-radius: 20px 20px 0 0 !important;
     margin: 0 !important;
   }
 
-  .ai-chat-header {
-    padding: 12px 14px !important;
+  .wa-chat-header {
+    padding: 10px 12px !important;
   }
 
-  .ai-chat-header h3 {
+  .wa-chat-header .wa-header-title {
     font-size: 13.5px !important;
-    flex-wrap: wrap !important;
-    gap: 4px !important;
   }
 
-  .ai-chat-header p {
-    font-size: 11px !important;
+  .wa-chat-header .wa-header-status {
+    font-size: 10.5px !important;
   }
 
+  .wa-chat-thread,
   #aiChatThread {
-    padding: 12px 10px !important;
-    gap: 10px !important;
+    padding: 10px 10px !important;
+    gap: 7px !important;
   }
 
-  .ai-msg-bubble {
-    max-width: 88% !important;
+  .wa-msg-bubble {
+    max-width: 86% !important;
     font-size: 13px !important;
-    line-height: 1.45 !important;
+    padding: 7px 11px 5px 11px !important;
   }
 
-  .ai-quick-prompts {
-    padding: 8px 10px !important;
-    gap: 6px !important;
+  .wa-bubble-text {
+    font-size: 13px !important;
   }
 
-  .ai-prompt-chip {
-    padding: 5px 10px !important;
+  .wa-quick-chips {
+    padding: 6px 10px !important;
+    gap: 5px !important;
+  }
+
+  .wa-chip-btn {
+    padding: 4px 10px !important;
     font-size: 11px !important;
   }
 
-  .ai-chat-form {
-    padding: 8px 10px max(10px, env(safe-area-inset-bottom)) !important;
+  .wa-chat-form {
+    padding: 7px 10px max(10px, env(safe-area-inset-bottom)) !important;
     gap: 6px !important;
   }
 
-  .ai-user-input {
+  .wa-input-pill-wrap {
     height: 42px !important;
-    font-size: 13.5px !important;
-    padding: 0 12px !important;
+    padding: 0 8px 0 12px !important;
   }
 
-  .ai-send-btn {
+  .wa-user-input {
+    font-size: 13.5px !important;
+  }
+
+  .wa-send-btn {
+    width: 42px !important;
     height: 42px !important;
-    padding: 0 14px !important;
-    min-width: 60px !important;
   }
 }
 

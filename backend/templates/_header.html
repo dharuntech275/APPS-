@@ -85,57 +85,130 @@
 </script>
 
 
-<!-- AI Psychological Wellness Companion Modal -->
+<!-- WhatsApp / Meta AI Style Psychological Wellness Companion Modal -->
 <div class="apps-modal-overlay" id="aiCompanionOverlay" onclick="if(event.target === this) closeAICompanion()">
-  <div class="apps-modal-card ai-companion-card">
-    <div class="ai-chat-header" style="padding:16px 20px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; background:linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(6,182,212,0.06) 100%);">
-      <div style="display:flex; align-items:center; gap:12px;">
-        <div style="width:38px; height:38px; border-radius:12px; background:linear-gradient(135deg, #2563eb, #06b6d4); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 0 14px rgba(37,99,235,0.4); font-size:18px;">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>
+  <div class="apps-modal-card ai-companion-card wa-chat-card">
+    
+    <!-- WhatsApp Chat Header -->
+    <div class="wa-chat-header">
+      <div class="wa-header-left">
+        <button type="button" class="wa-back-btn" onclick="closeAICompanion()" title="Close chat">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <div class="wa-avatar-wrap">
+          <div class="wa-ai-avatar">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="10" rx="2"></rect>
+              <circle cx="12" cy="5" r="2"></circle>
+              <path d="M12 7v4"></path>
+              <line x1="8" y1="16" x2="8" y2="16"></line>
+              <line x1="16" y1="16" x2="16" y2="16"></line>
+            </svg>
+          </div>
+          <span class="wa-avatar-online-dot"></span>
         </div>
-        <div>
-          <h3 style="margin:0; font-size:15px; font-weight:800; color:var(--ink); display:flex; align-items:center; gap:6px;">
-            APPS AI Wellness Companion
-            <span style="font-size:10px; font-weight:700; color:#10b981; background:rgba(16,185,129,0.12); padding:2px 7px; border-radius:10px;">Live 24/7</span>
-          </h3>
-          <p style="margin:2px 0 0; font-size:11.5px; color:var(--steel);">Confidential empathetic support &amp; self-care guidance</p>
+        <div class="wa-header-info">
+          <div class="wa-header-title">
+            <span>APPS AI Assistant</span>
+            <span class="wa-meta-badge" title="Verified WhatsApp AI Companion">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#00a884">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+            </span>
+          </div>
+          <div class="wa-header-status">
+            <span class="wa-status-dot"></span>
+            <span>online &bull; Meta AI Wellness 24/7</span>
+          </div>
         </div>
       </div>
-      <button type="button" class="modal-close-btn" onclick="closeAICompanion()" title="Close" style="position:static; margin:0;">&times;</button>
-    </div>
-
-    <!-- Chat Messages Scroll Area -->
-    <div id="aiChatThread" style="flex:1; overflow-y:auto; padding:20px 18px; display:flex; flex-direction:column; gap:14px;">
-      <!-- Welcome Bubble -->
-      <div class="ai-msg-bubble ai-bot-bubble">
-        <span style="font-weight:700; font-size:11.5px; color:var(--primary); display:block; margin-bottom:4px;">APPS Wellness Companion</span>
-        Hello! I am your 24/7 confidential wellness companion. Whether you are dealing with work fatigue, irregular shifts, sleep trouble, or stress, I am here to help you decompress. How are you feeling today?
+      <div class="wa-header-right">
+        <button type="button" class="wa-header-action-btn" onclick="clearAIChatHistory()" title="Clear chat history">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+        </button>
+        <button type="button" class="wa-close-btn" onclick="closeAICompanion()" title="Close chat">&times;</button>
       </div>
     </div>
 
-    <!-- Suggested Quick Prompts -->
-    <div class="ai-quick-prompts" style="scrollbar-width:none; -ms-overflow-style:none;" onwheel="if(event.deltaY !== 0){ this.scrollLeft += event.deltaY; event.preventDefault(); }">
-      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('Help me de-stress from a tough shift')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="vertical-align:middle; margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>De-stress from shift
+    <!-- WhatsApp Chat Messages Scroll Area with Wallpaper -->
+    <div id="aiChatThread" class="wa-chat-thread">
+      <!-- Date Divider Badge -->
+      <div class="wa-date-divider">
+        <span>TODAY</span>
+      </div>
+
+      <!-- Welcome Message Bubble from APPS AI -->
+      <div class="wa-msg-row wa-msg-bot">
+        <div class="wa-msg-bubble wa-bot-bubble">
+          <div class="wa-bubble-sender">
+            <span class="wa-sender-name">APPS AI</span>
+            <span class="wa-sender-badge">Meta AI Style</span>
+          </div>
+          <div class="wa-bubble-text">
+            Hello {{ session.get('user_name', 'there') }}! 👋 I am your 24/7 confidential WhatsApp-style AI companion.<br><br>
+            How are you feeling today? Whether you want to talk about your shift, de-stress, check your sleep habits, or ask me anything, I am right here with you!
+          </div>
+          <div class="wa-bubble-meta">
+            <span class="wa-msg-time" id="waInitTime">--:--</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WhatsApp Quick Suggestion Chips -->
+    <div class="wa-quick-chips" onwheel="if(event.deltaY !== 0){ this.scrollLeft += event.deltaY; event.preventDefault(); }">
+      <button type="button" class="wa-chip-btn" onclick="sendQuickPrompt('Hi')">
+        <span>👋 Hi</span>
       </button>
-      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('I cannot sleep properly tonight')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:4px;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Trouble sleeping
+      <button type="button" class="wa-chip-btn" onclick="sendQuickPrompt('How are you?')">
+        <span>💬 How are you?</span>
       </button>
-      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('Guide me through a calming exercise')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:4px;"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>Calming exercise
+      <button type="button" class="wa-chip-btn" onclick="sendQuickPrompt('Help me de-stress from a tough shift')">
+        <span>🧘 De-stress from shift</span>
       </button>
-      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('How do I talk to my Welfare Officer?')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>Welfare Officer chat
+      <button type="button" class="wa-chip-btn" onclick="sendQuickPrompt('I cannot sleep properly tonight')">
+        <span>😴 Trouble sleeping</span>
+      </button>
+      <button type="button" class="wa-chip-btn" onclick="sendQuickPrompt('Guide me through a calming exercise')">
+        <span>🌬️ 4-7-8 Breathing</span>
+      </button>
+      <button type="button" class="wa-chip-btn" onclick="sendQuickPrompt('How do I talk to my Welfare Officer?')">
+        <span>👨‍✈️ Talk to Officer</span>
+      </button>
+      <button type="button" class="wa-chip-btn" onclick="sendQuickPrompt('Give me a wellness motivation quote')">
+        <span>💡 Wellness tip</span>
       </button>
     </div>
 
-    <!-- Input Bar -->
-    <form id="aiChatForm" class="ai-chat-form" onsubmit="submitAIChat(event)">
-      <input type="text" id="aiUserInput" class="ai-user-input" placeholder="Type what is on your mind confidentially..." autocomplete="off">
-      <button type="submit" id="aiSendBtn" class="btn ai-send-btn">Send</button>
+    <!-- WhatsApp Input Bar -->
+    <form id="aiChatForm" class="wa-chat-form" onsubmit="submitAIChat(event)">
+      <div class="wa-input-pill-wrap">
+        <button type="button" class="wa-icon-btn wa-emoji-btn" onclick="insertEmoji('😊')" title="Insert friendly mood">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+            <line x1="9" y1="9" x2="9.01" y2="9"></line>
+            <line x1="15" y1="9" x2="15.01" y2="9"></line>
+          </svg>
+        </button>
+        <input type="text" id="aiUserInput" class="wa-user-input" placeholder="Type a message..." autocomplete="off">
+      </div>
+      <button type="submit" id="aiSendBtn" class="wa-send-btn" title="Send message">
+        <svg class="wa-send-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
     </form>
+
   </div>
 </div>
+
 
 <!-- AI Clinical Pre-Counseling Case Intelligence Brief Modal -->
 <div class="apps-modal-overlay" id="caseBriefOverlay" onclick="if(event.target === this) closeCaseBriefModal()">
@@ -1502,19 +1575,58 @@
 
 
 <script>
-  /* --- APPS AI Wellness Companion & Case Brief Scripts --- */
+    /* --- APPS WhatsApp / Meta AI Wellness Companion Scripts --- */
+  function getWATimeStr() {
+    var d = new Date();
+    var h = d.getHours();
+    var m = d.getMinutes();
+    var ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12;
+    h = h ? h : 12;
+    m = m < 10 ? '0' + m : m;
+    return h + ':' + m + ' ' + ampm;
+  }
+
+  // Set initial time on welcome message
+  document.addEventListener('DOMContentLoaded', function() {
+    var initT = document.getElementById('waInitTime');
+    if (initT) initT.textContent = getWATimeStr();
+  });
+
   window.openAICompanion = function() {
     var overlay = document.getElementById('aiCompanionOverlay');
     if (overlay) {
       overlay.classList.add('active');
+      var initT = document.getElementById('waInitTime');
+      if (initT && (initT.textContent === '--:--' || !initT.textContent)) {
+        initT.textContent = getWATimeStr();
+      }
       var input = document.getElementById('aiUserInput');
       if (input) setTimeout(function() { input.focus(); }, 150);
+      var thread = document.getElementById('aiChatThread');
+      if (thread) thread.scrollTop = thread.scrollHeight;
     }
   };
 
   window.closeAICompanion = function() {
     var overlay = document.getElementById('aiCompanionOverlay');
     if (overlay) overlay.classList.remove('active');
+  };
+
+  window.insertEmoji = function(emoji) {
+    var inp = document.getElementById('aiUserInput');
+    if (!inp) return;
+    inp.value += emoji + ' ';
+    inp.focus();
+  };
+
+  window.clearAIChatHistory = function() {
+    var thread = document.getElementById('aiChatThread');
+    if (!thread) return;
+    var rows = thread.querySelectorAll('.wa-msg-row');
+    for (var i = 1; i < rows.length; i++) {
+      rows[i].remove();
+    }
   };
 
   window.sendQuickPrompt = function(promptText) {
@@ -1524,6 +1636,8 @@
       submitAIChat();
     }
   };
+
+  var WA_BLUE_TICKS_SVG = '<svg class="wa-double-check" width="16" height="15" viewBox="0 0 16 15" fill="none"><path d="M15 4.5L7.5 12L4 8.5M11.5 4.5L7.25 8.75M4 12L0.5 8.5" stroke="#53bdeb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   window.submitAIChat = function(e) {
     if (e) e.preventDefault();
@@ -1535,20 +1649,42 @@
     var msg = input.value.trim();
     if (!msg) return;
 
-    // Append user bubble
+    var currentTime = getWATimeStr();
+
+    // 1. Append WhatsApp User Message Row
+    var userRow = document.createElement('div');
+    userRow.className = 'wa-msg-row wa-msg-user';
+    
     var userBubble = document.createElement('div');
-    userBubble.className = 'ai-msg-bubble ai-user-bubble';
-    userBubble.textContent = msg;
-    thread.appendChild(userBubble);
+    userBubble.className = 'wa-msg-bubble wa-user-bubble';
+    
+    var userText = document.createElement('div');
+    userText.className = 'wa-bubble-text';
+    userText.textContent = msg;
+    
+    var userMeta = document.createElement('div');
+    userMeta.className = 'wa-bubble-meta';
+    userMeta.innerHTML = '<span class="wa-msg-time">' + currentTime + '</span>' + WA_BLUE_TICKS_SVG;
+    
+    userBubble.appendChild(userText);
+    userBubble.appendChild(userMeta);
+    userRow.appendChild(userBubble);
+    thread.appendChild(userRow);
+
     input.value = '';
     thread.scrollTop = thread.scrollHeight;
 
-    // Loading indicator
-    var loadingBubble = document.createElement('div');
-    loadingBubble.className = 'ai-msg-bubble ai-bot-bubble';
-    loadingBubble.id = 'aiTempLoadingBubble';
-    loadingBubble.innerHTML = '<span class="radar-pulse-dot" style="display:inline-block; vertical-align:middle; margin-right:6px;"></span> Reflecting & counseling...';
-    thread.appendChild(loadingBubble);
+    // 2. Append WhatsApp Typing Indicator
+    var typingRow = document.createElement('div');
+    typingRow.className = 'wa-msg-row wa-msg-bot';
+    typingRow.id = 'waTypingRow';
+    
+    var typingBubble = document.createElement('div');
+    typingBubble.className = 'wa-msg-bubble wa-bot-bubble wa-typing-bubble';
+    typingBubble.innerHTML = '<div class="wa-typing-dots"><span></span><span></span><span></span></div><span class="wa-typing-label">APPS AI is typing...</span>';
+    
+    typingRow.appendChild(typingBubble);
+    thread.appendChild(typingRow);
     thread.scrollTop = thread.scrollHeight;
 
     if (sendBtn) sendBtn.disabled = true;
@@ -1560,33 +1696,64 @@
     })
     .then(function(res) { return res.json(); })
     .then(function(data) {
-      var loader = document.getElementById('aiTempLoadingBubble');
+      var loader = document.getElementById('waTypingRow');
       if (loader) loader.remove();
 
+      var botTime = data.timestamp || getWATimeStr();
+      var botRow = document.createElement('div');
+      botRow.className = 'wa-msg-row wa-msg-bot';
+
       var botBubble = document.createElement('div');
-      botBubble.className = 'ai-msg-bubble ai-bot-bubble';
-      if (data.is_emergency) {
-        botBubble.style.borderColor = '#ef4444';
-        botBubble.style.background = 'rgba(239,68,68,0.08)';
-      }
-      botBubble.innerHTML = '<span style="font-weight:700; font-size:11.5px; color:' + (data.is_emergency ? '#dc2626' : 'var(--primary)') + '; display:block; margin-bottom:4px;">APPS Wellness Companion</span>' +
-                            data.response.replace(/\n/g, '<br>');
-      thread.appendChild(botBubble);
+      botBubble.className = 'wa-msg-bubble wa-bot-bubble' + (data.is_emergency ? ' wa-emergency-bubble' : '');
+
+      var senderDiv = document.createElement('div');
+      senderDiv.className = 'wa-bubble-sender';
+      senderDiv.innerHTML = '<span class="wa-sender-name"' + (data.is_emergency ? ' style="color:#ef4444;"' : '') + '>APPS AI' + (data.is_emergency ? ' [CRISIS SUPPORT]' : '') + '</span>' +
+                            (!data.is_emergency ? '<span class="wa-sender-badge">Meta AI Style</span>' : '');
+
+      var textDiv = document.createElement('div');
+      textDiv.className = 'wa-bubble-text';
+      
+      // Formatting
+      var formatted = data.response
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n/g, '<br>');
+      textDiv.innerHTML = formatted;
+
+      var metaDiv = document.createElement('div');
+      metaDiv.className = 'wa-bubble-meta';
+      metaDiv.innerHTML = '<span class="wa-msg-time">' + botTime + '</span>';
+
+      botBubble.appendChild(senderDiv);
+      botBubble.appendChild(textDiv);
+      botBubble.appendChild(metaDiv);
+      botRow.appendChild(botBubble);
+      thread.appendChild(botRow);
+
       thread.scrollTop = thread.scrollHeight;
       if (sendBtn) sendBtn.disabled = false;
     })
     .catch(function(err) {
-      var loader = document.getElementById('aiTempLoadingBubble');
+      var loader = document.getElementById('waTypingRow');
       if (loader) loader.remove();
 
-      var errBubble = document.createElement('div');
-      errBubble.className = 'ai-msg-bubble ai-bot-bubble';
-      errBubble.textContent = "I'm reflecting on your note right now. Remember, if you are feeling overwhelmed, you can tap Crisis SOS anytime to reach your Welfare Officer immediately.";
-      thread.appendChild(errBubble);
+      var botRow = document.createElement('div');
+      botRow.className = 'wa-msg-row wa-msg-bot';
+
+      var botBubble = document.createElement('div');
+      botBubble.className = 'wa-msg-bubble wa-bot-bubble';
+      botBubble.innerHTML = '<div class="wa-bubble-sender"><span class="wa-sender-name">APPS AI</span></div>' +
+                            '<div class="wa-bubble-text">I am right here with you. If you are feeling overwhelmed, remember you can trigger Crisis SOS anytime to reach your Welfare Officer immediately.</div>' +
+                            '<div class="wa-bubble-meta"><span class="wa-msg-time">' + getWATimeStr() + '</span></div>';
+
+      botRow.appendChild(botBubble);
+      thread.appendChild(botRow);
       thread.scrollTop = thread.scrollHeight;
       if (sendBtn) sendBtn.disabled = false;
     });
   };
+
 
   /* --- Case Briefing Modal Logic --- */
   window.openCaseBriefModal = function(userId, userName) {
