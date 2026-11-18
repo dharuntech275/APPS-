@@ -7517,11 +7517,108 @@ html.dark .wa-user-input {
   transform: none !important;
 }
 
+/* 6b. Floating WhatsApp AI Launcher Button */
+.wa-floating-btn {
+  position: fixed !important;
+  bottom: 24px !important;
+  right: 24px !important;
+  z-index: 998 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  background: #25D366 !important;
+  color: #ffffff !important;
+  padding: 10px 18px 10px 14px !important;
+  border-radius: 9999px !important;
+  border: none !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 18px rgba(37, 211, 102, 0.45), 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background 0.2s ease !important;
+  font-family: inherit !important;
+  text-decoration: none !important;
+}
+
+.wa-floating-btn:hover {
+  transform: translateY(-3px) scale(1.03) !important;
+  background: #20ba5a !important;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.55), 0 3px 8px rgba(0, 0, 0, 0.25) !important;
+}
+
+.wa-floating-btn:active {
+  transform: scale(0.96) !important;
+}
+
+.wa-float-icon-wrap {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.wa-float-badge {
+  position: absolute !important;
+  top: -4px !important;
+  right: -8px !important;
+  background: #111b21 !important;
+  color: #25D366 !important;
+  font-size: 9.5px !important;
+  font-weight: 800 !important;
+  padding: 1px 4px !important;
+  border-radius: 6px !important;
+  border: 1px solid #25D366 !important;
+  line-height: 1 !important;
+}
+
+.wa-float-text {
+  font-size: 13.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.02em !important;
+  color: #ffffff !important;
+}
+
+.wa-float-pulse {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6) !important;
+  animation: waPulseRing 2.2s infinite cubic-bezier(0.66, 0, 0, 1) !important;
+  pointer-events: none !important;
+}
+
+@keyframes waPulseRing {
+  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+  70% { box-shadow: 0 0 0 16px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
 /* 7. Mobile Viewport Rules (<= 640px) */
 @media screen and (max-width: 640px) {
   .apps-modal-overlay#aiCompanionOverlay {
     padding: 0 !important;
     align-items: flex-end !important;
+  }
+
+  .wa-floating-btn {
+    bottom: 20px !important;
+    right: 18px !important;
+    padding: 12px !important;
+    border-radius: 50% !important;
+    width: 52px !important;
+    height: 52px !important;
+    justify-content: center !important;
+  }
+
+  .wa-floating-btn .wa-float-text {
+    display: none !important;
+  }
+
+  .wa-floating-btn .wa-float-badge {
+    top: -3px !important;
+    right: -4px !important;
+    font-size: 8.5px !important;
   }
 
   .apps-modal-card.ai-companion-card,
