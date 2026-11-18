@@ -85,12 +85,26 @@
 </script>
 
 
-<!-- AI Psychological Wellness Companion Modal -->
-<div class="apps-modal-overlay" id="aiCompanionOverlay" onclick="if(event.target === this) closeAICompanion()">
-  <div class="apps-modal-card ai-companion-card">
+<!-- AI Psychological Wellness Companion Modal (Ultra-Modern Premium Redesign) -->
+<div class="apps-modal-overlay ai-companion-overlay" id="aiCompanionOverlay" onclick="if(event.target === this) closeAICompanion()">
+  <div class="ai-companion-card" role="dialog" aria-modal="true" aria-labelledby="aiHeaderTitle">
+    
+    <!-- Top Security & Status Ribbon -->
+    <div class="ai-status-ribbon">
+      <div class="ai-ribbon-left">
+        <span class="ai-pulse-dot"></span>
+        <span class="ai-ribbon-status">24/7 Live AI Counseling Engine</span>
+      </div>
+      <div class="ai-ribbon-right">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>End-to-End Confidential</span>
+      </div>
+    </div>
+
+    <!-- Modal Header -->
     <div class="ai-chat-header">
-      <div style="display:flex; align-items:center; gap:12px;">
-        <div class="ai-header-icon-wrap">
+      <div class="ai-header-lead">
+        <div class="ai-header-avatar">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="11" width="18" height="10" rx="2"></rect>
             <circle cx="12" cy="5" r="2"></circle>
@@ -98,51 +112,91 @@
             <line x1="8" y1="16" x2="8" y2="16"></line>
             <line x1="16" y1="16" x2="16" y2="16"></line>
           </svg>
+          <span class="ai-avatar-badge"></span>
         </div>
-        <div>
-          <h3 class="ai-header-title">
-            <span>APPS AI Wellness Companion</span>
-            <span class="ai-live-badge">Live 24/7</span>
-          </h3>
-          <p class="ai-header-sub">Confidential empathetic support &amp; self-care guidance</p>
+        <div class="ai-header-meta">
+          <div class="ai-header-title-row">
+            <h3 class="ai-header-title" id="aiHeaderTitle">APPS Wellness Companion</h3>
+            <span class="ai-active-pill">Active</span>
+          </div>
+          <p class="ai-header-sub">Empathetic psychological support &amp; 24/7 health decompression</p>
         </div>
       </div>
-      <button type="button" class="ai-chat-close-btn" onclick="closeAICompanion()" title="Close" aria-label="Close">&times;</button>
+      <button type="button" class="ai-modal-close-btn" onclick="closeAICompanion()" title="Close chat" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
     </div>
 
     <!-- Chat Messages Scroll Area -->
     <div id="aiChatThread" class="ai-chat-thread">
-      <!-- Welcome Bubble -->
+      <!-- Bot Greeting Message -->
       <div class="ai-msg-bubble ai-bot-bubble">
-        <span class="ai-bubble-sender">APPS Wellness Companion</span>
-        Hello {{ session.get('user_name', 'there') }}! I am your 24/7 confidential AI wellness companion. Whether you are dealing with work fatigue, irregular shifts, sleep trouble, or have a health question, I am here to help you decompress. How are you feeling today?
+        <div class="ai-bubble-header">
+          <div class="ai-bubble-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>APPS AI COMPANION</span>
+          </div>
+          <span class="ai-bubble-time">Live</span>
+        </div>
+        <div class="ai-bubble-text">
+          Hello <strong>{{ session.get('user_name', 'there') }}</strong>! I am your 24/7 confidential psychological wellness companion.
+          <br><br>
+          Whether you are managing tough shifts, sleep fatigue, work stress, or just need a calm space to decompress, I am here for you anytime. How can I support your wellbeing today?
+        </div>
       </div>
     </div>
 
-    <!-- Suggested Quick Prompts -->
-    <div class="ai-quick-prompts" onwheel="if(event.deltaY !== 0){ this.scrollLeft += event.deltaY; event.preventDefault(); }">
-      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('Hi')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="vertical-align:middle; margin-right:4px;"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>Say Hi
-      </button>
-      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('Help me de-stress from a tough shift')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="vertical-align:middle; margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>De-stress from shift
-      </button>
-      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('I cannot sleep properly tonight')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:4px;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Trouble sleeping
-      </button>
-      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('Guide me through a calming exercise')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:4px;"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>Calming exercise
-      </button>
-      <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('How do I talk to my Welfare Officer?')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle; margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>Welfare Officer chat
-      </button>
+    <!-- Quick Prompts Section -->
+    <div class="ai-prompts-wrapper">
+      <div class="ai-prompts-label">Suggested quick topics:</div>
+      <div class="ai-quick-prompts" onwheel="if(event.deltaY !== 0){ this.scrollLeft += event.deltaY; event.preventDefault(); }">
+        <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('Hi')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+          <span>Say Hi</span>
+        </button>
+        <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('Help me de-stress from a tough shift')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span>De-stress from shift</span>
+        </button>
+        <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('I cannot sleep properly tonight')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <span>Trouble sleeping</span>
+        </button>
+        <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('Guide me through a calming exercise')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
+          <span>Calming exercise</span>
+        </button>
+        <button type="button" class="ai-prompt-chip" onclick="sendQuickPrompt('How do I talk to my Welfare Officer?')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+          <span>Talk to Officer</span>
+        </button>
+      </div>
     </div>
 
-    <!-- Input Bar -->
-    <form id="aiChatForm" class="ai-chat-form" onsubmit="submitAIChat(event)">
-      <input type="text" id="aiUserInput" class="ai-user-input" placeholder="Type what is on your mind confidentially..." autocomplete="off">
-      <button type="submit" id="aiSendBtn" class="btn ai-send-btn">Send</button>
-    </form>
+    <!-- Input Footer Bar -->
+    <div class="ai-chat-footer">
+      <form id="aiChatForm" class="ai-chat-form" onsubmit="submitAIChat(event)">
+        <div class="ai-input-pill-wrap">
+          <svg class="ai-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <input type="text" id="aiUserInput" class="ai-user-input" placeholder="Type what is on your mind confidentially..." autocomplete="off">
+        </div>
+        <button type="submit" id="aiSendBtn" class="ai-submit-btn" aria-label="Send message">
+          <span>Send</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </form>
+      <div class="ai-confidential-tagline">
+        Private session &bull; Clinical-grade safety guardrails armed
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1547,6 +1601,9 @@
     var msg = input.value.trim();
     if (!msg) return;
 
+    var now = new Date();
+    var timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
     // Append user bubble
     var userBubble = document.createElement('div');
     userBubble.className = 'ai-msg-bubble ai-user-bubble';
@@ -1560,7 +1617,13 @@
     var loadingBubble = document.createElement('div');
     loadingBubble.className = 'ai-msg-bubble ai-bot-bubble';
     loadingBubble.id = 'aiTempLoadingBubble';
-    loadingBubble.innerHTML = '<span class="radar-pulse-dot" style="display:inline-block; vertical-align:middle; margin-right:6px;"></span> Reflecting &amp; counseling...';
+    loadingBubble.innerHTML = '<div class="ai-bubble-header">' +
+                              '  <div class="ai-bubble-badge">' +
+                              '    <span class="ai-pulse-dot" style="display:inline-block; vertical-align:middle; margin-right:4px;"></span>' +
+                              '    <span>AI REFLECTING</span>' +
+                              '  </div>' +
+                              '</div>' +
+                              '<div class="ai-bubble-text" style="color:var(--steel); font-style:italic;">Analyzing wellness telemetry &amp; preparing confidential guidance...</div>';
     thread.appendChild(loadingBubble);
     thread.scrollTop = thread.scrollHeight;
 
@@ -1580,7 +1643,7 @@
       botBubble.className = 'ai-msg-bubble ai-bot-bubble';
       if (data.is_emergency) {
         botBubble.style.borderColor = '#ef4444';
-        botBubble.style.background = 'rgba(239,68,68,0.08)';
+        botBubble.style.background = 'rgba(239,68,68,0.1)';
       }
 
       var formatted = data.response
@@ -1588,8 +1651,14 @@
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\n/g, '<br>');
 
-      botBubble.innerHTML = '<span class="ai-bubble-sender" style="color:' + (data.is_emergency ? '#dc2626' : 'var(--primary)') + ';">APPS Wellness Companion</span>' +
-                            '<div>' + formatted + '</div>';
+      botBubble.innerHTML = '<div class="ai-bubble-header">' +
+                            '  <div class="ai-bubble-badge" style="' + (data.is_emergency ? 'color:#ef4444 !important;' : '') + '">' +
+                            '    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
+                            '    <span>' + (data.is_emergency ? 'CRITICAL SUPPORT' : 'APPS AI COMPANION') + '</span>' +
+                            '  </div>' +
+                            '  <span class="ai-bubble-time">' + timeStr + '</span>' +
+                            '</div>' +
+                            '<div class="ai-bubble-text">' + formatted + '</div>';
       thread.appendChild(botBubble);
       thread.scrollTop = thread.scrollHeight;
       if (sendBtn) sendBtn.disabled = false;
@@ -1600,8 +1669,14 @@
 
       var errBubble = document.createElement('div');
       errBubble.className = 'ai-msg-bubble ai-bot-bubble';
-      errBubble.innerHTML = '<span class="ai-bubble-sender">APPS Wellness Companion</span>' +
-                            '<div>I am right here with you. If you are feeling overwhelmed, remember you can trigger Crisis SOS anytime to reach your Welfare Officer immediately.</div>';
+      errBubble.innerHTML = '<div class="ai-bubble-header">' +
+                            '  <div class="ai-bubble-badge">' +
+                            '    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
+                            '    <span>APPS AI COMPANION</span>' +
+                            '  </div>' +
+                            '  <span class="ai-bubble-time">' + timeStr + '</span>' +
+                            '</div>' +
+                            '<div class="ai-bubble-text">I am right here with you. If you are feeling overwhelmed, remember you can trigger Crisis SOS anytime to reach your Welfare Officer immediately.</div>';
       thread.appendChild(errBubble);
       thread.scrollTop = thread.scrollHeight;
       if (sendBtn) sendBtn.disabled = false;
