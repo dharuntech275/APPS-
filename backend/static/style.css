@@ -4386,9 +4386,12 @@ html.dark .filter-pill-btn:hover {
     line-height: 1.35;
   }
   .gauge-telemetry-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
+    gap: 8px 14px !important;
   }
 }
 
@@ -11314,5 +11317,186 @@ html.dark .nav-delete-btn:hover {
     font-size: 9px !important;
     line-height: 1.15 !important;
     opacity: 0.8 !important;
+  }
+}
+
+
+/* ==========================================================================
+   MOBILE & LAPTOP PRECISION ENHANCEMENTS: TELEMETRY DATE, CRISIS SOS, AI CHAT
+   ========================================================================== */
+
+/* 1. Results Page Telemetry Header: Date Inline with Space */
+.gauge-telemetry-header {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  flex-wrap: wrap !important;
+  gap: 8px 14px !important;
+}
+
+/* 2. Results Quick Actions on Mobile (<= 640px) */
+@media (max-width: 640px) {
+  .results-quick-actions {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+  .results-quick-actions .results-action-btn,
+  .results-quick-actions .btn,
+  .results-quick-actions .btn-outline {
+    width: 100% !important;
+    justify-content: center !important;
+    height: 44px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* 3. Crisis SOS Support Modal Mobile Alignment (<= 640px) */
+@media (max-width: 640px) {
+  #sosModalOverlay .apps-modal-card {
+    width: min(440px, 94vw) !important;
+    max-width: 100% !important;
+    padding: 22px 18px 20px !important;
+    border-radius: 18px !important;
+    box-sizing: border-box !important;
+  }
+  #sosModalOverlay .hotline-card {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 10px 14px !important;
+    margin-bottom: 8px !important;
+    border-radius: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  #sosModalOverlay .hotline-num {
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+  }
+  #sosModalOverlay .hotline-lbl {
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+    opacity: 0.85 !important;
+  }
+  #sosModalOverlay #sosNote {
+    width: 100% !important;
+    min-height: 60px !important;
+    padding: 10px 12px !important;
+    font-size: 13px !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+  }
+  #sosModalOverlay #sosSubmitBtn {
+    width: 100% !important;
+    height: 46px !important;
+    padding: 0 16px !important;
+    font-size: 13.5px !important;
+    font-weight: 800 !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* 4. AI Companion Modal Ergonomics (Laptop & Mobile) */
+.ai-companion-card {
+  width: min(660px, 92vw) !important;
+  height: min(720px, 84vh) !important;
+  border-radius: 22px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+.ai-prompts-wrapper {
+  padding: 8px 16px !important;
+  flex-shrink: 0 !important;
+}
+.ai-quick-prompts {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  gap: 8px !important;
+  padding-bottom: 4px !important;
+}
+.ai-prompt-chip {
+  flex: 0 0 auto !important;
+  white-space: nowrap !important;
+  padding: 6px 14px !important;
+  border-radius: 20px !important;
+  font-size: 12px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+.ai-chat-form {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+.ai-input-pill-wrap {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: var(--paper, #ffffff) !important;
+  border: 1.5px solid var(--line, #cbd5e1) !important;
+  border-radius: 9999px !important;
+  padding: 0 16px !important;
+  height: 46px !important;
+  box-sizing: border-box !important;
+}
+html.dark .ai-input-pill-wrap {
+  background: rgba(15, 23, 42, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+}
+.ai-user-input {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  color: var(--ink) !important;
+  font-size: 13.5px !important;
+  height: 100% !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+.ai-submit-btn {
+  flex: 0 0 auto !important;
+  height: 46px !important;
+  min-width: 84px !important;
+  padding: 0 18px !important;
+  border-radius: 9999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+}
+@media (max-width: 640px) {
+  .ai-companion-card {
+    width: calc(100vw - 20px) !important;
+    height: min(620px, 88vh) !important;
+    border-radius: 18px !important;
+  }
+  .ai-input-pill-wrap {
+    height: 42px !important;
+    padding: 0 12px !important;
+  }
+  .ai-submit-btn {
+    height: 42px !important;
+    padding: 0 14px !important;
+    min-width: 74px !important;
   }
 }

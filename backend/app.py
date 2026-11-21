@@ -138,7 +138,7 @@ def sync_db_from_blob(force=False):
     """Download latest apps.db from Vercel Blob into DB_PATH if available."""
     global _last_blob_sync_time
     now = time.time()
-    if not force and os.path.exists(DB_PATH) and (now - _last_blob_sync_time < 30):
+    if not force and os.path.exists(DB_PATH) and (now - _last_blob_sync_time < 2):
         return False
 
     token = _get_blob_token()
@@ -1496,6 +1496,7 @@ def get_user_history(conn, user_id):
 @app.route("/dashboard")
 @role_required("personnel")
 def dashboard():
+    sync_db_from_blob(force=True)
     uid = session["user_id"]
     conn = get_db()
     history = get_user_history(conn, uid)
@@ -1600,6 +1601,7 @@ def dashboard():
 @app.route("/snapshot")
 @role_required("personnel")
 def snapshot():
+    sync_db_from_blob(force=True)
     uid = session["user_id"]
     conn = get_db()
     history = get_user_history(conn, uid)
@@ -1637,6 +1639,7 @@ def snapshot():
 @app.route("/results")
 @role_required("personnel")
 def results():
+    sync_db_from_blob(force=True)
     conn = get_db()
     history = get_user_history(conn, session["user_id"])
     conn.close()
@@ -1690,6 +1693,12 @@ def submit_survey():
         entry_id = cur.lastrowid
     conn.commit()
     conn.close()
+
+    # Instant cross-device sync: push check-in to Vercel Blob immediately
+    try:
+        sync_db_to_blob()
+    except Exception as e:
+        print(f"[Blob Sync on submit_survey error] {e}")
 
     # Instant multi-container resilience: save recent check-ins in signed session cookie
     new_entry = {
@@ -2746,6 +2755,24 @@ def ai_companion():
     # 13. Motivation & Tips
     is_motivation = any(w in words for w in ["quote", "motivate", "motivation", "tip", "advice", "inspire"]) or any(p in lower_msg for p in ["wellness tip", "give me a tip", "motivate me"])
 
+    # 14. Heart Rate, Blood Pressure & Vitals
+    is_heart_vitals = any(w in words for w in ["heart", "pulse", "bp", "vitals", "tachycardia", "palpitation", "bpm"]) or any(p in lower_msg for p in ["heart rate", "high heart rate", "blood pressure", "chest pounding", "pulse rate"])
+
+    # 15. Diet, Nutrition & Hydration
+    is_diet_hydration = any(w in words for w in ["water", "food", "diet", "eat", "eating", "nutrition", "hydration", "drink", "coffee", "caffeine", "snack", "hungry"]) or any(p in lower_msg for p in ["drink water", "what to eat", "healthy food", "healthy diet", "meal"])
+
+    # 16. Fitness, Workout & Physical Exercise
+    is_fitness_exercise = any(w in words for w in ["exercise", "workout", "gym", "fitness", "running", "jogging", "walking", "stretch", "stretching", "cardio"]) or any(p in lower_msg for p in ["physical health", "stay active", "workout tips", "daily exercise"])
+
+    # 17. Sickness, Fever & Unwell
+    is_sickness_fever = any(w in words for w in ["sick", "fever", "cold", "cough", "infection", "nausea", "unwell", "ill", "vomiting"]) or any(p in lower_msg for p in ["not feeling well", "feeling sick", "stomach pain", "body ache", "flu"])
+
+    # 18. Anxiety, Overthinking & Racing Mind
+    is_anxiety_overthinking = any(w in words for w in ["overthinking", "worry", "worried", "fear", "scared", "panicking", "restless"]) or any(p in lower_msg for p in ["can't focus", "mind racing", "stop overthinking", "too much thoughts", "anxious"])
+
+    # 19. General Health & Wellbeing
+    is_general_health = any(w in words for w in ["health", "healthy", "lifestyle", "routine", "wellbeing", "wellness"]) or any(p in lower_msg for p in ["health tips", "improve health", "healthy life", "good health", "how to be healthy"])
+
     # Generate Dialogue Responses
     if is_how_are_you:
         reply = (
@@ -2844,6 +2871,64 @@ def ai_companion():
             f"Here is your wellness takeaway for today, {user_name}:\n\n"
             "'Resilience is not about never feeling tired; it is about knowing when to recharge and step back into balance.'\n\n"
             f"You have put in solid effort with ~{duty}h on duty. Take pride in your dedication, drink water, and prioritize quality rest tonight!"
+        )
+    elif is_heart_vitals:
+        reply = (
+            f"Let's check in on your cardiac vitals, {user_name}.\n\n"
+            "A healthy resting heart rate for adults typically sits between 60 to 100 bpm. High operational strain or adrenaline surges can elevate your pulse into the 90-115+ range.\n\n"
+            "Key steps to stabilize your pulse & blood pressure right now:\n"
+            "1. Controlled Exhalation: Breathe out twice as long as you breathe in (like 4-7-8 breathing) to stimulate the vagus nerve and slow down your pulse.\n"
+            "2. Immediate Hydration: Dehydration forces the heart to beat faster. Drink 300ml of cool water now.\n"
+            "3. Rested Posture: Sit comfortably with uncrossed legs for 5 minutes.\n\n"
+            "If you experience persistent chest tightness or severe palpitations, please report immediately to medical staff or use Crisis SOS."
+        )
+    elif is_diet_hydration:
+        reply = (
+            f"Nutrition and hydration directly govern your cognitive focus and physical stamina on duty, {user_name}.\n\n"
+            "Clinical shift nutrition principles:\n"
+            "1. Smart Hydration: Aim for 2.5 to 3.5 liters of clean water daily, sipping steadily across your shift.\n"
+            "2. Sustained Energy Foods: Focus on complex carbs, lean proteins, nuts, and fresh fruit to prevent sugar crashes.\n"
+            "3. Shift Caffeine Protocol: Avoid caffeine within 5 to 6 hours of bedtime so your deep restorative sleep remains intact.\n\n"
+            "How is your water intake today? Try to drink a glass of water right now!"
+        )
+    elif is_fitness_exercise:
+        reply = (
+            f"Staying physically active keeps your cardiovascular system strong and clears stress cortisol build-up, {user_name}.\n\n"
+            "Daily functional fitness tips:\n"
+            "1. Micro-Mobility: Perform 3 minutes of shoulder rolls, hip openers, and gentle twists after long hours of seated or standing duty.\n"
+            "2. Moderate Cardio: 20-30 minutes of brisk walking or light jogging releases natural mood-boosting endorphins.\n"
+            "3. Post-Shift Stretching: Gentle hamstring and spinal stretches relieve operational back tightness before sleep.\n\n"
+            f"Listen to your body: since your recent recorded sleep is ~{sleep}h, prioritize restorative stretching over heavy exertion today!"
+        )
+    elif is_sickness_fever:
+        reply = (
+            f"I am sorry to hear that you are feeling unwell, {user_name}. Your physical health and prompt recovery take absolute priority.\n\n"
+            "Immediate self-care measures:\n"
+            "1. Complete Rest: Inform your unit lead or officer if you are unable to fulfill duties safely.\n"
+            "2. Hydrate & Replenish: Sip warm fluids (electrolytes, herbal teas, or warm water) and monitor your temperature.\n"
+            "3. Clinical Evaluation: Do not push through fever or severe illness alone. Visit your unit clinic or physician for prompt evaluation.\n\n"
+            "Would you like help sending a health update note to your Welfare Officer?"
+        )
+    elif is_anxiety_overthinking:
+        reply = (
+            f"When your thoughts start racing, {user_name}, grounding your nervous system back into the physical present brings immediate relief.\n\n"
+            "Try the 5-4-3-2-1 Sensory Grounding Technique with me:\n"
+            "• Look around: Spot 5 physical objects you can see.\n"
+            "• Touch: Feel 4 physical textures around you (your uniform, desk, chair).\n"
+            "• Listen: Identify 3 distinct sounds in your surroundings.\n"
+            "• Scent: Notice 2 scents in the air.\n"
+            "• Taste: Notice 1 taste or take a sip of cool water.\n\n"
+            "Take one slow, deep breath. Your thoughts are just signals, not emergencies. How does your breathing feel right now?"
+        )
+    elif is_general_health:
+        reply = (
+            f"Maintaining peak health on demanding schedules relies on four steady pillars, {user_name}:\n\n"
+            "The 4 Pillars of Peak Health in APPS:\n"
+            "1. Restorative Sleep: Target 7-8 hours when off-duty to repair cognitive and immune pathways.\n"
+            "2. Consistent Hydration: Keep water within arm's reach throughout your shift.\n"
+            "3. Mental Decompression: Take 60-second micro-pauses between heavy tasks.\n"
+            "4. Timely Communication: Reach out early when strain accumulates rather than holding it in.\n\n"
+            "What area of your wellbeing would you like to explore today?"
         )
     else:
         # Context-aware conversational fallback
