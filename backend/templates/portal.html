@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - AI Predictive Personnel Stress &amp; Welfare Monitoring Systems</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=22.0">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=23.0">
 <script>
   (function(){
     var t = localStorage.getItem('apps_theme');
@@ -17,7 +17,6 @@
   /* Fail-safe pill styling matching Image 1 for mobile and laptop */
   .portal-badge-chip {
     display: inline-flex !important;
-    flex-direction: row !important;
     align-items: center !important;
     justify-content: center !important;
     gap: 6px !important;
@@ -26,7 +25,7 @@
     border: 1px solid rgba(37, 99, 235, 0.35) !important;
     background: rgba(37, 99, 235, 0.08) !important;
     color: var(--primary, #2563eb) !important;
-    font-size: clamp(8px, 2.3vw, 11px) !important;
+    font-size: 11px !important;
     font-weight: 800 !important;
     letter-spacing: 0.03em !important;
     text-transform: uppercase !important;
@@ -34,6 +33,46 @@
     margin: 0 auto 16px auto !important;
     max-width: 96% !important;
     box-sizing: border-box !important;
+  }
+  @media (max-width: 520px) {
+    .portal-badge-chip {
+      display: inline-flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 3px !important;
+      padding: 6px 14px !important;
+      border-radius: 16px !important;
+      max-width: 92% !important;
+      width: auto !important;
+      white-space: normal !important;
+      text-align: center !important;
+      line-height: 1.35 !important;
+      box-sizing: border-box !important;
+    }
+    .portal-chip-lead {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 5px !important;
+      font-size: 9.5px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.02em !important;
+      text-align: center !important;
+      width: 100% !important;
+    }
+    .portal-chip-sep {
+      display: none !important;
+    }
+    .portal-chip-tail {
+      display: block !important;
+      font-size: 8.5px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.05em !important;
+      opacity: 0.85 !important;
+      text-align: center !important;
+      width: 100% !important;
+    }
   }
   html.dark .portal-badge-chip {
     background: rgba(30, 58, 138, 0.3) !important;

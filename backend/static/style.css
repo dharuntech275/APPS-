@@ -10359,19 +10359,41 @@ html.dark .showcase-feature-card:hover {
   }
   .portal-badge-chip {
     display: inline-flex !important;
-    flex-direction: row !important;
+    flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 6px !important;
+    gap: 3px !important;
     padding: 6px 14px !important;
-    border-radius: 9999px !important;
-    max-width: 96% !important;
+    border-radius: 16px !important;
+    max-width: 92% !important;
+    width: auto !important;
     margin: 0 auto 14px auto !important;
-    white-space: nowrap !important;
+    white-space: normal !important;
+    text-align: center !important;
+    line-height: 1.35 !important;
     box-sizing: border-box !important;
-    font-size: clamp(8px, 2.3vw, 11px) !important;
+    font-size: 9.5px !important;
     font-weight: 800 !important;
     letter-spacing: 0.03em !important;
+  }
+  .portal-chip-lead {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+  .portal-chip-sep {
+    display: none !important;
+  }
+  .portal-chip-tail {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    font-size: 8.5px !important;
+    letter-spacing: 0.05em !important;
+    opacity: 0.85 !important;
   }
   .portal-chip-lead {
     font-size: inherit !important;
@@ -10911,5 +10933,229 @@ html.dark .modern-auth-card .role-tabs {
   .auth-submit-btn {
     height: 48px !important;
     font-size: 14px !important;
+  }
+}
+
+
+/* ========================================================
+   DRAWER ACCOUNT ACTIONS & DELETE ACCOUNT MODAL STYLING
+   ======================================================== */
+.drawer-account-footer {
+  padding: 14px 16px !important;
+  border-top: 1px solid var(--line) !important;
+  margin-top: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  box-sizing: border-box !important;
+  background: var(--card) !important;
+}
+
+.nav-logout {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  height: 42px !important;
+  border-radius: 10px !important;
+  background: rgba(37, 99, 235, 0.08) !important;
+  color: var(--primary) !important;
+  border: 1px solid rgba(37, 99, 235, 0.25) !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  text-decoration: none !important;
+  box-sizing: border-box !important;
+  transition: all 0.2s ease !important;
+}
+
+.nav-logout:hover {
+  background: var(--primary) !important;
+  color: #ffffff !important;
+}
+
+html.dark .nav-logout {
+  background: rgba(37, 99, 235, 0.18) !important;
+  color: #93c5fd !important;
+  border-color: rgba(59, 130, 246, 0.35) !important;
+}
+
+.nav-delete-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  height: 42px !important;
+  border-radius: 10px !important;
+  background: rgba(239, 68, 68, 0.06) !important;
+  color: #dc2626 !important;
+  border: 1px solid rgba(239, 68, 68, 0.25) !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  font-family: inherit !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+  transition: all 0.2s ease !important;
+}
+
+.nav-delete-btn:hover {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #b91c1c !important;
+  border-color: rgba(239, 68, 68, 0.45) !important;
+}
+
+html.dark .nav-delete-btn {
+  background: rgba(239, 68, 68, 0.12) !important;
+  color: #f87171 !important;
+  border-color: rgba(239, 68, 68, 0.32) !important;
+}
+
+html.dark .nav-delete-btn:hover {
+  background: rgba(239, 68, 68, 0.24) !important;
+  color: #fca5a5 !important;
+  border-color: rgba(239, 68, 68, 0.55) !important;
+}
+
+/* Delete Account Modal Card */
+.delete-account-card {
+  max-width: 440px !important;
+  width: 92% !important;
+  padding: 26px 22px !important;
+  border-radius: 20px !important;
+  box-sizing: border-box !important;
+}
+
+.delete-modal-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin-bottom: 14px !important;
+}
+
+.delete-icon-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 12px !important;
+  background: rgba(239, 68, 68, 0.12) !important;
+  color: #dc2626 !important;
+  flex-shrink: 0 !important;
+}
+
+.delete-modal-title {
+  margin: 0 !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  color: #b91c1c !important;
+}
+
+.delete-modal-sub {
+  margin: 2px 0 0 !important;
+  font-size: 12px !important;
+  color: var(--steel) !important;
+}
+
+.delete-warning-box {
+  background: rgba(239, 68, 68, 0.06) !important;
+  border: 1px solid rgba(239, 68, 68, 0.22) !important;
+  border-radius: 12px !important;
+  padding: 12px 14px !important;
+  margin-bottom: 16px !important;
+}
+
+.delete-warning-box p {
+  margin: 0 !important;
+  font-size: 12.5px !important;
+  line-height: 1.5 !important;
+  color: var(--ink) !important;
+}
+
+.delete-input-label {
+  display: block !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  margin-bottom: 8px !important;
+  color: var(--ink) !important;
+}
+
+.delete-pwd-input {
+  width: 100% !important;
+  height: 48px !important;
+  padding: 0 14px !important;
+  border: 1.5px solid var(--line) !important;
+  border-radius: 12px !important;
+  font-family: inherit !important;
+  font-size: 14px !important;
+  margin-bottom: 16px !important;
+  box-sizing: border-box !important;
+  background: var(--card) !important;
+  color: var(--ink) !important;
+}
+
+.delete-pwd-input:focus {
+  outline: none !important;
+  border-color: #dc2626 !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.18) !important;
+}
+
+.delete-alert-box {
+  padding: 10px 14px !important;
+  border-radius: 10px !important;
+  margin-bottom: 14px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+}
+
+.delete-modal-actions {
+  display: flex !important;
+  gap: 10px !important;
+  justify-content: flex-end !important;
+}
+
+.delete-confirm-btn {
+  background: #dc2626 !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  height: 44px !important;
+  padding: 0 18px !important;
+  font-size: 13.5px !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35) !important;
+}
+
+.delete-confirm-btn:hover {
+  background: #b91c1c !important;
+}
+
+.modal-cancel-btn {
+  height: 44px !important;
+  padding: 0 16px !important;
+  font-size: 13px !important;
+  border-radius: 10px !important;
+}
+
+@media (max-width: 520px) {
+  .delete-modal-actions {
+    flex-direction: column-reverse !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+  .delete-modal-actions button,
+  .delete-modal-actions .btn,
+  .delete-modal-actions .btn-outline {
+    width: 100% !important;
+    height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    border-radius: 12px !important;
+    padding: 0 16px !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
   }
 }
