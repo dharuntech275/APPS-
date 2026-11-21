@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - Latest Snapshot</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=19.0">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=20.0">
 <style>
   /* Gauge — text-align+inline-block centering (most reliable across all browsers) */
   .gauge-center-wrapper {
@@ -30,8 +30,6 @@
   {% include "_header.html" %}
 
   <div class="welcome-banner modern-hero-banner" style="margin-bottom:24px;">
-    <div class="hero-glow-orb hero-glow-1"></div>
-    <div class="hero-glow-orb hero-glow-2"></div>
     <div class="welcome-banner-content">
       <div class="hero-date-row" style="margin-bottom:10px;">
         <span class="hero-date-pill">
@@ -185,11 +183,10 @@
                 }
                 return label;
               },
-              maxRotation: window.innerWidth < 480 ? 30 : 0,
+              maxRotation: 0,
               minRotation: 0,
-              autoSkip: true,
-              maxTicksLimit: 7,
-              font: { size: window.innerWidth < 480 ? 9.5 : 10.5, weight: '600' },
+              autoSkip: false,
+              font: { size: window.innerWidth < 480 ? 9.5 : 11, weight: '700' },
               color: tickColor,
               padding: 6
             },

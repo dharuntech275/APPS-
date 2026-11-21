@@ -460,12 +460,362 @@
       border-bottom: 1px solid var(--line) !important;
     }
   }
+
+  /* Universal Fail-Safe Styles for AI Modal & Hero Banners (Laptop & Mobile) */
+  .ai-companion-overlay {
+    display: none;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 10000 !important;
+    background: rgba(15, 23, 42, 0.65) !important;
+    backdrop-filter: blur(8px) !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 16px !important;
+  }
+  .ai-companion-overlay.active {
+    display: flex !important;
+  }
+  .ai-companion-card {
+    width: min(640px, 94vw) !important;
+    height: min(720px, 84vh) !important;
+    min-height: 480px !important;
+    max-height: 86vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    border-radius: 22px !important;
+    background: var(--card, #ffffff) !important;
+    border: 1px solid var(--line, #e2e8f0) !important;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.35) !important;
+    overflow: hidden !important;
+  }
+  html.dark .ai-companion-card {
+    background: #0f172a !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  .ai-status-ribbon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 7px 16px !important;
+    background: rgba(37, 99, 235, 0.08) !important;
+    border-bottom: 1px solid rgba(37, 99, 235, 0.15) !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    color: var(--primary, #2563eb) !important;
+    flex-shrink: 0 !important;
+  }
+  html.dark .ai-status-ribbon {
+    background: rgba(30, 58, 138, 0.35) !important;
+    border-bottom-color: rgba(59, 130, 246, 0.25) !important;
+    color: #93c5fd !important;
+  }
+  .ai-pulse-dot {
+    width: 6.5px !important;
+    height: 6.5px !important;
+    border-radius: 50% !important;
+    background: #10b981 !important;
+    box-shadow: 0 0 0 2.5px rgba(16, 185, 129, 0.3) !important;
+    display: inline-block !important;
+    flex-shrink: 0 !important;
+    margin-right: 6px !important;
+  }
+  .ai-chat-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 14px 18px !important;
+    border-bottom: 1px solid var(--line, #e2e8f0) !important;
+    background: var(--paper, #f8fafc) !important;
+    flex-shrink: 0 !important;
+  }
+  html.dark .ai-chat-header {
+    background: #1e293b !important;
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+  }
+  .ai-header-lead {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    min-width: 0 !important;
+  }
+  .ai-header-avatar {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 12px !important;
+    background: linear-gradient(135deg, #2563eb, #0d9488) !important;
+    color: #ffffff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 0 14px rgba(37, 99, 235, 0.35) !important;
+  }
+  .ai-avatar-badge {
+    position: absolute !important;
+    bottom: -2px !important;
+    right: -2px !important;
+    width: 10px !important;
+    height: 10px !important;
+    border-radius: 50% !important;
+    background: #10b981 !important;
+    border: 2px solid var(--paper, #ffffff) !important;
+  }
+  .ai-modal-close-btn {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    border-radius: 50% !important;
+    border: 1px solid var(--line, #e2e8f0) !important;
+    background: transparent !important;
+    color: var(--steel, #64748b) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    transition: all 0.15s ease !important;
+    flex-shrink: 0 !important;
+  }
+  .ai-modal-close-btn:hover {
+    background: rgba(239, 68, 68, 0.12) !important;
+    color: #ef4444 !important;
+    border-color: rgba(239, 68, 68, 0.35) !important;
+  }
+  .ai-chat-thread {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    padding: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    background: var(--card, #ffffff) !important;
+  }
+  html.dark .ai-chat-thread {
+    background: #0f172a !important;
+  }
+  .ai-msg-bubble {
+    padding: 12px 14px !important;
+    border-radius: 14px !important;
+    font-size: 13.5px !important;
+    line-height: 1.55 !important;
+    max-width: 88% !important;
+    word-break: break-word !important;
+  }
+  .ai-bot-bubble {
+    align-self: flex-start !important;
+    background: rgba(37, 99, 235, 0.05) !important;
+    border: 1px solid rgba(37, 99, 235, 0.18) !important;
+    color: var(--ink, #0f172a) !important;
+  }
+  html.dark .ai-bot-bubble {
+    background: rgba(30, 41, 59, 0.65) !important;
+    border-color: rgba(59, 130, 246, 0.25) !important;
+    color: #f1f5f9 !important;
+  }
+  .ai-user-bubble {
+    align-self: flex-end !important;
+    background: #2563eb !important;
+    color: #ffffff !important;
+  }
+  .ai-prompts-wrapper {
+    padding: 8px 16px !important;
+    border-top: 1px solid var(--line, #e2e8f0) !important;
+    background: var(--paper, #f8fafc) !important;
+    flex-shrink: 0 !important;
+  }
+  html.dark .ai-prompts-wrapper {
+    background: #1e293b !important;
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
+  }
+  .ai-prompts-label {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    color: var(--steel, #64748b) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.03em !important;
+    margin-bottom: 6px !important;
+  }
+  .ai-quick-prompts {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 2px !important;
+  }
+  .ai-prompt-chip {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 6px 12px !important;
+    border-radius: 9999px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    background: var(--card, #ffffff) !important;
+    border: 1px solid var(--line, #cbd5e1) !important;
+    color: var(--ink, #0f172a) !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+  }
+  .ai-prompt-chip:hover {
+    background: rgba(37, 99, 235, 0.08) !important;
+    border-color: rgba(37, 99, 235, 0.35) !important;
+    color: #2563eb !important;
+  }
+  html.dark .ai-prompt-chip {
+    background: rgba(30, 41, 59, 0.9) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    color: #f1f5f9 !important;
+  }
+  html.dark .ai-prompt-chip:hover {
+    background: rgba(37, 99, 235, 0.25) !important;
+    border-color: rgba(59, 130, 246, 0.5) !important;
+    color: #93c5fd !important;
+  }
+  .ai-chat-footer {
+    padding: 12px 16px 14px !important;
+    border-top: 1px solid var(--line, #e2e8f0) !important;
+    background: var(--paper, #f8fafc) !important;
+    flex-shrink: 0 !important;
+  }
+  html.dark .ai-chat-footer {
+    background: #1e293b !important;
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
+  }
+  .ai-chat-form {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+  .ai-input-pill-wrap {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 8px !important;
+    background: #ffffff !important;
+    border: 1px solid var(--line, #cbd5e1) !important;
+    border-radius: 9999px !important;
+    padding: 0 14px !important;
+    height: 44px !important;
+    box-sizing: border-box !important;
+  }
+  html.dark .ai-input-pill-wrap {
+    background: rgba(15, 23, 42, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
+  }
+  .ai-input-icon {
+    flex-shrink: 0 !important;
+    color: var(--steel, #64748b) !important;
+  }
+  .ai-user-input {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    color: var(--ink, #0f172a) !important;
+    font-family: inherit !important;
+    font-size: 13.5px !important;
+    outline: none !important;
+    box-shadow: none !important;
+    height: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  html.dark .ai-user-input {
+    color: #f1f5f9 !important;
+  }
+  .ai-submit-btn {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: 88px !important;
+    height: 44px !important;
+    border-radius: 9999px !important;
+    background: #2563eb !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 0 18px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    font-family: inherit !important;
+    font-weight: 700 !important;
+    font-size: 13.5px !important;
+    cursor: pointer !important;
+    margin: 0 !important;
+  }
+  .ai-submit-btn:hover {
+    background: #1d4ed8 !important;
+  }
+
+  /* Universal Hero Banner Anchor Left (Zero Flex Orbs Dead Space) */
+  .hero-glow-orb {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  .welcome-banner.modern-hero-banner,
+  .modern-hero-banner,
+  .welcome-banner {
+    display: block !important;
+    text-align: left !important;
+    padding: 26px 28px !important;
+    border-radius: 20px !important;
+    margin-bottom: 24px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .welcome-banner-content,
+  .modern-hero-banner .welcome-banner-content,
+  .welcome-banner.modern-hero-banner .welcome-banner-content {
+    display: block !important;
+    text-align: left !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .hero-date-row,
+  .modern-hero-banner .hero-date-row,
+  .welcome-banner.modern-hero-banner .hero-date-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    margin: 0 0 10px 0 !important;
+  }
+  .hero-title,
+  .modern-hero-banner .hero-title,
+  .welcome-banner.modern-hero-banner .hero-title {
+    text-align: left !important;
+    margin: 0 0 6px 0 !important;
+    font-size: 24px !important;
+    font-weight: 800 !important;
+  }
+  .hero-subtitle,
+  .modern-hero-banner .hero-subtitle,
+  .welcome-banner.modern-hero-banner .hero-subtitle {
+    text-align: left !important;
+    margin: 0 !important;
+    font-size: 13.5px !important;
+  }
 </style>
 
 <header class="top">
   <div class="header-left">
     <!-- Dedicated Header Menu Pill Button (Clean Tactical Icon + Text) -->
-    <button type="button" id="headerMenuBtn" class="header-menu-pill-btn" aria-label="Open Navigation Menu" title="Open Navigation Menu">
+    <button type="button" id="headerMenuBtn" class="header-menu-pill-btn" onclick="window.toggleNavDrawer(event)" aria-label="Open Navigation Menu" title="Open Navigation Menu">
       <span class="menu-pill-icon">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="3" width="7" height="7" rx="1.5"/>
