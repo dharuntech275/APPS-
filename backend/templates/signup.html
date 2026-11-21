@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - Account Registration</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=21.0">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=22.0">
 <script>
   (function(){
     var t = localStorage.getItem('apps_theme');
@@ -14,7 +14,7 @@
   })();
 </script>
 <style>
-  /* Fail-safe Auth Header & Centered Card Styles for Laptop & Mobile */
+  /* Fail-safe Auth Header & Centered Spacious Card Styles for Laptop & Mobile */
   .auth-top-nav {
     width: 100% !important;
     display: flex !important;
@@ -50,14 +50,81 @@
   }
   .auth-card.modern-auth-card {
     width: 100% !important;
-    max-width: 480px !important;
+    max-width: 540px !important;
     margin: 0 auto !important;
-    border-radius: 24px !important;
+    padding: 44px 42px !important;
+    border-radius: 26px !important;
     box-sizing: border-box !important;
+  }
+  .auth-form {
+    gap: 20px !important;
+  }
+  .auth-field-group {
+    gap: 8px !important;
+    margin-bottom: 4px !important;
+  }
+  .auth-card.modern-auth-card .role-tabs,
+  .modern-auth-card .role-tabs {
+    margin: 20px 0 28px !important;
+    padding: 6px !important;
+    border-radius: 16px !important;
+    gap: 8px !important;
+  }
+  .auth-card.modern-auth-card .role-tab,
+  .modern-auth-card .role-tab {
+    height: 44px !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    border-radius: 12px !important;
+    padding: 0 16px !important;
+  }
+  .auth-card.modern-auth-card .auth-input-container,
+  .modern-auth-card .auth-input-container {
+    height: 52px !important;
+    min-height: 52px !important;
+  }
+  .auth-card.modern-auth-card input.auth-text-input,
+  .modern-auth-card input.auth-text-input {
+    height: 52px !important;
+    min-height: 52px !important;
+    line-height: 52px !important;
+    padding: 0 48px 0 46px !important;
+    font-size: 14.5px !important;
+    border-radius: 14px !important;
+  }
+  #securityKeyGroup {
+    padding: 18px 20px !important;
+    border-radius: 16px !important;
+    margin: 22px 0 10px !important;
+  }
+  .auth-submit-btn {
+    height: 52px !important;
+    font-size: 15.5px !important;
+    font-weight: 800 !important;
+    border-radius: 14px !important;
+    margin-top: 10px !important;
   }
   @media (max-width: 640px) {
     .auth-top-nav {
       padding: 10px 14px !important;
+    }
+    .auth-card.modern-auth-card {
+      padding: 28px 20px !important;
+      border-radius: 20px !important;
+      max-width: 100% !important;
+    }
+    .auth-form {
+      gap: 16px !important;
+    }
+    .auth-card.modern-auth-card .role-tab,
+    .modern-auth-card .role-tab {
+      height: 40px !important;
+      font-size: 12.5px !important;
+      padding: 0 10px !important;
+    }
+    .auth-submit-btn {
+      height: 48px !important;
+      font-size: 14px !important;
     }
   }
 </style>
