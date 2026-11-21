@@ -8506,8 +8506,12 @@ html.dark .auth-page-body {
   position: relative !important;
   z-index: 20 !important;
   display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
   justify-content: space-between !important;
   align-items: center !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
   padding: 16px 36px !important;
   border-bottom: 1px solid var(--line) !important;
   background: rgba(255, 255, 255, 0.5) !important;
@@ -8521,9 +8525,19 @@ html.dark .auth-top-nav {
 }
 
 .auth-nav-left {
-  display: flex !important;
+  display: inline-flex !important;
   align-items: center !important;
   gap: 14px !important;
+  flex: 0 0 auto !important;
+}
+
+.auth-nav-right {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  margin-left: auto !important;
+  flex: 0 0 auto !important;
 }
 
 .auth-portal-link {
@@ -8658,6 +8672,7 @@ html.dark .auth-theme-btn:hover {
   min-height: calc(100vh - 75px) !important;
   display: flex !important;
   align-items: center !important;
+  justify-content: center !important;
   box-sizing: border-box !important;
 }
 

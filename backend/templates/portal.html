@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - AI Predictive Personnel Stress &amp; Welfare Monitoring Systems</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=20.0">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=21.0">
 <script>
   (function(){
     var t = localStorage.getItem('apps_theme');
@@ -65,6 +65,37 @@
   .portal-chip-tail {
     display: inline !important;
   }
+
+  /* Universal Top-Right Navigation Alignment on Laptop & Mobile */
+  .auth-top-nav {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+    padding: 16px 36px !important;
+  }
+  .auth-nav-left {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 14px !important;
+    flex: 0 0 auto !important;
+  }
+  .auth-nav-right {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 10px !important;
+    margin-left: auto !important;
+    flex: 0 0 auto !important;
+  }
+  @media (max-width: 640px) {
+    .auth-top-nav {
+      padding: 10px 14px !important;
+    }
+  }
 </style>
 </head>
 <body class="auth-page-body">
@@ -77,8 +108,8 @@
 </div>
 
 <!-- Top Website Navigation Bar -->
-<header class="auth-top-nav">
-  <div class="auth-nav-left">
+<header class="auth-top-nav" style="width:100% !important; display:flex !important; flex-direction:row !important; flex-wrap:nowrap !important; justify-content:space-between !important; align-items:center !important; box-sizing:border-box !important;">
+  <div class="auth-nav-left" style="display:inline-flex !important; align-items:center !important; gap:8px !important; flex:0 0 auto !important;">
     <a href="/" class="auth-brand-badge" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
       <span class="brand-shield-icon-sm">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -87,8 +118,8 @@
     </a>
   </div>
 
-  <!-- TOP RIGHT AUTH & THEME CONTROLS -->
-  <div class="auth-nav-right" style="display:flex; align-items:center; gap:10px;">
+  <!-- TOP RIGHT AUTH & THEME CONTROLS (Always Anchored Right) -->
+  <div class="auth-nav-right" style="display:inline-flex !important; align-items:center !important; justify-content:flex-end !important; gap:10px !important; margin-left:auto !important; flex:0 0 auto !important;">
     <button type="button" class="nav-auth-btn nav-signin-btn" onclick="openLoginModal()" title="Sign In to Your Dashboard">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
       <span>Sign In</span>

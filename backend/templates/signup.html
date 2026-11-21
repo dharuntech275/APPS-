@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>APPS - Account Registration</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=20.0">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=21.0">
 <script>
   (function(){
     var t = localStorage.getItem('apps_theme');
@@ -13,6 +13,54 @@
     }
   })();
 </script>
+<style>
+  /* Fail-safe Auth Header & Centered Card Styles for Laptop & Mobile */
+  .auth-top-nav {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+    padding: 16px 36px !important;
+  }
+  .auth-nav-left {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex: 0 0 auto !important;
+  }
+  .auth-nav-right {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    margin-left: auto !important;
+    flex: 0 0 auto !important;
+  }
+  .auth-wrapper {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-height: calc(100vh - 80px) !important;
+    padding: 30px 16px 60px !important;
+    box-sizing: border-box !important;
+    margin: 0 auto !important;
+  }
+  .auth-card.modern-auth-card {
+    width: 100% !important;
+    max-width: 480px !important;
+    margin: 0 auto !important;
+    border-radius: 24px !important;
+    box-sizing: border-box !important;
+  }
+  @media (max-width: 640px) {
+    .auth-top-nav {
+      padding: 10px 14px !important;
+    }
+  }
+</style>
 </head>
 <body class="auth-page-body">
 
@@ -24,8 +72,8 @@
 </div>
 
 <!-- Modern Top Navigation Bar -->
-<header class="auth-top-nav">
-  <div class="auth-nav-left">
+<header class="auth-top-nav" style="width:100% !important; display:flex !important; flex-direction:row !important; flex-wrap:nowrap !important; justify-content:space-between !important; align-items:center !important; box-sizing:border-box !important;">
+  <div class="auth-nav-left" style="display:inline-flex !important; align-items:center !important; gap:12px !important; flex:0 0 auto !important;">
     <a href="/" class="auth-portal-link" title="Return to Website Overview">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
         <line x1="19" y1="12" x2="5" y2="12"></line>
@@ -42,7 +90,7 @@
     </a>
   </div>
 
-  <div class="auth-nav-right">
+  <div class="auth-nav-right" style="display:inline-flex !important; align-items:center !important; justify-content:flex-end !important; margin-left:auto !important; flex:0 0 auto !important;">
     <button type="button" class="theme-toggle auth-theme-btn" aria-label="Toggle dark mode" title="Toggle dark/light mode">
       <span class="theme-toggle-icon">
         <svg class="theme-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
