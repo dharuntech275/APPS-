@@ -11159,3 +11159,160 @@ html.dark .nav-delete-btn:hover {
     margin: 0 !important;
   }
 }
+
+
+/* ==========================================================================
+   PRECISION MOBILE PROPORTIONAL AUTH DESIGN (<= 640px)
+   ========================================================================== */
+@media (max-width: 640px) {
+  .auth-top-nav {
+    padding: 10px 14px !important;
+  }
+  .auth-wrapper {
+    padding: 10px 14px 24px !important;
+    min-height: calc(100vh - 65px) !important;
+  }
+  .auth-card.modern-auth-card {
+    padding: 22px 18px 20px !important;
+    border-radius: 20px !important;
+    max-width: 100% !important;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08) !important;
+  }
+  .auth-card-header {
+    margin-bottom: 14px !important;
+  }
+  .auth-title {
+    font-size: 20px !important;
+    font-weight: 800 !important;
+    margin: 0 0 3px !important;
+  }
+  .auth-subtitle {
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+    margin: 0 !important;
+  }
+  .auth-form {
+    gap: 12px !important;
+  }
+  .auth-field-group {
+    gap: 5px !important;
+    margin-bottom: 0 !important;
+  }
+  .auth-field-label {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.03em !important;
+  }
+  .auth-label-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+  }
+  .auth-forgot-link {
+    font-size: 11.5px !important;
+    white-space: nowrap !important;
+  }
+  .auth-card.modern-auth-card .auth-input-container,
+  .modern-auth-card .auth-input-container {
+    height: 44px !important;
+    min-height: 44px !important;
+  }
+  .auth-card.modern-auth-card input.auth-text-input,
+  .modern-auth-card input.auth-text-input {
+    height: 44px !important;
+    min-height: 44px !important;
+    line-height: 44px !important;
+    padding: 0 38px 0 36px !important;
+    font-size: 13.5px !important;
+    border-radius: 11px !important;
+  }
+  .auth-input-icon {
+    left: 11px !important;
+    width: 15px !important;
+    height: 15px !important;
+  }
+  .auth-eye-btn {
+    right: 8px !important;
+    width: 28px !important;
+    height: 28px !important;
+  }
+  .auth-card.modern-auth-card .role-tabs,
+  .modern-auth-card .role-tabs {
+    margin: 10px 0 14px !important;
+    padding: 4px !important;
+    border-radius: 12px !important;
+    gap: 6px !important;
+  }
+  .auth-card.modern-auth-card .role-tab,
+  .modern-auth-card .role-tab {
+    height: 38px !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+    padding: 0 10px !important;
+    gap: 6px !important;
+  }
+  #securityKeyGroup {
+    padding: 12px 14px !important;
+    border-radius: 12px !important;
+    margin: 10px 0 6px !important;
+  }
+  .auth-submit-btn {
+    height: 44px !important;
+    min-height: 44px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    border-radius: 11px !important;
+    margin-top: 6px !important;
+    margin-bottom: 0 !important;
+  }
+  .auth-switch-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    margin-top: 10px !important;
+    font-size: 12px !important;
+    white-space: nowrap !important;
+  }
+  .auth-roles-section {
+    margin-top: 16px !important;
+    padding-top: 12px !important;
+  }
+  .roles-divider {
+    margin-bottom: 8px !important;
+  }
+  .roles-divider span {
+    font-size: 9.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em !important;
+  }
+  .auth-role-chips-grid {
+    gap: 6px !important;
+  }
+  .auth-role-card {
+    padding: 8px 4px !important;
+    border-radius: 10px !important;
+    gap: 2px !important;
+    text-align: center !important;
+    min-width: 0 !important;
+  }
+  .role-icon-pill {
+    width: 24px !important;
+    height: 24px !important;
+    border-radius: 6px !important;
+    margin-bottom: 2px !important;
+  }
+  .role-title {
+    font-size: 11.5px !important;
+    font-weight: 800 !important;
+    line-height: 1.15 !important;
+    margin-bottom: 0 !important;
+  }
+  .role-desc {
+    font-size: 9px !important;
+    line-height: 1.15 !important;
+    opacity: 0.8 !important;
+  }
+}
